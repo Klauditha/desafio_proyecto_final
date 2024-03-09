@@ -1,12 +1,15 @@
 ##Crear usuario
-
-POST http://localhost:3000/usuario
+POST http://localhost:3000/api/usuario
 Content-Type: application/json
 
 {
-  
+  "primerNombre":"Claudia",
+  "segundoNombre":"Andrea",
+  "primerApellido":"Villarroel",
+  "segundoApellido":"Villarroel",
+  "correo":"micorreo@gmail.com",
+  "password":"12122"
 }
-
 
 ###Obtener usuario
 
@@ -14,7 +17,7 @@ GET http://localhost:3000/usuario
 Content-Type: application/json
 
 {
-  
+  "id": "12777d98-1951-4c4f-814f-7a8e0c90462c"
 }
 
 ###Modificar usuario
