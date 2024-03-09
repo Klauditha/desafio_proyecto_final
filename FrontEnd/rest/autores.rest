@@ -1,0 +1,36 @@
+##Crear autor
+
+POST http://localhost:3000/autor
+Content-Type: application/json
+
+{
+  
+}
+
+
+###Obtener autor
+
+GET http://localhost:3000/autor
+Content-Type: application/json
+
+{
+  
+}
+
+###Modificar autor
+
+PUT http://localhost:3000/autor
+Content-Type: application/json
+
+{
+  
+}
+
+###Modificar autor
+
+DELETE http://localhost:3000/autor
+Content-Type: application/json
+
+{
+  
+}

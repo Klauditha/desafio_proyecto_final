@@ -1,0 +1,36 @@
+##Crear libro
+
+POST http://localhost:3000/libro
+Content-Type: application/json
+
+{
+  
+}
+
+
+###Obtener libro
+
+GET http://localhost:3000/libro
+Content-Type: application/json
+
+{
+  
+}
+
+###Modificar libro
+
+PUT http://localhost:3000/libro
+Content-Type: application/json
+
+{
+  
+}
+
+###Modificar libro
+
+DELETE http://localhost:3000/libro
+Content-Type: application/json
+
+{
+  
+}

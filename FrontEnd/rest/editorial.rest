@@ -1,0 +1,36 @@
+##Crear editorial
+
+POST http://localhost:3000/editorial
+Content-Type: application/json
+
+{
+  
+}
+
+
+###Obtener editorial
+
+GET http://localhost:3000/editorial
+Content-Type: application/json
+
+{
+  
+}
+
+###Modificar editorial
+
+PUT http://localhost:3000/editorial
+Content-Type: application/json
+
+{
+  
+}
+
+###Modificar editorial
+
+DELETE http://localhost:3000/editorial
+Content-Type: application/json
+
+{
+  
+}

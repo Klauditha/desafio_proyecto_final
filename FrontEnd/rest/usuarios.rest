@@ -1,0 +1,36 @@
+##Crear usuario
+
+POST http://localhost:3000/usuario
+Content-Type: application/json
+
+{
+  
+}
+
+
+###Obtener usuario
+
+GET http://localhost:3000/usuario
+Content-Type: application/json
+
+{
+  
+}
+
+###Modificar usuario
+
+PUT http://localhost:3000/usuario
+Content-Type: application/json
+
+{
+  
+}
+
+###Modificar usuario
+
+DELETE http://localhost:3000/usuario
+Content-Type: application/json
+
+{
+  
+}

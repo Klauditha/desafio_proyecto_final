@@ -1,0 +1,36 @@
+##Crear categoria
+
+POST http://localhost:3000/categoria
+Content-Type: application/json
+
+{
+  
+}
+
+
+###Obtener categoria
+
+GET http://localhost:3000/categoria
+Content-Type: application/json
+
+{
+  
+}
+
+###Modificar categoria
+
+PUT http://localhost:3000/categoria
+Content-Type: application/json
+
+{
+  
+}
+
+###Modificar categoria
+
+DELETE http://localhost:3000/categoria
+Content-Type: application/json
+
+{
+  
+}
