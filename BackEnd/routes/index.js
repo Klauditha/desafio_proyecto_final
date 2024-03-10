@@ -11,7 +11,7 @@ const categoriaRouter = require('./categoria');
 router.use('/user', userRouter);
 router.use('/autor', autorRouter);
 router.use('/editorial', editorialRouter);
-router.use('/books', booksRouter);
+router.use('/book', booksRouter);
 router.use('/categoria', categoriaRouter);
 
 module.exports = router;

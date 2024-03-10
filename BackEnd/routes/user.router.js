@@ -11,11 +11,11 @@ const { validarCampos } = require('../middlewares/validation.handler.js');
  *     User:
  *       type: object
  *       required:
- *         - userId
+ *         - id
  *         - username
  *         - password
  *       properties:
- *         userId:
+ *         id:
  *           type: string
  *           description: The auto-generated id of the user
  *         username:
@@ -206,7 +206,7 @@ response: { estado : boolean , message : string , data : object usuario }
  *     summary: Get the user by id
  *     tags: [User]
  *     parameters:
- *       - in: header
+ *       - in: path
  *         name: id
  *     security: [
  *       {

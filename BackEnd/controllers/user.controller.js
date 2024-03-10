@@ -5,45 +5,44 @@ const service = new UsuarioService();
 
 const createUser = async (req, res, next) => {
   try {
-
     const body = req.body;
     const newUser = await service.create(body);
     res.status(201).json({
-      status : true,
-      message : 'New user created',
-      data : {
-        user : newUser,
+      status: true,
+      message: 'New user created',
+      data: {
+        user: newUser,
       },
     });
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      status : false,
-      message : error.message,
-      data : null,
-    })
+      status: false,
+      message: error.message,
+      data: null,
+    });
   }
 };
 
-const getUser = (req, res, next) => {
-  
+const getUser = async (req, res, next) => {
+  console.log('getUser');
   try {
     const { id } = req.params;
     const user = service.findOne(id);
     res.status(200).json({
-      status : true,
-      message : 'User found',
-      data : {
-        user : user,
-      }
-    })
+      status: true,
+      message: 'User found',
+      data: {
+        user: user,
+      },
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      status : false,
-      message : error.message,
-      data : null,
-    })
+      status: false,
+      message: error.message,
+      data: null,
+    });
   }
 };
 

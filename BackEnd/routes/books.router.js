@@ -12,7 +12,7 @@ const { booksController } = require('../controllers');
  *         - book_id
  *         - isbn
  *       properties:
- *         book_id:
+ *         bookId:
  *           type: string
  *           description: The auto-generated id of the book
  *         isbn:
@@ -49,7 +49,7 @@ Descripcion: Crea un nuevo libro
 request: body: 
 response: { estado : boolean , message : string , data : object libro }
 */
-router.post('/', booksController.createBook);
+//router.post('/', booksController.createBook);
 
 /*
 Ruta: PUT /api/libro
@@ -57,7 +57,7 @@ Descripcion: Modifica un libro
 request: body: { token : string, libro : object }
 response: { estado : boolean , message : string , data : object libro }
 */
-router.put('/', booksController.updateBook);
+//router.put('/', booksController.updateBook);
 
 /*
 Ruta: DELETE /api/libro
@@ -65,20 +65,20 @@ Descripcion: Modifica un libro
 request: body: { token : string, id : string }
 response: { estado : boolean , message : string , data : object libro }
 */
-router.delete('/', booksController.deleteBook);
+//router.delete('/', booksController.deleteBook);
 
 /**
  * @swagger
  * tags:
  *   name: Book
  *   description: The Book managing API
- * /books/{idBook}:
+ * /book:
  *   get:
  *     summary: Get the book
  *     tags: [Book]
  *     parameters:
- *       - in: path
- *         name: idBook
+ *       - in: header
+ *         name: bookId
  *     responses:
  *       200:
  *         description: The book was get
@@ -114,7 +114,7 @@ router.delete('/', booksController.deleteBook);
  *                   default: null
  *
  */
-router.get('/', booksController.getBook);
+router.get('/:bookId', booksController.getBook);
 
 /**
  * @swagger
@@ -165,7 +165,7 @@ router.get('/', booksController.getBook);
  *                   default: null
  *
  */
-router.get('/', booksController.getBooksByCategory);
+//router.get('/', booksController.getBooksByCategory);
 
 /**
  * @swagger
