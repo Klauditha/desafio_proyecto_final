@@ -11,11 +11,11 @@ const { validarCampos } = require('../middlewares/validation.handler.js');
  *     User:
  *       type: object
  *       required:
- *         - title
- *         - author
- *         - finished
+ *         - userId
+ *         - username
+ *         - password
  *       properties:
- *         id:
+ *         userId:
  *           type: string
  *           description: The auto-generated id of the user
  *         username:
@@ -133,6 +133,9 @@ router.post('/', userController.createUsuario);
  *   put:
  *     summary: Update the user
  *     tags: [User]
+ *     parameters:
+ *       - in: header
+ *         name: idUser
  *     requestBody:
  *       required: true
  *       content:
@@ -158,6 +161,22 @@ router.post('/', userController.createUsuario);
  *                   type: string
  *                 data:
  *                   $ref: '#/components/schemas/User'
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status: 
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Unauthorized
+ *                 data:
+ *                   type: object
+ *                   default: null
  *       500:
  *         description: Some server error
  *         content:
@@ -174,6 +193,8 @@ router.post('/', userController.createUsuario);
  *                 data:
  *                   type: object
  *                   default: null
+ *
+ * 
  * 
  */
 router.put('/', authMiddleware, userController.updateUsuario);

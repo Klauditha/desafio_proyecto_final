@@ -1,4 +1,4 @@
-const createLibro = (req, res, next) => {
+const createBook = (req, res, next) => {
     try {
         res.status(200).send('Libro creado');
     } catch (error) {
@@ -7,7 +7,7 @@ const createLibro = (req, res, next) => {
     
 }
 
-const getLibro = (req, res, next) => {
+const getBook = (req, res, next) => {
     try {
         res.status(200).send('Libro obtenido');
     }
@@ -16,7 +16,7 @@ const getLibro = (req, res, next) => {
     }
 }
 
-const updateLibro = (req, res, next) => {
+const updateBook = (req, res, next) => {
     try {
         res.status(200).send('Libro actualizado');
     } catch (error) {
@@ -24,7 +24,7 @@ const updateLibro = (req, res, next) => {
     }
 }
 
-const deleteLibro = (req, res, next) => {
+const deleteBook = (req, res, next) => {
     try {
         res.status(200).send('Libro eliminado');
     }
@@ -33,10 +33,19 @@ const deleteLibro = (req, res, next) => {
     }
 }
 
+const getBooksByCategory = (req, res, next) => {
+    try {
+        res.status(200).send('Libros por categoria');
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
+
 
 module.exports = {
-    createLibro,
-    getLibro,
-    updateLibro,
-    deleteLibro
+    createBook,
+    getBook,
+    updateBook,
+    deleteBook,
+    getBooksByCategory
 }

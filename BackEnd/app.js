@@ -22,8 +22,51 @@ const options = {
           type: 'http',
           scheme: 'bearer',
           bearerFormat: 'JWT',
+        },
+      },
+      responses: {
+        200: {
+          description: 'Successful operation',
+        },
+        400: {
+          description: 'Bad Request',
+        },
+        401: {
+          description: 'Unauthorized',
+        },
+        404: {
+          description: 'Not Found',
+        },
+        500: {
+          description: 'Internal Server Error',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/Error',
+              }
+            }
+          }
+        },
+      },
+      schemas: {
+        Error: {
+          type: 'object',
+          properties: {
+            message: {
+              type: 'string',
+              example: 'Error message',
+            },
+            status: {
+              type: 'boolean',
+              example: 'false',
+            },
+            data: {
+              type: 'object',
+              example: 'null',
+            }
+          }
         }
-      }
+      },
     },
     security: [{ bearerAuth: [] }],
     servers: [
@@ -33,14 +76,15 @@ const options = {
     ],
   },
   apis: ['./routes/*.js'],
+  paths: {},
 };
 
 const specs = swaggerJsdoc(options);
 app.use(
-    "/api-docs",
-    swaggerUi.serve,
-    swaggerUi.setup(specs, { explorer: true })
-  );
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(specs, { explorer: true })
+);
 
 //middleware
 app.use(cors());

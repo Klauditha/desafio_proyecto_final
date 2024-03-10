@@ -3,7 +3,7 @@ const router = express.Router();
 const userRouter = require('./user.router');
 const autorRouter = require('./autor');
 const editorialRouter = require('./editorial');
-const libroRouter = require('./libro');
+const booksRouter = require('./books.router');
 const categoriaRouter = require('./categoria');
 
 
@@ -11,7 +11,7 @@ const categoriaRouter = require('./categoria');
 router.use('/user', userRouter);
 router.use('/autor', autorRouter);
 router.use('/editorial', editorialRouter);
-router.use('/libro', libroRouter);
+router.use('/books', booksRouter);
 router.use('/categoria', categoriaRouter);
 
 module.exports = router;
