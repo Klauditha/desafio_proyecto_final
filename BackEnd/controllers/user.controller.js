@@ -5,7 +5,7 @@ const service = new UsuarioService();
 
 const createUser = async (req, res, next) => {
   try {
-    
+
     const body = req.body;
     const newUser = await service.create(body);
     res.status(201).json({
@@ -26,10 +26,24 @@ const createUser = async (req, res, next) => {
 };
 
 const getUser = (req, res, next) => {
+  
   try {
-    res.status(200).send('Usuario obtenido');
+    const { id } = req.params;
+    const user = service.findOne(id);
+    res.status(200).json({
+      status : true,
+      message : 'User found',
+      data : {
+        user : user,
+      }
+    })
   } catch (error) {
-    res.status(500).send(error);
+    console.log(error);
+    res.status(500).json({
+      status : false,
+      message : error.message,
+      data : null,
+    })
   }
 };
 

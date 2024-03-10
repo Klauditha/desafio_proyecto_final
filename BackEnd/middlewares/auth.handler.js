@@ -5,7 +5,9 @@ const authMiddleware = (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
   console.log(token);
   if (!token) {
-    return res.status(401).json({ error: 'No token provided' });
+    return res
+      .status(401)
+      .json({ status: false, message: 'No token provided', data: null });
   }
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
@@ -13,11 +15,20 @@ const authMiddleware = (req, res, next) => {
     next();
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
-      return res.status(401).send({ error: 'Token ha expirado' });
+      return res.status(401).send({
+        status: false,
+        message: 'Token expired',
+        data: null,
+      });
     } else if (error instanceof jwt.JsonWebTokenError) {
-      return res.status(401).send({ error: 'Token o firma no válida' });
+      return res.status(401).json({
+        status: false,
+        message: 'Invalid token or signature',
+        data: null,
+      });
     } else {
-      return res.status(401).send({ error: 'Token no válido' });
+      return res.status(401).json({ 
+        status: false, message: 'Invalid token', data: null });
     }
   }
 };

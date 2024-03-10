@@ -8,7 +8,9 @@ const validarCampos = (req, res, next) => {
       retorno += '- ' + error.msg + '\n';
     });
     return res.status(500).json({
+      status: false,
       message: retorno,
+      data: null,
     });
   }
   next();

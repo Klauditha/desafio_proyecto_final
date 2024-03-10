@@ -196,6 +196,72 @@ Descripcion: btiene un usuario por id
 request: body: { token : string, id : string }
 response: { estado : boolean , message : string , data : object usuario }
 */
-//router.get('/', authMiddleware, userController.getUsuario);
+/**
+ * @swagger
+ * tags:
+ *   name: User
+ *   description: The User managing API
+ * /user:
+ *   get:
+ *     summary: Get the user by id
+ *     tags: [User]
+ *     parameters:
+ *       - in: header
+ *         name: id
+ *     security: [
+ *       {
+ *         bearerAuth: []
+ *       }
+ *     ]
+ *     responses:
+ *       200:
+ *         description: User found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   $ref: '#/components/schemas/User'
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status: 
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Unauthorized
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status: 
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *
+
+ */
+router.get('/', authMiddleware, userController.getUser);
 
 module.exports = router;
