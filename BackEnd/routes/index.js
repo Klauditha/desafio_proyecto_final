@@ -5,6 +5,7 @@ const autorRouter = require('./autor');
 const editorialRouter = require('./editorial');
 const booksRouter = require('./books.router');
 const categoriaRouter = require('./categoria');
+const loginRouter = require('./login.router');
 
 
 //middleware
@@ -13,5 +14,6 @@ router.use('/autor', autorRouter);
 router.use('/editorial', editorialRouter);
 router.use('/book', booksRouter);
 router.use('/categoria', categoriaRouter);
+router.use('/login', loginRouter);
 
 module.exports = router;
