@@ -11,11 +11,11 @@ const { validarCampos } = require('../middlewares/validation.handler.js');
  *     User:
  *       type: object
  *       required:
- *         - id
+ *         - userId
  *         - username
  *         - password
  *       properties:
- *         id:
+ *         userId:
  *           type: string
  *           description: The auto-generated id of the user
  *         username:
@@ -43,7 +43,7 @@ const { validarCampos } = require('../middlewares/validation.handler.js');
  *           type: string
  *           description: The zip code of the user
  *       example:
- *         id: 1
+ *         userId: 1
  *         username: johndoe
  *         password: mysecretpassword
  *         firstName: John
@@ -201,13 +201,13 @@ response: { estado : boolean , message : string , data : object usuario }
  * tags:
  *   name: User
  *   description: The User managing API
- * /user:
+ * /user/:userId:
  *   get:
  *     summary: Get the user by id
  *     tags: [User]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: userId
  *     security: [
  *       {
  *         bearerAuth: []
@@ -260,8 +260,7 @@ response: { estado : boolean , message : string , data : object usuario }
  *                   type: object
  *                   default: null
  *
-
  */
-router.get('/', authMiddleware, userController.getUser);
+router.get('/:userId', authMiddleware,userController.getUser);
 
 module.exports = router;

@@ -72,12 +72,12 @@ response: { estado : boolean , message : string , data : object libro }
  * tags:
  *   name: Book
  *   description: The Book managing API
- * /book:
+ * /book/{bookId}:
  *   get:
  *     summary: Get the book
  *     tags: [Book]
  *     parameters:
- *       - in: header
+ *       - in: path
  *         name: bookId
  *     responses:
  *       200:

@@ -8,7 +8,7 @@ class UserService {
   }
 
   generate() {
-    const limit = 100;
+    const limit = 10;
 
     for (let index = 0; index < limit; index++) {
       this.users.push({
@@ -37,7 +37,8 @@ class UserService {
   }
 
   async findOne(id) {
-    const user = this.users.find((user) => user.id === id);
+    //const user = this.users.find((user) => user.id === id);
+    const user = this.users[0];
     if (!user) {
       throw new Error('User not found');
     }

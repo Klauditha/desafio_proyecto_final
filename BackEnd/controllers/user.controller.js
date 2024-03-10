@@ -25,10 +25,10 @@ const createUser = async (req, res, next) => {
 };
 
 const getUser = async (req, res, next) => {
-  console.log('getUser');
   try {
-    const { id } = req.params;
-    const user = service.findOne(id);
+    const { UserId } = req.params;
+    console.log(UserId);
+    const user = await service.findOne(UserId);
     res.status(200).json({
       status: true,
       message: 'User found',
