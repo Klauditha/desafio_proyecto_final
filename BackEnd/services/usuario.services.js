@@ -27,7 +27,7 @@ class UsuarioService {
       ...data,
     };
     this.users.push(newUser);
-    console.log(this.users);
+    //console.log(this.users);
     return newUser;
   }
 }
