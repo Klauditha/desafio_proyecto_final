@@ -24,6 +24,7 @@ const options = {
           bearerFormat: 'JWT',
         },
       },
+      /*
       responses: {
         200: {
           description: 'Successful operation',
@@ -66,7 +67,7 @@ const options = {
             }
           }
         }
-      },
+      },*/
     },
     security: [{ bearerAuth: [] }],
     servers: [
@@ -91,6 +92,6 @@ app.use(cors());
 app.use(express.json());
 
 //routes
-app.use('/api', routes);
+app.use('/', routes);
 
 module.exports = app;

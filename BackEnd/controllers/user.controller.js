@@ -1,25 +1,31 @@
-const UsuarioService = require('../services/usuario.services');
-const { createUsuarioSchema } = require('../schemas/usuario.schema');
+const UsuarioService = require('../services/user.services');
+const { createUserSchema } = require('../schemas/user.schema');
 
 const service = new UsuarioService();
 
-const createUsuario = async (req, res, next) => {
+const createUser = async (req, res, next) => {
   try {
-    const body = req.body;
-    const nuevoUsuario = await service.create(body);
-
-    res.status(201).json({
-      usuario: nuevoUsuario,
-      mensaje: 'Usuario creado',
-    });
     
+    const body = req.body;
+    const newUser = await service.create(body);
+    res.status(201).json({
+      status : true,
+      message : 'New user created',
+      data : {
+        user : newUser,
+      },
+    });
   } catch (error) {
     console.log(error);
-    res.status(500).send(error);
+    res.status(500).json({
+      status : false,
+      message : error.message,
+      data : null,
+    })
   }
 };
 
-const getUsuario = (req, res, next) => {
+const getUser = (req, res, next) => {
   try {
     res.status(200).send('Usuario obtenido');
   } catch (error) {
@@ -27,7 +33,7 @@ const getUsuario = (req, res, next) => {
   }
 };
 
-const updateUsuario = (req, res, next) => {
+const updateUser = (req, res, next) => {
   try {
     res.status(200).send('Usuario actualizado');
   } catch (error) {
@@ -35,7 +41,7 @@ const updateUsuario = (req, res, next) => {
   }
 };
 
-const deleteUsuario = (req, res, next) => {
+const deleteUser = (req, res, next) => {
   try {
     res.status(200).send('Usuario eliminado');
   } catch (error) {
@@ -44,8 +50,8 @@ const deleteUsuario = (req, res, next) => {
 };
 
 module.exports = {
-  createUsuario,
-  getUsuario,
-  updateUsuario,
-  deleteUsuario,
+  createUser,
+  getUser,
+  updateUser,
+  deleteUser,
 };

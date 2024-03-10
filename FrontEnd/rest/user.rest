@@ -1,14 +1,16 @@
 ##Crear usuario
-POST http://localhost:3000/api/usuario
+POST http://localhost:3000/user
 Content-Type: application/json
 
 {
-  "primerNombre":"Claudia",
-  "segundoNombre":"Andrea",
-  "primerApellido":"Villarroel",
-  "segundoApellido":"Villarroel",
-  "correo":"micorreo@gmail.com",
-  "password":"12122"
+  "username": "claudia",
+  "password": "mysecretpassword",
+  "firstName": "John",
+  "lastName": "Doe",
+  "phone": 123456789,
+  "region": "Region",
+  "address": "Address",
+  "zipCode": 123
 }
 
 ###Obtener usuario

@@ -104,25 +104,8 @@ const { validarCampos } = require('../middlewares/validation.handler.js');
  *                 data:
  *                   type: object
  *                   default: null
- *       401:
- *         description: Unauthorized
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                   default: false
- *                 message:
- *                   type: string
- *                   default: Unauthorized
- *                 data:
- *                   type: object
- *                   default: null
-
  */
-router.post('/', userController.createUsuario);
+router.post('/', userController.createUser);
 
 /**
  * @swagger
@@ -197,7 +180,7 @@ router.post('/', userController.createUsuario);
  * 
  * 
  */
-router.put('/', authMiddleware, userController.updateUsuario);
+//router.put('/', authMiddleware, userController.updateUsuario);
 
 /*
 Ruta: DELETE /api/usuario
@@ -205,7 +188,7 @@ Descripcion: Modifica un usuario
 request: body: { token : string, id : string }
 response: { estado : boolean , message : string , data : object usuario }
 */
-router.delete('/', authMiddleware, userController.deleteUsuario);
+//router.delete('/', authMiddleware, userController.deleteUsuario);
 
 /*
 Ruta: GET /api/usuario
@@ -213,6 +196,6 @@ Descripcion: btiene un usuario por id
 request: body: { token : string, id : string }
 response: { estado : boolean , message : string , data : object usuario }
 */
-router.get('/', authMiddleware, userController.getUsuario);
+//router.get('/', authMiddleware, userController.getUsuario);
 
 module.exports = router;
