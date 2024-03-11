@@ -6,3 +6,16 @@ Content-Type: application/json
   "username": "claudia",
   "password": "mysecretpassword"
 }
+
+##########################
+
+##Logout usuario
+
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNsYXVkaWEiLCJpYXQiOjE3MTAxMTgzMDgsImV4cCI6MTcxMDExODkwOH0.BhhOCYts2vTLQGZK0_MZQ13fbyAI6YPqmbfFH9wNc6A
+POST http://localhost:3000/logout
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+
+}

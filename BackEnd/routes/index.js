@@ -14,6 +14,6 @@ router.use('/autor', autorRouter);
 router.use('/editorial', editorialRouter);
 router.use('/book', booksRouter);
 router.use('/categoria', categoriaRouter);
-router.use('/login', loginRouter);
+router.use('/', loginRouter);
 
 module.exports = router;

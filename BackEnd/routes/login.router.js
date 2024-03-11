@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { loginController } = require('../controllers');
+const { authMiddleware } = require('../middlewares/auth.handler');
 /**
  * @swagger
  * components:
@@ -77,6 +78,6 @@ const { loginController } = require('../controllers');
  *                   default: null
  *
  */
-router.post('/', loginController.loginUser);
+router.post('/login', loginController.loginUser);
 
 module.exports = router;

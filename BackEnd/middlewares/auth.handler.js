@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const authMiddleware = (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
-  console.log(token);
+  console.log("token",token);
   if (!token) {
     return res
       .status(401)
@@ -11,7 +11,8 @@ const authMiddleware = (req, res, next) => {
   }
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    req.nombreUsuario = payload.nombreUsuario;
+    req.username = payload.username;
+    req.token = token;
     next();
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {

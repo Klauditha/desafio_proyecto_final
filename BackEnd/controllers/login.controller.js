@@ -2,9 +2,7 @@ const jwt = require('jsonwebtoken');
 const loginUser = async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    console.log(username, password);
-    const token = await createPayload(username);
-    console.log(token);
+    const token = await createPayload(username, '10m');
     res.status(200).json({
       status: true,
       message: 'User logged in',
@@ -19,11 +17,13 @@ const loginUser = async (req, res, next) => {
   }
 };
 
-const createPayload = async(username) => {
+const createPayload = async (username, expiredIn) => {
   const payload = {
     username: username,
   };
-  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '10m' });
+  const token = jwt.sign(payload, process.env.JWT_SECRET, {
+    expiresIn: expiredIn,
+  });
   return token;
 };
 
