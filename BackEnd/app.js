@@ -73,7 +73,13 @@ const options = {
     servers: [
       {
         url: 'http://localhost:3000',
+        description: 'Local API',
+
       },
+      {
+        url: 'https://desafio-proyecto-final-api.onrender.com/',
+        description: 'Production API',
+      }
     ],
   },
   apis: ['./routes/*.js'],
