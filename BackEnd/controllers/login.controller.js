@@ -5,7 +5,7 @@ const loginUser = async (req, res, next) => {
   try {
     const { username, password } = req.body;
     if (
-      username in ['claudia', 'esteban', 'orlando'] &&
+      ['claudia', 'esteban', 'orlando'].includes(username) &&
       password === 'password'
     ) {
       const token = await createPayload(username, '10m');
