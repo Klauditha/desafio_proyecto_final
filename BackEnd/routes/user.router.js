@@ -280,7 +280,7 @@ response: { estado : boolean , message : string , data : object usuario }
  * tags:
  *   name: User
  *   description: The User managing API
- * /user/:userId:
+ * /user/{userId}:
  *   get:
  *     summary: Get the user by id
  *     tags: [User]
@@ -358,7 +358,7 @@ response: { estado : boolean , message : string , data : object usuario }
  */
 router.get(
   '/:userId',
-  authMiddleware,
+  //authMiddleware,
   userController.getUser
 );
 

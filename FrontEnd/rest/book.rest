@@ -10,7 +10,7 @@ Content-Type: application/json
 
 ###Obtener libro
 
-GET http://localhost:3000/book/bookId=2f7369a7-f4fb-4b3a-8a1b-cc1af02935ff
+GET http://localhost:3000/book/11
 Content-Type: application/json
 
 {

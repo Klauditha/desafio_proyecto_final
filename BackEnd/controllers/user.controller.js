@@ -28,11 +28,10 @@ const createUser = async (req, res, next) => {
 const getUser = async (req, res, next) => {
   try {
     const { userId } = req.params;
-    if(["{userId}","",null,undefined," "].includes(userId)){
+    if(["{userId}",":userId","",null,undefined," "].includes(userId)){
       throw boom.badRequest('Parameter userId is invalid or not provided');
     }
-    console.log(userId);
-    if ([1, 11, 21].includes(userId)) {
+    if (['1', '11', '21'].includes(userId)) {
       throw boom.conflict('User not found');
     }
     const user = await service.findOne(userId);
@@ -52,23 +51,6 @@ const getUser = async (req, res, next) => {
     });
   }
 };
-
-/*
-const updateUser = (req, res, next) => {
-  try {
-    res.status(200).send('Usuario actualizado');
-  } catch (error) {
-    res.status(500).send(error);
-  }
-};
-
-const deleteUser = (req, res, next) => {
-  try {
-    res.status(200).send('Usuario eliminado');
-  } catch (error) {
-    res.status(500).send(error);
-  }
-};*/
 
 module.exports = {
   createUser,

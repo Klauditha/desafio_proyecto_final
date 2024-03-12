@@ -36,12 +36,12 @@ class BookService {
   }
 
   async findOne(bookId) {
+    console.log(bookId);
     const book = this.books[0];
-    console.log(book);
+    //console.log(book);
     if (!book) {
       throw new Error('Book not found');
     }
-    console.log('book', book);
     return book;
   }
 }

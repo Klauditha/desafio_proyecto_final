@@ -9,8 +9,16 @@ const { booksController } = require('../controllers');
  *     Book:
  *       type: object
  *       required:
- *         - book_id
+ *         - bookId
  *         - isbn
+ *         - img
+ *         - title
+ *         - language
+ *         - pages
+ *         - publisher
+ *         - pub_date
+ *         - price
+ *         - stock
  *       properties:
  *         bookId:
  *           type: string
@@ -18,12 +26,21 @@ const { booksController } = require('../controllers');
  *         isbn:
  *           type: string
  *           description: The isbn of the book
+ *         img:
+ *           type: string
+ *           description: The img of the book
  *         title:
  *           type: string
  *           description: The title of the book
- *         author:
+ *         language:
  *           type: string
- *           description: The author of the book
+ *           description: The language of the book
+ *         pages:
+ *           type: number
+ *           description: The pages of the book
+ *         publisher:
+ *           type: string
+ *           description: The publisher of the book
  *         pubDate:
  *           type: datetime
  *           description: The publication date of the book
@@ -36,10 +53,13 @@ const { booksController } = require('../controllers');
  *       example:
  *         book_id: 1
  *         isbn: 123456
+ *         img: https://via.placeholder.com/150
  *         title: El Principito
- *         author: Antoine de Saint-Exupery
+ *         language: Spanish
+ *         pages: 300
+ *         publisher: Random
  *         pubDate: 2020-01-01
- *         price: 10
+ *         price: 10000
  *         stock: 10
  */
 
@@ -96,6 +116,22 @@ response: { estado : boolean , message : string , data : object libro }
  *                   properties:
  *                     book:
  *                       $ref: '#/components/schemas/Book'
+ *       404:
+ *         description: The book was not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: The book was not found
+ *                 data:
+ *                   type: object
+ *                   default: null
  *       500:
  *         description: Some server error
  *         content:
@@ -117,7 +153,6 @@ response: { estado : boolean , message : string , data : object libro }
 router.get('/:bookId', booksController.getBook);
 
 /**
- * @swagger
  * tags:
  *   name: Book
  *   description: The Book managing API
@@ -168,7 +203,6 @@ router.get('/:bookId', booksController.getBook);
 //router.get('/', booksController.getBooksByCategory);
 
 /**
- * @swagger
  * tags:
  *   name: Book
  *   description: The Book managing API
@@ -219,7 +253,6 @@ router.get('/:bookId', booksController.getBook);
 //router.get('/', booksController.getBooksByAuthor);
 
 /**
- * @swagger
  * tags:
  *   name: Book
  *   description: The Book managing API

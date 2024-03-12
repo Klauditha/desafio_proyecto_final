@@ -15,7 +15,16 @@ Content-Type: application/json
 
 ###Obtener usuario sin token
 
-GET http://localhost:3000/user/userId=12777d98-1951-4c4f-814f-7a8e0c90462c
+GET http://localhost:3000/user/12777d98-1951-4c4f-814f-7a8e0c90462c
+Content-Type: application/json
+
+{
+  
+}
+
+###Obtener usuario sin token
+
+GET http://localhost:3000/user/11
 Content-Type: application/json
 
 {
