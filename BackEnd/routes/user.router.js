@@ -358,7 +358,7 @@ response: { estado : boolean , message : string , data : object usuario }
  */
 router.get(
   '/:userId',
-  //authMiddleware,
+  authMiddleware,
   userController.getUser
 );
 
