@@ -1,7 +1,6 @@
 const Joi = require('joi');
 
-
-id = Joi.string().required();
+userId = Joi.string().required();
 userName = Joi.string().required();
 firstName = Joi.string().required();
 lastName = Joi.string().required();
@@ -13,7 +12,7 @@ zipCode = Joi.number().required();
 password = Joi.string().required();
 
 const userSchema = Joi.object({
-  id: Joi.string(),
+  userId: Joi.string(),
   userName: Joi.string(),
   firstName: Joi.string(),
   lastName: Joi.string(),

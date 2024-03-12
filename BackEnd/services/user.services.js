@@ -1,5 +1,6 @@
 const { faker } = require('@faker-js/faker');
 const { userSchema } = require('../schemas/user.schema');
+const boom = require('@hapi/boom');
 
 class UserService {
   constructor() {
@@ -27,12 +28,16 @@ class UserService {
   }
 
   async create(data) {
+
     const newUser = {
       id: faker.datatype.uuid(),
       ...data,
     };
+    console.log(newUser);
+    if(newUser.username === 'claudia'){
+      throw boom.conflict('User already exists');
+    }
     this.users.push(newUser);
-    //console.log(this.users);
     return newUser;
   }
 

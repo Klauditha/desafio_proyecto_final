@@ -1,5 +1,6 @@
 const UsuarioService = require('../services/user.services');
 const { createUserSchema } = require('../schemas/user.schema');
+const boom = require('@hapi/boom');
 
 const service = new UsuarioService();
 
@@ -15,8 +16,8 @@ const createUser = async (req, res, next) => {
       },
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
       status: false,
       message: error.message,
       data: null,
@@ -46,6 +47,7 @@ const getUser = async (req, res, next) => {
   }
 };
 
+/*
 const updateUser = (req, res, next) => {
   try {
     res.status(200).send('Usuario actualizado');
@@ -60,11 +62,9 @@ const deleteUser = (req, res, next) => {
   } catch (error) {
     res.status(500).send(error);
   }
-};
+};*/
 
 module.exports = {
   createUser,
   getUser,
-  updateUser,
-  deleteUser,
 };

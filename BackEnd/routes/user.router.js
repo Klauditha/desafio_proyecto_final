@@ -3,6 +3,7 @@ const router = express.Router();
 const { authMiddleware } = require('../middlewares/auth.handler.js');
 const { userController } = require('../controllers/index.js');
 const { validarCampos } = require('../middlewares/validation.handler.js');
+const { check } = require('express-validator');
 
 /**
  * @swagger
@@ -14,6 +15,13 @@ const { validarCampos } = require('../middlewares/validation.handler.js');
  *         - userId
  *         - username
  *         - password
+ *         - email
+ *         - firstName
+ *         - lastName
+ *         - phone
+ *         - region
+ *         - address
+ *         - zipCode
  *       properties:
  *         userId:
  *           type: string
@@ -24,6 +32,9 @@ const { validarCampos } = require('../middlewares/validation.handler.js');
  *         password:
  *           type: string
  *           description: The password of the user
+ *         email:
+ *           type: string
+ *           description: The email of the user
  *         firstName:
  *           type: boolean
  *           description: The first name of the user
@@ -46,6 +57,7 @@ const { validarCampos } = require('../middlewares/validation.handler.js');
  *         userId: 1
  *         username: johndoe
  *         password: mysecretpassword
+ *         email: johndoe@me.com
  *         firstName: John
  *         lastName: Doe
  *         phone: 123456789
@@ -68,7 +80,43 @@ const { validarCampos } = require('../middlewares/validation.handler.js');
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/User'
+ *              properties:
+ *                  username:
+ *                      type: string
+ *                      description: The user name of the user
+ *                      default: johndoe
+ *                  password:
+ *                      type: string
+ *                      description: The password of the user
+ *                      default: mysecretpassword
+ *                  email:
+ *                      type: string
+ *                      description: The email of the user
+ *                      default: johndoe@me.com
+ *                  firstName:
+ *                      type: boolean
+ *                      description: The first name of the user
+ *                      default: John
+ *                  lastName:
+ *                      type: string
+ *                      description: The last name of the user
+ *                      default: Doe
+ *                  phone:
+ *                      type: string
+ *                      description: The phone of the user
+ *                      default: 123456789
+ *                  region:
+ *                      type: string
+ *                      description: The region of the user
+ *                      default: Region
+ *                  address:
+ *                      type: string
+ *                      description: The address of the user
+ *                      default: Los angeles 123
+ *                  zipCode:
+ *                      type: string
+ *                      description: The zip code of the user 
+ *                      default: 123
  *     responses:
  *       201:
  *         description: The user was successfully created
@@ -88,6 +136,22 @@ const { validarCampos } = require('../middlewares/validation.handler.js');
  *                     user:
  *                       type: object
  *                       $ref: '#/components/schemas/User'
+ *       409:
+ *         description: The user already exists
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: User already exists
+ *                 data:
+ *                   type: object
+ *                   default: null
  *       500:
  *         description: Some server error
  *         content:
@@ -95,7 +159,7 @@ const { validarCampos } = require('../middlewares/validation.handler.js');
  *             schema:
  *               type: object
  *               properties:
- *                 status: 
+ *                 status:
  *                   type: boolean
  *                   default: false
  *                 message:
@@ -105,7 +169,22 @@ const { validarCampos } = require('../middlewares/validation.handler.js');
  *                   type: object
  *                   default: null
  */
-router.post('/', userController.createUser);
+router.post(
+  '/',
+  [
+    check('username', 'Username is required').not().isEmpty(),
+    check('password', 'Password is required').not().isEmpty(),
+    check('email', 'Email is required').isEmail(),
+    check('firstName', 'First name is required').not().isEmpty(),
+    check('lastName', 'Last name is required').not().isEmpty(),
+    check('phone', 'Phone is required').not().isEmpty(),
+    check('region', 'Region is required').not().isEmpty(),
+    check('address', 'Address is required').not().isEmpty(),
+    check('zipCode', 'Zip code is required').not().isEmpty(),
+    validarCampos,
+  ],
+  userController.createUser
+);
 
 /**
  * @swagger
@@ -151,7 +230,7 @@ router.post('/', userController.createUser);
  *             schema:
  *               type: object
  *               properties:
- *                 status: 
+ *                 status:
  *                   type: boolean
  *                   default: false
  *                 message:
@@ -167,7 +246,7 @@ router.post('/', userController.createUser);
  *             schema:
  *               type: object
  *               properties:
- *                 status: 
+ *                 status:
  *                   type: boolean
  *                   default: false
  *                 message:
@@ -177,8 +256,8 @@ router.post('/', userController.createUser);
  *                   type: object
  *                   default: null
  *
- * 
- * 
+ *
+ *
  */
 //router.put('/', authMiddleware, userController.updateUsuario);
 
@@ -234,7 +313,7 @@ response: { estado : boolean , message : string , data : object usuario }
  *             schema:
  *               type: object
  *               properties:
- *                 status: 
+ *                 status:
  *                   type: boolean
  *                   default: false
  *                 message:
@@ -250,7 +329,7 @@ response: { estado : boolean , message : string , data : object usuario }
  *             schema:
  *               type: object
  *               properties:
- *                 status: 
+ *                 status:
  *                   type: boolean
  *                   default: false
  *                 message:
@@ -261,6 +340,6 @@ response: { estado : boolean , message : string , data : object usuario }
  *                   default: null
  *
  */
-router.get('/:userId', authMiddleware,userController.getUser);
+router.get('/:userId', authMiddleware, userController.getUser);
 
 module.exports = router;
