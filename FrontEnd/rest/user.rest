@@ -24,10 +24,10 @@ Content-Type: application/json
 
 ###Obtener usuario con token invalido
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJwZXBpdG8zQGdtYWlsLmNvbSIsImlhdCI6MTcwODQ4NTkzOCwiZXhwIjoxNzA4NDg5NTM4fQ.rvALpuHO365SjzMidBniP8k761UWMliH1gNNfKkx_lw
-GET http://localhost:3000/user?id=12777d98-1951-4c4f-814f-7a8e0c90462c
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNsYXVkaWEiLCJpYXQiOjE3MTAyMDY3OTksImV4cCI6MTcxMDIwNzM5OX0.CrYqB1XIvsJ2GscKkx4h92-Je49OByV1i2SwEUu-_mI
+GET http://localhost:3000/user/userId=12777d98-1951-4c4f-814f-7a8e0c90462c
 Content-Type: application/json
-Authorization: Bearer @{{token}}
+Authorization: Bearer {{token}}
 
 {
   

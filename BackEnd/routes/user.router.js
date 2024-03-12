@@ -115,7 +115,7 @@ const { check } = require('express-validator');
  *                      default: Los angeles 123
  *                  zipCode:
  *                      type: string
- *                      description: The zip code of the user 
+ *                      description: The zip code of the user
  *                      default: 123
  *     responses:
  *       201:
@@ -187,7 +187,6 @@ router.post(
 );
 
 /**
- * @swagger
  * tags:
  *   name: User
  *   description: The User managing API
@@ -259,6 +258,7 @@ router.post(
  *
  *
  */
+
 //router.put('/', authMiddleware, userController.updateUsuario);
 
 /*
@@ -287,11 +287,8 @@ response: { estado : boolean , message : string , data : object usuario }
  *     parameters:
  *       - in: path
  *         name: userId
- *     security: [
- *       {
- *         bearerAuth: []
- *       }
- *     ]
+ *     security:
+ *       -bearerAuth: []
  *     responses:
  *       200:
  *         description: User found
@@ -322,6 +319,22 @@ response: { estado : boolean , message : string , data : object usuario }
  *                 data:
  *                   type: object
  *                   default: null
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: User not found
+ *                 data:
+ *                   type: object
+ *                   default: null
  *       500:
  *         description: Some server error
  *         content:
@@ -340,6 +353,10 @@ response: { estado : boolean , message : string , data : object usuario }
  *                   default: null
  *
  */
-router.get('/:userId', authMiddleware, userController.getUser);
+router.get(
+  '/:userId',
+  authMiddleware,
+  userController.getUser
+);
 
 module.exports = router;

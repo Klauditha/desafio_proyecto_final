@@ -27,9 +27,15 @@ const createUser = async (req, res, next) => {
 
 const getUser = async (req, res, next) => {
   try {
-    const { UserId } = req.params;
-    console.log(UserId);
-    const user = await service.findOne(UserId);
+    const { userId } = req.params;
+    if(["{userId}","",null,undefined," "].includes(userId)){
+      throw boom.badRequest('Parameter userId is invalid or not provided');
+    }
+    console.log(userId);
+    if ([1, 11, 21].includes(userId)) {
+      throw boom.conflict('User not found');
+    }
+    const user = await service.findOne(userId);
     res.status(200).json({
       status: true,
       message: 'User found',
@@ -38,8 +44,8 @@ const getUser = async (req, res, next) => {
       },
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
       status: false,
       message: error.message,
       data: null,
