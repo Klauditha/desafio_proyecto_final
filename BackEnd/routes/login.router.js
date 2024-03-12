@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { loginController } = require('../controllers');
 const { authMiddleware } = require('../middlewares/auth.handler');
+const { check } = require('express-validator');
+const { validarCampos } = require('../middlewares/validation.handler');
 /**
  * @swagger
  * components:
@@ -41,10 +43,10 @@ const { authMiddleware } = require('../middlewares/auth.handler');
  *             properties:
  *              username:
  *                 type: string
- *                 default: 0
+ *                 default: null
  *              password:
  *                 type: string
- *                 default: 0
+ *                 default: null
  *     responses:
  *       200:
  *         description: The user was authenticated
@@ -57,6 +59,7 @@ const { authMiddleware } = require('../middlewares/auth.handler');
  *                   type: boolean
  *                 message:
  *                   type: string
+ *                   default: User is logged in
  *                 data:
  *                   type: object
  *                   default: token
@@ -76,8 +79,32 @@ const { authMiddleware } = require('../middlewares/auth.handler');
  *                 data:
  *                   type: object
  *                   default: null
- *
+  *       401:
+ *         description: The user was not authenticated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Credentials are not valid
+ *                 data:
+ *                   type: object
+ *                   default: null
  */
-router.post('/login', loginController.loginUser);
+
+router.post(
+  '/login',
+  [
+    check('username', 'Username is required').not().isEmpty(),
+    check('password', 'Password is required').not().isEmpty(),
+    validarCampos,
+  ],
+  loginController.loginUser
+);
 
 module.exports = router;
