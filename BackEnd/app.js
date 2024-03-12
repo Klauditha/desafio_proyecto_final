@@ -16,70 +16,39 @@ const options = {
       description:
         'Aqui encontraras todas las rutas de la API para el Backend.',
     },
+    
+    securityDefinitions: {
+      bearerAuth : {
+        type: 'http',
+        name: 'Authorization',
+        in: 'header'
+      }
+    },
+
+    Bearer: 'Authorization',
     components: {
       securitySchemes: {
         bearerAuth: {
           type: 'http',
           scheme: 'bearer',
+          description: 'JWT Authorization header using the Bearer scheme.',
           bearerFormat: 'JWT',
+          in: 'header',
+          name: 'Authorization',
+          
         },
       },
-      /*
-      responses: {
-        200: {
-          description: 'Successful operation',
-        },
-        400: {
-          description: 'Bad Request',
-        },
-        401: {
-          description: 'Unauthorized',
-        },
-        404: {
-          description: 'Not Found',
-        },
-        500: {
-          description: 'Internal Server Error',
-          content: {
-            'application/json': {
-              schema: {
-                $ref: '#/components/schemas/Error',
-              }
-            }
-          }
-        },
-      },
-      schemas: {
-        Error: {
-          type: 'object',
-          properties: {
-            message: {
-              type: 'string',
-              example: 'Error message',
-            },
-            status: {
-              type: 'boolean',
-              example: 'false',
-            },
-            data: {
-              type: 'object',
-              example: 'null',
-            }
-          }
-        }
-      },*/
     },
-    security: [{ bearerAuth: [] }],
+    
     servers: [
       {
         url: 'http://localhost:3000',
         description: 'Local API',
-
       },
       {
         url: 'https://desafio-proyecto-final-api.onrender.com/',
         description: 'Production API',
-      }
+      },
     ],
   },
   apis: ['./routes/*.js'],

@@ -287,8 +287,11 @@ response: { estado : boolean , message : string , data : object usuario }
  *     parameters:
  *       - in: path
  *         name: userId
- *     security:
- *       -bearerAuth: []
+ *     security: [
+ *       {
+ *         bearerAuth: []
+ *       }
+ *     ]
  *     responses:
  *       200:
  *         description: User found
