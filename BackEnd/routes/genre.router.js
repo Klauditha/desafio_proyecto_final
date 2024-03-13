@@ -1,61 +1,45 @@
 const express = require('express');
 const router = express.Router();
 const { authMiddleware } = require('../middlewares/auth.handler.js');
-const { authorController } = require('../controllers/index.js');
+const { genreController } = require('../controllers/index.js');
 const { validarCampos } = require('../middlewares/validation.handler.js');
 const { check } = require('express-validator');
-
 /**
  * @swagger
  * components:
  *   schemas:
- *     Author:
+ *     Genre:
  *       type: object
  *       required:
- *        - authorId
- *        - name
- *        - state
- *        - createdAt
- *        - updatedAt
+ *         - genreId
+ *         - name
  *       properties:
- *         authorId:
+ *         genreId:
  *           type: number
- *           description: The id of the author
+ *           description: The id of the genre
  *         name:
  *           type: string
- *           description: The name of the author
- *         state:
- *           type: boolean
- *           description: The state of the author
- *         createdAt:
- *           type: date
- *           description: The creation date of the author
- *         updatedAt:
- *           type: date
- *           description: The update date of the author
+ *           description: The name of the genre
  *       example:
- *         authorId: 1
- *         name: Gabriel Garcia Marquez
- *         state: true
- *         createdAt: 2022-01-01
- *         updatedAt: 2022-01-01
+ *         genreId: 1
+ *         name: Horror
  */
 
 /**
  * @swagger
  * tags:
- *   name: Author
- *   description: The Author managing API
- * /author/{authorId}:
+ *   name: Genre
+ *   description: The Genre managing API
+ * /genre/{genreId}:
  *   get:
- *     summary: Get the author
- *     tags: [Author]
+ *     summary: Get the genre
+ *     tags: [Genre]
  *     parameters:
  *       - in: path
- *         name: authorId
+ *         name: genreId
  *     responses:
  *       200:
- *         description: The author was found
+ *         description: The genre was found
  *         content:
  *           application/json:
  *             schema:
@@ -65,15 +49,15 @@ const { check } = require('express-validator');
  *                   type: boolean
  *                 message:
  *                   type: string
- *                   default: Author found
+ *                   default: Genre found
  *                 data:
  *                   type: object
  *                   properties:
- *                     author:
+ *                     genre:
  *                       type: object
- *                       $ref: '#/components/schemas/Author'
+ *                       $ref: '#/components/schemas/Genre'
  *       409:
- *         description: The author does not exist
+ *         description: The genre does not exist
  *         content:
  *           application/json:
  *             schema:
@@ -84,7 +68,7 @@ const { check } = require('express-validator');
  *                   default: false
  *                 message:
  *                   type: string
- *                   default: Author not found
+ *                   default: Genre not found
  *                 data:
  *                   type: object
  *                   default: null
@@ -105,20 +89,20 @@ const { check } = require('express-validator');
  *                   type: object
  *                   default: null
  */
-router.get('/:authorId', authorController.getAuthor);
+router.get('/:authorId', genreController.getGenreById);
 
 /**
  * @swagger
  * tags:
- *   name: Author
- *   description: The Author managing API
- * /author/all:
+ *   name: Genre
+ *   description: The Genre managing API
+ * /genre/all:
  *   get:
- *     summary: Get all the authors active
- *     tags: [Author]
+ *     summary: Get all the genres active
+ *     tags: [Genre]
  *     responses:
  *       200:
- *         description: The authors were found
+ *         description: The genres were found
  *         content:
  *           application/json:
  *             schema:
@@ -128,15 +112,15 @@ router.get('/:authorId', authorController.getAuthor);
  *                   type: boolean
  *                 message:
  *                   type: string
- *                   default: Authors found
+ *                   default: Genres found
  *                 data:
  *                   type: object
  *                   properties:
- *                     authors:
+ *                     genres:
  *                       type: object
- *                       $ref: '#/components/schemas/Author'
+ *                       $ref: '#/components/schemas/Genre'
  *       409:
- *         description: The authors does not exist
+ *         description: The genres does not exist
  *         content:
  *           application/json:
  *             schema:
@@ -147,7 +131,7 @@ router.get('/:authorId', authorController.getAuthor);
  *                   default: false
  *                 message:
  *                   type: string
- *                   default: Authors not found
+ *                   default: Genres not found
  *                 data:
  *                   type: object
  *                   default: null
@@ -168,17 +152,17 @@ router.get('/:authorId', authorController.getAuthor);
  *                   type: object
  *                   default: null
  */
-router.get('/all', authorController.getAuthors);
+router.get('/all', genreController.getAllGenres);
 
 /**
  * @swagger
  * tags:
- *   name: Author
- *   description: The Author managing API
- * /author:
+ *   name: Genre
+ *   description: The Genre managing API
+ * /genre:
  *   post:
- *     summary: Create a new user
- *     tags: [Author]
+ *     summary: Create a new genre
+ *     tags: [Genre]
  *     requestBody:
  *       required: true
  *       content:
@@ -187,8 +171,8 @@ router.get('/all', authorController.getAuthors);
  *              properties:
  *                  name:
  *                     type: string
- *                     description: The name of the author
- *                     default: Gabriel Garcia Marquez
+ *                     description: The name of the genre
+ *                     default: Horror
  *     security: [
  *       {
  *         bearerAuth: []
@@ -196,7 +180,7 @@ router.get('/all', authorController.getAuthors);
  *     ]
  *     responses:
  *       201:
- *         description: The author was created
+ *         description: The genre was created
  *         content:
  *           application/json:
  *             schema:
@@ -206,15 +190,15 @@ router.get('/all', authorController.getAuthors);
  *                   type: boolean
  *                 message:
  *                   type: string
- *                   default: Author created
+ *                   default: Genre created
  *                 data:
  *                   type: object
  *                   properties:
- *                     author:
+ *                     genre:
  *                       type: object
- *                       $ref: '#/components/schemas/Author'
+ *                       $ref: '#/components/schemas/Genre'
  *       409:
- *         description: The author already exists
+ *         description: The genre already exists
  *         content:
  *           application/json:
  *             schema:
@@ -225,7 +209,7 @@ router.get('/all', authorController.getAuthors);
  *                   default: false
  *                 message:
  *                   type: string
- *                   default: Author already exists
+ *                   default: Genre already exists
  *                 data:
  *                   type: object
  *                   default: null
@@ -250,21 +234,21 @@ router.post(
   '/',
   [check('name', 'The name is required').not().isEmpty(), validarCampos],
   authMiddleware,
-  authorController.createAuthor
+  genreController.createGenre
 );
 
 /**
  * @swagger
  * tags:
- *   name: Author
- *   description: The Author managing API
- * /author/{authorId}:
+ *   name: Genre
+ *   description: The Genre managing API
+ * /genre/{genreId}:
  *   put:
- *     summary: Update the author
- *     tags: [Author]
+ *     summary: Update the genre
+ *     tags: [Genre]
  *     parameters:
  *       - in: path
- *         name: authorId
+ *         name: genreId
  *     requestBody:
  *       required: true
  *       content:
@@ -273,8 +257,8 @@ router.post(
  *              properties:
  *                  name:
  *                     type: string
- *                     description: The name of the user
- *                     default: johndoe
+ *                     description: The name of the genre
+ *                     default: Horror
  *     security: [
  *       {
  *         bearerAuth: []
@@ -282,7 +266,7 @@ router.post(
  *     ]
  *     responses:
  *       200:
- *         description: The author was updated
+ *         description: The genre was updated
  *         content:
  *           application/json:
  *             schema:
@@ -292,15 +276,15 @@ router.post(
  *                   type: boolean
  *                 message:
  *                   type: string
- *                   default: Author updated
+ *                   default: Genre updated
  *                 data:
  *                   type: object
  *                   properties:
- *                     author:
+ *                     genre:
  *                       type: object
- *                       $ref: '#/components/schemas/Author'
+ *                       $ref: '#/components/schemas/Genre'
  *       409:
- *         description: The author does not exist
+ *         description: The genre does not exist
  *         content:
  *           application/json:
  *             schema:
@@ -311,7 +295,7 @@ router.post(
  *                   default: false
  *                 message:
  *                   type: string
- *                   default: Author not found
+ *                   default: Genre not found
  *                 data:
  *                   type: object
  *                   default: null
@@ -333,24 +317,24 @@ router.post(
  *                   default: null
  */
 router.put(
-  '/:authorId',
+  '/:genreId',
   [check('name', 'The name is required').not().isEmpty(), validarCampos],
   authMiddleware,
-  authorController.updateAuthorById
+  genreController.updateGenreById
 );
 
 /**
  * @swagger
  * tags:
- *   name: Author
- *   description: The Author managing API
- * /author/{authorId}:
+ *   name: Genre
+ *   description: The Genre managing API
+ * /genre/{genreId}:
  *   delete:
- *     summary: Delete the author
- *     tags: [Author]
+ *     summary: Delete the genre
+ *     tags: [Genre]
  *     parameters:
  *       - in: path
- *         name: authorId
+ *         name: genreId
  *     security: [
  *       {
  *         bearerAuth: []
@@ -358,7 +342,7 @@ router.put(
  *     ]
  *     responses:
  *       200:
- *         description: The author was deleted
+ *         description: The genre was deleted
  *         content:
  *           application/json:
  *             schema:
@@ -368,15 +352,15 @@ router.put(
  *                   type: boolean
  *                 message:
  *                   type: string
- *                   default: Author deleted
+ *                   default: Genre deleted
  *                 data:
  *                   type: object
  *                   properties:
- *                     author:
+ *                     genre:
  *                       type: object
- *                       $ref: '#/components/schemas/Author'
+ *                       $ref: '#/components/schemas/Genre'
  *       409:
- *         description: The author does not exist
+ *         description: The genre does not exist
  *         content:
  *           application/json:
  *             schema:
@@ -387,7 +371,7 @@ router.put(
  *                   default: false
  *                 message:
  *                   type: string
- *                   default: Author not found
+ *                   default: Genre not found
  *                 data:
  *                   type: object
  *                   default: null
@@ -408,6 +392,6 @@ router.put(
  *                   type: object
  *                   default: null
  */
-router.get('/:authorId', authMiddleware, authorController.deleteAuthorById);
+router.delete('/:genreId', authMiddleware, genreController.deleteGenreById);
 
 module.exports = router;
