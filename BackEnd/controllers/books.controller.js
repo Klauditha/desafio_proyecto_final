@@ -4,7 +4,7 @@ const boom = require('@hapi/boom');
 
 const service = new BookService();
 
-/*
+
 const createBook = (req, res, next) => {
   try {
     const body = req.body;
@@ -25,7 +25,7 @@ const createBook = (req, res, next) => {
       data: null,
     });
   }
-};*/
+};
 
 const getBook = async (req, res, next) => {
   try {
@@ -82,4 +82,5 @@ const getBooksByCategory = (req, res, next) => {
 module.exports = {
   getBook,
   getBooksByCategory,
+  createBook,
 };

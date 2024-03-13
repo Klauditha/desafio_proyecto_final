@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { booksController } = require('../controllers');
+const { validarCampos } = require('../middlewares/validation.handler.js');
+const { check } = require('express-validator');
+const { authMiddleware } = require('../middlewares/auth.handler.js');
 
 /**
  * @swagger
@@ -69,7 +72,6 @@ Descripcion: Crea un nuevo libro
 request: body: 
 response: { estado : boolean , message : string , data : object libro }
 */
-//router.post('/', booksController.createBook);
 
 /*
 Ruta: PUT /api/libro
@@ -253,6 +255,124 @@ router.get('/:bookId', booksController.getBook);
 //router.get('/', booksController.getBooksByAuthor);
 
 /**
+ * @swagger
+ * tags:
+ *   name: Book
+ *   description: The Book managing API
+ * /books:
+ *   post:
+ *     summary: Create a new book
+ *     tags: [Book]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: The title of the book
+ *                 default: The title of your book
+ *               isbn:
+ *                 type: string
+ *                 description: The isbn of the book
+ *                 default: 123456789
+ *               img:
+ *                 type: string
+ *                 description: The img of the book
+ *                 default: http://www.example.com/image.jpg
+ *               language:
+ *                 type: string
+ *                 description: The language of the book
+ *                 default: English
+ *               pages:
+ *                 type: number
+ *                 description: The pages of the book
+ *                 default: 100
+ *               publisher:
+ *                 type: string
+ *                 description: The publisher of the book
+ *                 default: publisher
+ *               pubDate:
+ *                 type: date
+ *                 description: The pubDate of the book
+ *                 default: 2020-01-01
+ *               price:
+ *                 type: number
+ *                 description: The price of the book
+ *                 default: 10000
+ *               stock:
+ *                 type: number
+ *                 description: The stock of the book
+ *                 default: 10
+ *               authorId:
+ *                 type: number
+ *                 description: The id of the author
+ *                 default: 1
+ *               genreId:
+ *                 type: number
+ *                 description: The id of the genre
+ *                 default: 1
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       201:
+ *         description: The book was created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     books:
+ *                       type: array
+ *                       items:
+ *                         $ref: '#/components/schemas/Book'
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *
+ */
+router.post(
+  '/',
+  [
+    check('title', 'The title is required').not().isEmpty(),
+    check('isbn', 'The isbn is required').not().isEmpty(),
+    check('img', 'The img is required').not().isEmpty(),
+    check('language', 'The language is required').not().isEmpty(),
+    check('pages', 'The pages is required').not().isEmpty(),
+    check('publisher', 'The publisher is required').not().isEmpty(),
+    check('pub_date', 'The pub_date is required').not().isEmpty(),
+    check('stock', 'The stock is required').not().isEmpty(),
+    check('price', 'The price is required').not().isEmpty(),
+    check('authorId', 'The authorId is required').not().isEmpty(),
+    check('genreId', 'The genreId is required').not().isEmpty(),
+    validarCampos,
+  ],
+  authMiddleware,
+  booksController.createBook
+);
+/**
  * tags:
  *   name: Book
  *   description: The Book managing API
@@ -274,7 +394,7 @@ router.get('/:bookId', booksController.getBook);
  *               stock:
  *                 type: number
  *                 default: 0
- *     security: 
+ *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
