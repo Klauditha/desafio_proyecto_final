@@ -54,8 +54,8 @@ const getBook = async (req, res, next) => {
   }
 };
 
-/*
-const updateBook = (req, res, next) => {
+
+const updateBookById = (req, res, next) => {
   try {
     res.status(200).send('Libro actualizado');
   } catch (error) {
@@ -63,13 +63,13 @@ const updateBook = (req, res, next) => {
   }
 };
 
-const deleteBook = (req, res, next) => {
+const deleteBookById = (req, res, next) => {
   try {
     res.status(200).send('Libro eliminado');
   } catch (error) {
     res.status(500).send(error);
   }
-};*/
+};
 
 const getBooksByCategory = (req, res, next) => {
   try {
@@ -83,4 +83,6 @@ module.exports = {
   getBook,
   getBooksByCategory,
   createBook,
+  deleteBookById,
+  updateBookById
 };

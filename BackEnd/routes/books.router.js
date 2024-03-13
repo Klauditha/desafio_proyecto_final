@@ -66,28 +66,126 @@ const { authMiddleware } = require('../middlewares/auth.handler.js');
  *         stock: 10
  */
 
-/*
-Ruta: POST /api/libro
-Descripcion: Crea un nuevo libro
-request: body: 
-response: { estado : boolean , message : string , data : object libro }
-*/
-
-/*
-Ruta: PUT /api/libro
-Descripcion: Modifica un libro
-request: body: { token : string, libro : object }
-response: { estado : boolean , message : string , data : object libro }
-*/
-//router.put('/', booksController.updateBook);
-
-/*
-Ruta: DELETE /api/libro
-Descripcion: Modifica un libro
-request: body: { token : string, id : string }
-response: { estado : boolean , message : string , data : object libro }
-*/
-//router.delete('/', booksController.deleteBook);
+/**
+ * @swagger
+ * tags:
+ *   name: Book
+ *   description: The Book managing API
+ * /book/{bookId}:
+ *   put:
+ *     summary: Update the book
+ *     tags: [Book]
+ *     parameters:
+ *       - in: path
+ *         name: bookId
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *              properties:
+ *                  title:
+ *                    type: string
+ *                    description: The title of the book
+ *                    default: El Principito
+ *                  language:
+ *                    type: string
+ *                    description: The language of the book
+ *                    default: Spanish
+ *                  pages:
+ *                    type: number
+ *                    description: The pages of the book
+ *                    default: 300
+ *                  publisher:
+ *                    type: string
+ *                    description: The publisher of the book
+ *                    default: Random
+ *                  pubDate:
+ *                    type: datetime
+ *                    description: The publication date of the book
+ *                    default: 2020-01-01
+ *                  price:
+ *                    type: number
+ *                    description: The price of the book
+ *                    default: 10000
+ *                  stock:
+ *                    type: number
+ *                    description: The stock of the book
+ *                    default: 10
+ *     security: [
+ *       {
+ *         bearerAuth: []
+ *       }
+ *     ]
+ *     responses:
+ *       200:
+ *         description: The book was updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                   default: Book updated
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     book:
+ *                       type: object
+ *                       $ref: '#/components/schemas/Book'
+ *       409:
+ *         description: The book does not exist
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: The book does not exist
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ */
+router.post(
+  '/:bookId',
+  [
+    check('title', 'The title is required').not().isEmpty(),
+    check('isbn', 'The isbn is required').not().isEmpty(),
+    check('img', 'The img is required').not().isEmpty(),
+    check('language', 'The language is required').not().isEmpty(),
+    check('pages', 'The pages is required').not().isEmpty(),
+    check('publisher', 'The publisher is required').not().isEmpty(),
+    check('pub_date', 'The pub_date is required').not().isEmpty(),
+    check('stock', 'The stock is required').not().isEmpty(),
+    check('price', 'The price is required').not().isEmpty(),
+    validarCampos,
+  ],
+  authMiddleware,
+  booksController.updateBookById
+);
 
 /**
  * @swagger
@@ -158,7 +256,7 @@ router.get('/:bookId', booksController.getBook);
  * tags:
  *   name: Book
  *   description: The Book managing API
- * /books/getByCategory/{idCategory}:
+ * /book/getByCategory/{idCategory}:
  *   get:
  *     summary: Get the books by category
  *     tags: [Book]
@@ -259,7 +357,7 @@ router.get('/:bookId', booksController.getBook);
  * tags:
  *   name: Book
  *   description: The Book managing API
- * /books:
+ * /book:
  *   post:
  *     summary: Create a new book
  *     tags: [Book]
@@ -331,7 +429,7 @@ router.get('/:bookId', booksController.getBook);
  *                 data:
  *                   type: object
  *                   properties:
- *                     books:
+ *                     book:
  *                       type: array
  *                       items:
  *                         $ref: '#/components/schemas/Book'
@@ -411,7 +509,7 @@ router.post(
  *                 data:
  *                   type: object
  *                   properties:
- *                     books:
+ *                     book:
  *                       type: array
  *                       items:
  *                         $ref: '#/components/schemas/Book'
@@ -434,5 +532,82 @@ router.post(
  *
  */
 //router.get('/', booksController.setStockById);
+
+/*
+Ruta: DELETE /api/libro
+Descripcion: Modifica un libro
+request: body: { token : string, id : string }
+response: { estado : boolean , message : string , data : object libro }
+*/
+/**
+ * @swagger
+ * tags:
+ *   name: Book
+ *   description: The Book managing API
+ * /book/{bookId}:
+ *   delete:
+ *     summary: Delete the book
+ *     tags: [Book]
+ *     parameters:
+ *       - in: path
+ *         name: bookId
+ *     security: [
+ *       {
+ *         bearerAuth: []
+ *       }
+ *     ]
+ *     responses:
+ *       200:
+ *         description: The book was deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                   default: Book deleted
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     book:
+ *                       type: object
+ *                       $ref: '#/components/schemas/Book'
+ *       409:
+ *         description: The book was not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Book not found
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ */
+router.delete('/:bookId', authMiddleware, booksController.deleteBookById);
 
 module.exports = router;
