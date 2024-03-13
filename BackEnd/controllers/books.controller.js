@@ -79,10 +79,20 @@ const getBooksByCategory = (req, res, next) => {
   }
 };
 
+const getAllBooks = (req, res, next) => {
+  try {
+    res.status(200).send('Libros');
+  }
+  catch (error) {
+    res.status(500).send(error);
+  }
+}
+
 module.exports = {
   getBook,
   getBooksByCategory,
   createBook,
   deleteBookById,
-  updateBookById
+  updateBookById,
+  getAllBooks
 };

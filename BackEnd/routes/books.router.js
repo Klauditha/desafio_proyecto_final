@@ -610,4 +610,170 @@ response: { estado : boolean , message : string , data : object libro }
  */
 router.delete('/:bookId', authMiddleware, booksController.deleteBookById);
 
+/**
+ * @swagger
+ * tags:
+ *   name: Book
+ *   description: The Book managing API
+ * /book/{bookId}:
+ *   get:
+ *     summary: Get the book
+ *     tags: [Book]
+ *     parameters:
+ *       - in: path
+ *         name: bookId
+ *     responses:
+ *       200:
+ *         description: The book was get
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     book:
+ *                       $ref: '#/components/schemas/Book'
+ *       404:
+ *         description: The book was not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: The book was not found
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *
+ */
+router.get('/:bookId', booksController.getBook);
+
+
+/**
+ * @swagger
+ * tags:
+ *   name: Book
+ *   description: The Book managing API
+ * /book/all?limit={limit}&page={page}&orderBy={orderBy}/filter?title={title}&genre={genre}&author={author}:
+ *   get:
+ *     summary: Get all the books with pagination, filter and order
+ *     tags: [Book]
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: number
+ *         default: 10
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: number
+ *         default: 1
+ *       - in: query
+ *         name: orderBy
+ *         schema:
+ *           type: string
+ *         default: title_ASC
+ *       - in: query
+ *         name: title
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: genre
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: author
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: The books were get
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                   default: Was get 1 book
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     books:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           book:
+ *                             type: object
+ *                             $ref: '#/components/schemas/Book'
+ *       404:
+ *         description: The books were not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: The books were not found
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *
+ */
+router.get(
+  '/all?limit={limit}&page={page}&orderBy={orderBy}/filter?title={title}&genre={genre}&author={author}',
+  booksController.getAllBooks
+);
+
 module.exports = router;
