@@ -50,4 +50,94 @@ const router = express.Router();
  *         createdAt: 2022-01-01
  *         updatedAt: 2022-01-01
  */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Rating
+ *   description: The Rating managing API
+ * /rating:
+ *   post:
+ *     summary: Create a new rating
+ *     tags: [Rating]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: number
+ *                 description: The id of the user
+ *               bookId:
+ *                 type: number
+ *                 description: The id of the book
+ *               score:
+ *                 type: number
+ *                 description: The score of the book
+ *               comment:
+ *                 type: string
+ *                 description: The comment of the book
+ *               whishlist:
+ *                 type: boolean
+ *                 description: The whishlist of the book
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       201:
+ *         description: The rating was created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: true
+ *                 message:
+ *                   type: string
+ *                   default: The rating was created
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     rating:
+ *                       type: object
+ *                       $ref: '#/components/schemas/Rating'
+ *       500:
+ *         description: The rating was not created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Unauthorized
+ *                 data: 
+ *                   type: object
+ *                   default: null
+ *
+ * 
+ * */
+router.post('/');
 module.exports = router

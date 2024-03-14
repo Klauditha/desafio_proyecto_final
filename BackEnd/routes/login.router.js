@@ -11,17 +11,17 @@ const { validarCampos } = require('../middlewares/validation.handler');
  *     Login:
  *       type: object
  *       required:
- *         - username
+ *         - email
  *         - password
  *       properties:
  *         username:
  *           type: string
- *           description: The username of the user
+ *           description: The email of the user
  *         password:
  *           type: string
  *           description: The password of the user
  *       example:
- *         username: John
+ *         email: 6UqQK@example.com
  *         password: 123456
  */
 
@@ -41,12 +41,12 @@ const { validarCampos } = require('../middlewares/validation.handler');
  *           schema:
  *             type: object
  *             properties:
- *              username:
+ *              email:
  *                 type: string
- *                 default: null
+ *                 default: claudiav@gmail.com
  *              password:
  *                 type: string
- *                 default: null
+ *                 default: secretPassword
  *     responses:
  *       200:
  *         description: The user was authenticated
@@ -100,7 +100,7 @@ const { validarCampos } = require('../middlewares/validation.handler');
 router.post(
   '/login',
   [
-    check('username', 'Username is required').not().isEmpty(),
+    check('email', 'Email is required').not().isEmpty(),
     check('password', 'Password is required').not().isEmpty(),
     validarCampos,
   ],
