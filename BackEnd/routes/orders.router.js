@@ -34,32 +34,71 @@ const router = express.Router();
 
 /**
  * @swagger
- * components:
- *   schemas:
- *     OrderItem:
- *       type: object
- *       required:
- *         - orderItemId
- *         - orderId
- *         - bookId
- *         - quantity
- *       properties:
- *         orderItemId:
- *           type: number
- *           description: The id of the order item
- *         orderId:
- *           type: number
- *           description: The id of the order
- *         bookId:
- *           type: number
- *           description: The id of the book
- *         quantity:
- *           type: number
- *           description: The quantity of the book
- *       example:
- *         orderItemId: 1
- *         orderId: 1
- *         bookId: 1
- *         quantity: 1
+ * tags:
+ *   name: Orders
+ *   description: The Orders managing API
+ * /orders/{userId}:
+ *   get:
+ *     summary: Get all orders by user
+ *     tags: [Orders]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *     security: [
+ *       {
+ *         bearerAuth: []
+ *       }
+ *     ]
+ *     responses:
+ *       200:
+ *         description: The orders were found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     orders:
+ *                       type: array
+ *                       items:
+ *                         $ref: '#/components/schemas/Orders'
+ *       404:
+ *         description: The orders were not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
  */
-module.exports = router
+router.get('/:userId');
+
+module.exports = router;

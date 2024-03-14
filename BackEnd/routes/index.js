@@ -13,7 +13,7 @@ router.use('/', loginRouter);
 router.use('/user', userRouter);
 router.use('/book', booksRouter);
 router.use('/cart', cartRouter);
-router.use('/order', ordersRouter);
+router.use('/orders', ordersRouter);
 router.use('/rating', ratingRouter);
 router.use('/author', authorRouter);
 
