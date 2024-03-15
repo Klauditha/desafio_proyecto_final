@@ -169,32 +169,31 @@
       "stock": 18
     },
     {
-      "book_id": 7,
-      "isbn": 9788483835161,
-      "img": "book7.jpg",
-      "title": "2666",
-      "description": "Novela del escritor español Roberto Bolaño, que cuenta la historia de un grupo de académicos que investigan una serie de asesinatos en Ciudad Juárez.",
-      "language": "Español",
-      "pages": 800,
-      "publisher": "Mondadori",
-      "pub_date": "2008-05-01",
-      "price": 17990,
-      "stock": 22
+	"book_id": 7,
+	"isbn": 9788483835161,
+	"img": "book7.jpg",
+	"title": "2666",
+	"description": "Novela del escritor español Roberto Bolaño, que cuenta la historia de un grupo de académicos que investigan una serie de asesinatos en Ciudad Juárez.",
+	"language": "Español",
+	"pages": 800,
+	"publisher": "Mondadori",
+	"pub_date": "2008-05-01",
+	"price": 17990,
+	"stock": 22
     },
-	
-    {
-      "book_id": 8,
-      "isbn": 9789562820005,
-      "img": "book8.jpg",
-      "title": "Cien años de soledad",
-      "description": "Novela del escritor colombiano Gabriel García Márquez que narra la historia de la familia Buendía a lo largo de siete generaciones en el pueblo ficticio de Macondo.",
-      "language": "Español",
-      "pages": 432,
-      "publisher": "DeBolsillo",
-      "pub_date": "1967-05-30",
-      "price": 14990,
-      "stock": 20
-    }
+  {
+	"book_id": 8,
+	"isbn": 9789562820005,
+	"img": "book8.jpg",
+	"title": "Cien años de soledad",
+	"description": "Novela del escritor colombiano Gabriel García Márquez que narra la historia de la familia Buendía a lo largo de siete generaciones en el pueblo ficticio de Macondo.",
+	"language": "Español",
+	"pages": 432,
+	"publisher": "DeBolsillo",
+	"pub_date": "1967-05-30",
+	"price": 14990,
+	"stock": 20
+  }
   ],
   "authors": [
     {
