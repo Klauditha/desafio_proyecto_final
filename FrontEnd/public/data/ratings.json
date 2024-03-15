@@ -1,0 +1,42 @@
+[
+  {
+    "ratingId": "1",
+    "userId": "1",
+    "bookId": "1",
+    "score": 1,
+    "comment": "I like it",
+    "whishlist": "true",
+    "createdAt": "2022-10-18T19:12:11.000Z",
+    "updatedAt": "2022-10-18T19:12:11.000Z"
+  },
+  {
+    "ratingId": "1",
+    "userId": "1",
+    "bookId": "1",
+    "score": 1,
+    "comment": "I like it",
+    "whishlist": "true",
+    "createdAt": "2022-10-18T19:12:11.000Z",
+    "updatedAt": "2022-10-18T19:12:11.000Z"
+  },
+  {
+    "ratingId": "2",
+    "userId": "2",
+    "bookId": "2",
+    "score": 1,
+    "comment": "I like it",
+    "whishlist": "true",
+    "createdAt": "2022-10-18T19:12:11.000Z",
+    "updatedAt": "2022-10-18T19:12:11.000Z"
+  },
+  {
+    "ratingId": "3",
+    "userId": "3",
+    "bookId": "3",
+    "score": 3,
+    "comment": "I like it",
+    "whishlist": "true",
+    "createdAt": "2022-10-18T19:12:11.000Z",
+    "updatedAt": "2022-10-18T19:12:11.000Z"
+  }
+]

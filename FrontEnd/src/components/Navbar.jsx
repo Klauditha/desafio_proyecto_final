@@ -1,13 +1,8 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+/* eslint-disable no-unused-vars */
+import { Link } from 'react-router-dom';
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
-import New from './pages/New';
-import Bestselling from './pages/Bestselling';
-import Publishers from './pages/Publishers';
-import Wishlist from './pages/Wishlist';
-import Loginpage from './pages/Loginpage';
-import Register from './Register';
-import Cart from './pages/Cart';
+
 
 export default function Navbar() {
     return (
@@ -56,15 +51,7 @@ export default function Navbar() {
             </nav>
           </div>
         </div>
-        <Routes>
-          <Route path="/new" element={<New />} />
-          <Route path="/bestselling" element={<Bestselling />} />
-          <Route path="/publishers" element={<Publishers />} />
-          <Route path="/wishlist" element={<Wishlist />} />
-          <Route path="/login" element={<Loginpage />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/cart" element={<Cart />} />
-        </Routes>
+        
         </>
     );
   }
