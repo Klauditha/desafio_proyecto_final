@@ -1,0 +1,14 @@
+[
+    {
+        "bookId": "1",
+        "authorId": "1"
+    },
+    {
+        "bookId": "2",
+        "authorId": "2"
+    },
+    {
+        "bookId": "3",
+        "authorId": "3"
+    }
+]

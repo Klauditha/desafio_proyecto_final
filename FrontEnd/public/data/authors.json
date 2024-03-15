@@ -1,0 +1,14 @@
+[
+  {
+    "authorId": "1",
+    "name": "J.K. Rowling"
+  },
+  {
+    "authorId": "2",
+    "name": "Stephen King"
+  },
+  {
+    "authorId": "3",
+    "name": "George R. R. Martin"
+  }
+]

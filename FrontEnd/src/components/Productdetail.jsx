@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { Label } from '@/components/ui/label';
 import { RadioGroupItem, RadioGroup } from '@/components/ui/radio-group';
@@ -10,9 +12,44 @@ import {
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { useContext } from 'react';
+import { ECommerceContext } from '../Context/ECommerceContext';
+import { useEffect } from 'react';
 
 const Productdetail = ({ book }) => {
-  console.log(book);
+  const { ratings } = useContext(ECommerceContext);
+
+  const getRatingsByBook = (bookId, ratings) => {
+    const ratingsByBook = ratings.filter((rating) => rating.bookId === bookId);
+    let sum = 0;
+
+    ratingsByBook.map((item) => {
+      sum = item.score;
+    });
+    let avg = sum / ratingsByBook.length;
+    return Math.trunc(avg);
+  };
+
+  const setRating = () => {
+    const rating = getRatingsByBook(book.bookId, ratings);
+    if (rating) {
+      for (let i = 1; i <= 5; i++) {
+        if (i <= rating) {
+          document
+            .getElementById(`ratingIcon${i}`)
+            .classList.add('fill-primary');
+        } else {
+          document
+            .getElementById(`ratingIcon${i}`)
+            .classList.add('fill-muted', 'stroke-muted-foreground');
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    setRating();
+  }, [book.bookId]);
+
   return (
     <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
       <div className="grid gap-4 md:gap-2 items-start order-2 md:order-1">
@@ -21,11 +58,11 @@ const Productdetail = ({ book }) => {
             <h1 className="font-bold text-3xl">{book.title}</h1>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-0.5">
-                <StarIcon className="w-5 h-5 fill-primary" />
-                <StarIcon className="w-5 h-5 fill-primary" />
-                <StarIcon className="w-5 h-5 fill-primary" />
-                <StarIcon className="w-5 h-5 fill-muted stroke-muted-foreground" />
-                <StarIcon className="w-5 h-5 fill-muted stroke-muted-foreground" />
+                <StarIcon id="ratingIcon1" className="w-5 h-5" />
+                <StarIcon id="ratingIcon2" className="w-5 h-5" />
+                <StarIcon id="ratingIcon3" className="w-5 h-5" />
+                <StarIcon id="ratingIcon4" className="w-5 h-5" />
+                <StarIcon id="ratingIcon5" className="w-5 h-5" />
               </div>
             </div>
             <div className="grid gap-4 text-sm leading-loose">
@@ -41,7 +78,7 @@ const Productdetail = ({ book }) => {
             </div>
             <div>
               <p className="text-sm font-medium">Editorial</p>
-              <p className="text-sm">Planeta Cómic</p>
+              <p className="text-sm">{book.publisher}</p>
             </div>
             <div>
               <p className="text-sm font-medium">Disponibilidad</p>
@@ -68,7 +105,7 @@ const Productdetail = ({ book }) => {
               </SelectContent>
             </Select>
           </div>
-          <div className="text-4xl font-bold">$14.310</div>
+          <div className="text-4xl font-bold">${book.price}</div>
           <div className="flex flex-col gap-2 min-[400px]:flex-row">
             <Button size="lg">Agregar al carrito</Button>
             <Button size="lg" variant="outline">
@@ -82,16 +119,10 @@ const Productdetail = ({ book }) => {
         <div className="flex md:hidden items-start">
           <div className="grid gap-4">
             <h1 className="font-bold text-2xl sm:text-3xl">
-              The Silent Patient
+              {book.title}
             </h1>
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-0.5">
-                <StarIcon className="w-5 h-5 fill-primary" />
-                <StarIcon className="w-5 h-5 fill-primary" />
-                <StarIcon className="w-5 h-5 fill-primary" />
-                <StarIcon className="w-5 h-5 fill-muted stroke-muted-foreground" />
-                <StarIcon className="w-5 h-5 fill-muted stroke-muted-foreground" />
-              </div>
+              <div className="flex items-center gap-0.5"></div>
             </div>
           </div>
         </div>

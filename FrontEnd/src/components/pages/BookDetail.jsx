@@ -9,11 +9,10 @@ const BookDetail = () => {
   const { books } = useContext(ECommerceContext);
 
   const bookFiltrado = books.filter((book) => book.bookId === id);
-  console.log(bookFiltrado);
 
   return (
     <div>
-      <Productdetail book={bookFiltrado[0]}/>
+      <Productdetail book={bookFiltrado[0]} />
     </div>
   );
 };
