@@ -2,7 +2,6 @@
 import Login from '@/components/Login';
 import Register from './components/Register';
 import Navbar from './components/Navbar';
-import Bookcard from './components/Bookcard';
 import Productdetail from './components/Productdetail';
 import Loginpage from './components/pages/Loginpage';
 import Topnavbar from './components/Topnavbar';

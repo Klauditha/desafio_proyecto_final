@@ -1,0 +1,38 @@
+[
+  {
+    "bookId": "1",
+    "isbn": "9780747532743",
+    "img": "/books/1.jpg",
+    "title": "Harry Potter and the Philosopher's Stone",
+    "language": "English",
+    "pages": "320",
+    "publisher": "Bloomsbury",
+    "pubDate": "1997-06-26",
+    "price": 800,
+    "stock": 10
+  },
+  {
+    "bookId": "2",
+    "isbn": "9780747538486",
+    "img": "/books/2.jpg",
+    "title": "Harry Potter and the Philosopher's Stone",
+    "language": "English",
+    "pages": "320",
+    "publisher": "Bloomsbury",
+    "pubDate": "1997-06-26",
+    "price": 800,
+    "stock": 10
+  },
+  {
+    "bookId": "3",
+    "isbn": "9780747538486",
+    "img": "/books/3.jpg",
+    "title": "Harry Potter and the Philosopher's Stone",
+    "language": "English",
+    "pages": "320",
+    "publisher": "Bloomsbury",
+    "pubDate": "1997-06-26",
+    "price": 800,
+    "stock": 10
+  }
+]
