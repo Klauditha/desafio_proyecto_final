@@ -180,21 +180,21 @@
       "pub_date": "2008-05-01",
       "price": 17990,
       "stock": 22
-    }
+    },
 	
-	{
-	  "book_id": 8,
-	  "isbn": 9789562820005,
-	  "img": "book8.jpg",
-	  "title": "Cien años de soledad",
-	  "description": "Novela del escritor colombiano Gabriel García Márquez que narra la historia de la familia Buendía a lo largo de siete generaciones en el pueblo ficticio de Macondo.",
-	  "language": "Español",
-	  "pages": 432,
-	  "publisher": "DeBolsillo",
-	  "pub_date": "1967-05-30",
-	  "price": 14990,
-	  "stock": 20
-	}
+    {
+      "book_id": 8,
+      "isbn": 9789562820005,
+      "img": "book8.jpg",
+      "title": "Cien años de soledad",
+      "description": "Novela del escritor colombiano Gabriel García Márquez que narra la historia de la familia Buendía a lo largo de siete generaciones en el pueblo ficticio de Macondo.",
+      "language": "Español",
+      "pages": 432,
+      "publisher": "DeBolsillo",
+      "pub_date": "1967-05-30",
+      "price": 14990,
+      "stock": 20
+    }
   ],
   "authors": [
     {
