@@ -6,12 +6,14 @@ import Productdetail from './components/Productdetail';
 import Loginpage from './components/pages/Loginpage';
 import Topnavbar from './components/Topnavbar';
 import { ECommerceProvider } from './Context/ECommerceProvider';
+import ECommerceRoutes from './components/Routes/ECommerceRoutes';
 
 function App() {
   return (
     <ECommerceProvider>
       <div className="px-4 md:px-20 flex-col space-y-8">
         <Navbar />
+        <ECommerceRoutes />
         {/* <Topnavbar /> */}
         {/* <Loginpage />
      <Register />
