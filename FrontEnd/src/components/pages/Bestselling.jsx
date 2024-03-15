@@ -3,19 +3,17 @@ import { useContext } from 'react';
 import { ECommerceContext } from '../../Context/ECommerceContext';
 import Bookcard from '../Bookcard';
 
-const Bestselling = () => {
-  const { books } = useContext(ECommerceContext);
-  
-  return (
-    <div className="flex flex-col gap-4">
-      <h1 className="font-bold text-2xl">Los más vendidos</h1>
-      <div className="flex gap-4">
-        {books.map((book) => (
-          <Bookcard key={book.bookId} book={book} />
-        ))}
-      </div>
-    </div>
-  );
-};
-
-export default Bestselling;
+export default function Bestselling() {
+    return (
+      <div className="flex flex-col gap-4 px-4 md:px-20">
+                    <h1 className="font-bold text-2xl">Los más vendidos</h1>
+                    <div className="flex gap-4">
+                        
+        <Bookcard/>
+        <Bookcard/>
+        <Bookcard/>
+        <Bookcard/>
+        </div> 
+        </div>  
+    )
+}

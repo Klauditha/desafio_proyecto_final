@@ -1,6 +1,6 @@
 export default function Cart() {
     return (
-        <div>
+        <div className="px-4 md:px-20">
                     <div className="grid  gap-4">
           <img
             alt="Book cover"

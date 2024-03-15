@@ -7,7 +7,7 @@ import { Input } from "./ui/input"
 export default function Navbar() {
     return (
         <>
-        <div className="flex-col flex">
+        <div className="flex-col flex px-4 md:px-20">
           <div>
             <nav className="flex items-center justify-between py-4 px-4 border-b bg-white md:px-6 dark:bg-gray-950 border-gray-100 dark:border-gray-800">
               <div>
@@ -16,12 +16,12 @@ export default function Navbar() {
                   <span className="sr-only">Tinta Austral</span>
                 </Link>
               </div>
-              <div className="flex w-full max-w-sm items-center border border-gray-300 rounded-lg px-2.5">
+              <div className="hidden md:flex flex w-full max-w-sm items-center border border-gray-300 rounded-lg px-2.5">
                 <SearchIcon className="h-4 w-4 mr-2.5" />
                 <Input className="w-full border-0" placeholder="Busca aquí" type="search" />
               </div>
               <div className="flex gap-8">
-                <Button asChild>
+                <Button className="hidden md:flex " asChild>
                   <Link to="/login">Inicia sesión</Link>
                 </Button>
                 <Link className="ml-auto flex items-center gap-2 text-mm font-medium" to="/cart">
