@@ -11,7 +11,7 @@ import { ECommerceProvider } from './Context/ECommerceProvider';
 function App() {
   return (
     <ECommerceProvider>
-      <div className="px-4 md:px-20 flex-col space-y-8">
+      <div className="flex-col space-y-8">
         <Navbar />
         {/* <Topnavbar /> */}
         {/* <Loginpage />
