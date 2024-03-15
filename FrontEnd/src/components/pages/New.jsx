@@ -1,4 +1,5 @@
 import Bookcard from "../Bookcard";
+import Footer from "../Footer";
 
 export default function New() {
     return (
@@ -11,6 +12,7 @@ export default function New() {
     <Bookcard />
     <Bookcard />
   </div>
+  <Footer/>
 </div>
     )
 }
