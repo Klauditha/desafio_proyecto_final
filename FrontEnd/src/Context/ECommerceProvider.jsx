@@ -1,14 +1,16 @@
 /* eslint-disable react/prop-types */
-import { ECommerceContext } from './ECommerceContext';
+import { ECommerceContext } from "@/Context/ECommerceContext";
 import { useState, useEffect } from 'react';
 
 export const ECommerceProvider = ({ children }) => {
+  const [users, setUsers] = useState([]);
   const [cart, setCart] = useState([]);
   const [book, setBook] = useState([]);
   const [books, setBooks] = useState([]);
   const [authors, setAuthors] = useState([]);
   const [booksAuthors, setBooksAuthors] = useState([]);
   const [ratings, setRatings] = useState([]);
+  const [authenticatedUser, setAuthenticatedUser] = useState(null);
 
   const addToCart = (book) => {
     setCart([...cart, book]);
@@ -62,6 +64,27 @@ export const ECommerceProvider = ({ children }) => {
     setRatings(data);
   };
 
+
+  const getUsers = async () => {
+    try {
+      const response = await fetch("data/data.json");
+      const data = await response.json();
+      setUsers(data.users);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
+  const handleLogin = (user) => {
+    setAuthenticatedUser(user);
+  };
+
+  const handleLogout = () => {
+    setAuthenticatedUser(null);
+  };
+
+
+  
   /*
   const getBooksAPI = async () => {
       
@@ -73,6 +96,7 @@ export const ECommerceProvider = ({ children }) => {
     getAuthors();
     getBooks();
     setAuthorsBook();
+    getUsers();
   }, []);
 
   return (
@@ -89,6 +113,10 @@ export const ECommerceProvider = ({ children }) => {
         authors,
         setAuthors,
         ratings,
+        authenticatedUser,
+        users,
+        handleLogin,
+        handleLogout,
       }}
     >
       {children}
