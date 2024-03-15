@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 export default function Productdetail() {
   return (
     <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
-      <div className="grid gap-4 md:gap-10 items-start order-2 md:order-1">
+      <div className="grid gap-4 md:gap-2 items-start order-2 md:order-1">
         <div className="hidden md:flex items-start">
           <div className="grid gap-4">
             <h1 className="font-bold text-3xl">La conquista de los gatos</h1>
@@ -25,6 +25,22 @@ export default function Productdetail() {
 
 ¿Los conquistamos con un robot gigante? Acá los delirantes sueños de una raza de animales que no se conformó con un ovillo de lana o con un cajón con arena, y fue más allá.
               </p>
+            </div>
+            <div>
+            <p className="text-sm font-medium">ISBN</p>
+            <p className="text-sm">9789569994630</p>
+            </div>
+            <div>
+            <p className="text-sm font-medium">Páginas</p>
+            <p className="text-sm">112</p>
+            </div>
+            <div>
+            <p className="text-sm font-medium">Editorial</p>
+            <p className="text-sm">Planeta Cómic</p>
+            </div>
+            <div>
+            <p className="text-sm font-medium">Disponibilidad</p>
+            <p className="text-sm">Quedan 3 unidades</p>
             </div>
           </div>
         </div>
@@ -73,13 +89,13 @@ export default function Productdetail() {
             </div>
           </div>
         </div>
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid  gap-4">
           <img
             alt="Book cover"
-            className="aspect-[9-16] object-cover border border-gray-200 w-full rounded-lg overflow-hidden dark:border-gray-800"
-            height={600}
+            className="aspect-[9-16] object-cover border border-gray-200 rounded-lg overflow-hidden dark:border-gray-800"
+            height={350}
             src="/img/la-conquista-de-los-gatos.png"
-            width={600}
+            width={350}
           />
         </div>
       </div>

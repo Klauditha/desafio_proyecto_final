@@ -1,8 +1,8 @@
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card"
 
-import { Input } from "../ui/input"
-import { Button } from "../ui/button"
-import { Label } from "../ui/label"
+import { Input } from "./ui/input"
+import { Button } from "./ui/button"
+import { Label } from "./ui/label"
 import {
   Select,
   SelectContent,
@@ -11,14 +11,16 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "../ui/select"
+} from "./ui/select"
 
 export default function Register() {
   return (
+    <div className="pb-16">
+    
     <Card className="mx-auto max-w-sm">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold">Crea una cuenta</CardTitle>
-        <CardDescription>Ingresa tus datos</CardDescription>
+        <CardDescription>Ingresa tus datos para crear la cuenta y para despachar tus compras</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
@@ -31,8 +33,16 @@ export default function Register() {
             <Input id="email" placeholder="correo@gmail.com" required type="email" />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="address">Dirección</Label>
-            <Input id="address" placeholder="Las Petunias 23" required type="text" />
+            <Label htmlFor="password">Contraseña</Label>
+            <Input id="password" placeholder="" required type="password" />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password-check">Confirma la contraseña</Label>
+            <Input id="password-check" placeholder="" required type="password" />
+          </div>
+<div className="space-y-2">
+            <Label htmlFor="phone">Número de celular</Label>
+            <Input id="phone" placeholder="9 2345 4567" required type="number" />
           </div>
           <div className="space-y-2">
             <Label htmlFor="region">Región</Label>
@@ -63,18 +73,27 @@ export default function Register() {
     </Select>
 </div>
 <div className="space-y-2">
-            <Label htmlFor="phone">Ciudad / comuna</Label>
-            <Input id="phone" placeholder="Valparaiso" required type="text" />
+            <Label htmlFor="city">Ciudad</Label>
+            <Input id="city" placeholder="Valparaiso" required type="text" />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="phone">Número de celular</Label>
-            <Input id="phone" placeholder="9 2345 4567" required type="number" />
+            <Label htmlFor="district">Comuna</Label>
+            <Input id="district" placeholder="Puente Alto" required type="text" />
           </div>
-          <Button className="w-full" type="submit">
+          <div className="space-y-2">
+            <Label htmlFor="address">Dirección</Label>
+            <Input id="address" placeholder="Las Petunias 23" required type="text" />
+          </div>
+<div className="space-y-2">
+            <Label htmlFor="postalcode">Código postal</Label>
+            <Input id="postalcode" placeholder="" required type="text" />
+          </div>
+<Button className="w-full" type="submit">
             Crea tu cuenta
           </Button>
         </div>
       </CardContent>
     </Card>
+    </div>
   )
 }

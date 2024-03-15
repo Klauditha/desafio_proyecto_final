@@ -1,13 +1,15 @@
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card"
 
-import { Input } from "../ui/input"
-import { Button } from "../ui/button"
-import { Label } from "../ui/label"
+import { Input } from "./ui/input"
+import { Button } from "./ui/button"
+import { Label } from "./ui/label"
+import Register from "./Register"
+import { Link, Route, Routes } from "react-router-dom"
 
-export default function Register() {
+export default function Login() {
   return (
     <>
-    <Card className="flex-col flex justify-center">
+    <Card className="flex-col flex justify-center mx-auto max-w-sm md:mx-0 rounded-l-none">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold">Inicia sesión</CardTitle>
         <CardDescription>Ingresa tu email y contraseña para iniciar sesión</CardDescription>
@@ -26,8 +28,12 @@ export default function Register() {
             Iniciar sesión
           </Button>
         </div>
+        <CardDescription className="py-4 text-center">No tienes cuenta? Crea tu cuenta <Link className="font-bold" to="/register">acá</Link></CardDescription>
       </CardContent>
     </Card>
+     <Routes>
+     <Route path="/register" element={<Register />} />
+   </Routes>
     </>
   )
 }

@@ -11,8 +11,8 @@ import Autoplay from 'embla-carousel-autoplay'
 
 
 const getRandomImageUrl = () => {
-  const randomImageWidth = Math.floor(Math.random() * 800) + 400; // Random width between 400 and 1200
-  const randomImageHeight = Math.floor(Math.random() * 800) + 400; // Random height between 400 and 1200
+  const randomImageWidth = Math.floor(Math.random() * 800) + 400;
+  const randomImageHeight = Math.floor(Math.random() * 800) + 400;
   return `https://source.unsplash.com/random?book&${randomImageWidth}x${randomImageHeight}`;
 };
 
