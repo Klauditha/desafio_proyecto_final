@@ -1,0 +1,532 @@
+{
+  "users": [
+    {
+      "user_id": 3,
+      "username": "user3",
+      "password": "password3",
+      "email": "user3@example.com",
+      "first_name": "Pedro",
+      "last_name": "González",
+      "phone": "+56911111111",
+      "region": "Valparaíso",
+      "admin": false,
+      "country": "Chile",
+      "city": "Viña del Mar",
+      "district": "Reñaca",
+      "address": "Av. Libertad 123",
+      "zip_code": "2500000",
+      "created_at": "2023-03-17T12:00:00",
+      "updated_at": "2023-03-17T12:00:00",
+      "state": true
+    },
+    {
+      "user_id": 4,
+      "username": "user4",
+      "password": "password4",
+      "email": "user4@example.com",
+      "first_name": "Ana",
+      "last_name": "Martínez",
+      "phone": "+56922222222",
+      "region": "Biobío",
+      "admin": true,
+      "country": "Chile",
+      "city": "Concepción",
+      "district": "Centro",
+      "address": "Calle Tucapel 456",
+      "zip_code": "4030000",
+      "created_at": "2023-03-18T13:00:00",
+      "updated_at": "2023-03-18T13:00:00",
+      "state": true
+    },
+    {
+      "user_id": 5,
+      "username": "user5",
+      "password": "password5",
+      "email": "user5@example.com",
+      "first_name": "Marcela",
+      "last_name": "López",
+      "phone": "+56933333333",
+      "region": "Araucanía",
+      "admin": false,
+      "country": "Chile",
+      "city": "Temuco",
+      "district": "Centro",
+      "address": "Av. Alemania 789",
+      "zip_code": "4780000",
+      "created_at": "2023-03-19T14:00:00",
+      "updated_at": "2023-03-19T14:00:00",
+      "state": true
+    },
+    {
+      "user_id": 6,
+      "username": "user6",
+      "password": "password6",
+      "email": "user6@example.com",
+      "first_name": "Diego",
+      "last_name": "Ramírez",
+      "phone": "+56944444444",
+      "region": "Magallanes",
+      "admin": false,
+      "country": "Chile",
+      "city": "Punta Arenas",
+      "district": "Centro",
+      "address": "Av. España 567",
+      "zip_code": "6200000",
+      "created_at": "2023-03-20T15:00:00",
+      "updated_at": "2023-03-20T15:00:00",
+      "state": true
+    },
+    {
+      "user_id": 7,
+      "username": "user7",
+      "password": "password7",
+      "email": "user7@example.com",
+      "first_name": "Camila",
+      "last_name": "Hernández",
+      "phone": "+56955555555",
+      "region": "Antofagasta",
+      "admin": false,
+      "country": "Chile",
+      "city": "Antofagasta",
+      "district": "Norte",
+      "address": "Av. Angamos 123",
+      "zip_code": "1240000",
+      "created_at": "2023-03-21T16:00:00",
+      "updated_at": "2023-03-21T16:00:00",
+      "state": true
+    },
+    {
+      "user_id": 8,
+      "username": "user8",
+      "password": "password8",
+      "email": "user8@example.com",
+      "first_name": "Manuel",
+      "last_name": "Torres",
+      "phone": "+56966666666",
+      "region": "O'Higgins",
+      "admin": false,
+      "country": "Chile",
+      "city": "Rancagua",
+      "district": "Sur",
+      "address": "Av. Libertador Bernardo O'Higgins 456",
+      "zip_code": "2820000",
+      "created_at": "2023-03-22T17:00:00",
+      "updated_at": "2023-03-22T17:00:00",
+      "state": true
+    }
+  ],
+  "books": [
+    {
+      "book_id": 3,
+      "isbn": 9789569545344,
+      "img": "book3.jpg",
+      "title": "La casa de los espíritus",
+      "description": "Novela de la autora chilena Isabel Allende que relata la historia de varias generaciones de una familia.",
+      "language": "Español",
+      "pages": 500,
+      "publisher": "Sudamericana",
+      "pub_date": "1982-01-01",
+      "price": 13990,
+      "stock": 25
+    },
+    {
+      "book_id": 4,
+      "isbn": 9789568410152,
+      "img": "book4.jpg",
+      "title": "2666",
+      "description": "Obra póstuma del escritor chileno Roberto Bolaño, que sigue la pista de un misterioso autor de novelas policiales.",
+      "language": "Español",
+      "pages": 900,
+      "publisher": "Anagrama",
+      "pub_date": "2004-11-01",
+      "price": 15990,
+      "stock": 10
+    },
+    {
+      "book_id": 5,
+      "isbn": 9788420481853,
+      "img": "book5.jpg",
+      "title": "El túnel",
+      "description": "Novela del escritor argentino Ernesto Sabato, que narra la obsesión de un pintor por una mujer.",
+      "language": "Español",
+      "pages": 200,
+      "publisher": "Seix Barral",
+      "pub_date": "1948-01-01",
+      "price": 8990,
+      "stock": 30
+    },
+    {
+      "book_id": 6,
+      "isbn": 9788420706830,
+      "img": "book6.jpg",
+      "title": "Los siete locos",
+      "description": "Primera parte de la obra 'Los siete locos y Los lanzallamas', del escritor argentino Roberto Arlt.",
+      "language": "Español",
+      "pages": 350,
+      "publisher": "Alianza",
+      "pub_date": "1929-01-01",
+      "price": 11990,
+      "stock": 18
+    },
+    {
+      "book_id": 7,
+      "isbn": 9788483835161,
+      "img": "book7.jpg",
+      "title": "2666",
+      "description": "Novela del escritor español Roberto Bolaño, que cuenta la historia de un grupo de académicos que investigan una serie de asesinatos en Ciudad Juárez.",
+      "language": "Español",
+      "pages": 800,
+      "publisher": "Mondadori",
+      "pub_date": "2008-05-01",
+      "price": 17990,
+      "stock": 22
+    }
+	
+	{
+	  "book_id": 8,
+	  "isbn": 9789562820005,
+	  "img": "book8.jpg",
+	  "title": "Cien años de soledad",
+	  "description": "Novela del escritor colombiano Gabriel García Márquez que narra la historia de la familia Buendía a lo largo de siete generaciones en el pueblo ficticio de Macondo.",
+	  "language": "Español",
+	  "pages": 432,
+	  "publisher": "DeBolsillo",
+	  "pub_date": "1967-05-30",
+	  "price": 14990,
+	  "stock": 20
+	}
+  ],
+  "authors": [
+    {
+      "author_id": 3,
+      "name": "Isabel Allende"
+    },
+    {
+      "author_id": 4,
+      "name": "Ernesto Sabato"
+    },
+    {
+      "author_id": 5,
+      "name": "Roberto Arlt"
+    },
+    {
+      "author_id": 6,
+      "name": "Roberto Bolaño"
+    },
+    {
+      "author_id": 7,
+      "name": "Albert Camus"
+    },
+    {
+      "author_id": 8,
+      "name": "Gabriel García Márquez"
+    }
+  ],
+  "book_authors": [
+    {
+      "book_id": 3,
+      "author_id": 3
+    },
+    {
+      "book_id": 4,
+      "author_id": 6
+    },
+    {
+      "book_id": 5,
+      "author_id": 4
+    },
+    {
+      "book_id": 6,
+      "author_id": 5
+    },
+    {
+      "book_id": 7,
+      "author_id": 6
+    },
+    {
+      "book_id": 8,
+      "author_id": 7
+    }
+  ],
+  "genres": [
+    {
+      "genre_id": 3,
+      "name": "Literatura Latinoamericana"
+    },
+    {
+      "genre_id": 4,
+      "name": "Novela Negra"
+    },
+    {
+      "genre_id": 5,
+      "name": "Ficción Contemporánea"
+    },
+    {
+      "genre_id": 6,
+      "name": "Literatura Universal"
+    },
+    {
+      "genre_id": 7,
+      "name": "Ciencia Ficción"
+    },
+    {
+      "genre_id": 8,
+      "name": "Poesía"
+    }
+  ],
+  "book_genres": [
+    {
+      "book_id": 3,
+      "genre_id": 3
+    },
+    {
+      "book_id": 4,
+      "genre_id": 4
+    },
+    {
+      "book_id": 5,
+      "genre_id": 5
+    },
+    {
+      "book_id": 6,
+      "genre_id": 6
+    },
+    {
+      "book_id": 7,
+      "genre_id": 7
+    },
+    {
+      "book_id": 3,
+      "genre_id": 8
+    }
+  ],
+  
+  "publishers": [
+    {
+      "publisher_id": 3,
+      "name": "Sudamericana"
+    },
+    {
+      "publisher_id": 4,
+      "name": "Seix Barral"
+    },
+    {
+      "publisher_id": 5,
+      "name": "Alianza"
+    },
+    {
+      "publisher_id": 6,
+      "name": "Mondadori"
+    },
+    {
+      "publisher_id": 7,
+      "name": "Penguin Random House"
+    },
+    {
+      "publisher_id": 8,
+      "name": "DeBolsillo"
+    }
+  ],
+  "carts": [
+    {
+      "cart_id": 3,
+      "user_id": 3
+    },
+    {
+      "cart_id": 4,
+      "user_id": 4
+    },
+    {
+      "cart_id": 5,
+      "user_id": 5
+    },
+    {
+      "cart_id": 6,
+      "user_id": 6
+    },
+    {
+      "cart_id": 7,
+      "user_id": 7
+    },
+    {
+      "cart_id": 8,
+      "user_id": 8
+    }
+  ],
+  "cart_items": [
+    {
+      "cart_item_id": 3,
+      "cart_id": 3,
+      "book_id": 3,
+      "quantity": 3
+    },
+    {
+      "cart_item_id": 4,
+      "cart_id": 4,
+      "book_id": 4,
+      "quantity": 2
+    },
+    {
+      "cart_item_id": 5,
+      "cart_id": 5,
+      "book_id": 5,
+      "quantity": 4
+    },
+    {
+      "cart_item_id": 6,
+      "cart_id": 6,
+      "book_id": 6,
+      "quantity": 1
+    },
+    {
+      "cart_item_id": 7,
+      "cart_id": 7,
+      "book_id": 7,
+      "quantity": 2
+    },
+    {
+      "cart_item_id": 8,
+      "cart_id": 8,
+      "book_id": 3,
+      "quantity": 1
+    }
+  ],
+  "orders": [
+    {
+      "order_id": 3,
+      "user_id": 3,
+      "order_date": "2023-03-25",
+      "total_amount": 41970
+    },
+    {
+      "order_id": 4,
+      "user_id": 4,
+      "order_date": "2023-03-26",
+      "total_amount": 31980
+    },
+    {
+      "order_id": 5,
+      "user_id": 5,
+      "order_date": "2023-03-27",
+      "total_amount": 43960
+    },
+    {
+      "order_id": 6,
+      "user_id": 6,
+      "order_date": "2023-03-28",
+      "total_amount": 13990
+    },
+    {
+      "order_id": 7,
+      "user_id": 7,
+      "order_date": "2023-03-29",
+      "total_amount": 35980
+    },
+    {
+      "order_id": 8,
+      "user_id": 8,
+      "order_date": "2023-03-30",
+      "total_amount": 27980
+    }
+  ],
+  "order_items": [
+    {
+      "order_item_id": 3,
+      "order_id": 3,
+      "book_id": 3,
+      "quantity": 3
+    },
+    {
+      "order_item_id": 4,
+      "order_id": 4,
+      "book_id": 4,
+      "quantity": 2
+    },
+    {
+      "order_item_id": 5,
+      "order_id": 5,
+      "book_id": 5,
+      "quantity": 4
+    },
+    {
+      "order_item_id": 6,
+      "order_id": 6,
+      "book_id": 6,
+      "quantity": 1
+    },
+    {
+      "order_item_id": 7,
+      "order_id": 7,
+      "book_id": 7,
+      "quantity": 2
+    },
+    {
+      "order_item_id": 8,
+      "order_id": 8,
+      "book_id": 3,
+      "quantity": 1
+    }
+  ],
+  "ratings": [
+    {
+      "rating_id": 3,
+      "user_id": 3,
+      "book_id": 3,
+      "score": 4,
+      "comment": "Me encantó, muy recomendado.",
+      "wishlist": false,
+      "created_at": "2023-03-31T10:00:00",
+      "updated_at": "2023-03-31T10:00:00"
+    },
+    {
+      "rating_id": 4,
+      "user_id": 4,
+      "book_id": 4,
+      "score": 5,
+      "comment": "Una obra maestra.",
+      "wishlist": false,
+      "created_at": "2023-03-31T11:00:00",
+      "updated_at": "2023-03-31T11:00:00"
+    },
+    {
+      "rating_id": 5,
+      "user_id": 5,
+      "book_id": 5,
+      "score": 4,
+      "comment": "Muy interesante, no pude dejar de leerlo.",
+      "wishlist": false,
+      "created_at": "2023-03-31T12:00:00",
+      "updated_at": "2023-03-31T12:00:00"
+    },
+    {
+      "rating_id": 6,
+      "user_id": 6,
+      "book_id": 6,
+      "score": 3,
+      "comment": "No estuvo mal, pero esperaba más.",
+      "wishlist": false,
+      "created_at": "2023-03-31T13:00:00",
+      "updated_at": "2023-03-31T13:00:00"
+    },
+    {
+      "rating_id": 7,
+      "user_id": 7,
+      "book_id": 7,
+      "score": 5,
+      "comment": "Increíble, uno de los mejores libros que he leído.",
+      "wishlist": false,
+      "created_at": "2023-03-31T14:00:00",
+      "updated_at": "2023-03-31T14:00:00"
+    },
+    {
+      "rating_id": 8,
+      "user_id": 8,
+      "book_id": 3,
+      "score": 4,
+      "comment": "Muy bueno, lo recomiendo.",
+      "wishlist": false,
+      "created_at": "2023-03-31T15:00:00",
+      "updated_at": "2023-03-31T15:00:00"
+    }
+  ]
+}
