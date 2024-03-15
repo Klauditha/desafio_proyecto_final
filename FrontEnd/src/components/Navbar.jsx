@@ -12,7 +12,7 @@ import Cart from './pages/Cart';
 export default function Navbar() {
     return (
         <>
-        <div className="flex-col flex">
+        <div className="flex-col flex px-4 md:px-20">
           <div>
             <nav className="flex items-center justify-between py-4 px-4 border-b bg-white md:px-6 dark:bg-gray-950 border-gray-100 dark:border-gray-800">
               <div>
