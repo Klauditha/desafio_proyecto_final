@@ -46,6 +46,14 @@ const Productdetail = ({ book }) => {
     }
   };
 
+  const setArrayQuantity = () => {
+    const arrayQuantify = [];
+    for (let index = 0; index < book.stock; index++) {
+      arrayQuantify.push(index + 1);
+    }
+    return arrayQuantify;
+  };
+
   useEffect(() => {
     setRating();
   }, [book.bookId]);
@@ -92,16 +100,20 @@ const Productdetail = ({ book }) => {
             <Label className="text-base" htmlFor="quantity">
               Cantidad
             </Label>
-            <Select defaultValue="1">
+            <Select defaultValue="1" id="quantitySelect">
               <SelectTrigger className="w-24">
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="1">1</SelectItem>
-                <SelectItem value="2">2</SelectItem>
-                <SelectItem value="3">3</SelectItem>
-                <SelectItem value="4">4</SelectItem>
-                <SelectItem value="5">5</SelectItem>
+                {setArrayQuantity() ? (
+                  setArrayQuantity().map((item) => (
+                    <SelectItem key={item} value={item.toString()}>
+                      {item}
+                    </SelectItem>
+                  ))
+                ) : (
+                  <SelectItem value="1">No hay disponibilidad</SelectItem>
+                )}
               </SelectContent>
             </Select>
           </div>
