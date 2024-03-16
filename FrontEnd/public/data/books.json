@@ -1,5 +1,31 @@
 [
   {
+    "bookId": "1",
+    "isbn": "9789566120285",
+    "img": "/books/1.jpg",
+    "title": "Español Chileno Shileno Tchileno",
+    "description": "Dentro de la diversidad lingüística latinoamericana, el español chileno es único. Tanto por sus 'chilenismos' como por el modo en que el hablante elige pronunciar ciertas palabras. Y esto es por que el acento es un aspecto clave del modo en que nos expresamos y, además es uno de los indicios mas evidentes de nuestro origen.",
+    "language": "Español",
+    "pages": 96,
+    "publisher": "Sudamericana",
+    "pubDate": "2023-01-01",
+    "price": 11900,
+    "stock": 15
+  },
+  {
+    "bookId": "2",
+    "isbn": "9562890783",
+    "img": "/books/2.jpg",
+    "title": "Folclor Chileno",
+    "description": "En esta imprescindible obra, el connotado folclorólogo, Oreste Plath nos invita a sumergirnos en la sabiduría de nuestro pueblo a través de un recorrido que nos transporta a los personajes populares, el habla popular, las leyendas, las tradiciones, refranes, adivinanzas, fiestas criollas y las diversas expresiones del folclor intantil, religioso y musical, entre otros aspectos que nuten el colorido paisaje que da forma a nuestra identidad.En este notable Folclor Chileno, que ya lleva quince ediciones, el autor propone una ordenaciòn del material literario popular buscado y compilado en el país, el que se ha compoarado y acompañado de una vasta bibliografía que ha enriquecido aún más este trabajo.Un libro esencial para apreciar el imporantísimo legado de nuestra tierra, que ha sido y seguirá siendo, un valioso aporte a nuestra.",
+    "language": "Español",
+    "pages": 360,
+    "publisher": "Fondo de Cultura Economica",
+    "pubDate": "2009-01-01",
+    "price": 8930,
+    "stock": 5
+  },
+  {
     "bookId": "3",
     "isbn": "9789569545344",
     "img": "/books/3.jpg",
@@ -76,5 +102,18 @@
     "pubDate": "1967-05-30",
     "price": 14990,
     "stock": 20
+  },
+  {
+    "bookId": "9",
+    "isbn": "9562890708",
+    "img": "/books/9.jpg",
+    "title": "Folclor Lingüístico Chileno",
+    "description": "en este trabajo se presentan refranes, comparaciones populares, lolismos y locuciones. el propio autor advierte al lector que no se trata de un estudio, sino que de recoger aspectos del habla que se centran en el campo de la paremiología y da el detalle de su contenido: en “refranes chilenos” se encuentran frases, acciones refraneadas, en ellas se ha querido buscar, encontrar su génesis ya que el correr del tiempo las ha ido transformando y han tomado personalidad colectiva. las “comparaciones populares” son ideas pródigas en sentido; son proyecciones verbales de cualidad comparativa por las cuales corre la gracia, la donosura y propiedad popular. los “lolismos”, expresiones de la juventud con normas peculiares. lenguaje de los lolos, lolismos, de la más absoluta propiedad, la lololalia. y las “locuciones”, frases de referencias precisas, sentenciosas, ejemplario de picardía grato y alegre que no carece de enseñanza y que se consignan por tener las tres s: simplicidad, senso y sal que para los ingleses constituyen el carácter de los refranes.",
+    "language": "Español",
+    "pages": 432,
+    "publisher": "Fondo de Cultura Economica",
+    "pubDate": "2008-05-30",
+    "price": 7320,
+    "stock": 10
   }
 ]
