@@ -17,11 +17,11 @@ import { useEffect } from 'react';
 
 const Productdetail = ({ book }) => {
   const { ratings } = useContext(ECommerceContext);
-
   const getRatingsByBook = (bookId, ratings) => {
-    const ratingsByBook = ratings.filter((rating) => rating.bookId === bookId);
+    const ratingsByBook = ratings.filter(
+      (rating) => rating.bookId.toString() === bookId
+    );
     let sum = 0;
-
     ratingsByBook.map((item) => {
       sum = item.score;
     });
@@ -118,9 +118,7 @@ const Productdetail = ({ book }) => {
       <div className="grid gap-6 md:gap-3 items-start order-1">
         <div className="flex md:hidden items-start">
           <div className="grid gap-4">
-            <h1 className="font-bold text-2xl sm:text-3xl">
-              {book.title}
-            </h1>
+            <h1 className="font-bold text-2xl sm:text-3xl">{book.title}</h1>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-0.5"></div>
             </div>
