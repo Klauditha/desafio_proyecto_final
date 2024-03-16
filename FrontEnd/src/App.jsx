@@ -14,12 +14,6 @@ function App() {
       <div className="flex-col space-y-8">
         <Navbar />
         <ECommerceRoutes />
-        {/* <Topnavbar /> */}
-        {/* <Loginpage />
-     <Register />
-     <Bookcard />
-     <Productdetail /> */}
-        {/* <Carousel /> */}
       </div>
     </ECommerceProvider>
   );

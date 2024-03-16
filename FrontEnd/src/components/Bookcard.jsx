@@ -11,7 +11,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { ECommerceContext } from '@/Context/ECommerceContext';
 import { useNavigate } from 'react-router-dom';
-import.meta.env.VITE_API_URL;
+
 
 const Bookcard = ({ book }) => {
   const navigate = useNavigate();

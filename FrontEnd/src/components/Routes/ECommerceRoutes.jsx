@@ -8,11 +8,13 @@ import Loginpage from '../pages/Loginpage';
 import Register from '../Register';
 import Cart from '../pages/Cart';
 import BookDetail from '../pages/BookDetail';
+import Home from '../pages/Home';
 import { Book } from 'lucide-react';
 
 const ECommerceRoutes = () => {
   return (
     <Routes>
+      <Route path="/" element={<Home />} />
       <Route path="/new" element={<New />} />
       <Route path="/bestselling" element={<Bestselling />} />
       <Route path="/publishers" element={<Publishers />} />
