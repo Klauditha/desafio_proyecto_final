@@ -1,14 +1,26 @@
 [
   {
-    "authorId": "1",
-    "name": "J.K. Rowling"
-  },
-  {
-    "authorId": "2",
-    "name": "Stephen King"
-  },
-  {
     "authorId": "3",
-    "name": "George R. R. Martin"
+    "name": "Isabel Allende"
+  },
+  {
+    "authorId": "4",
+    "name": "Ernesto Sabato"
+  },
+  {
+    "authorId": "5",
+    "name": "Roberto Arlt"
+  },
+  {
+    "authorId": "6",
+    "name": "Roberto Bolaño"
+  },
+  {
+    "authorId": "7",
+    "name": "Albert Camus"
+  },
+  {
+    "authorId": "8",
+    "name": "Gabriel García Márquez"
   }
 ]
