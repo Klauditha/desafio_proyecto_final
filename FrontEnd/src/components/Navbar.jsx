@@ -15,7 +15,7 @@ export default function Navbar() {
                 <span className="sr-only">Tinta Austral</span>
               </Link>
             </div>
-            <div className="hidden md:flex flex w-full max-w-sm items-center border border-gray-300 rounded-lg px-2.5">
+            <div className="hidden md:flex w-full max-w-sm items-center border border-gray-300 rounded-lg px-2.5">
               <SearchIcon className="h-4 w-4 mr-2.5" />
               <Input
                 className="w-full border-0"
