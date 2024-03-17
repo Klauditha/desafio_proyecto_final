@@ -2,13 +2,18 @@ import { useContext } from 'react';
 import Bookcard from '../../Bookcard';
 import { ECommerceContext } from '../../../Context/ECommerceContext';
 import { Button } from '@/components/ui/button';
-export const AdminBooks = () => {
+import { useNavigate } from 'react-router-dom';
+
+const AdminBooks = () => {
   const { books } = useContext(ECommerceContext);
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-4 px-4 md:px-20">
       <h1 className="font-bold text-2xl">Mantenedor Libros</h1>
-      <div className="flex justify-end">
-        <Button size="sm" className="bg-blue-500">
+      <div className="flex justify-end" 
+      onClick={() => navigate('/managerbooks/add')}>
+        <Button size="sm" className="bg-blue-500" >
+        
           Añadir libro
         </Button>
       </div>
@@ -27,3 +32,5 @@ export const AdminBooks = () => {
     </div>
   );
 };
+
+export default AdminBooks;
