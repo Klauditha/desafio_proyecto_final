@@ -25,6 +25,7 @@ const AdminBooks = () => {
               book={book}
               btnEditBook={true}
               btnDeleteBook={true}
+              
             />
           ))}
         </div>

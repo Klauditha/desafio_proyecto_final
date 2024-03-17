@@ -12,7 +12,6 @@ import Home from '../pages/Home';
 import AdminBooks from '../pages/AdminBooks/AdminBooks';
 import AddEditBook from '../pages/AdminBooks/AddEditBook';
 
-
 const ECommerceRoutes = () => {
   return (
     <Routes>
@@ -27,7 +26,7 @@ const ECommerceRoutes = () => {
       <Route path="/book/:id" element={<BookDetail />} />
       <Route path="/managerbooks" element={<AdminBooks />} />
       <Route path="/deleteBook" element={<Home />} />
-      <Route path="/managerbooks/edit" element={<AddEditBook />} />
+      <Route path="/managerbooks/edit/:bookId" element={<AddEditBook />} />
       <Route path="/managerbooks/add" element={<AddEditBook />} />
     </Routes>
   );

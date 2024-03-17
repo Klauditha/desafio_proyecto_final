@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import { ECommerceContext } from '../../../Context/ECommerceContext';
 import { Input } from '../../ui/input';
 import { Button } from '../../ui/button';
@@ -14,11 +15,18 @@ import {
   SelectValue,
 } from '../../ui/select';
 const AddEditBook = () => {
-  const { genres, authors } = useContext(ECommerceContext);
+  const { bookId } = useParams();
+  const { genres, authors, books, booksAuthors } = useContext(ECommerceContext);
+  const bookFound = books.find((book) => book.bookId.toString() === bookId);
+  
+  console.log(bookFound);
+  console.log(booksAuthors);
 
   return (
     <div className="flex flex-col gap-4 px-4 md:px-20">
-      <h1 className="font-bold text-2xl">Nuevo libro</h1>
+      <h1 className="font-bold text-2xl">
+        {bookFound ? 'Editar libro' : 'Nuevo libro'}
+      </h1>
       <form className="w-full">
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -31,13 +39,15 @@ const AddEditBook = () => {
             <Input
               className="appearance-none block w-full  text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
               id="title"
+              value={bookFound ? bookFound.title : ''}
+              onChange={(e) => (bookFound.title = e.target.value)}
               placeholder="Título"
               required
               type="text"
             />
           </div>
           <div className="w-full md:w-1/2 px-3 mt-2">
-          <Label
+            <Label
               htmlFor="author"
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             >
@@ -77,6 +87,8 @@ const AddEditBook = () => {
             <Input
               id="description"
               placeholder="Descripción"
+              value={bookFound ? bookFound.description : ''}
+              onChange={(e) => (bookFound.description = e.target.value)}
               required
               type="text"
             />
@@ -88,7 +100,14 @@ const AddEditBook = () => {
             >
               Isbn
             </Label>
-            <Input id="isbn" placeholder="Isbn" required type="text" />
+            <Input
+              id="isbn"
+              placeholder="Isbn"
+              required
+              type="text"
+              value={bookFound ? bookFound.isbn : ''}
+              onChange={(e) => (bookFound.isbn = e.target.value)}
+            />
           </div>
           <div className="w-full md:w-1/2 px-3 mt-2">
             <Label
@@ -121,7 +140,14 @@ const AddEditBook = () => {
             >
               Páginas
             </Label>
-            <Input id="pages" placeholder="Páginas" required type="number" />
+            <Input
+              id="pages"
+              placeholder="Páginas"
+              required
+              type="number"
+              value={bookFound ? bookFound.pages : ''}
+              onChange={(e) => (bookFound.pages = e.target.value)}
+            />
           </div>
           <div className="w-full md:w-1/2 px-3 mt-2">
             <Label
@@ -160,7 +186,12 @@ const AddEditBook = () => {
             >
               Editorial
             </Label>
-            <Input id="editorial" placeholder="Editorial" required type="text" />
+            <Input
+              id="editorial"
+              placeholder="Editorial"
+              required
+              type="text"
+            />
           </div>
           <div className="w-full md:w-1/2 px-3 mt-2">
             <Label
@@ -171,6 +202,8 @@ const AddEditBook = () => {
             </Label>
             <Input
               id="pubDate"
+              value={bookFound ? bookFound.pubDate : ''}
+              onChange={(e) => (bookFound.pubDate = e.target.value)}
               placeholder="Fecha de publicación"
               required
               type="date"
@@ -183,7 +216,14 @@ const AddEditBook = () => {
             >
               Stock
             </Label>
-            <Input id="stock" placeholder="Stock" required type="number" />
+            <Input
+              id="stock"
+              placeholder="Stock"
+              value={bookFound ? bookFound.stock : ''}
+              onChange={(e) => (bookFound.stock = e.target.value)}
+              required
+              type="number"
+            />
           </div>
           <div className="w-full md:w-1/2 px-3 mt-2">
             <Label
@@ -192,10 +232,31 @@ const AddEditBook = () => {
             >
               Precio
             </Label>
-            <Input id="price" placeholder="Precio" required type="number" />
+            <Input
+              id="price"
+              placeholder="Precio"
+              required
+              type="number"
+              value={bookFound ? bookFound.price : ''}
+              onChange={(e) => (bookFound.price = e.target.value)}
+            />
           </div>
           <div className="w-full md:w-full px-3 mt-2 flex justify-end">
-            <Button className="bg-blue-500">Anadir</Button>
+            {bookFound ? (
+              <Button
+                className="bg-lime-700"
+               
+              >
+                Editar
+              </Button>
+            ): <Button
+              className="bg-blue-500"
+              
+            >
+              Agregar
+            </Button>}
+            
+            
           </div>
         </div>
       </form>

@@ -64,7 +64,7 @@ const Bookcard = ({
             <Button
               size="sm"
               className="bg-lime-700 hover:bg-lime-800"
-              onClick={() => navigate(`/editBook/${book.bookId}`)}
+              onClick={() => navigate(`/managerbooks/edit/${book.bookId}`)}
             >
               Editar
             </Button>
