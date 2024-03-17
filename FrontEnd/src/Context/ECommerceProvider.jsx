@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { ECommerceContext } from "@/Context/ECommerceContext";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 export const ECommerceProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
@@ -16,15 +16,13 @@ export const ECommerceProvider = ({ children }) => {
     setCart([...cart, book]);
   };
 
-  const setWishlist = (book) => {
-    
-  };
+  const setWishlist = (book) => {};
 
   const getBooks = async () => {
-    const response = await fetch('data/books.json');
+    const response = await fetch("data/books.json");
     const data = await response.json();
     data.map((book) => {
-      book.author = '';
+      book.author = "";
     });
     setBooks(data);
   };
@@ -47,23 +45,22 @@ export const ECommerceProvider = ({ children }) => {
   };
 
   const getAuthors = async () => {
-    const response = await fetch('data/authors.json');
+    const response = await fetch("data/authors.json");
     const data = await response.json();
     setAuthors(data);
   };
 
   const getBooksAuthors = async () => {
-    const response = await fetch('data/booksAuthors.json');
+    const response = await fetch("data/booksAuthors.json");
     const data = await response.json();
     setBooksAuthors(data);
   };
 
   const getRatings = async () => {
-    const response = await fetch('data/ratings.json');
+    const response = await fetch("data/ratings.json");
     const data = await response.json();
     setRatings(data);
   };
-
 
   const getUsers = async () => {
     try {
@@ -75,6 +72,10 @@ export const ECommerceProvider = ({ children }) => {
     }
   };
 
+  const registerUser = (newUser) => {
+    setUsers([...users, newUser]);
+  };
+
   const handleLogin = (user) => {
     setAuthenticatedUser(user);
   };
@@ -83,8 +84,6 @@ export const ECommerceProvider = ({ children }) => {
     setAuthenticatedUser(null);
   };
 
-
-  
   /*
   const getBooksAPI = async () => {
       
@@ -115,6 +114,7 @@ export const ECommerceProvider = ({ children }) => {
         ratings,
         authenticatedUser,
         users,
+        registerUser,
         handleLogin,
         handleLogout,
       }}
