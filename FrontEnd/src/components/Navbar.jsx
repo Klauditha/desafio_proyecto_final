@@ -59,6 +59,11 @@ export default function Navbar() {
               <Link className="text-gray-500 dark:text-gray-500" to="/wishlist">
                 Lista de deseos
               </Link>
+              <Link className="text-gray-500 dark:text-gray-500" to="/managerbooks">
+                Gestión libros
+              </Link>
+              
+      
             </div>
           </nav>
         </div>
