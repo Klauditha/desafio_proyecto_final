@@ -5,20 +5,7 @@ import {
   CardContent,
   Card,
 } from "@/components/ui/card";
-import React from "react";
-
-import { useContext, useState } from "react";
-import { ECommerceContext } from "@/Context/ECommerceContext";
-import {
-  CardTitle,
-  CardDescription,
-  CardHeader,
-  CardContent,
-  Card,
-} from "@/components/ui/card";
-import React from "react";
-
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { ECommerceContext } from "@/Context/ECommerceContext";
 
 import { Input } from "./ui/input";
@@ -449,6 +436,4 @@ export default function Register() {
       </form>
     </div>
   );
-  );
 }
-
