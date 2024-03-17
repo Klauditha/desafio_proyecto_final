@@ -9,6 +9,17 @@ import React from "react";
 
 import { useContext, useState } from "react";
 import { ECommerceContext } from "@/Context/ECommerceContext";
+import {
+  CardTitle,
+  CardDescription,
+  CardHeader,
+  CardContent,
+  Card,
+} from "@/components/ui/card";
+import React from "react";
+
+import { useContext, useState } from "react";
+import { ECommerceContext } from "@/Context/ECommerceContext";
 
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
@@ -37,12 +48,124 @@ export default function Register() {
     city: "",
     district: "",
     address: "",
-    postalCode: "",
+    zip_code: "",
     user_id: "",
     created_at: "",
     updated_at: "",
     state: "",
   });
+
+  const [errors, setErrors] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phone: "",
+    region: "",
+    city: "",
+    district: "",
+    address: "",
+    zip_code: "",
+  });
+
+  // Validaciones
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = { ...errors };
+
+    if (!formData.firstName) {
+      newErrors.firstName = "Por favor ingrese su primer nombre.";
+      valid = false;
+    } else {
+      newErrors.firstName = "";
+    }
+
+    if (!formData.lastName) {
+      newErrors.lastName = "Por favor ingrese su apellido.";
+      valid = false;
+    } else {
+      newErrors.lastName = "";
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email) {
+      newErrors.email = "Por favor ingrese su correo.";
+      valid = false;
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Por favor ingrese un correo valido.";
+      valid = false;
+    } else {
+      newErrors.email = "";
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Por favor ingrese una contraseña.";
+      valid = false;
+    } else {
+      newErrors.password = "";
+    }
+
+    if (!formData.confirmPassword) {
+      newErrors.confirmPassword = "Por favor confirme su contraseña.";
+      valid = false;
+    } else if (formData.confirmPassword !== formData.password) {
+      newErrors.confirmPassword = "Las contraseñas no coinciden.";
+      valid = false;
+    } else {
+      newErrors.confirmPassword = "";
+    }
+
+    const phoneRegex = /^\d{10}$/;
+    if (!formData.phone) {
+      newErrors.phone = "Por favor ingrese su numero de telefono.";
+      valid = false;
+    } else if (!phoneRegex.test(formData.phone)) {
+      newErrors.phone = "Por favor ingrese un numero de telefono valido.";
+      valid = false;
+    } else {
+      newErrors.phone = "";
+    }
+
+    if (!formData.region) {
+      newErrors.region = "Por favor eliga su región";
+      valid = false;
+    } else {
+      newErrors.region = "";
+    }
+
+    if (!formData.city) {
+      newErrors.city = "Por favor ingrese su ciudad.";
+      valid = false;
+    } else {
+      newErrors.city = "";
+    }
+
+    if (!formData.district) {
+      newErrors.district = "Por favor ingrese su comuna.";
+      valid = false;
+    } else {
+      newErrors.district = "";
+    }
+
+    if (!formData.address) {
+      newErrors.address = "Por favor ingrese su dirección.";
+      valid = false;
+    } else {
+      newErrors.address = "";
+    }
+
+    if (!formData.zip_code) {
+      newErrors.zip_code = "Por favor ingrese su codigo postal.";
+      valid = false;
+    } else {
+      newErrors.zip_code = "";
+    }
+
+    setErrors(newErrors);
+
+    return valid;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,6 +185,13 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const isValid = validateForm();
+
+    if (!isValid) {
+      return;
+    }
+
     const newUser = {
       firstName: formData.firstName,
       lastName: formData.lastName,
@@ -73,7 +203,7 @@ export default function Register() {
       city: formData.city,
       district: formData.district,
       address: formData.address,
-      postalCode: formData.postalCode,
+      zip_code: formData.zip_code,
       user_id: users.length + 1,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
@@ -88,7 +218,7 @@ export default function Register() {
       const response = await fetch("data/data.json");
       const data = await response.json();
       data.users.push(newUser);
-      console.log(newUser); // DEBUG
+      console.log(newUser); // Solo para propositos de DEBUG
       await fetch("data/data.json", {
         method: "PUT",
         headers: {
@@ -103,6 +233,9 @@ export default function Register() {
       console.error(
         "Error registrando usuario and actualizando archivo JSON",
         error
+      );
+      alert(
+        "Ocurrió un error mientras se registraba el usuario. Por favor intente más tarde."
       );
     }
   };
@@ -132,6 +265,9 @@ export default function Register() {
                   onChange={handleChange}
                   required
                 />
+                {errors.firstName && (
+                  <span style={{ color: "red" }}>{errors.firstName}</span>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="name">Apellido</Label>
@@ -143,6 +279,9 @@ export default function Register() {
                   onChange={handleChange}
                   required
                 />
+                {errors.lastName && (
+                  <span style={{ color: "red" }}>{errors.lastName}</span>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
@@ -155,6 +294,9 @@ export default function Register() {
                   value={formData.email}
                   onChange={handleChange}
                 />
+                {errors.email && (
+                  <span style={{ color: "red" }}>{errors.email}</span>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">Contraseña</Label>
@@ -166,6 +308,9 @@ export default function Register() {
                   value={formData.password}
                   onChange={handleChange}
                 />
+                {errors.password && (
+                  <span style={{ color: "red" }}>{errors.password}</span>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password-check">Confirma la contraseña</Label>
@@ -178,6 +323,9 @@ export default function Register() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                 />
+                {errors.confirmPassword && (
+                  <span style={{ color: "red" }}>{errors.confirmPassword}</span>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="phone">Número de celular</Label>
@@ -190,6 +338,9 @@ export default function Register() {
                   value={formData.phone}
                   onChange={handleChange}
                 />
+                {errors.phone && (
+                  <span style={{ color: "red" }}>{errors.phone}</span>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="region">Región</Label>
@@ -225,6 +376,9 @@ export default function Register() {
                     </SelectGroup>
                   </SelectContent>
                 </Select>
+                {errors.region && (
+                  <span style={{ color: "red" }}>{errors.region}</span>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="city">Ciudad</Label>
@@ -237,6 +391,9 @@ export default function Register() {
                   value={formData.city}
                   onChange={handleChange}
                 />
+                {errors.city && (
+                  <span style={{ color: "red" }}>{errors.city}</span>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="district">Comuna</Label>
@@ -249,6 +406,9 @@ export default function Register() {
                   value={formData.district}
                   onChange={handleChange}
                 />
+                {errors.district && (
+                  <span style={{ color: "red" }}>{errors.district}</span>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="address">Dirección</Label>
@@ -261,18 +421,24 @@ export default function Register() {
                   value={formData.address}
                   onChange={handleChange}
                 />
+                {errors.address && (
+                  <span style={{ color: "red" }}>{errors.address}</span>
+                )}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="postalcode">Código postal</Label>
+                <Label htmlFor="zip_code">Código postal</Label>
                 <Input
-                  name="postalCode"
-                  id="postalcode"
+                  name="zip_code"
+                  id="zip_code"
                   placeholder=""
                   required
                   type="text"
-                  value={formData.postalCode}
+                  value={formData.zip_code}
                   onChange={handleChange}
                 />
+                {errors.zip_code && (
+                  <span style={{ color: "red" }}>{errors.zip_code}</span>
+                )}
               </div>
               <Button className="w-full" type="submit">
                 Crea tu cuenta
@@ -283,4 +449,6 @@ export default function Register() {
       </form>
     </div>
   );
+  );
 }
+
