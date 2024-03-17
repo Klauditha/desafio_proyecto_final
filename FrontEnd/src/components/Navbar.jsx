@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 
-export default function Navbar() {
+export default function Navbar({ isAdmin }) {
   return (
     <>
       <div className="flex-col flex px-4 md:px-20">
@@ -56,9 +56,36 @@ export default function Navbar() {
               >
                 Editoriales
               </Link>
-              <Link className="text-gray-500 dark:text-gray-500" to="/wishlist">
-                Lista de deseos
-              </Link>
+              {isAdmin && (
+                <>
+                  <Link
+                    className="text-gray-500 dark:text-gray-500"
+                    to="/authors"
+                  >
+                    Autores
+                  </Link>
+                  <Link
+                    className="text-gray-500 dark:text-gray-500"
+                    to="/genres"
+                  >
+                    Géneros
+                  </Link>
+                  <Link
+                    className="text-gray-500 dark:text-gray-500"
+                    to="/book-management"
+                  >
+                    Gestión de libros
+                  </Link>
+                </>
+              )}
+              {!isAdmin && (
+                <Link
+                  className="text-gray-500 dark:text-gray-500"
+                  to="/wishlist"
+                >
+                  Lista de deseos
+                </Link>
+              )}
             </div>
           </nav>
         </div>
