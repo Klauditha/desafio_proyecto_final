@@ -16,13 +16,15 @@ import {
 } from '../../ui/select';
 const AddEditBook = () => {
   const { bookId } = useParams();
-  const { genres, authors, books, booksAuthors, booksGenres } = useContext(ECommerceContext);
+  const { genres, authors, books, booksAuthors, bookGenres } =
+    useContext(ECommerceContext);
   const bookFound = books.find((book) => book.bookId.toString() === bookId);
   const bookAuthorsFound = booksAuthors.find(
     (bookAuthor) => bookAuthor.bookId === bookId
   );
-
-  console.log(booksGenres);
+  const bookGenresFound = bookGenres.find(
+    (bookGenre) => bookGenre.book_id.toString() === bookId
+  );
 
   return (
     <div className="flex flex-col gap-4 px-4 md:px-20">
@@ -166,7 +168,12 @@ const AddEditBook = () => {
             >
               Genero
             </Label>
-            <Select>
+            <Select
+              value={bookGenresFound ? bookGenresFound.genre_id : ''}
+              onChange={(e) =>
+                (bookGenresFound.genre_id = e.bookGenresFound.value)
+              }
+            >
               <SelectTrigger className="w-full">
                 <SelectValue
                   placeholder="Selecciona un genero"
