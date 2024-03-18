@@ -16,11 +16,13 @@ import {
 } from '../../ui/select';
 const AddEditBook = () => {
   const { bookId } = useParams();
-  const { genres, authors, books, booksAuthors } = useContext(ECommerceContext);
+  const { genres, authors, books, booksAuthors, booksGenres } = useContext(ECommerceContext);
   const bookFound = books.find((book) => book.bookId.toString() === bookId);
-  
-  console.log(bookFound);
-  console.log(booksAuthors);
+  const bookAuthorsFound = booksAuthors.find(
+    (bookAuthor) => bookAuthor.bookId === bookId
+  );
+
+  console.log(booksGenres);
 
   return (
     <div className="flex flex-col gap-4 px-4 md:px-20">
@@ -53,7 +55,10 @@ const AddEditBook = () => {
             >
               Autor
             </Label>
-            <Select>
+            <Select
+              value={bookFound ? bookAuthorsFound.authorId : ''}
+              onChange={(e) => (bookAuthorsFound.authorId = e.target.value)}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue
                   placeholder="Selecciona un autor"
@@ -93,6 +98,7 @@ const AddEditBook = () => {
               type="text"
             />
           </div>
+
           <div className="w-full md:w-1/2 px-3 mt-2">
             <Label
               htmlFor="isbn"
@@ -109,6 +115,7 @@ const AddEditBook = () => {
               onChange={(e) => (bookFound.isbn = e.target.value)}
             />
           </div>
+
           <div className="w-full md:w-1/2 px-3 mt-2">
             <Label
               htmlFor="language"
@@ -116,7 +123,10 @@ const AddEditBook = () => {
             >
               Lenguaje
             </Label>
-            <Select>
+            <Select
+              value={bookFound ? bookFound.language : ''}
+              onChange={(e) => (bookFound.language = e.target.value)}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue
                   placeholder="Seleccione un lenguaje"
@@ -127,8 +137,8 @@ const AddEditBook = () => {
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Selecciona un lenguaje</SelectLabel>
-                  <SelectItem value="1">Español</SelectItem>
-                  <SelectItem value="2">Ingles</SelectItem>
+                  <SelectItem value="Español">Español</SelectItem>
+                  <SelectItem value="Ingles">Ingles</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -243,20 +253,10 @@ const AddEditBook = () => {
           </div>
           <div className="w-full md:w-full px-3 mt-2 flex justify-end">
             {bookFound ? (
-              <Button
-                className="bg-lime-700"
-               
-              >
-                Editar
-              </Button>
-            ): <Button
-              className="bg-blue-500"
-              
-            >
-              Agregar
-            </Button>}
-            
-            
+              <Button className="bg-lime-700">Editar</Button>
+            ) : (
+              <Button className="bg-blue-500">Agregar</Button>
+            )}
           </div>
         </div>
       </form>

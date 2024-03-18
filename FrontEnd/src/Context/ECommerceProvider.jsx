@@ -11,6 +11,7 @@ export const ECommerceProvider = ({ children }) => {
   const [booksAuthors, setBooksAuthors] = useState([]);
   const [ratings, setRatings] = useState([]);
   const [genres, setGenres] = useState([]);
+  const [bookGenres, setBookGenres] = useState([]);
   const [authenticatedUser, setAuthenticatedUser] = useState(null);
 
   const addToCart = (book) => {
@@ -81,6 +82,16 @@ export const ECommerceProvider = ({ children }) => {
     }
   };
 
+  const getBookGenres = async () => {
+    try {
+      const response = await fetch('data/bookGenres.json');
+      const data = await response.json();
+      setBookGenres(data);
+    } catch (error) {
+      console.error('Error fetching book genres:', error);
+    }
+  };
+
   const handleLogin = (user) => {
     setAuthenticatedUser(user);
   };
@@ -102,6 +113,7 @@ export const ECommerceProvider = ({ children }) => {
     setAuthorsBook();
     getUsers();
     getGenres();
+    getBookGenres();
 
   }, []);
 
@@ -123,6 +135,8 @@ export const ECommerceProvider = ({ children }) => {
         handleLogin,
         handleLogout,
         genres,
+        booksAuthors,
+        bookGenres,
       }}
     >
       {children}
