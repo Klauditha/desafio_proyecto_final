@@ -35,9 +35,16 @@
     "authorId": "9",
     "name": "Alejandro Zambra"
   },
- 
+  {
+    "authorId": "10",
+    "name": "Maria Ignacia Oteiza Ramirez"
+  },
   {
     "authorId": "11",
     "name": "Francisco Ortega"
+  },
+  {
+    "authorId": "12",
+    "name": "Tamara Muñoz"
   }
 ]

@@ -141,5 +141,31 @@
     "pubDate": "2018-03-04",
     "price": 7650,
     "stock": 2
+  },
+  {
+    "bookId": "12",
+    "isbn": "9789564085289",
+    "img": "/books/12.jpg",
+    "title": "Negocios abundantes",
+    "description": "'Pasé de ser una profesora empleada, con miedo a la cesantía, que ahorraba todo el año para viajar diez de cada 365 días, a ser una empresaria que lidera un equipo de más de veinte personas, factura más de 250 mil dólares anuales, puede viajar cuando quiera, y, sobre todo, perdí prácticamente todos mis miedos, porque sé que diseñar la vida de mis sueños está en mis manos”. A partir de su propia experiencia, Tamara Muñoz, creadora de la comunidad @Quierete.cl y de la Escuela de Negocios Abundantes, invita a las lectoras a transformar sus vidas a través del emprendimiento. Aunque a muchas mujeres les asuste o sientan que armar su propio negocio es una idea inalcanzable o solo para unas pocas, en Negocios abundantes la autora entrega todas las herramientas prácticas y hace las preguntas clave para que cualquier mujer se atreva a dar el gran paso de emprender. Encuentra tu código único, aprende a vender y cómo perderle el miedo, descubre qué hacer y no hacer cuando quieras crecer y cuáles son las estrategias para usar las redes sociales a tu favor, para dar forma a ese negocio que llenará tu vida de abundancia.",
+    "language": "Español",
+    "pages": 180,
+    "publisher": "Planeta",
+    "pubDate": "2024-04-20",
+    "price": 14310,
+    "stock": 50
+  },
+  {
+    "bookId": "13",
+    "isbn": "9789563844580",
+    "img": "/books/13.jpg",
+    "title": "Juntas",
+    "description": "En un mundo de complacencias, apariencias y expecta&vas sociales ¿cómo cuidamos de nosotros y nosotras mismas? En este libro, la psicóloga Ignacia Oteíza Ramírez nos invita a repensar el concepto de autocuidado y a revalorizar el cuidado mutuo, desde una perspec&va feminista. Más que entregarnos un rígido plan a seguir para mejorar nuestro bienestar, esta lectura busca que reflexionemos, por medio de ac&vidades prác&cas, sobre nuestras experiencias con relación al cuidado propio, para encontrar en conjunto formas que nos resulten más cómodas y ligeras para cuidarnos, sin tantas expecta&vas ni imposiciones",
+    "language": "Español",
+    "pages": 236,
+    "publisher": "Alfaguara Infantil Juvenil",
+    "pubDate": "2024-04-25",
+    "price": 16200,
+    "stock": 30
   }
 ]
