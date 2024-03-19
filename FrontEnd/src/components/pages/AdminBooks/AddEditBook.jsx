@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-case-declarations */
 /* eslint-disable no-unused-vars */
 import { useContext } from 'react';
@@ -17,20 +18,13 @@ import {
 } from '../../ui/select';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 const AddEditBook = () => {
-  const { bookId } = useParams();
-  const {
-    genres,
-    authors,
-    books,
-    booksAuthors,
-    bookGenres,
-    setBooks,
-    setBooksAuthors,
-    setBookGenres,
-  } = useContext(ECommerceContext);
+  let { bookId } = useParams();
+  const { genres, authors, books, booksAuthors, bookGenres } =
+    useContext(ECommerceContext);
   const navigate = useNavigate();
-  const [metodo, setMetodo] = useState('add');
+  const [estadoCarga, setEstadoCarga] = useState(false);
   const [formData, setFormData] = useState({
     bookId: '',
     isbn: '',
@@ -78,13 +72,12 @@ const AddEditBook = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     let metodo = formData.bookId ? 'edit' : 'add';
-    console.log(metodo);
+
     if (validateForm()) {
       try {
         switch (metodo) {
           case 'add':
             const id = Math.floor(Math.random() * 1000);
-            console.log(id);
             const newBook = {
               bookId: id.toString(),
               isbn: formData.isbn,
@@ -115,7 +108,50 @@ const AddEditBook = () => {
             navigate('/managerbooks');
 
             break;
+          case 'edit':
+            const bookFound = books.find(
+              (book) => book.bookId.toString() === bookId
+            );
 
+            if (bookFound) {
+              bookFound.isbn = formData.isbn;
+              bookFound.img = formData.img;
+              bookFound.title = formData.title;
+              bookFound.description = formData.description;
+              bookFound.language = formData.language;
+              bookFound.pages = formData.pages;
+              bookFound.publisher = formData.publisher;
+              bookFound.pubDate = formData.pubDate;
+              bookFound.stock = formData.stock;
+              bookFound.price = formData.price;
+            }
+
+            const bookAuthorFound = booksAuthors.find(
+              (bookAuthor) => bookAuthor.bookId.toString() === bookId
+            );
+
+            if (bookAuthorFound) {
+              bookAuthorFound.authorId = formData.author_id.toString();
+            }
+
+            const bookGenreFound = bookGenres.find(
+              (bookGenre) => bookGenre.book_id.toString() === bookId
+            );
+
+            if (bookGenreFound) {
+              bookGenreFound.genre_id = formData.genre_id;
+            }
+
+            const index = books.findIndex(
+              (book) => book.bookId.toString() === bookId
+            );
+            books[index] = bookFound;
+            booksAuthors[index] = bookAuthorFound;
+            bookGenres[index] = bookGenreFound;
+
+            alert('Libro editado exitosamente');
+            navigate('/managerbooks');
+            break;
           default:
             break;
         }
@@ -126,8 +162,7 @@ const AddEditBook = () => {
   };
 
   const setearDatosEdicion = () => {
-    console.log('setearDatosEdicion');
-    if (bookId) {
+    if (bookId && !estadoCarga) {
       const bookFound = books.find((book) => book.bookId.toString() === bookId);
       const bookAuthorsFound = booksAuthors.find(
         (bookAuthor) => bookAuthor.bookId === bookId
@@ -149,16 +184,16 @@ const AddEditBook = () => {
         formData.publisher = bookFound.publisher;
         formData.stock = bookFound.stock;
       }
-      console.log(bookGenresFound);
+
       if (bookAuthorsFound) formData.author_id = bookAuthorsFound.authorId;
       if (bookGenresFound) formData.genre_id = bookGenresFound.genre_id;
     }
-    console.log(formData);
+
+    setEstadoCarga(true);
   };
 
   useEffect(() => {
-    console.log(bookId);
-    setearDatosEdicion();
+    if (!estadoCarga) setearDatosEdicion();
   }, [bookId]);
 
   return (
