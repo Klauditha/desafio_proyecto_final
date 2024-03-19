@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 
-export default function Navbar() {
+export default function Navbar({ isAdmin }) {
   return (
     <>
       <div className="flex-col flex px-4 md:px-20">
@@ -15,7 +15,7 @@ export default function Navbar() {
                 <span className="sr-only">Tinta Austral</span>
               </Link>
             </div>
-            <div className="hidden md:flex flex w-full max-w-sm items-center border border-gray-300 rounded-lg px-2.5">
+            <div className="hidden md:flex w-full max-w-sm items-center border border-gray-300 rounded-lg px-2.5">
               <SearchIcon className="h-4 w-4 mr-2.5" />
               <Input
                 className="w-full border-0"
@@ -56,14 +56,36 @@ export default function Navbar() {
               >
                 Editoriales
               </Link>
-              <Link className="text-gray-500 dark:text-gray-500" to="/wishlist">
-                Lista de deseos
-              </Link>
-              <Link className="text-gray-500 dark:text-gray-500" to="/managerbooks">
-                Gestión libros
-              </Link>
-              
-      
+              {isAdmin && (
+                <>
+                  <Link
+                    className="text-gray-500 dark:text-gray-500"
+                    to="/authors"
+                  >
+                    Autores
+                  </Link>
+                  <Link
+                    className="text-gray-500 dark:text-gray-500"
+                    to="/genres"
+                  >
+                    Géneros
+                  </Link>
+                  <Link
+                    className="text-gray-500 dark:text-gray-500"
+                    to="/book-management"
+                  >
+                    Gestión de libros
+                  </Link>
+                </>
+              )}
+              {!isAdmin && (
+                <Link
+                  className="text-gray-500 dark:text-gray-500"
+                  to="/wishlist"
+                >
+                  Lista de deseos
+                </Link>
+              )}
             </div>
           </nav>
         </div>
