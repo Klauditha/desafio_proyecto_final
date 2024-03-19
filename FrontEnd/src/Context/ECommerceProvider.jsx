@@ -10,13 +10,14 @@ export const ECommerceProvider = ({ children }) => {
   const [authors, setAuthors] = useState([]);
   const [booksAuthors, setBooksAuthors] = useState([]);
   const [ratings, setRatings] = useState([]);
+  const [genres, setGenres] = useState([]);
+  const [bookGenres, setBookGenres] = useState([]);
   const [authenticatedUser, setAuthenticatedUser] = useState(null);
 
   const addToCart = (book) => {
     setCart([...cart, book]);
   };
 
-  const setWishlist = (book) => {};
 
   const getBooks = async () => {
     const response = await fetch("data/books.json");
@@ -26,6 +27,8 @@ export const ECommerceProvider = ({ children }) => {
     });
     setBooks(data);
   };
+
+
 
   const getAuthorBook = (bookId) => {
     const authorId = booksAuthors.find(
@@ -64,13 +67,34 @@ export const ECommerceProvider = ({ children }) => {
 
   const getUsers = async () => {
     try {
-      const response = await fetch("data/data.json");
+      const response = await fetch('data/data.json');
       const data = await response.json();
       setUsers(data.users);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error('Error fetching users:', error);
     }
   };
+
+  const getGenres = async () => {
+    try {
+      const response = await fetch('data/genres.json');
+      const data = await response.json();
+      setGenres(data);
+    } catch (error) {
+      console.error('Error fetching genres:', error);
+    }
+  };
+
+  const getBookGenres = async () => {
+    try {
+      const response = await fetch('data/bookGenres.json');
+      const data = await response.json();
+      setBookGenres(data);
+    } catch (error) {
+      console.error('Error fetching book genres:', error);
+    }
+  };
+
 
   const registerUser = (newUser) => {
     setUsers([...users, newUser]);
@@ -84,10 +108,6 @@ export const ECommerceProvider = ({ children }) => {
     setAuthenticatedUser(null);
   };
 
-  /*
-  const getBooksAPI = async () => {
-      
-  }*/
 
   useEffect(() => {
     getRatings();
@@ -96,6 +116,9 @@ export const ECommerceProvider = ({ children }) => {
     getBooks();
     setAuthorsBook();
     getUsers();
+    getGenres();
+    getBookGenres();
+    setBooks();
   }, []);
 
   return (
@@ -106,7 +129,6 @@ export const ECommerceProvider = ({ children }) => {
         book,
         setBook,
         addToCart,
-        setWishlist,
         books,
         setBooks,
         authors,
@@ -117,6 +139,11 @@ export const ECommerceProvider = ({ children }) => {
         registerUser,
         handleLogin,
         handleLogout,
+        genres,
+        booksAuthors,
+        bookGenres,
+        setBooksAuthors,
+        setBookGenres,
       }}
     >
       {children}

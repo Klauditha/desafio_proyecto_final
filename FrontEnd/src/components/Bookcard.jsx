@@ -12,8 +12,13 @@ import { Button } from '@/components/ui/button';
 import { ECommerceContext } from '@/Context/ECommerceContext';
 import { useNavigate } from 'react-router-dom';
 
-
-const Bookcard = ({ book }) => {
+const Bookcard = ({
+  book,
+  btnAddCart,
+  btnEditBook,
+  btnDeleteBook,
+  displayPrice,
+}) => {
   const navigate = useNavigate();
   const { addToCart } = useContext(ECommerceContext);
   const { setWishlist } = useContext(ECommerceContext);
@@ -43,8 +48,36 @@ const Bookcard = ({ book }) => {
           {book.language}
         </CardDescription>
         <div className="flex items-center justify-between">
-          <span className="text-sm font-medium">${book.price}</span>
-          <Button size="sm">Agregar al carrito</Button>
+          {displayPrice ? (
+            <span className="text-sm font-medium">${book.price}</span>
+          ) : null}
+          {btnAddCart ? (
+            <Button
+              size="sm"
+              className="bg-blue-500 hover:bg-blue-600"
+              onClick={() => addToCart(book)}
+            >
+              Agregar al carrito
+            </Button>
+          ) : null}
+          {btnEditBook ? (
+            <Button
+              size="sm"
+              className="bg-lime-700 hover:bg-lime-800"
+              onClick={() => navigate(`/managerbooks/edit/${book.bookId}`)}
+            >
+              Editar
+            </Button>
+          ) : null}
+          {btnDeleteBook ? (
+            <Button
+              size="sm"
+              className="bg-red-500 hover:bg-red-600"
+              onClick={() => navigate(`/deleteBook/${book.bookId}`)}
+            >
+              Eliminar
+            </Button>
+          ) : null}
         </div>
       </CardContent>
     </Card>

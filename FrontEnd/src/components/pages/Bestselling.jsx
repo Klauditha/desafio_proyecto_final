@@ -11,7 +11,7 @@ const Bestselling = () => {
       <h1 className="font-bold text-2xl">Los más vendidos</h1>
       <div className="flex gap-4">
         {books.map((book) => (
-          <Bookcard key={book.bookId} book={book} />
+          <Bookcard key={book.bookId} book={book} btnAddCart={true} displayPrice={true}/>
         ))}
       </div>
     </div>

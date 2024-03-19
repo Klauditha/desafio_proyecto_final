@@ -1,0 +1,26 @@
+[
+  {
+    "genre_id": 3,
+    "name": "Literatura Latinoamericana"
+  },
+  {
+    "genre_id": 4,
+    "name": "Novela Negra"
+  },
+  {
+    "genre_id": 5,
+    "name": "Ficción Contemporánea"
+  },
+  {
+    "genre_id": 6,
+    "name": "Literatura Universal"
+  },
+  {
+    "genre_id": 7,
+    "name": "Ciencia Ficción"
+  },
+  {
+    "genre_id": 8,
+    "name": "Poesía"
+  }
+]

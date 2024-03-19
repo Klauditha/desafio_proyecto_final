@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
@@ -72,7 +73,7 @@ export default function Navbar({ isAdmin }) {
                   </Link>
                   <Link
                     className="text-gray-500 dark:text-gray-500"
-                    to="/book-management"
+                    to="/managerbooks"
                   >
                     Gestión de libros
                   </Link>
@@ -86,6 +87,12 @@ export default function Navbar({ isAdmin }) {
                   Lista de deseos
                 </Link>
               )}
+              <Link
+                className="text-gray-500 dark:text-gray-500"
+                to="/managerbooks"
+              >
+                Gestión de libros
+              </Link>
             </div>
           </nav>
         </div>
