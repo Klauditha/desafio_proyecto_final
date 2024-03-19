@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <div className="bg-slate-300 w-screen flex flex-col md:flex-row gap-16 justify-around py-12 items-center">
-      <div className="flex flex-col gap-4">
-        <h2 className="text-3xl font-bold text-primary">Síguenos</h2>
+    <div className="bg-slate-300 w-screen flex flex-col md:flex-row gap-16 justify-around py-4 items-center">
+      <div className="flex flex-col gap-2">
+        <h2 className="text-xl font-bold text-primary">Síguenos</h2>
         <div className="flex justify-between">
           <Link to="http://www.facebook.com/tintaaustral">
             <FacebookIcon />
@@ -17,7 +17,7 @@ export default function Footer() {
           </Link>
         </div>
       </div>
-      <div className="text-lg font-bold text-primary items-center flex flex-col gap-2">
+      <div className="text-sm font-bold text-primary items-center flex flex-col gap-2">
         <Link className="text-primary dark:text-gray-50" to="/new">
           <h3>Novedades</h3>
         </Link>
@@ -152,7 +152,7 @@ function TintaAustral(props) {
       viewBox="0 0 126 28"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="md:scale-150"
+      className="md:scale-100"
     >
       <path
         d="M26.7402 10.3198V8.31112H36.2039V10.3198H32.6761V19.834H30.268V10.3198H26.7402Z"
