@@ -16,7 +16,7 @@ const ECommerceRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/new" element={<New />} />
+      <Route path="/news" element={<New />} />
       <Route path="/bestselling" element={<Bestselling />} />
       <Route path="/publishers" element={<Publishers />} />
       <Route path="/wishlist" element={<Wishlist />} />

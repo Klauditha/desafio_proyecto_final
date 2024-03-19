@@ -30,5 +30,13 @@
   {
     "bookId": "8",
     "authorId": "7"
+  },
+  {
+    "bookId": "10",
+    "authorId": "9"
+  },
+  {
+    "bookId": "11",
+    "authorId": "10"
   }
 ]
