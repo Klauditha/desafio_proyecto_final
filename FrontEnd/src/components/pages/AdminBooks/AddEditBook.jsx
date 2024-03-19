@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable no-unused-vars */
 import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
@@ -14,24 +15,158 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../../ui/select';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 const AddEditBook = () => {
   const { bookId } = useParams();
-  const { genres, authors, books, booksAuthors, bookGenres } =
-    useContext(ECommerceContext);
-  const bookFound = books.find((book) => book.bookId.toString() === bookId);
-  const bookAuthorsFound = booksAuthors.find(
-    (bookAuthor) => bookAuthor.bookId === bookId
-  );
-  const bookGenresFound = bookGenres.find(
-    (bookGenre) => bookGenre.book_id.toString() === bookId
-  );
+  const {
+    genres,
+    authors,
+    books,
+    booksAuthors,
+    bookGenres,
+    setBooks,
+    setBooksAuthors,
+    setBookGenres,
+  } = useContext(ECommerceContext);
+  const navigate = useNavigate();
+  const [metodo, setMetodo] = useState('add');
+  const [formData, setFormData] = useState({
+    bookId: '',
+    isbn: '',
+    img: '',
+    title: '',
+    description: '',
+    language: '',
+    pages: '',
+    price: '',
+    pubDate: '',
+    publisher: '',
+    stock: '',
+    author_id: '',
+    genre_id: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleChangeAuthor = (value) => {
+    setFormData({
+      ...formData,
+      author_id: value,
+    });
+  };
+
+  const handleChangeLanguage = (value) => {
+    setFormData({
+      ...formData,
+      language: value,
+    });
+  };
+  const handleChangeGenre = (value) => {
+    formData.genre_id = value;
+  };
+
+  const validateForm = () => {
+    return true;
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    let metodo = formData.bookId ? 'edit' : 'add';
+    console.log(metodo);
+    if (validateForm()) {
+      try {
+        switch (metodo) {
+          case 'add':
+            const id = Math.floor(Math.random() * 1000);
+            console.log(id);
+            const newBook = {
+              bookId: id.toString(),
+              isbn: formData.isbn,
+              img: '/books/notAvailable.jpg',
+              title: formData.title,
+              description: formData.description,
+              language: formData.language,
+              pages: formData.pages,
+              publisher: formData.publisher,
+              pubDate: formData.pubDate,
+              stock: formData.stock,
+              price: formData.price,
+            };
+            const newBookAuthor = {
+              bookId: id.toString(),
+              authorId: formData.author_id.toString(),
+            };
+            const newBookGenre = {
+              book_id: id.toString(),
+              genre_id: formData.genre_id,
+            };
+
+            books.push(newBook);
+            booksAuthors.push(newBookAuthor);
+            bookGenres.push(newBookGenre);
+
+            alert('Libro agregado exitosamente');
+            navigate('/managerbooks');
+
+            break;
+
+          default:
+            break;
+        }
+      } catch (error) {
+        alert('Error al agregar el libro. Intenta de nuevo');
+      }
+    }
+  };
+
+  const setearDatosEdicion = () => {
+    console.log('setearDatosEdicion');
+    if (bookId) {
+      const bookFound = books.find((book) => book.bookId.toString() === bookId);
+      const bookAuthorsFound = booksAuthors.find(
+        (bookAuthor) => bookAuthor.bookId === bookId
+      );
+      const bookGenresFound = bookGenres.find(
+        (bookGenre) => bookGenre.book_id.toString() === bookId
+      );
+
+      if (bookFound) {
+        formData.bookId = bookFound.bookId;
+        formData.isbn = bookFound.isbn;
+        formData.img = bookFound.img;
+        formData.title = bookFound.title;
+        formData.description = bookFound.description;
+        formData.language = bookFound.language;
+        formData.pages = bookFound.pages;
+        formData.price = bookFound.price;
+        formData.pubDate = bookFound.pubDate;
+        formData.publisher = bookFound.publisher;
+        formData.stock = bookFound.stock;
+      }
+      console.log(bookGenresFound);
+      if (bookAuthorsFound) formData.author_id = bookAuthorsFound.authorId;
+      if (bookGenresFound) formData.genre_id = bookGenresFound.genre_id;
+    }
+    console.log(formData);
+  };
+
+  useEffect(() => {
+    console.log(bookId);
+    setearDatosEdicion();
+  }, [bookId]);
 
   return (
     <div className="flex flex-col gap-4 px-4 md:px-20">
       <h1 className="font-bold text-2xl">
-        {bookFound ? 'Editar libro' : 'Nuevo libro'}
+        {bookId ? 'Editar libro' : 'Nuevo libro'}
       </h1>
-      <form className="w-full">
+      <form className="w-full" onSubmit={handleSubmit}>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <Label
@@ -43,8 +178,9 @@ const AddEditBook = () => {
             <Input
               className="appearance-none block w-full  text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
               id="title"
-              value={bookFound ? bookFound.title : ''}
-              onChange={(e) => (bookFound.title = e.target.value)}
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
               placeholder="Título"
               required
               type="text"
@@ -58,8 +194,10 @@ const AddEditBook = () => {
               Autor
             </Label>
             <Select
-              value={bookFound ? bookAuthorsFound.authorId : ''}
-              onChange={(e) => (bookAuthorsFound.authorId = e.target.value)}
+              name="author_id"
+              value={formData.author_id}
+              required
+              onValueChange={handleChangeAuthor}
             >
               <SelectTrigger className="w-full">
                 <SelectValue
@@ -93,9 +231,10 @@ const AddEditBook = () => {
             </Label>
             <Input
               id="description"
+              name="description"
               placeholder="Descripción"
-              value={bookFound ? bookFound.description : ''}
-              onChange={(e) => (bookFound.description = e.target.value)}
+              value={formData.description}
+              onChange={handleChange}
               required
               type="text"
             />
@@ -111,10 +250,11 @@ const AddEditBook = () => {
             <Input
               id="isbn"
               placeholder="Isbn"
-              required
               type="text"
-              value={bookFound ? bookFound.isbn : ''}
-              onChange={(e) => (bookFound.isbn = e.target.value)}
+              required
+              name="isbn"
+              value={formData.isbn}
+              onChange={handleChange}
             />
           </div>
 
@@ -126,8 +266,10 @@ const AddEditBook = () => {
               Lenguaje
             </Label>
             <Select
-              value={bookFound ? bookFound.language : ''}
-              onChange={(e) => (bookFound.language = e.target.value)}
+              name="language"
+              value={formData.language}
+              required
+              onValueChange={handleChangeLanguage}
             >
               <SelectTrigger className="w-full">
                 <SelectValue
@@ -157,8 +299,9 @@ const AddEditBook = () => {
               placeholder="Páginas"
               required
               type="number"
-              value={bookFound ? bookFound.pages : ''}
-              onChange={(e) => (bookFound.pages = e.target.value)}
+              name="pages"
+              value={formData.pages}
+              onChange={handleChange}
             />
           </div>
           <div className="w-full md:w-1/2 px-3 mt-2">
@@ -169,10 +312,10 @@ const AddEditBook = () => {
               Genero
             </Label>
             <Select
-              value={bookGenresFound ? bookGenresFound.genre_id : ''}
-              onChange={(e) =>
-                (bookGenresFound.genre_id = e.bookGenresFound.value)
-              }
+              name="genre_id"
+              value={formData.genre_id}
+              required
+              onValueChange={handleChangeGenre}
             >
               <SelectTrigger className="w-full">
                 <SelectValue
@@ -206,8 +349,11 @@ const AddEditBook = () => {
             <Input
               id="editorial"
               placeholder="Editorial"
-              required
+              name="publisher"
               type="text"
+              required
+              value={formData.publisher}
+              onChange={handleChange}
             />
           </div>
           <div className="w-full md:w-1/2 px-3 mt-2">
@@ -219,8 +365,9 @@ const AddEditBook = () => {
             </Label>
             <Input
               id="pubDate"
-              value={bookFound ? bookFound.pubDate : ''}
-              onChange={(e) => (bookFound.pubDate = e.target.value)}
+              name="pubDate"
+              value={formData.pubDate}
+              onChange={handleChange}
               placeholder="Fecha de publicación"
               required
               type="date"
@@ -236,8 +383,9 @@ const AddEditBook = () => {
             <Input
               id="stock"
               placeholder="Stock"
-              value={bookFound ? bookFound.stock : ''}
-              onChange={(e) => (bookFound.stock = e.target.value)}
+              name="stock"
+              value={formData.stock}
+              onChange={handleChange}
               required
               type="number"
             />
@@ -254,12 +402,13 @@ const AddEditBook = () => {
               placeholder="Precio"
               required
               type="number"
-              value={bookFound ? bookFound.price : ''}
-              onChange={(e) => (bookFound.price = e.target.value)}
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
             />
           </div>
           <div className="w-full md:w-full px-3 mt-2 flex justify-end">
-            {bookFound ? (
+            {bookId ? (
               <Button className="bg-lime-700">Editar</Button>
             ) : (
               <Button className="bg-blue-500">Agregar</Button>

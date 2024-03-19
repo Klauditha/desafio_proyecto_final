@@ -27,6 +27,8 @@ export const ECommerceProvider = ({ children }) => {
     setBooks(data);
   };
 
+
+
   const getAuthorBook = (bookId) => {
     const authorId = booksAuthors.find(
       (bookAuthor) => bookAuthor.bookId === bookId
@@ -100,6 +102,8 @@ export const ECommerceProvider = ({ children }) => {
     setAuthenticatedUser(null);
   };
 
+  //console.log(books);
+
   /*
   const getBooksAPI = async () => {
       
@@ -114,7 +118,7 @@ export const ECommerceProvider = ({ children }) => {
     getUsers();
     getGenres();
     getBookGenres();
-
+    setBooks();
   }, []);
 
   return (
@@ -137,6 +141,8 @@ export const ECommerceProvider = ({ children }) => {
         genres,
         booksAuthors,
         bookGenres,
+        setBooksAuthors,
+        setBookGenres,
       }}
     >
       {children}
