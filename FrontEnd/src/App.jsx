@@ -9,20 +9,7 @@ import Navbar from "./components/Navbar";
 import Productdetail from "./components/Productdetail";
 import Loginpage from "./components/pages/Loginpage";
 import Topnavbar from "./components/Topnavbar";
-
-/* function App() {
-  const { users } = useContext(ECommerceContext);
-  const isAdmin = users.some((user) => user.admin === true);
-  
-  return (
-    <ECommerceProvider>
-      <div className="flex-col space-y-8">
-        <Navbar isAdmin={isAdmin} />
-        <ECommerceRoutes />
-      </div>
-    </ECommerceProvider>
-  );
-} */
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -40,6 +27,7 @@ function AppContent() {
     <div className="flex-col space-y-8">
       <Navbar isAdmin={isAdmin} />
       <ECommerceRoutes />
+      <Footer />
     </div>
   );
 }

@@ -2,7 +2,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { Label } from '@/components/ui/label';
-import { RadioGroupItem, RadioGroup } from '@/components/ui/radio-group';
 import {
   SelectValue,
   SelectTrigger,
@@ -16,7 +15,7 @@ import { ECommerceContext } from '../Context/ECommerceContext';
 import { useEffect } from 'react';
 
 const Productdetail = ({ book }) => {
-  const { ratings } = useContext(ECommerceContext);
+  const { ratings, books, setBooks } = useContext(ECommerceContext);
   const getRatingsByBook = (bookId, ratings) => {
     const ratingsByBook = ratings.filter(
       (rating) => rating.bookId.toString() === bookId
@@ -54,6 +53,16 @@ const Productdetail = ({ book }) => {
     return arrayQuantify;
   };
 
+  const handleAddToWishList = () => {
+    const updatedBooks = books.map((b) => {
+      if (b.bookId == book.bookId) {
+        return { ...b, wishlist: !b.wishlist };
+      }
+      return b;
+    });
+    console.log(updatedBooks);
+    setBooks(updatedBooks);
+  };
   useEffect(() => {
     setRating();
   }, [book.bookId]);
@@ -120,9 +129,24 @@ const Productdetail = ({ book }) => {
           <div className="text-4xl font-bold">${book.price}</div>
           <div className="flex flex-col gap-2 min-[400px]:flex-row">
             <Button size="lg">Agregar al carrito</Button>
-            <Button size="lg" variant="outline">
-              <HeartIcon className="w-4 h-4 mr-2" />
-              Agregar a lista de deseos
+
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={(e) => {
+                e.preventDefault();
+                handleAddToWishList();
+              }}
+            >
+              {book.wishlist ? (
+                <HeartIcon className="w-4 h-4 mr-2 fill-primary" />
+              ) : (
+                <HeartIcon className="w-4 h-4 mr-2" />
+              )}
+              
+              {book.wishlist
+                ? 'Quitar de lista de deseos'
+                : 'Agregar a lista de deseos'}
             </Button>
           </div>
         </form>

@@ -104,6 +104,7 @@ export const ECommerceProvider = ({ children }) => {
     data.map((book) => {
       book.author = getAuthorBook(book.bookId);
       book.sold = getSoldBook(book.bookId);
+      book.wishlist = false;
     });
     setBooks(data);
   };
