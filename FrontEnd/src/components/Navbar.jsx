@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { Link } from 'react-router-dom';
+import { Link,NavLink } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 
@@ -42,50 +42,51 @@ export default function Navbar({ isAdmin }) {
         <div>
           <nav className="flex items-center justify-between py-4 px-4 border-b bg-white md:px-6 dark:bg-gray-950 border-gray-100 dark:border-gray-800">
             <div className="hidden md:flex flex-1 justify-center gap-8 text-sm font-medium">
-              <Link className="text-gray-900 dark:text-gray-50" to="/news">
+              <NavLink to="/news" 
+              className={({ isActive }) => (isActive ? 'font-bold text-blue-900 dark:text-gray-50 ' : 'text-gray-500 dark:text-gray-500')}>
                 Novedades
-              </Link>
-              <Link
-                className="text-gray-500 dark:text-gray-500"
+              </NavLink>
+              <NavLink
+                className={({ isActive }) => (isActive ? 'font-bold text-blue-900 dark:text-gray-50 ' : 'text-gray-500 dark:text-gray-500')}
                 to="/bestselling"
               >
                 Lo + vendido
-              </Link>
-              <Link
-                className="text-gray-500 dark:text-gray-500"
+              </NavLink>
+              <NavLink
+                className={({ isActive }) => (isActive ? 'font-bold text-blue-900 dark:text-gray-50 ' : 'text-gray-500 dark:text-gray-500')}
                 to="/publishers"
               >
                 Editoriales
-              </Link>
+              </NavLink>
               {isAdmin && (
                 <>
-                  <Link
-                    className="text-gray-500 dark:text-gray-500"
+                  <NavLink
+                    className={({ isActive }) => (isActive ? 'font-bold text-blue-900 dark:text-gray-50 ' : 'text-gray-500 dark:text-gray-500')}
                     to="/authors"
                   >
                     Autores
-                  </Link>
-                  <Link
-                    className="text-gray-500 dark:text-gray-500"
+                  </NavLink>
+                  <NavLink
+                    className={({ isActive }) => (isActive ? 'font-bold text-blue-900 dark:text-gray-50 ' : 'text-gray-500 dark:text-gray-500')}
                     to="/genres"
                   >
                     Géneros
-                  </Link>
-                  <Link
-                    className="text-gray-500 dark:text-gray-500"
+                  </NavLink>
+                  <NavLink
+                    className={({ isActive }) => (isActive ? 'font-bold text-blue-900 dark:text-gray-50 ' : 'text-gray-500 dark:text-gray-500')}
                     to="/managerbooks"
                   >
                     Gestión de libros
-                  </Link>
+                  </NavLink>
                 </>
               )}
               {!isAdmin && (
-                <Link
-                  className="text-gray-500 dark:text-gray-500"
+                <NavLink
+                className={({ isActive }) => (isActive ? 'font-bold text-blue-900 dark:text-gray-50 ' : 'text-gray-500 dark:text-gray-500')}
                   to="/wishlist"
                 >
                   Lista de deseos
-                </Link>
+                </NavLink>
               )}
             </div>
           </nav>
