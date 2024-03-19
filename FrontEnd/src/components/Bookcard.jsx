@@ -44,16 +44,20 @@ const Bookcard = ({
           />
         </div>
       </div>
-      <CardContent className="p-4">
-        <CardTitle className="text-base font-semibold">{book.title}</CardTitle>
-        <CardTitle className="text-sm font-medium">{book.author}</CardTitle>
+      <CardContent className="p-4 flex flex-col justify-between">
+        <CardTitle className="text-base font-semibold text-center">
+          {book.title}
+        </CardTitle>
+        <CardTitle className="text-sm font-medium text-center">
+          {book.author}
+        </CardTitle>
         {displayQuantitySold ? (
           <CardDescription className="text-sm font-semibold text-blue-500 text-center mb-2">
             Vendidos: {book.sold}
           </CardDescription>
         ) : null}
         {displayLanguage ? (
-          <CardDescription className="text-sm font-medium">
+          <CardDescription className="text-sm font-medium text-center">
             Idioma: {book.language}
           </CardDescription>
         ) : null}
@@ -61,15 +65,16 @@ const Bookcard = ({
           <CardDescription className="text-sm font-medium">
             Publicado: {book.pubDate}
           </CardDescription>
-        ): null}
-        <div className="flex items-center justify-between">
+        ) : null}
+
+        <div className="flex justify-between items-center">
           {displayPrice ? (
             <span className="text-sm font-medium">${book.price}</span>
           ) : null}
           {btnAddCart ? (
             <Button
               size="sm"
-              className="bg-blue-500 hover:bg-blue-600"
+              className="bg-blue-500 hover:bg-blue-600 mt-1"
               onClick={() => addToCart(book)}
             >
               Agregar al carrito
@@ -78,7 +83,7 @@ const Bookcard = ({
           {btnEditBook ? (
             <Button
               size="sm"
-              className="bg-lime-700 hover:bg-lime-800"
+              className="m-auto bg-lime-700 hover:bg-lime-800 mt-4"
               onClick={() => navigate(`/managerbooks/edit/${book.bookId}`)}
             >
               Editar
