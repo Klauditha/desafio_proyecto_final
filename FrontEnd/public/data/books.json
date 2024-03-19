@@ -118,39 +118,8 @@
   },
   {
     "bookId": "10",
-<<<<<<< HEAD
-    "isbn": "9789564085289",
-    "img": "/books/10.jpg",
-    "title": "Negocios abundantes",
-    "description": "'Pasé de ser una profesora empleada, con miedo a la cesantía, que ahorraba todo el año para viajar diez de cada 365 días, a ser una empresaria que lidera un equipo de más de veinte personas, factura más de 250 mil dólares anuales, puede viajar cuando quiera, y, sobre todo, perdí prácticamente todos mis miedos, porque sé que diseñar la vida de mis sueños está en mis manos”. A partir de su propia experiencia, Tamara Muñoz, creadora de la comunidad @Quierete.cl y de la Escuela de Negocios Abundantes, invita a las lectoras a transformar sus vidas a través del emprendimiento. Aunque a muchas mujeres les asuste o sientan que armar su propio negocio es una idea inalcanzable o solo para unas pocas, en Negocios abundantes la autora entrega todas las herramientas prácticas y hace las preguntas clave para que cualquier mujer se atreva a dar el gran paso de emprender. Encuentra tu código único, aprende a vender y cómo perderle el miedo, descubre qué hacer y no hacer cuando quieras crecer y cuáles son las estrategias para usar las redes sociales a tu favor, para dar forma a ese negocio que llenará tu vida de abundancia.",
-    "language": "Español",
-    "pages": 180,
-    "publisher": "Planeta",
-    "pubDate": "2024-04-20",
-    "price": 14310,
-    "stock": 50
-  },
-  {
-    "bookId": "11",
-    "isbn": "9789563844580",
-    "img": "/books/11.jpg",
-    "title": "Juntas",
-    "description": "En un mundo de complacencias, apariencias y expecta&vas sociales ¿cómo cuidamos de nosotros y nosotras mismas? En este libro, la psicóloga Ignacia Oteíza Ramírez nos invita a repensar el concepto de autocuidado y a revalorizar el cuidado mutuo, desde una perspec&va feminista. Más que entregarnos un rígido plan a seguir para mejorar nuestro bienestar, esta lectura busca que reflexionemos, por medio de ac&vidades prác&cas, sobre nuestras experiencias con relación al cuidado propio, para encontrar en conjunto formas que nos resulten más cómodas y ligeras para cuidarnos, sin tantas expecta&vas ni imposiciones",
-    "language": "Español",
-    "pages": 236,
-    "publisher": "Alfaguara Infantil Juvenil",
-    "pubDate": "2024-04-25",
-    "price": 16200,
-    "stock": 30
-  },
-  {
-    "bookId": "12",
-    "isbn": "9789566045298",
-    "img": "/books/12.jpg",
-=======
     "isbn": "9789566045298",
     "img": "/books/10.jpg",
->>>>>>> origin/main
     "title": "Folclor Lingüístico Chileno",
     "description": "Durante buena parte de esta novela Gonzalo es un poetastro que quiere ser poeta y un padrastro que se comporta como si fuera el padre biológico de Vicente, un niño adicto a la comida para gatos que años más tarde se niega a estudiar en la universidad porque su sueño principal es convertirse –también– en poeta, a pesar de los consejos de Carla, su orgullosamente solitaria madre, y de León, un padre mediocre dedicado a coleccionar autitos de juguete. El poderoso mito de la poesía chilena –un personaje secundario dice, aludiendo a los veredictos de la Academia Sueca, que los chilenos son bicampeones mundiales de poesía– es revisitado y cuestionado por Pru, una periodista gringa que se convierte en testigo accidental de ese esquivo e intenso mundo de héroes e impostores literarios. La verdadera seriedad es cómica, decía Nicanor Parra, y esta novela sobre poetas que desprecian las novelas lo demuestra brillantemente. El laberinto masculino actual, los trágicos vaivenes del amor, las familias –o familiastras– fugaces, la omnipresente descon?anza en instituciones y autoridades, el deseo valiente y obcecado de pertenecer a una comunidad en parte imaginaria, el sentido de escribir y de leer en un mundo hostil que parece desmoronarse a toda velocidad... Son muchos los temas que este libro hermoso, contundente y desenfadado pone encima de la mesa. Autor de obras que se han vuelto emblemáticas, como Bonsái, Formas de volver a casa, Mis documentos o Facsímil, Alejandro Zambra regresa en grande a la novela con este libro que lo confirma como una de las voces fundamentales de la literatura latinoamericana en lo que va de siglo.",
     "language": "Español",
@@ -161,11 +130,7 @@
     "stock": 2
   },
   {
-<<<<<<< HEAD
-    "bookId": "13",
-=======
     "bookId": "11",
->>>>>>> origin/main
     "isbn": "9789566165378",
     "img": "/books/11.jpg",
     "title": "Dioses chilenos",
