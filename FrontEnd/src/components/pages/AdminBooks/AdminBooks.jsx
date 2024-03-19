@@ -25,7 +25,7 @@ const AdminBooks = () => {
               book={book}
               btnEditBook={true}
               btnDeleteBook={false}
-              
+              displayLanguage={true}
             />
           ))}
         </div>

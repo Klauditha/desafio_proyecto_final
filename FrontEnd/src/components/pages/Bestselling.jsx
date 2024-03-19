@@ -4,15 +4,26 @@ import { ECommerceContext } from '../../Context/ECommerceContext';
 import Bookcard from '../Bookcard';
 
 const Bestselling = () => {
-  const { books } = useContext(ECommerceContext);
-  
+  const { books ,setSoldBook } = useContext(ECommerceContext);
+  setSoldBook();
   return (
-    <div className="flex flex-col gap-4 px-4 md:px-20">
-      <h1 className="font-bold text-2xl">Los más vendidos</h1>
-      <div className="flex gap-4">
-        {books.map((book) => (
-          <Bookcard key={book.bookId} book={book} btnAddCart={true} displayPrice={true}/>
-        ))}
+    <div>
+      <h1 className="font-bold text-xl text-center">Los más vendidos</h1>
+      <h2 className="text-md font-bold text-center mb-4">Nuestros Top 10</h2>
+      <div className="grid gap-8 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 w-full justify-center">
+        {books
+          .filter((book) => book.sold > 0)
+          .sort((a, b) => b.sold - a.sold)
+          .map((book) => (
+            <Bookcard
+              key={book.bookId}
+              book={book}
+              btnAddCart={true}
+              displayPrice={true}
+              displayLanguage={false}
+              displayQuantitySold={true}
+            />
+          ))}
       </div>
     </div>
   );
