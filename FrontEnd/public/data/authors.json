@@ -38,5 +38,14 @@
   {
     "authorId": "10",
     "name": "Maria Ignacia Oteiza Ramirez"
+  },
+  {
+    "authorId": "11",
+    "name": "Alejandro Zambra"
+  },
+ 
+  {
+    "authorId": "12",
+    "name": "Francisco Ortega"
   }
 ]

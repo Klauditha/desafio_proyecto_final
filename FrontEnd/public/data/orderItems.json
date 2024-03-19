@@ -34,5 +34,35 @@
     "order_id": 8,
     "book_id": 3,
     "quantity": 1
+  },
+  {
+    "order_item_id": 9,
+    "order_id": 8,
+    "book_id": 10,
+    "quantity": 2
+  },
+  {
+    "order_item_id": 10,
+    "order_id": 8,
+    "book_id": 9,
+    "quantity": 1
+  },
+  {
+    "order_item_id": 11,
+    "order_id": 7,
+    "book_id": 11,
+    "quantity": 25
+  },
+  {
+    "order_item_id": 12,
+    "order_id": 7,
+    "book_id": 8,
+    "quantity": 41
+  },
+  {
+    "order_item_id": 12,
+    "order_id": 7,
+    "book_id": 1,
+    "quantity": 40
   }
 ]
