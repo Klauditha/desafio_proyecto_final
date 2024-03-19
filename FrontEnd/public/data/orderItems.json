@@ -1,0 +1,38 @@
+[
+  {
+    "order_item_id": 3,
+    "order_id": 3,
+    "book_id": 3,
+    "quantity": 3
+  },
+  {
+    "order_item_id": 4,
+    "order_id": 4,
+    "book_id": 4,
+    "quantity": 2
+  },
+  {
+    "order_item_id": 5,
+    "order_id": 5,
+    "book_id": 5,
+    "quantity": 4
+  },
+  {
+    "order_item_id": 6,
+    "order_id": 6,
+    "book_id": 6,
+    "quantity": 1
+  },
+  {
+    "order_item_id": 7,
+    "order_id": 7,
+    "book_id": 7,
+    "quantity": 2
+  },
+  {
+    "order_item_id": 8,
+    "order_id": 8,
+    "book_id": 3,
+    "quantity": 1
+  }
+]

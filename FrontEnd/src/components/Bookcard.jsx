@@ -18,6 +18,8 @@ const Bookcard = ({
   btnEditBook,
   btnDeleteBook,
   displayPrice,
+  displayLanguage,
+  displayQuantitySold,
 }) => {
   const navigate = useNavigate();
   const { addToCart } = useContext(ECommerceContext);
@@ -44,9 +46,17 @@ const Bookcard = ({
       <CardContent className="p-4">
         <CardTitle className="text-base font-semibold">{book.title}</CardTitle>
         <CardTitle className="text-sm font-medium">{book.author}</CardTitle>
-        <CardDescription className="mb-4 text-sm">
-          {book.language}
-        </CardDescription>
+        {displayQuantitySold ? (
+          <CardDescription className="text-sm font-semibold text-blue-500 text-center mb-2">
+            Vendidos: {book.sold}
+          </CardDescription>
+        ) : null}
+        {displayLanguage ? (
+          <CardDescription className="text-sm font-medium">
+            Idioma: {book.language}
+          </CardDescription>
+        ) : null}
+
         <div className="flex items-center justify-between">
           {displayPrice ? (
             <span className="text-sm font-medium">${book.price}</span>

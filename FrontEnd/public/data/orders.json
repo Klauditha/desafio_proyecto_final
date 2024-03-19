@@ -1,0 +1,38 @@
+[
+  {
+    "order_id": 3,
+    "user_id": 3,
+    "order_date": "2023-03-25",
+    "total_amount": 41970
+  },
+  {
+    "order_id": 4,
+    "user_id": 4,
+    "order_date": "2023-03-26",
+    "total_amount": 31980
+  },
+  {
+    "order_id": 5,
+    "user_id": 5,
+    "order_date": "2023-03-27",
+    "total_amount": 43960
+  },
+  {
+    "order_id": 6,
+    "user_id": 6,
+    "order_date": "2023-03-28",
+    "total_amount": 13990
+  },
+  {
+    "order_id": 7,
+    "user_id": 7,
+    "order_date": "2023-03-29",
+    "total_amount": 35980
+  },
+  {
+    "order_id": 8,
+    "user_id": 8,
+    "order_date": "2023-03-30",
+    "total_amount": 27980
+  }
+]
