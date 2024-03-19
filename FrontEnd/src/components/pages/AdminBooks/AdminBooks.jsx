@@ -23,7 +23,7 @@ const AdminBooks = () => {
             <Bookcard
               key={book.bookId}
               book={book}
-              btnEditBook={true}
+              btnEditBook={false}
               btnDeleteBook={true}
               
             />
