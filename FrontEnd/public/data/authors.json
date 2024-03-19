@@ -33,6 +33,7 @@
   },
   {
     "authorId": "9",
+<<<<<<< HEAD
     "name": "Tamara Muñoz"
   },
   {
@@ -41,11 +42,17 @@
   },
   {
     "authorId": "11",
+=======
+>>>>>>> origin/main
     "name": "Alejandro Zambra"
   },
  
   {
+<<<<<<< HEAD
     "authorId": "12",
+=======
+    "authorId": "11",
+>>>>>>> origin/main
     "name": "Francisco Ortega"
   }
 ]

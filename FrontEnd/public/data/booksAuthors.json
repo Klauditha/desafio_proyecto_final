@@ -32,6 +32,7 @@
     "authorId": "7"
   },
   {
+<<<<<<< HEAD
     "bookId": "10",
     "authorId": "9"
   },
@@ -45,6 +46,13 @@
   },
   {
     "bookId": "13",
+=======
+    "bookId": "9",
+    "authorId": "8"
+  },
+  {
+    "bookId": "10",
+>>>>>>> origin/main
     "authorId": "2"
   }
   ,{
