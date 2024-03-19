@@ -17,7 +17,7 @@
       "zip_code": "2500000",
       "created_at": "2023-03-17T12:00:00",
       "updated_at": "2023-03-17T12:00:00",
-      "state": true
+      "deleted": false
     },
     {
       "user_id": 4,
@@ -36,7 +36,7 @@
       "zip_code": "4030000",
       "created_at": "2023-03-18T13:00:00",
       "updated_at": "2023-03-18T13:00:00",
-      "state": true
+      "deleted": false
     },
     {
       "user_id": 5,
@@ -55,7 +55,7 @@
       "zip_code": "4780000",
       "created_at": "2023-03-19T14:00:00",
       "updated_at": "2023-03-19T14:00:00",
-      "state": true
+      "deleted": false
     },
     {
       "user_id": 6,
@@ -74,7 +74,7 @@
       "zip_code": "6200000",
       "created_at": "2023-03-20T15:00:00",
       "updated_at": "2023-03-20T15:00:00",
-      "state": true
+      "deleted": false
     },
     {
       "user_id": 7,
@@ -93,7 +93,7 @@
       "zip_code": "1240000",
       "created_at": "2023-03-21T16:00:00",
       "updated_at": "2023-03-21T16:00:00",
-      "state": true
+      "deleted": false
     },
     {
       "user_id": 8,
@@ -112,7 +112,7 @@
       "zip_code": "2820000",
       "created_at": "2023-03-22T17:00:00",
       "updated_at": "2023-03-22T17:00:00",
-      "state": true
+      "deleted": false
     }
   ],
   "books": [
@@ -127,7 +127,8 @@
       "publisher": "Sudamericana",
       "pub_date": "1982-01-01",
       "price": 13990,
-      "stock": 25
+      "stock": 25,
+      "deleted": false
     },
     {
       "book_id": 4,
@@ -140,7 +141,8 @@
       "publisher": "Anagrama",
       "pub_date": "2004-11-01",
       "price": 15990,
-      "stock": 10
+      "stock": 10,
+      "deleted": false
     },
     {
       "book_id": 5,
@@ -153,7 +155,8 @@
       "publisher": "Seix Barral",
       "pub_date": "1948-01-01",
       "price": 8990,
-      "stock": 30
+      "stock": 30,
+      "deleted": false
     },
     {
       "book_id": 6,
@@ -166,7 +169,8 @@
       "publisher": "Alianza",
       "pub_date": "1929-01-01",
       "price": 11990,
-      "stock": 18
+      "stock": 18,
+      "deleted": false
     },
     {
       "book_id": 7,
@@ -179,7 +183,8 @@
       "publisher": "Mondadori",
       "pub_date": "2008-05-01",
       "price": 17990,
-      "stock": 22
+      "stock": 22,
+      "deleted": false
     },
     {
       "book_id": 8,
@@ -192,36 +197,43 @@
       "publisher": "DeBolsillo",
       "pub_date": "1967-05-30",
       "price": 14990,
-      "stock": 20
+      "stock": 20,
+      "deleted": false
     }
   ],
   "authors": [
     {
       "author_id": 3,
-      "name": "Isabel Allende"
+      "name": "Isabel Allende",
+      "deleted": false
     },
     {
       "author_id": 4,
-      "name": "Ernesto Sabato"
+      "name": "Ernesto Sabato",
+      "deleted": false
     },
     {
       "author_id": 5,
-      "name": "Roberto Arlt"
+      "name": "Roberto Arlt",
+      "deleted": false
     },
     {
       "author_id": 6,
-      "name": "Roberto Bolaño"
+      "name": "Roberto Bolaño",
+      "deleted": false
     },
     {
       "author_id": 7,
-      "name": "Albert Camus"
+      "name": "Albert Camus",
+      "deleted": false
     },
     {
       "author_id": 8,
-      "name": "Gabriel García Márquez"
+      "name": "Gabriel García Márquez",
+      "deleted": false
     }
   ],
-  "book_authors": [
+  "books_authors": [
     {
       "book_id": 3,
       "author_id": 3
@@ -250,30 +262,36 @@
   "genres": [
     {
       "genre_id": 3,
-      "name": "Literatura Latinoamericana"
+      "name": "Literatura Latinoamericana",
+      "deleted": false
     },
     {
       "genre_id": 4,
-      "name": "Novela Negra"
+      "name": "Novela Negra",
+      "deleted": false
     },
     {
       "genre_id": 5,
-      "name": "Ficción Contemporánea"
+      "name": "Ficción Contemporánea",
+      "deleted": false
     },
     {
       "genre_id": 6,
-      "name": "Literatura Universal"
+      "name": "Literatura Universal",
+      "deleted": false
     },
     {
       "genre_id": 7,
-      "name": "Ciencia Ficción"
+      "name": "Ciencia Ficción",
+      "deleted": false
     },
     {
       "genre_id": 8,
-      "name": "Poesía"
+      "name": "Poesía",
+      "deleted": false
     }
   ],
-  "book_genres": [
+  "books_genres": [
     {
       "book_id": 3,
       "genre_id": 3
@@ -299,57 +317,37 @@
       "genre_id": 8
     }
   ],
-  
-  "publishers": [
-    {
-      "publisher_id": 3,
-      "name": "Sudamericana"
-    },
-    {
-      "publisher_id": 4,
-      "name": "Seix Barral"
-    },
-    {
-      "publisher_id": 5,
-      "name": "Alianza"
-    },
-    {
-      "publisher_id": 6,
-      "name": "Mondadori"
-    },
-    {
-      "publisher_id": 7,
-      "name": "Penguin Random House"
-    },
-    {
-      "publisher_id": 8,
-      "name": "DeBolsillo"
-    }
-  ],
+
   "carts": [
     {
       "cart_id": 3,
-      "user_id": 3
+      "user_id": 3,
+      "deleted": false
     },
     {
       "cart_id": 4,
-      "user_id": 4
+      "user_id": 4,
+      "deleted": false
     },
     {
       "cart_id": 5,
-      "user_id": 5
+      "user_id": 5,
+      "deleted": false
     },
     {
       "cart_id": 6,
-      "user_id": 6
+      "user_id": 6,
+      "deleted": false
     },
     {
       "cart_id": 7,
-      "user_id": 7
+      "user_id": 7,
+      "deleted": false
     },
     {
       "cart_id": 8,
-      "user_id": 8
+      "user_id": 8,
+      "deleted": false
     }
   ],
   "cart_items": [
@@ -357,37 +355,43 @@
       "cart_item_id": 3,
       "cart_id": 3,
       "book_id": 3,
-      "quantity": 3
+      "quantity": 3,
+      "deleted": false
     },
     {
       "cart_item_id": 4,
       "cart_id": 4,
       "book_id": 4,
-      "quantity": 2
+      "quantity": 2,
+      "deleted": false
     },
     {
       "cart_item_id": 5,
       "cart_id": 5,
       "book_id": 5,
-      "quantity": 4
+      "quantity": 4,
+      "deleted": false
     },
     {
       "cart_item_id": 6,
       "cart_id": 6,
       "book_id": 6,
-      "quantity": 1
+      "quantity": 1,
+      "deleted": false
     },
     {
       "cart_item_id": 7,
       "cart_id": 7,
       "book_id": 7,
-      "quantity": 2
+      "quantity": 2,
+      "deleted": false
     },
     {
       "cart_item_id": 8,
       "cart_id": 8,
       "book_id": 3,
-      "quantity": 1
+      "quantity": 1,
+      "deleted": false
     }
   ],
   "orders": [
@@ -395,37 +399,43 @@
       "order_id": 3,
       "user_id": 3,
       "order_date": "2023-03-25",
-      "total_amount": 41970
+      "total_amount": 41970,
+      "deleted": false
     },
     {
       "order_id": 4,
       "user_id": 4,
       "order_date": "2023-03-26",
-      "total_amount": 31980
+      "total_amount": 31980,
+      "deleted": false
     },
     {
       "order_id": 5,
       "user_id": 5,
       "order_date": "2023-03-27",
-      "total_amount": 43960
+      "total_amount": 43960,
+      "deleted": false
     },
     {
       "order_id": 6,
       "user_id": 6,
       "order_date": "2023-03-28",
-      "total_amount": 13990
+      "total_amount": 13990,
+      "deleted": false
     },
     {
       "order_id": 7,
       "user_id": 7,
       "order_date": "2023-03-29",
-      "total_amount": 35980
+      "total_amount": 35980,
+      "deleted": false
     },
     {
       "order_id": 8,
       "user_id": 8,
       "order_date": "2023-03-30",
-      "total_amount": 27980
+      "total_amount": 27980,
+      "deleted": false
     }
   ],
   "order_items": [
@@ -433,37 +443,43 @@
       "order_item_id": 3,
       "order_id": 3,
       "book_id": 3,
-      "quantity": 3
+      "quantity": 3,
+      "deleted": false
     },
     {
       "order_item_id": 4,
       "order_id": 4,
       "book_id": 4,
-      "quantity": 2
+      "quantity": 2,
+      "deleted": false
     },
     {
       "order_item_id": 5,
       "order_id": 5,
       "book_id": 5,
-      "quantity": 4
+      "quantity": 4,
+      "deleted": false
     },
     {
       "order_item_id": 6,
       "order_id": 6,
       "book_id": 6,
-      "quantity": 1
+      "quantity": 1,
+      "deleted": false
     },
     {
       "order_item_id": 7,
       "order_id": 7,
       "book_id": 7,
-      "quantity": 2
+      "quantity": 2,
+      "deleted": false
     },
     {
       "order_item_id": 8,
       "order_id": 8,
       "book_id": 3,
-      "quantity": 1
+      "quantity": 1,
+      "deleted": false
     }
   ],
   "ratings": [
@@ -475,7 +491,8 @@
       "comment": "Me encantó, muy recomendado.",
       "wishlist": false,
       "created_at": "2023-03-31T10:00:00",
-      "updated_at": "2023-03-31T10:00:00"
+      "updated_at": "2023-03-31T10:00:00",
+      "deleted": false
     },
     {
       "rating_id": 4,
@@ -485,7 +502,8 @@
       "comment": "Una obra maestra.",
       "wishlist": false,
       "created_at": "2023-03-31T11:00:00",
-      "updated_at": "2023-03-31T11:00:00"
+      "updated_at": "2023-03-31T11:00:00",
+      "deleted": false
     },
     {
       "rating_id": 5,
@@ -495,7 +513,8 @@
       "comment": "Muy interesante, no pude dejar de leerlo.",
       "wishlist": false,
       "created_at": "2023-03-31T12:00:00",
-      "updated_at": "2023-03-31T12:00:00"
+      "updated_at": "2023-03-31T12:00:00",
+      "deleted": false
     },
     {
       "rating_id": 6,
@@ -505,7 +524,8 @@
       "comment": "No estuvo mal, pero esperaba más.",
       "wishlist": false,
       "created_at": "2023-03-31T13:00:00",
-      "updated_at": "2023-03-31T13:00:00"
+      "updated_at": "2023-03-31T13:00:00",
+      "deleted": false
     },
     {
       "rating_id": 7,
@@ -515,7 +535,8 @@
       "comment": "Increíble, uno de los mejores libros que he leído.",
       "wishlist": false,
       "created_at": "2023-03-31T14:00:00",
-      "updated_at": "2023-03-31T14:00:00"
+      "updated_at": "2023-03-31T14:00:00",
+      "deleted": false
     },
     {
       "rating_id": 8,
@@ -525,7 +546,8 @@
       "comment": "Muy bueno, lo recomiendo.",
       "wishlist": false,
       "created_at": "2023-03-31T15:00:00",
-      "updated_at": "2023-03-31T15:00:00"
+      "updated_at": "2023-03-31T15:00:00",
+      "deleted": false
     }
   ]
 }

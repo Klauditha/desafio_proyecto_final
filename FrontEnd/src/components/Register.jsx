@@ -38,7 +38,7 @@ export default function Register() {
     user_id: "",
     created_at: "",
     updated_at: "",
-    state: "",
+    deleted: false,
   });
 
   const [errors, setErrors] = useState({
@@ -193,7 +193,7 @@ export default function Register() {
       user_id: users.length + 1,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-      state: true,
+      deleted: false,
     };
 
     registerUser(newUser);
