@@ -109,13 +109,6 @@ export const ECommerceProvider = ({ children }) => {
   };
 
 
-  //console.log(books);
-
-  /*
-  const getBooksAPI = async () => {
-      
-  }*/
-
   useEffect(() => {
     getRatings();
     getBooksAuthors();
