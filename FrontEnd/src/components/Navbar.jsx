@@ -87,12 +87,6 @@ export default function Navbar({ isAdmin }) {
                   Lista de deseos
                 </Link>
               )}
-              <Link
-                className="text-gray-500 dark:text-gray-500"
-                to="/managerbooks"
-              >
-                Gestión de libros
-              </Link>
             </div>
           </nav>
         </div>
