@@ -22,5 +22,13 @@
     {
       "book_id": 3,
       "genre_id": 8
+    },
+    {
+      "book_id": 10,
+      "genre_id": 9
+    },
+    {
+      "book_id": 11,
+      "genre_id": 10
     }
   ]

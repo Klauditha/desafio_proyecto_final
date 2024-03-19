@@ -20,6 +20,7 @@ const Bookcard = ({
   displayPrice,
   displayLanguage,
   displayQuantitySold,
+  displayPubDate,
 }) => {
   const navigate = useNavigate();
   const { addToCart } = useContext(ECommerceContext);
@@ -56,7 +57,11 @@ const Bookcard = ({
             Idioma: {book.language}
           </CardDescription>
         ) : null}
-
+        {displayPubDate ? (
+          <CardDescription className="text-sm font-medium">
+            Publicado: {book.pubDate}
+          </CardDescription>
+        ): null}
         <div className="flex items-center justify-between">
           {displayPrice ? (
             <span className="text-sm font-medium">${book.price}</span>

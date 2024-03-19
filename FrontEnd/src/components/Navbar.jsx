@@ -42,7 +42,7 @@ export default function Navbar({ isAdmin }) {
         <div>
           <nav className="flex items-center justify-between py-4 px-4 border-b bg-white md:px-6 dark:bg-gray-950 border-gray-100 dark:border-gray-800">
             <div className="hidden md:flex flex-1 justify-center gap-8 text-sm font-medium">
-              <Link className="text-gray-900 dark:text-gray-50" to="/new">
+              <Link className="text-gray-900 dark:text-gray-50" to="/news">
                 Novedades
               </Link>
               <Link

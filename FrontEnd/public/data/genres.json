@@ -22,5 +22,13 @@
   {
     "genre_id": 8,
     "name": "Poesía"
+  },
+  {
+    "genre_id": 9,
+    "name": "Autoayuda y Desarrollo Personal"
+  },
+  {
+    "genre_id": 10,
+    "name": "Psicología"
   }
 ]
