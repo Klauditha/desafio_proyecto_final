@@ -20,7 +20,7 @@ const ECommerceRoutes = () => {
       <Route path="/bestselling" element={<Bestselling />} />
       <Route path="/publishers" element={<Publishers />} />
       <Route path="/wishlist" element={<Wishlist />} />
-      <Route path="/login" element={<Loginpage />} />
+      <Route path="/login/*" element={<Loginpage />} />
       <Route path="/register" element={<Register />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/book/:id" element={<BookDetail />} />
