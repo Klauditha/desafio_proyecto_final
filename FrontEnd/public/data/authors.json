@@ -30,5 +30,14 @@
   {
     "authorId": "8",
     "name": "Gabriel García Márquez"
+  },
+  {
+    "authorId": "9",
+    "name": "Alejandro Zambra"
+  },
+ 
+  {
+    "authorId": "11",
+    "name": "Francisco Ortega"
   }
 ]
