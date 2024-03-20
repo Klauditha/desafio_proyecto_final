@@ -48,7 +48,7 @@ const Publishers = () => {
         </div>
       </div>
 
-      <div className="grid grid-auto-cols gap-8 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 w-full justify-space-between mt-8">
+      <div className="grid gap-8 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 w-full justify-center">
         {booksByPublisher
           ? booksByPublisher.map((book) => (
               <Bookcard
