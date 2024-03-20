@@ -26,6 +26,10 @@ const Bookcard = ({
   const { addToCart } = useContext(ECommerceContext);
   const { setWishlist } = useContext(ECommerceContext);
 
+  const handleAddToCart = () => {
+    addToCart(book);
+  };
+
   return (
     <Card className="w-full max-w-xs">
       <div className="grid w-full">
@@ -75,7 +79,7 @@ const Bookcard = ({
             <Button
               size="sm"
               className="bg-blue-500 hover:bg-blue-600 mt-1"
-              onClick={() => addToCart(book)}
+              onClick={() => handleAddToCart(book)}
             >
               Agregar al carrito
             </Button>

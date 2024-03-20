@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { Link, NavLink } from 'react-router-dom';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
+import { Link,  NavLink } from "react-router-dom";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { useContext } from 'react';
 import { ECommerceContext } from '../Context/ECommerceContext';
 
@@ -39,7 +40,7 @@ export default function Navbar({ isAdmin }) {
                 className="ml-auto flex items-center gap-2 text-mm font-medium"
                 to="/cart"
               >
-                Carrito
+                <span className="hidden md:flex">Carrito</span>
                 <ShoppingCartIcon className="h-4 w-4 fill-current" />
               </Link>
             </div>
@@ -53,8 +54,8 @@ export default function Navbar({ isAdmin }) {
                 to="/news"
                 className={({ isActive }) =>
                   isActive
-                    ? 'font-bold text-blue-900 dark:text-gray-50 '
-                    : 'text-gray-500 dark:text-gray-500'
+                    ? "font-bold text-blue-900 dark:text-gray-50 "
+                    : "text-gray-500 dark:text-gray-500"
                 }
               >
                 Novedades
@@ -62,8 +63,8 @@ export default function Navbar({ isAdmin }) {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? 'font-bold text-blue-900 dark:text-gray-50 '
-                    : 'text-gray-500 dark:text-gray-500'
+                    ? "font-bold text-blue-900 dark:text-gray-50 "
+                    : "text-gray-500 dark:text-gray-500"
                 }
                 to="/bestselling"
               >
@@ -72,8 +73,8 @@ export default function Navbar({ isAdmin }) {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? 'font-bold text-blue-900 dark:text-gray-50 '
-                    : 'text-gray-500 dark:text-gray-500'
+                    ? "font-bold text-blue-900 dark:text-gray-50 "
+                    : "text-gray-500 dark:text-gray-500"
                 }
                 to="/publishers"
               >
@@ -84,8 +85,8 @@ export default function Navbar({ isAdmin }) {
                   <NavLink
                     className={({ isActive }) =>
                       isActive
-                        ? 'font-bold text-blue-900 dark:text-gray-50 '
-                        : 'text-gray-500 dark:text-gray-500'
+                        ? "font-bold text-blue-900 dark:text-gray-50 "
+                        : "text-gray-500 dark:text-gray-500"
                     }
                     to="/authors"
                   >
@@ -94,8 +95,8 @@ export default function Navbar({ isAdmin }) {
                   <NavLink
                     className={({ isActive }) =>
                       isActive
-                        ? 'font-bold text-blue-900 dark:text-gray-50 '
-                        : 'text-gray-500 dark:text-gray-500'
+                        ? "font-bold text-blue-900 dark:text-gray-50 "
+                        : "text-gray-500 dark:text-gray-500"
                     }
                     to="/genres"
                   >
@@ -104,8 +105,8 @@ export default function Navbar({ isAdmin }) {
                   <NavLink
                     className={({ isActive }) =>
                       isActive
-                        ? 'font-bold text-blue-900 dark:text-gray-50 '
-                        : 'text-gray-500 dark:text-gray-500'
+                        ? "font-bold text-blue-900 dark:text-gray-50 "
+                        : "text-gray-500 dark:text-gray-500"
                     }
                     to="/managerbooks"
                   >
@@ -117,14 +118,109 @@ export default function Navbar({ isAdmin }) {
                 <NavLink
                   className={({ isActive }) =>
                     isActive
-                      ? 'font-bold text-blue-900 dark:text-gray-50 '
-                      : 'text-gray-500 dark:text-gray-500'
+                      ? "font-bold text-blue-900 dark:text-gray-50 "
+                      : "text-gray-500 dark:text-gray-500"
                   }
                   to="/wishlist"
                 >
                   Lista de deseos
                 </NavLink>
               )}
+            </div>
+            {/* mobile menu */}
+            <div className="flex md:hidden px-4 md:px-6">
+              <Popover className="w-max mx-auto">
+                <PopoverTrigger asChild>
+                  <Button
+                    className="w-10 h-10 rounded-full border-2 border-gray-100 top-4 right-4 absolute dark:border-gray-850"
+                    id="menu"
+                    size="icon"
+                    variant="outline"
+                  >
+                    <MenuIcon className="h-4 w-4" />
+                    <span className="sr-only">Toggle menu</span>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent
+                  align="end"
+                  className="rounded-t-2xl w-56 mt-2"
+                  side="bottom"
+                >
+                  <div />
+                  <div className="grid gap-8 p-2">
+                    <div>
+                      <NavLink
+                        to="/news"
+                        className={({ isActive }) =>
+                          isActive
+                            ? "font-bold text-blue-900 dark:text-gray-50 "
+                            : "text-gray-500 dark:text-gray-500"
+                        }
+                      >
+                        Novedades
+                      </NavLink>
+                    </div>
+
+                    <div>
+                      <NavLink
+                        to="/bestselling"
+                        className={({ isActive }) =>
+                          isActive
+                            ? "font-bold text-blue-900 dark:text-gray-50 "
+                            : "text-gray-500 dark:text-gray-500"
+                        }
+                      >
+                        Lo + vendido
+                      </NavLink>
+                    </div>
+
+                    <div>
+                      <NavLink
+                        to="/publishers"
+                        className={({ isActive }) =>
+                          isActive
+                            ? "font-bold text-blue-900 dark:text-gray-50 "
+                            : "text-gray-500 dark:text-gray-500"
+                        }
+                      >
+                        Editoriales
+                      </NavLink>
+                    </div>
+
+                    <div>
+                      <NavLink
+                        to="/wishlist"
+                        className={({ isActive }) =>
+                          isActive
+                            ? "font-bold text-blue-900 dark:text-gray-50 "
+                            : "text-gray-500 dark:text-gray-500"
+                        }
+                      >
+                        Lista de deseos
+                      </NavLink>
+                    </div>
+
+                    <div>
+                      <NavLink
+                        to="/cart"
+                        className={({ isActive }) =>
+                          isActive
+                            ? "font-bold text-blue-900 dark:text-gray-50 "
+                            : "text-gray-500 dark:text-gray-500"
+                        }
+                      >
+                        <div className="flex gap-2">
+                          <span>
+                            {" "}
+                            <ShoppingCartIcon className="h-4 w-4 fill-current" />
+                          </span>
+                          <span>Carrito</span>
+                        </div>
+                      </NavLink>
+                    </div>
+                  </div>
+                </PopoverContent>
+              </Popover>
             </div>
           </nav>
         </div>
@@ -239,6 +335,27 @@ function ShoppingCartIcon(props) {
       <circle cx="8" cy="21" r="1" />
       <circle cx="19" cy="21" r="1" />
       <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+    </svg>
+  );
+}
+
+function MenuIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="4" x2="20" y1="12" y2="12" />
+      <line x1="4" x2="20" y1="6" y2="6" />
+      <line x1="4" x2="20" y1="18" y2="18" />
     </svg>
   );
 }
