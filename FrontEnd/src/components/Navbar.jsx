@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
-import { Link } from 'react-router-dom';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
+import { Link } from "react-router-dom";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
-export default function Navbar({ isAdmin }) {
+export default function Navbar({ isAdmin, isLogged }) {
   return (
     <>
       <div className="flex-col flex px-4 md:px-20">
@@ -27,6 +27,21 @@ export default function Navbar({ isAdmin }) {
               <Button className="hidden md:flex " asChild>
                 <Link to="/login">Inicia sesión</Link>
               </Button>
+
+              {/* waiting for logic */}
+              {/* isLogged */}
+
+                <>
+                  <Link
+                    className="ml-auto flex items-center gap-2 text-mm font-medium"
+                    to="/profile"
+                  >
+                    Hola, user
+                    <UserIcon className="h-4 w-4 fill-current" />
+                  </Link>
+                </>
+
+
               <Link
                 className="ml-auto flex items-center gap-2 text-mm font-medium"
                 to="/cart"
@@ -183,23 +198,63 @@ function SearchIcon(props) {
   );
 }
 
+function UserIcon(props) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12.6666 14.0003V12.6669C12.6666 11.9597 12.3856 11.2814 11.8855 10.7813C11.3854 10.2812 10.7072 10.0003 9.99992 10.0003H5.99992C5.29267 10.0003 4.6144 10.2812 4.1143 10.7813C3.6142 11.2814 3.33325 11.9597 3.33325 12.6669V14.0003"
+        stroke="#334155"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M7.99992 7.33361C9.47268 7.33361 10.6666 6.1397 10.6666 4.66694C10.6666 3.19418 9.47268 2.00027 7.99992 2.00027C6.52716 2.00027 5.33325 3.19418 5.33325 4.66694C5.33325 6.1397 6.52716 7.33361 7.99992 7.33361Z"
+        stroke="#334155"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function ShoppingCartIcon(props) {
   return (
     <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
     >
-      <circle cx="8" cy="21" r="1" />
-      <circle cx="19" cy="21" r="1" />
-      <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+      <path
+        d="M8 22C8.55228 22 9 21.5523 9 21C9 20.4477 8.55228 20 8 20C7.44772 20 7 20.4477 7 21C7 21.5523 7.44772 22 8 22Z"
+        stroke="black"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M19 22C19.5523 22 20 21.5523 20 21C20 20.4477 19.5523 20 19 20C18.4477 20 18 20.4477 18 21C18 21.5523 18.4477 22 19 22Z"
+        stroke="black"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M2.05005 2.05005H4.05005L6.71005 14.47C6.80763 14.9249 7.06072 15.3315 7.42576 15.6199C7.7908 15.9083 8.24495 16.0604 8.71005 16.05H18.49C18.9452 16.0493 19.3865 15.8933 19.7411 15.6079C20.0956 15.3224 20.3422 14.9246 20.4401 14.48L22.09 7.05005H5.12005"
+        stroke="black"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }

@@ -10,6 +10,8 @@ import Cart from '../pages/Cart';
 import BookDetail from '../pages/BookDetail';
 import Home from '../pages/Home';
 import { Book } from 'lucide-react';
+import Userprofile from '../pages/Userprofile';
+
 
 const ECommerceRoutes = () => {
   return (
@@ -23,6 +25,7 @@ const ECommerceRoutes = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/book/:id" element={<BookDetail />} />
+      <Route path="/profile" element={<Userprofile />} />
     </Routes>
   );
 };
