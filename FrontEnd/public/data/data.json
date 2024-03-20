@@ -119,7 +119,7 @@
     {
       "book_id": 3,
       "isbn": 9789569545344,
-      "img": "book3.jpg",
+      "img": "/books/3.jpg",
       "title": "La casa de los espíritus",
       "description": "Novela de la autora chilena Isabel Allende que relata la historia de varias generaciones de una familia.",
       "language": "Español",
@@ -133,7 +133,7 @@
     {
       "book_id": 4,
       "isbn": 9789568410152,
-      "img": "book4.jpg",
+      "img": "/books/4.jpg",
       "title": "2666",
       "description": "Obra póstuma del escritor chileno Roberto Bolaño, que sigue la pista de un misterioso autor de novelas policiales.",
       "language": "Español",
@@ -147,7 +147,7 @@
     {
       "book_id": 5,
       "isbn": 9788420481853,
-      "img": "book5.jpg",
+      "img": "/books/5.jpg",
       "title": "El túnel",
       "description": "Novela del escritor argentino Ernesto Sabato, que narra la obsesión de un pintor por una mujer.",
       "language": "Español",
@@ -161,7 +161,7 @@
     {
       "book_id": 6,
       "isbn": 9788420706830,
-      "img": "book6.jpg",
+      "img": "/books/6.jpg",
       "title": "Los siete locos",
       "description": "Primera parte de la obra 'Los siete locos y Los lanzallamas', del escritor argentino Roberto Arlt.",
       "language": "Español",
@@ -175,7 +175,7 @@
     {
       "book_id": 7,
       "isbn": 9788483835161,
-      "img": "book7.jpg",
+      "img": "/books/7.jpg",
       "title": "2666",
       "description": "Novela del escritor español Roberto Bolaño, que cuenta la historia de un grupo de académicos que investigan una serie de asesinatos en Ciudad Juárez.",
       "language": "Español",
@@ -189,7 +189,7 @@
     {
       "book_id": 8,
       "isbn": 9789562820005,
-      "img": "book8.jpg",
+      "img": "/books/8.jpg",
       "title": "Cien años de soledad",
       "description": "Novela del escritor colombiano Gabriel García Márquez que narra la historia de la familia Buendía a lo largo de siete generaciones en el pueblo ficticio de Macondo.",
       "language": "Español",
