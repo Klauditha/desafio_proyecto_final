@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { Link,  NavLink } from "react-router-dom";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Link, NavLink } from 'react-router-dom';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { useContext } from 'react';
 import { ECommerceContext } from '../Context/ECommerceContext';
 
@@ -54,8 +54,8 @@ export default function Navbar({ isAdmin }) {
                 to="/news"
                 className={({ isActive }) =>
                   isActive
-                    ? "font-bold text-blue-900 dark:text-gray-50 "
-                    : "text-gray-500 dark:text-gray-500"
+                    ? 'font-bold text-blue-900 dark:text-gray-50 '
+                    : 'text-gray-500 dark:text-gray-500'
                 }
               >
                 Novedades
@@ -63,8 +63,8 @@ export default function Navbar({ isAdmin }) {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? "font-bold text-blue-900 dark:text-gray-50 "
-                    : "text-gray-500 dark:text-gray-500"
+                    ? 'font-bold text-blue-900 dark:text-gray-50 '
+                    : 'text-gray-500 dark:text-gray-500'
                 }
                 to="/bestselling"
               >
@@ -73,15 +73,17 @@ export default function Navbar({ isAdmin }) {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? "font-bold text-blue-900 dark:text-gray-50 "
-                    : "text-gray-500 dark:text-gray-500"
+                    ? 'font-bold text-blue-900 dark:text-gray-50 '
+                    : 'text-gray-500 dark:text-gray-500'
                 }
                 to="/publishers"
               >
                 Editoriales
               </NavLink>
+
               {isAdmin && (
                 <>
+                  {/*
                   <NavLink
                     className={({ isActive }) =>
                       isActive
@@ -102,11 +104,12 @@ export default function Navbar({ isAdmin }) {
                   >
                     Géneros
                   </NavLink>
+                  */}
                   <NavLink
                     className={({ isActive }) =>
                       isActive
-                        ? "font-bold text-blue-900 dark:text-gray-50 "
-                        : "text-gray-500 dark:text-gray-500"
+                        ? 'font-bold text-blue-900 dark:text-gray-50 '
+                        : 'text-gray-500 dark:text-gray-500'
                     }
                     to="/managerbooks"
                   >
@@ -118,8 +121,8 @@ export default function Navbar({ isAdmin }) {
                 <NavLink
                   className={({ isActive }) =>
                     isActive
-                      ? "font-bold text-blue-900 dark:text-gray-50 "
-                      : "text-gray-500 dark:text-gray-500"
+                      ? 'font-bold text-blue-900 dark:text-gray-50 '
+                      : 'text-gray-500 dark:text-gray-500'
                   }
                   to="/wishlist"
                 >
@@ -153,8 +156,8 @@ export default function Navbar({ isAdmin }) {
                         to="/news"
                         className={({ isActive }) =>
                           isActive
-                            ? "font-bold text-blue-900 dark:text-gray-50 "
-                            : "text-gray-500 dark:text-gray-500"
+                            ? 'font-bold text-blue-900 dark:text-gray-50 '
+                            : 'text-gray-500 dark:text-gray-500'
                         }
                       >
                         Novedades
@@ -166,8 +169,8 @@ export default function Navbar({ isAdmin }) {
                         to="/bestselling"
                         className={({ isActive }) =>
                           isActive
-                            ? "font-bold text-blue-900 dark:text-gray-50 "
-                            : "text-gray-500 dark:text-gray-500"
+                            ? 'font-bold text-blue-900 dark:text-gray-50 '
+                            : 'text-gray-500 dark:text-gray-500'
                         }
                       >
                         Lo + vendido
@@ -179,8 +182,8 @@ export default function Navbar({ isAdmin }) {
                         to="/publishers"
                         className={({ isActive }) =>
                           isActive
-                            ? "font-bold text-blue-900 dark:text-gray-50 "
-                            : "text-gray-500 dark:text-gray-500"
+                            ? 'font-bold text-blue-900 dark:text-gray-50 '
+                            : 'text-gray-500 dark:text-gray-500'
                         }
                       >
                         Editoriales
@@ -192,8 +195,8 @@ export default function Navbar({ isAdmin }) {
                         to="/wishlist"
                         className={({ isActive }) =>
                           isActive
-                            ? "font-bold text-blue-900 dark:text-gray-50 "
-                            : "text-gray-500 dark:text-gray-500"
+                            ? 'font-bold text-blue-900 dark:text-gray-50 '
+                            : 'text-gray-500 dark:text-gray-500'
                         }
                       >
                         Lista de deseos
@@ -205,13 +208,13 @@ export default function Navbar({ isAdmin }) {
                         to="/cart"
                         className={({ isActive }) =>
                           isActive
-                            ? "font-bold text-blue-900 dark:text-gray-50 "
-                            : "text-gray-500 dark:text-gray-500"
+                            ? 'font-bold text-blue-900 dark:text-gray-50 '
+                            : 'text-gray-500 dark:text-gray-500'
                         }
                       >
                         <div className="flex gap-2">
                           <span>
-                            {" "}
+                            {' '}
                             <ShoppingCartIcon className="h-4 w-4 fill-current" />
                           </span>
                           <span>Carrito</span>

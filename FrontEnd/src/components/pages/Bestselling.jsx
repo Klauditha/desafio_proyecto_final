@@ -4,9 +4,9 @@ import { ECommerceContext } from '../../Context/ECommerceContext';
 import Bookcard from '../Bookcard';
 
 const Bestselling = () => {
-  const { books, setSoldBook, filterBySearch ,searchBooks} = useContext(ECommerceContext);
-  const [booksNews, setBooksNews ] = useState([books]);
-  
+  const { books, setSoldBook, filterBySearch, searchBooks } =
+    useContext(ECommerceContext);
+  const [booksNews, setBooksNews] = useState([books]);
 
   useEffect(() => {
     setSoldBook();
