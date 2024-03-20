@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { ECommerceContext } from '@/Context/ECommerceContext';
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const ECommerceProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
@@ -18,8 +19,39 @@ export const ECommerceProvider = ({ children }) => {
   const [authenticatedUser, setAuthenticatedUser] = useState(null);
   const [orders, setOrders] = useState([]);
 
-  const addToCart = (book) => {
-    setCart([...cart, book]);
+  const navigate = useNavigate();
+
+  const addToCart = async (book) => {
+    // Funcionalidad POST con servidor para futuro
+    console.log("Intentando agregar libro al carro antes de autenticación de usuario:", book);
+
+    if (authenticatedUser) {
+      try {
+        const response = await fetch("/api/cart/add", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: authenticatedUser.userId,
+            bookId: book.bookId,
+          }),
+        });
+
+        if (response.ok) {
+          console.log("Libro correctamente agregado al carro del servidor");
+          setCart([...cart, book]);
+          console.log("Carrito actualizado:", cart);
+          fetchCartItems();
+        } else {
+          console.error("Fallo al agregar libro al carrito en el servidor");
+        }
+      } catch (error) {
+        console.error("Error agregar libro al carro:", error);
+      }
+    } else {
+      navigate("/login");
+    }
   };
 
   const getAuthorBook = (bookId) => {
