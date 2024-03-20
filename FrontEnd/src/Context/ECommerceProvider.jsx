@@ -20,6 +20,10 @@ export const ECommerceProvider = ({ children }) => {
   const [orders, setOrders] = useState([]);
 
   const navigate = useNavigate();
+  const [searchBooks, setSearchBooks] = useState('');
+  const [searchPublishers, setSearchPublishers] = useState('');
+  const [publishers, setPublishers] = useState(null);
+  const [editoriales, setEditoriales] = useState(null);
 
   const addToCart = async (book) => {
     // Funcionalidad POST con servidor para futuro
@@ -222,11 +226,10 @@ export const ECommerceProvider = ({ children }) => {
     setBooks(data);
   };
 
- 
   const registerUser = (newUser) => {
     setUsers([...users, newUser]);
   };
-  
+
   const setAuthorsBook = async () => {
     books.map((book) => {
       book.author = getAuthorBook(book.bookId);
@@ -249,26 +252,106 @@ const handleLogin = (user) => {
     setAuthenticatedUser(null);
   };
 
+  const filterBySearch = () => {
+    let filteredBooksResult = [];
+    if (searchBooks != '' && searchPublishers != '') {
+      getBooks();
+      books.map((book) => {
+        if (
+          searchBooks != '' &&
+          book.title.toLowerCase().includes(searchBooks.toLowerCase()) &&
+          searchPublishers != '' &&
+          book.publisher.toLowerCase().includes(searchPublishers.toLowerCase())
+        ) {
+          let valor = filteredBooksResult.find(
+            (item) => item.bookId.toString() == book.bookId
+          );
+          if (!valor) filteredBooksResult.push(book);
+        }
+      });
+      return filteredBooksResult;
+    }
+    if (searchBooks != '' && searchPublishers == '') {
+      getBooks();
+      books.map((book) => {
+        if (
+          searchBooks != '' &&
+          book.title.toLowerCase().includes(searchBooks.toLowerCase()) &&
+          searchPublishers == ''
+        ) {
+          let valor = filteredBooksResult.find(
+            (item) => item.bookId.toString() == book.bookId.toString()
+          );
+          if (!valor) filteredBooksResult.push(book);
+        }
+      });
+      return filteredBooksResult;
+    }
+    if (searchBooks == '' && searchPublishers != '') {
+      getBooks();
+      books.map((book) => {
+        if (
+          searchBooks == '' &&
+          searchPublishers != '' &&
+          book.publisher.toLowerCase().includes(searchPublishers.toLowerCase())
+        ) {
+          let valor = filteredBooksResult.find(
+            (item) => item.bookId.toString() == book.bookId
+          );
+          if (!valor) filteredBooksResult.push(book);
+        }
+      });
+      return filteredBooksResult;
+    } else {
+      getBooks();
+      return books;
+    }
+  };
+
+  const setDataPublishers = async () => {
+    const response = await fetch('data/books.json');
+    const data = await response.json();
+    let publishers = [];
+    data.map((book) => {
+      publishers.push(book.publisher);
+    });
+    setEditoriales(publishers);
+  };
+
   useEffect(() => {
-    getBooksAuthors();
-    getOrderItems();
-    getRatings();
-    getAuthors();
-    getUsers();
-    getGenres();
-    getBookGenres();
-    getBooks();
-    setAuthorsBook();
-    setSoldBook();
-    setBooks();
-    removeFromCart();
+    if (
+      (searchBooks != '' && searchBooks != null && searchBooks != undefined) ||
+      (searchPublishers != '' &&
+        searchPublishers != null &&
+        searchPublishers != undefined)
+    ) {
+      filterBySearch();
+    }
+    //  else if(searchPublishers != '') filterByPublisher(searchPublishers);
+    //setDataPublishers();
+    else {
+      setDataPublishers();
+      getBooksAuthors();
+      getOrderItems();
+      getRatings();
+      getAuthors();
+      getUsers();
+      getGenres();
+      getBookGenres();
+      getBooks();
+      setAuthorsBook();
+      setSoldBook();
+      setBooks();
+      removeFromCart();
     fetchData().then((booksData) => {
       if (authenticatedUser) {
         console.log("Fetching cart items...");
         fetchCartItems();
       }
     });
-  }, [authenticatedUser]);
+    }
+    //setDataPublishers();
+  }, [searchBooks, searchPublishers,authenticatedUser]);
 
   return (
     <ECommerceContext.Provider
@@ -300,6 +383,14 @@ const handleLogin = (user) => {
         getBookDetailsById,
         updateCartItemQuantity,
         removeFromCart,
+        searchBooks,
+        publishers,
+        setSearchBooks,
+        setPublishers,
+        editoriales,
+        searchPublishers,
+        setSearchPublishers,
+        filterBySearch,
       }}
     >
       {children}

@@ -1,12 +1,17 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Bookcard from '../../Bookcard';
 import { ECommerceContext } from '../../../Context/ECommerceContext';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 
 const AdminBooks = () => {
-  const { books } = useContext(ECommerceContext);
+  const { books, searchBooks, filterBySearch } = useContext(ECommerceContext);
+  const [booksAdmin, setBookAmin] = useState([books]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setBookAmin(filterBySearch());
+  }, [searchBooks]);
   return (
     <div>
       <h1 className="font-bold text-xl text-center">Mantenedor Libros</h1>
@@ -19,15 +24,17 @@ const AdminBooks = () => {
         </Button>
       </div>
       <div className="grid grid-auto-cols gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 w-full justify-space-between">
-        {books.map((book) => (
-          <Bookcard
-            key={book.bookId}
-            book={book}
-            btnEditBook={true}
-            btnDeleteBook={false}
-            displayLanguage={true}
-          />
-        ))}
+        {booksAdmin
+          ? booksAdmin.map((book) => (
+              <Bookcard
+                key={book.bookId}
+                book={book}
+                btnEditBook={true}
+                btnDeleteBook={false}
+                displayLanguage={true}
+              />
+            ))
+          : null}
       </div>
     </div>
   );

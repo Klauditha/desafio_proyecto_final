@@ -4,25 +4,26 @@ import React, { useContext, useState, useEffect } from 'react';
 import { ECommerceContext } from '../../Context/ECommerceContext';
 import Bookcard from '../Bookcard';
 const Publishers = () => {
-  const { books } = useContext(ECommerceContext);
+  const {
+    books,
+    searchBooks,
+    setPublishers,
+    editoriales,
+    setSearchBooks,
+    searchPublishers,
+    setSearchPublishers,
+    filterBySearch
+  } = useContext(ECommerceContext);
   const [seleccion, setSeleccion] = React.useState('');
   const [booksByPublisher, setBooksByPublisher] = useState(books);
 
-  let publishers = books
-    .map((book) => book.publisher)
-    .filter((value, index, self) => self.indexOf(value) === index);
-  publishers = publishers.sort();
-
   const filterByPublisher = (publisher) => {
-    if (publisher === '') {
-      setBooksByPublisher(books);
-    } else {
-      const filteredBooks = books.filter(
-        (book) => book.publisher === publisher
-      );
-      setBooksByPublisher(filteredBooks);
-    }
+    setSearchPublishers(publisher);
   };
+
+  useEffect(() => {
+    setBooksByPublisher(filterBySearch());
+  }, [searchBooks,searchPublishers]);
 
   return (
     <div>
@@ -38,8 +39,8 @@ const Publishers = () => {
             }}
           >
             <option value="">Seleccione una editorial</option>
-            {publishers.map((publisher) => (
-              <option key={publisher} value={publisher}>
+            {editoriales.map((publisher, index) => (
+              <option key={index} value={publisher}>
                 {publisher}
               </option>
             ))}
@@ -48,17 +49,19 @@ const Publishers = () => {
       </div>
 
       <div className="grid grid-auto-cols gap-8 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 w-full justify-space-between mt-8">
-        {booksByPublisher.map((book) => (
-          <Bookcard
-            key={book.bookId}
-            book={book}
-            btnAddCart={true}
-            displayPrice={true}
-            displayLanguage={false}
-            displayQuantitySold={false}
-            displayPubDate={true}
-          />
-        ))}
+        {booksByPublisher
+          ? booksByPublisher.map((book) => (
+              <Bookcard
+                key={book.bookId}
+                book={book}
+                btnAddCart={true}
+                displayPrice={true}
+                displayLanguage={false}
+                displayQuantitySold={false}
+                displayPubDate={true}
+              />
+            ))
+          : null}
       </div>
     </div>
   );

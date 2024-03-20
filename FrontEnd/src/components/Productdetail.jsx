@@ -13,8 +13,7 @@ import { Button } from '@/components/ui/button';
 import { useContext } from 'react';
 import { ECommerceContext } from '../Context/ECommerceContext';
 import { useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate } from 'react-router-dom';
 
 const Productdetail = ({ book }) => {
   const { ratings, books, setBooks } = useContext(ECommerceContext);
@@ -64,11 +63,10 @@ const Productdetail = ({ book }) => {
       }
       return b;
     });
-    console.log(updatedBooks);
     setBooks(updatedBooks);
 
     if (!authenticatedUser) {
-      navigate("/login");
+      navigate('/login');
     }
   };
   useEffect(() => {
@@ -136,26 +134,26 @@ const Productdetail = ({ book }) => {
           </div>
           <div className="text-4xl font-bold">${book.price}</div>
           <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Button size="lg">Agregar al carrito</Button>
+            <Button size="lg">Agregar al carrito</Button>
 
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleAddToWishList();
-                }}
-              >
-                {book.wishlist ? (
-                  <HeartIcon className="w-4 h-4 mr-2 fill-primary" />
-                ) : (
-                  <HeartIcon className="w-4 h-4 mr-2" />
-                )}
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={(e) => {
+                e.preventDefault();
+                handleAddToWishList();
+              }}
+            >
+              {book.wishlist ? (
+                <HeartIcon className="w-4 h-4 mr-2 fill-primary" />
+              ) : (
+                <HeartIcon className="w-4 h-4 mr-2" />
+              )}
 
-                {book.wishlist
-                  ? "Quitar de lista de deseos"
-                  : "Agregar a lista de deseos"}
-              </Button>
+              {book.wishlist
+                ? 'Quitar de lista de deseos'
+                : 'Agregar a lista de deseos'}
+            </Button>
           </div>
         </form>
       </div>

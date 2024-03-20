@@ -1,11 +1,14 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { Link, NavLink } from "react-router-dom";
+import { Link,  NavLink } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { useContext } from 'react';
+import { ECommerceContext } from '../Context/ECommerceContext';
 
 export default function Navbar({ isAdmin }) {
+  const { setSearchBooks } = useContext(ECommerceContext);
   return (
     <>
       <div className="flex-col flex px-4 md:px-20">
@@ -20,9 +23,13 @@ export default function Navbar({ isAdmin }) {
             <div className="hidden md:flex w-full max-w-sm items-center border border-gray-300 rounded-lg px-2.5">
               <SearchIcon className="h-4 w-4 mr-2.5" />
               <Input
+                id="searchBooks"
                 className="w-full border-0"
                 placeholder="Busca aquí"
                 type="search"
+                onChange={(e) => {
+                  setSearchBooks(e.target.value);
+                }}
               />
             </div>
             <div className="flex gap-8">
