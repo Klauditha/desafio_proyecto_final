@@ -54,7 +54,7 @@ const CartItem = () => {
                   {book.title}
                 </h2>
                 <h2 className="text-2xl font-semibold text-center md:text-left">
-                  $ {book.price}
+                  $ {book.price.toLocaleString("es-CL")}
                 </h2>
               </div>
             </div>
