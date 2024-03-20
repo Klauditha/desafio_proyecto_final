@@ -1,10 +1,13 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { Link,NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
+import { useContext } from 'react';
+import { ECommerceContext } from '../Context/ECommerceContext';
 
 export default function Navbar({ isAdmin }) {
+  const { setSearchBooks } = useContext(ECommerceContext);
   return (
     <>
       <div className="flex-col flex px-4 md:px-20">
@@ -19,9 +22,13 @@ export default function Navbar({ isAdmin }) {
             <div className="hidden md:flex w-full max-w-sm items-center border border-gray-300 rounded-lg px-2.5">
               <SearchIcon className="h-4 w-4 mr-2.5" />
               <Input
+                id="searchBooks"
                 className="w-full border-0"
                 placeholder="Busca aquí"
                 type="search"
+                onChange={(e) => {
+                  setSearchBooks(e.target.value);
+                }}
               />
             </div>
             <div className="flex gap-8">
@@ -42,18 +49,32 @@ export default function Navbar({ isAdmin }) {
         <div>
           <nav className="flex items-center justify-between py-4 px-4 border-b bg-white md:px-6 dark:bg-gray-950 border-gray-100 dark:border-gray-800">
             <div className="hidden md:flex flex-1 justify-center gap-8 text-sm font-medium">
-              <NavLink to="/news" 
-              className={({ isActive }) => (isActive ? 'font-bold text-blue-900 dark:text-gray-50 ' : 'text-gray-500 dark:text-gray-500')}>
+              <NavLink
+                to="/news"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'font-bold text-blue-900 dark:text-gray-50 '
+                    : 'text-gray-500 dark:text-gray-500'
+                }
+              >
                 Novedades
               </NavLink>
               <NavLink
-                className={({ isActive }) => (isActive ? 'font-bold text-blue-900 dark:text-gray-50 ' : 'text-gray-500 dark:text-gray-500')}
+                className={({ isActive }) =>
+                  isActive
+                    ? 'font-bold text-blue-900 dark:text-gray-50 '
+                    : 'text-gray-500 dark:text-gray-500'
+                }
                 to="/bestselling"
               >
                 Lo + vendido
               </NavLink>
               <NavLink
-                className={({ isActive }) => (isActive ? 'font-bold text-blue-900 dark:text-gray-50 ' : 'text-gray-500 dark:text-gray-500')}
+                className={({ isActive }) =>
+                  isActive
+                    ? 'font-bold text-blue-900 dark:text-gray-50 '
+                    : 'text-gray-500 dark:text-gray-500'
+                }
                 to="/publishers"
               >
                 Editoriales
@@ -61,19 +82,31 @@ export default function Navbar({ isAdmin }) {
               {isAdmin && (
                 <>
                   <NavLink
-                    className={({ isActive }) => (isActive ? 'font-bold text-blue-900 dark:text-gray-50 ' : 'text-gray-500 dark:text-gray-500')}
+                    className={({ isActive }) =>
+                      isActive
+                        ? 'font-bold text-blue-900 dark:text-gray-50 '
+                        : 'text-gray-500 dark:text-gray-500'
+                    }
                     to="/authors"
                   >
                     Autores
                   </NavLink>
                   <NavLink
-                    className={({ isActive }) => (isActive ? 'font-bold text-blue-900 dark:text-gray-50 ' : 'text-gray-500 dark:text-gray-500')}
+                    className={({ isActive }) =>
+                      isActive
+                        ? 'font-bold text-blue-900 dark:text-gray-50 '
+                        : 'text-gray-500 dark:text-gray-500'
+                    }
                     to="/genres"
                   >
                     Géneros
                   </NavLink>
                   <NavLink
-                    className={({ isActive }) => (isActive ? 'font-bold text-blue-900 dark:text-gray-50 ' : 'text-gray-500 dark:text-gray-500')}
+                    className={({ isActive }) =>
+                      isActive
+                        ? 'font-bold text-blue-900 dark:text-gray-50 '
+                        : 'text-gray-500 dark:text-gray-500'
+                    }
                     to="/managerbooks"
                   >
                     Gestión de libros
@@ -82,7 +115,11 @@ export default function Navbar({ isAdmin }) {
               )}
               {!isAdmin && (
                 <NavLink
-                className={({ isActive }) => (isActive ? 'font-bold text-blue-900 dark:text-gray-50 ' : 'text-gray-500 dark:text-gray-500')}
+                  className={({ isActive }) =>
+                    isActive
+                      ? 'font-bold text-blue-900 dark:text-gray-50 '
+                      : 'text-gray-500 dark:text-gray-500'
+                  }
                   to="/wishlist"
                 >
                   Lista de deseos
