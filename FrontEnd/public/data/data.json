@@ -392,6 +392,13 @@
       "book_id": 3,
       "quantity": 1,
       "deleted": false
+    },
+    {
+      "cart_item_id": 9,
+      "cart_id": 3,
+      "book_id": 5,
+      "quantity": 2,
+      "deleted": false
     }
   ],
   "orders": [
