@@ -7,14 +7,14 @@ import RequireAuth from '../RequireAuth';
 
 const Wishlist = () => {
   const { books } = useContext(ECommerceContext);
-  const booksWishlist = books.filter((book) => book.wishlist == true);
-
+  const booksWishlist = books ?  books.filter((book) => book.wishlist == true) : [];
+  
   return (
     <RequireAuth>
       <div>
         <h1 className="font-bold text-xl text-center">Lista de deseos</h1>
         <div className="grid grid-auto-cols gap-8 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 w-full justify-space-between mt-8">
-          {booksWishlist.map((book) => (
+          {booksWishlist ? booksWishlist.map((book) => (
             <Bookcard
               key={book.bookId}
               book={book}
@@ -24,7 +24,7 @@ const Wishlist = () => {
               displayQuantitySold={false}
               displayPubDate={true}
             />
-          ))}
+          )): <p>No se encontraron resultados</p>}
         </div>
       </div>
     </RequireAuth>
