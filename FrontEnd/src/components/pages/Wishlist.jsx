@@ -3,11 +3,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { ECommerceContext } from '../../Context/ECommerceContext';
 import Bookcard from '../Bookcard';
-import RequireAuth from "../RequireAuth";
+import RequireAuth from '../RequireAuth';
 
 const Wishlist = () => {
   const { books } = useContext(ECommerceContext);
-  console.log(books);
   const booksWishlist = books.filter((book) => book.wishlist == true);
 
   return (

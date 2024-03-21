@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
-import { ECommerceContext } from "@/Context/ECommerceContext";
-import { Button } from "./ui/button";
+import { useContext } from 'react';
+import { ECommerceContext } from '@/Context/ECommerceContext';
+import { Button } from './ui/button';
 
 export default function CartTotal() {
   const { cart_items, getBookDetailsById } = useContext(ECommerceContext);
@@ -17,7 +17,7 @@ export default function CartTotal() {
     <div className="flex flex-col md:flex-row items-center gap-4 justify-center md:justify-end px-4 md:px-20 ">
       <h1 className="font-bold text-2xl">Total</h1>
       <h1 className="font-bold text-2xl">
-        $ {totalPrice.toLocaleString("es-CL")}
+        $ {totalPrice.toLocaleString('es-CL')}
       </h1>
       <Button>Continuar con el pago</Button>
     </div>

@@ -10,15 +10,17 @@ import {
   Select,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { ECommerceContext } from '../Context/ECommerceContext';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Productdetail = ({ book }) => {
-  const { ratings, books, setBooks } = useContext(ECommerceContext);
+  const { ratings, books, setBooks, addCartLocal, authenticatedUser } =
+    useContext(ECommerceContext);
   const navigate = useNavigate();
-  const { authenticatedUser } = useContext(ECommerceContext);
+  let [quantity, setQuantity] = useState();
+
   const getRatingsByBook = (bookId, ratings) => {
     const ratingsByBook = ratings.filter(
       (rating) => rating.bookId.toString() === bookId
@@ -69,6 +71,10 @@ const Productdetail = ({ book }) => {
       navigate('/login');
     }
   };
+
+  const handleAddToCart = () => {
+    addCartLocal(book,quantity ? quantity : 1);
+  };
   useEffect(() => {
     setRating();
   }, [book.bookId]);
@@ -115,26 +121,31 @@ const Productdetail = ({ book }) => {
             <Label className="text-base" htmlFor="quantity">
               Cantidad
             </Label>
-            <Select defaultValue="1" id="quantitySelect">
-              <SelectTrigger className="w-24">
-                <SelectValue placeholder="Select" />
-              </SelectTrigger>
-              <SelectContent>
-                {setArrayQuantity() ? (
-                  setArrayQuantity().map((item) => (
-                    <SelectItem key={item} value={item.toString()}>
-                      {item}
-                    </SelectItem>
-                  ))
-                ) : (
-                  <SelectItem value="1">No hay disponibilidad</SelectItem>
-                )}
-              </SelectContent>
-            </Select>
+            <select
+              id="quantitySelect"
+              className="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              onChange={(event) => {
+                setQuantity(event.target.value);
+              }}
+            >
+              {setArrayQuantity().map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="text-4xl font-bold">${book.price}</div>
           <div className="flex flex-col gap-2 min-[400px]:flex-row">
-            <Button size="lg">Agregar al carrito</Button>
+            <Button
+              size="lg"
+              onClick={(e) => {
+                e.preventDefault();
+                handleAddToCart();
+              }}
+            >
+              Agregar al carrito
+            </Button>
 
             <Button
               size="lg"

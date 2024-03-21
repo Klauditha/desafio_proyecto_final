@@ -23,11 +23,12 @@ const Bookcard = ({
   displayPubDate,
 }) => {
   const navigate = useNavigate();
-  const { addToCart } = useContext(ECommerceContext);
+  const { addToCart,addCartLocal } = useContext(ECommerceContext);
   const { setWishlist } = useContext(ECommerceContext);
 
   const handleAddToCart = () => {
-    addToCart(book);
+    addCartLocal(book, );
+    //addToCart(book);
   };
 
   return (
@@ -79,7 +80,7 @@ const Bookcard = ({
             <Button
               size="sm"
               className="bg-blue-500 hover:bg-blue-600 mt-1"
-              onClick={() => handleAddToCart(book)}
+              onClick={(e) => handleAddToCart(book)}
             >
               Agregar al carrito
             </Button>
