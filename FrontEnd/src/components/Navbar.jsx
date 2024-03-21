@@ -6,9 +6,11 @@ import { Input } from './ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { useContext } from 'react';
 import { ECommerceContext } from '../Context/ECommerceContext';
+import { Icon } from '@radix-ui/react-select';
 
-export default function Navbar({ isAdmin }) {
+export default function Navbar({ isAdmin, dataUser }) {
   const { setSearchBooks } = useContext(ECommerceContext);
+
   return (
     <>
       <div className="flex-col flex px-4 md:px-20">
@@ -33,9 +35,39 @@ export default function Navbar({ isAdmin }) {
               />
             </div>
             <div className="flex gap-8">
-              <Button className="hidden md:flex " asChild>
-                <Link to="/login">Inicia sesión</Link>
-              </Button>
+              {dataUser ? (
+                <NavLink
+                  to="/profile"
+                  className={({ isActive }) =>
+                    isActive
+                      ? 'font-bold text-blue-900 dark:text-gray-50 mt-2'
+                      : 'font-bold text-green-700 dark:text-green-500 mt-2'
+                  }
+                >
+                  <div className="hidden md:flex gap-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                      />
+                    </svg>
+                    {dataUser.first_name} {dataUser.last_name}
+                  </div>
+                </NavLink>
+              ) : (
+                <Button className="hidden md:flex  " asChild>
+                  <Link to="/login">Inicia sesión</Link>
+                </Button>
+              )}
+
               <Link
                 className="ml-auto flex items-center gap-2 text-mm font-medium"
                 to="/cart"
@@ -43,6 +75,18 @@ export default function Navbar({ isAdmin }) {
                 <span className="hidden md:flex">Carrito</span>
                 <ShoppingCartIcon className="h-4 w-4 fill-current" />
               </Link>
+              {dataUser ? (
+                <Button className="hidden md:flex md:bg-gray-700" asChild>
+                  <Link
+                    onClick={() => {
+                      sessionStorage.clear();
+                      window.location.href = '/';
+                    }}
+                  >
+                    Cerrar sesión
+                  </Link>
+                </Button>
+              ) : null}
             </div>
           </nav>
         </div>

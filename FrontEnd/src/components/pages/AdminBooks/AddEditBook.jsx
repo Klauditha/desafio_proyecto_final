@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-case-declarations */
 /* eslint-disable no-unused-vars */
@@ -104,7 +105,7 @@ const AddEditBook = () => {
             booksAuthors.push(newBookAuthor);
             bookGenres.push(newBookGenre);
 
-            alert('Libro agregado exitosamente');
+            alertify.success("Libro agregado exitosamente");
             navigate('/managerbooks');
 
             break;
@@ -149,14 +150,15 @@ const AddEditBook = () => {
             booksAuthors[index] = bookAuthorFound;
             bookGenres[index] = bookGenreFound;
 
-            alert('Libro editado exitosamente');
+            alertify.success("Libro editado exitosamente");
+            
             navigate('/managerbooks');
             break;
           default:
             break;
         }
       } catch (error) {
-        alert('Error al agregar el libro. Intenta de nuevo');
+        alertify.error('Error al agregar el libro. Intenta de nuevo');
       }
     }
   };

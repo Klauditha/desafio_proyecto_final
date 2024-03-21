@@ -1,15 +1,15 @@
 /* eslint-disable no-unused-vars */
-import React, { useContext } from "react";
-import { ECommerceContext } from "@/Context/ECommerceContext";
-import { ECommerceProvider } from "@/Context/ECommerceProvider";
-import ECommerceRoutes from "./components/Routes/ECommerceRoutes";
-import Login from "@/components/Login";
-import Register from "./components/Register";
-import Navbar from "./components/Navbar";
-import Productdetail from "./components/Productdetail";
-import Loginpage from "./components/pages/Loginpage";
-import Topnavbar from "./components/Topnavbar";
-import Footer from "./components/Footer";
+import React, { useContext } from 'react';
+import { ECommerceContext } from '@/Context/ECommerceContext';
+import { ECommerceProvider } from '@/Context/ECommerceProvider';
+import ECommerceRoutes from './components/Routes/ECommerceRoutes';
+import Login from '@/components/Login';
+import Register from './components/Register';
+import Navbar from './components/Navbar';
+import Productdetail from './components/Productdetail';
+import Loginpage from './components/pages/Loginpage';
+import Topnavbar from './components/Topnavbar';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -22,10 +22,11 @@ function App() {
 function AppContent() {
   const { users, authenticatedUser } = useContext(ECommerceContext);
   const isAdmin = authenticatedUser && authenticatedUser.admin;
+  const dataUser = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')) : null;
 
   return (
     <div className="flex-col space-y-8">
-      <Navbar isAdmin={isAdmin} />
+      <Navbar isAdmin={isAdmin} dataUser={dataUser}  />
       <ECommerceRoutes />
       <Footer />
     </div>
