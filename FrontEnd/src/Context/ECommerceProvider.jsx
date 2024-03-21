@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const ECommerceProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [cart, setCart] = useState([]);
   const [cart_items, setCartItems] = useState([]);
@@ -18,8 +19,6 @@ export const ECommerceProvider = ({ children }) => {
   const [orderItems, setOrderItems] = useState([]);
   const [authenticatedUser, setAuthenticatedUser] = useState(null);
   const [orders, setOrders] = useState([]);
-
-  const navigate = useNavigate();
   const [searchBooks, setSearchBooks] = useState('');
   const [searchPublishers, setSearchPublishers] = useState('');
   const [publishers, setPublishers] = useState(null);
@@ -296,11 +295,12 @@ export const ECommerceProvider = ({ children }) => {
     setBooks(books);
   };
   const handleLogin = (user) => {
-    localStorage.setItem('user', JSON.stringify(user));
+    sessionStorage.setItem('user', JSON.stringify(user));
     setAuthenticatedUser(user);
   };
 
   const handleLogout = () => {
+    sessionStorage.removeItem('user');
     setAuthenticatedUser(null);
   };
 
