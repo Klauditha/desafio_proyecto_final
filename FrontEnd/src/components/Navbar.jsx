@@ -37,7 +37,6 @@ export default function Navbar({ isAdmin, dataUser }) {
             <div className="flex gap-8">
               {dataUser ? (
                 <NavLink
-                  to="/profile"
                   className={({ isActive }) =>
                     isActive
                       ? 'font-bold text-blue-900 dark:text-gray-50 mt-2'
