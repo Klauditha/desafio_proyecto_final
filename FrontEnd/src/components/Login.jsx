@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useContext, useState } from 'react';
 import { ECommerceContext } from '@/Context/ECommerceContext';
 import { useNavigate } from 'react-router-dom';
@@ -47,11 +48,12 @@ export default function Login() {
       handleLogin(user);
       setError('');
       setLoginMessage('Ingreso exitoso.');
+      alertify.success("Ingreso exitoso. Bienvenido");
       setTimeout(() => {
-        alert('Bienvenido ');
         navigate('/');
-      }, 3000);
+      }, 2000);
     } else {
+      alertify.error('Correo o contraseña invalidos. Por favor intente nuevamente');
       setError('Correo o contraseña invalidos. Por favor intente nuevamente.');
       setLoginMessage('');
     }

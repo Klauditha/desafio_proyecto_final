@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
-    <div className="bg-slate-300 w-screen flex flex-col md:flex-row gap-16 justify-around py-4 items-center">
-      <div className="flex flex-col gap-2">
-        <h2 className="text-xl font-bold text-primary">Síguenos</h2>
+    <div className="bg-slate-300 w-screen flex flex-col md:flex-row sm:flex-col xl:gap-8 sm:gap-8 md:gap-8 gap-4 justify-around sm:py-4 py-2  items-center">
+      <div className="flex flex-col gap-2 sm:gap-0">
+        <h2 className="md:text-xl sm:text-sm font-bold text-primary ">
+          Síguenos
+        </h2>
         <div className="flex justify-between">
           <Link to="http://www.facebook.com/tintaaustral">
             <FacebookIcon />
@@ -17,7 +19,7 @@ export default function Footer() {
           </Link>
         </div>
       </div>
-      <div className="text-sm font-bold text-primary items-center flex flex-col gap-2">
+      <div className="text-sm font-bold text-primary items-center flex flex-col gap-0 sm:gap-4">
         <Link className="text-primary dark:text-gray-50" to="/new">
           <h3>Novedades</h3>
         </Link>

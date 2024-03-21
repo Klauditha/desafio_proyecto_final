@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import { ECommerceContext } from '@/Context/ECommerceContext';
 import { useState, useEffect } from 'react';
@@ -61,7 +62,8 @@ export const ECommerceProvider = ({ children }) => {
   };
 
   const addCartLocal = (book, quantity) => {
-    if (authenticatedUser) {
+    let user = JSON.parse(sessionStorage.getItem('user'));
+    if (user) {
       try {
         const newCart = {
           cart_item_id: cart_items.length + 1,
@@ -72,8 +74,10 @@ export const ECommerceProvider = ({ children }) => {
         };
 
         cart_items.push(newCart);
+        alertify.success("Libro agregado al carrito");
       } catch (error) {
         console.log(error);
+        alertify.error("Error al agregar libro al carrito");
       }
     } else {
       navigate('/login');
@@ -113,7 +117,9 @@ export const ECommerceProvider = ({ children }) => {
 
   const fetchCartItems = async () => {
     try {
-      if (!authenticatedUser) {
+      let user = JSON.parse(sessionStorage.getItem('user'));
+
+      if (!user) {
         console.error('Usuario no autentificado.');
         return;
       }
@@ -122,7 +128,7 @@ export const ECommerceProvider = ({ children }) => {
       const cartsResponse = await fetch('data/data.json');
       const data = await cartsResponse.json();
       const userCart = data.carts.find(
-        (cart) => cart.user_id === authenticatedUser.user_id
+        (cart) => cart.user_id === user.user_id
       );
 
       if (!userCart) {
@@ -396,7 +402,8 @@ export const ECommerceProvider = ({ children }) => {
       setBooks();
       removeFromCart();
       fetchData().then((booksData) => {
-        if (authenticatedUser) {
+        let user = JSON.parse(sessionStorage.getItem('user'));
+        if (user) {
           console.log('Fetching cart items...');
           fetchCartItems();
         }
