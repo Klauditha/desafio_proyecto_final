@@ -7,6 +7,9 @@ const cartRouter = require('./cart.router');
 const ordersRouter = require('./orders.router');
 const ratingRouter = require('./rating.router');
 const authorRouter = require('./author.router');
+const genreRouter = require('./genre.router');
+const bookGenreRouter = require('./booksGenre.router');
+const bookAuthorRouter = require('./booksAuthor.router');
 
 //middleware
 router.use('/', loginRouter);
@@ -16,5 +19,8 @@ router.use('/cart', cartRouter);
 router.use('/orders', ordersRouter);
 router.use('/rating', ratingRouter);
 router.use('/author', authorRouter);
+router.use('/genre', genreRouter);
+router.use('/bookGenre', bookGenreRouter);
+router.use('/bookAuthor', bookAuthorRouter);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 ##Crear autor
 
-POST http://localhost:3000/autor
+POST http://localhost:3000/author/
 Content-Type: application/json
 
 {
@@ -10,12 +10,22 @@ Content-Type: application/json
 
 ###Obtener autor
 
-GET http://localhost:3000/autor
+GET http://localhost:3000/author/3
 Content-Type: application/json
 
 {
   
 }
+
+###Obtener autor
+
+GET http://localhost:3000/bookAuthor/3
+Content-Type: application/json
+
+{
+  
+}
+
 
 ###Modificar autor
 

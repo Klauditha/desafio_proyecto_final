@@ -105,7 +105,7 @@ const { check } = require('express-validator');
  *                   type: object
  *                   default: null
  */
-router.get('/:authorId', authorController.getAuthor);
+router.get('/:author_id', authorController.getAuthor);
 
 /**
  * @swagger
@@ -168,7 +168,9 @@ router.get('/:authorId', authorController.getAuthor);
  *                   type: object
  *                   default: null
  */
+/*
 router.get('/all', authorController.getAuthors);
+*/
 
 /**
  * @swagger
@@ -246,12 +248,13 @@ router.get('/all', authorController.getAuthors);
  *                   type: object
  *                   default: null
  */
+/*
 router.post(
   '/',
   [check('name', 'The name is required').not().isEmpty(), validarCampos],
   authMiddleware,
   authorController.createAuthor
-);
+);*/
 
 /**
  * @swagger
@@ -332,12 +335,13 @@ router.post(
  *                   type: object
  *                   default: null
  */
+/*
 router.put(
   '/:authorId',
   [check('name', 'The name is required').not().isEmpty(), validarCampos],
   authMiddleware,
   authorController.updateAuthorById
-);
+);*/
 
 /**
  * @swagger
@@ -408,6 +412,7 @@ router.put(
  *                   type: object
  *                   default: null
  */
-router.get('/:authorId', authMiddleware, authorController.deleteAuthorById);
+/*
+router.get('/:authorId', authMiddleware, authorController.deleteAuthorById);*/
 
 module.exports = router;

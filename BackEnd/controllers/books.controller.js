@@ -1,15 +1,21 @@
 const BookService = require('../services/book.services');
+const GenreService = require('../services/genre.service');
+const BookGenreService = require('../services/bookGenre.service');
+const AuthorService = require('../services/author.service');
+const BookAuthorService = require('../services/bookAuthor.service');
 const { bookSchema } = require('../schemas/book.schema');
 const boom = require('@hapi/boom');
 
 const service = new BookService();
-
+const genreService = new GenreService();
+const bookGenreService = new BookGenreService();
+const authorService = new AuthorService();
+const bookAuthorService = new BookAuthorService();
 
 const createBook = (req, res, next) => {
   try {
     const body = req.body;
     const newBook = service.create(body);
-    console.log(newBook);
     res.status(201).json({
       status: true,
       message: 'New book created',
@@ -18,7 +24,6 @@ const createBook = (req, res, next) => {
       },
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       status: false,
       message: error.message,
@@ -27,33 +32,39 @@ const createBook = (req, res, next) => {
   }
 };
 
+/**
+ * Obtiene un libro por su id con sus generos y autores
+ */
 const getBook = async (req, res, next) => {
   try {
-    const { bookId } = req.params;
-    if (['{bookId}', ':bookId', '', null, undefined, ' '].includes(bookId)) {
-      throw boom.badRequest('Parameter bookId is invalid or not provided');
+    const { book_id } = req.params;
+    const book = await service.findOne(book_id);
+    const bookGenre = await bookGenreService.findOneByBook(book.book_id);
+    if (bookGenre) {
+      genre = await genreService.findOne(bookGenre.book_id);
     }
-    if (['1', '11', '21'].includes(bookId)) {
-      throw boom.notFound('Book not found');
+    const bookAuthor = await bookAuthorService.findOneByBook(book.book_id);
+    if (bookAuthor) {
+      author = await authorService.findOne(bookAuthor.book_id);
     }
-    const book = await service.findOne(bookId);
+
     res.status(200).json({
       status: true,
       message: 'Book found',
       data: {
-        book: book,
+        book,
+        genre: genre ?? null,
+        author: author ?? null,
       },
     });
   } catch (error) {
-    let codeError = error.isBoom ? error.output.statusCode : 500;
-    res.status(codeError).json({
+    res.status(500).json({
       status: false,
       message: error.message,
       data: null,
     });
   }
 };
-
 
 const updateBookById = (req, res, next) => {
   try {
@@ -82,11 +93,10 @@ const getBooksByCategory = (req, res, next) => {
 const getAllBooks = (req, res, next) => {
   try {
     res.status(200).send('Libros');
-  }
-  catch (error) {
+  } catch (error) {
     res.status(500).send(error);
   }
-}
+};
 
 module.exports = {
   getBook,
@@ -94,5 +104,6 @@ module.exports = {
   createBook,
   deleteBookById,
   updateBookById,
-  getAllBooks
+  getAllBooks,
+
 };

@@ -5,6 +5,8 @@ const { validarCampos } = require('../middlewares/validation.handler.js');
 const { check } = require('express-validator');
 const { authMiddleware } = require('../middlewares/auth.handler.js');
 
+router.get('/:book_id', booksController.getBook);
+
 /**
  * @swagger
  * components:
@@ -71,7 +73,7 @@ const { authMiddleware } = require('../middlewares/auth.handler.js');
  * tags:
  *   name: Book
  *   description: The Book managing API
- * /book/{bookId}:
+ * /book/{book_id}:
  *   put:
  *     summary: Update the book
  *     tags: [Book]
@@ -169,6 +171,7 @@ const { authMiddleware } = require('../middlewares/auth.handler.js');
  *                   type: object
  *                   default: null
  */
+/*
 router.post(
   '/:bookId',
   [
@@ -185,7 +188,7 @@ router.post(
   ],
   authMiddleware,
   booksController.updateBookById
-);
+);*/
 
 /**
  * @swagger
@@ -250,7 +253,7 @@ router.post(
  *                   default: null
  *
  */
-router.get('/:bookId', booksController.getBook);
+//router.get('/:bookId', booksController.getBook);
 
 /**
  * tags:
@@ -451,6 +454,7 @@ router.get('/:bookId', booksController.getBook);
  *                   default: null
  *
  */
+/*
 router.post(
   '/',
   [
@@ -469,7 +473,7 @@ router.post(
   ],
   authMiddleware,
   booksController.createBook
-);
+);*/
 /**
  * tags:
  *   name: Book
@@ -608,7 +612,7 @@ response: { estado : boolean , message : string , data : object libro }
  *                   type: object
  *                   default: null
  */
-router.delete('/:bookId', authMiddleware, booksController.deleteBookById);
+//router.delete('/:bookId', authMiddleware, booksController.deleteBookById);
 
 /**
  * @swagger
@@ -673,7 +677,7 @@ router.delete('/:bookId', authMiddleware, booksController.deleteBookById);
  *                   default: null
  *
  */
-router.get('/:bookId', booksController.getBook);
+
 
 
 /**
@@ -771,9 +775,10 @@ router.get('/:bookId', booksController.getBook);
  *                   default: null
  *
  */
+/*
 router.get(
   '/all?limit={limit}&page={page}&orderBy={orderBy}/filter?title={title}&genre={genre}&author={author}',
   booksController.getAllBooks
-);
+);*/
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const { booksAuthorController } = require('../controllers/index.js');
 /**
  * @swagger
  * components:
@@ -32,5 +32,6 @@ const router = express.Router();
  *         quantity: 1
  */
 
+router.get('/:book_id', booksAuthorController.getBookAuthorByIdBook);
 
 module.exports = router
