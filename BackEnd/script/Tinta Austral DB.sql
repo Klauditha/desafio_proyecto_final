@@ -1,3 +1,9 @@
+-- Creacion de database
+
+CREATE DATABASE TintaAustral;
+
+-- Creacion de tablas
+
 CREATE TABLE "users"(
     "user_id" INTEGER NOT NULL,
     "username" VARCHAR(60) NOT NULL,
