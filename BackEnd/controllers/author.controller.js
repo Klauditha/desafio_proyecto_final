@@ -23,6 +23,7 @@ const createAuthor = (req, res, next) => {
   }
 };
 
+/**Obtener un autor por su id */
 const getAuthor = async (req, res, next) => {
   try {
     const { author_id } = req.params;
@@ -35,7 +36,8 @@ const getAuthor = async (req, res, next) => {
       },
     });
   } catch (error) {
-    res.status(500).json({
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
       status: false,
       message: error.message,
       data: null,
