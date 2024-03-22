@@ -1,18 +1,21 @@
 const BookService = require('../services/book.services');
 const GenreService = require('../services/genre.service');
 const BookGenreService = require('../services/bookGenre.service');
+const AuthorService = require('../services/author.service');
+const BookAuthorService = require('../services/bookAuthor.service');
 const { bookSchema } = require('../schemas/book.schema');
 const boom = require('@hapi/boom');
 
 const service = new BookService();
 const genreService = new GenreService();
 const bookGenreService = new BookGenreService();
+const authorService = new AuthorService();
+const bookAuthorService = new BookAuthorService();
 
 const createBook = (req, res, next) => {
   try {
     const body = req.body;
     const newBook = service.create(body);
-    console.log(newBook);
     res.status(201).json({
       status: true,
       message: 'New book created',
@@ -29,21 +32,20 @@ const createBook = (req, res, next) => {
   }
 };
 
+/**
+ * Obtiene un libro por su id con sus generos y autores
+ */
 const getBook = async (req, res, next) => {
-  console.log('getBook');
   try {
-    //console.log(req.params);
     const { book_id } = req.params;
-    //const genre = null;
     const book = await service.findOne(book_id);
-    //console.log(book);
-    //console.log(bookGenre);
     const bookGenre = await bookGenreService.findOneByBook(book.book_id);
-    console.log(bookGenre);
-    
     if (bookGenre) {
       genre = await genreService.findOne(bookGenre.book_id);
-      console.log(bookGenre);
+    }
+    const bookAuthor = await bookAuthorService.findOneByBook(book.book_id);
+    if (bookAuthor) {
+      author = await authorService.findOne(bookAuthor.book_id);
     }
 
     res.status(200).json({
@@ -52,6 +54,7 @@ const getBook = async (req, res, next) => {
       data: {
         book,
         genre: genre ?? null,
+        author: author ?? null,
       },
     });
   } catch (error) {

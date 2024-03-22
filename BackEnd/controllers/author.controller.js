@@ -1,6 +1,5 @@
 const boom = require('@hapi/boom');
 const AuthorService = require('../services/author.service');
-
 const service = new AuthorService();
 
 const createAuthor = (req, res, next) => {
@@ -24,11 +23,23 @@ const createAuthor = (req, res, next) => {
   }
 };
 
-const getAuthor = (req, res, next) => {
+const getAuthor = async (req, res, next) => {
   try {
-    res.status(200).send('Autor obtenido');
+    const { author_id } = req.params;
+    const author = await service.findOne(author_id);
+    res.status(200).json({
+      status: true,
+      message: 'Author found',
+      data: {
+        author,
+      },
+    });
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json({
+      status: false,
+      message: error.message,
+      data: null,
+    });
   }
 };
 
@@ -56,23 +67,22 @@ const getAuthors = (req, res, next) => {
       message: 'Authors found',
       data: {
         authors,
-      }
+      },
     });
-  }
-  catch (error) {
+  } catch (error) {
     let codeError = error.isBoom ? error.output.statusCode : 500;
     res.status(codeError).json({
       status: false,
       message: error.message,
       data: null,
-    })
+    });
   }
-}
+};
 
 module.exports = {
-    createAuthor,
-    getAuthor,
-    updateAuthorById,
-    deleteAuthorById,
-    getAuthors
+  createAuthor,
+  getAuthor,
+  updateAuthorById,
+  deleteAuthorById,
+  getAuthors,
 };

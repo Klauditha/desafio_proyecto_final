@@ -3,6 +3,12 @@ const { Model, DataTypes, Sequelize } = require('sequelize');
 const BOOK_AUTHOR_TABLE = 'books_authors';
 
 const BookAuthorSchema = {
+    bookauthor_id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+    },
     book_id: {
         allowNull: false,
         type: DataTypes.INTEGER,
