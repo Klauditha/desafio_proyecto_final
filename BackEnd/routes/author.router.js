@@ -12,33 +12,23 @@ const { check } = require('express-validator');
  *     Author:
  *       type: object
  *       required:
- *        - authorId
+ *        - author_id
  *        - name
- *        - state
- *        - createdAt
- *        - updatedAt
+ *        - deleted
  *       properties:
- *         authorId:
+ *         author_id:
  *           type: number
  *           description: The id of the author
  *         name:
  *           type: string
  *           description: The name of the author
- *         state:
+ *         deleted:
  *           type: boolean
  *           description: The state of the author
- *         createdAt:
- *           type: date
- *           description: The creation date of the author
- *         updatedAt:
- *           type: date
- *           description: The update date of the author
  *       example:
- *         authorId: 1
- *         name: Gabriel Garcia Marquez
- *         state: true
- *         createdAt: 2022-01-01
- *         updatedAt: 2022-01-01
+ *         author_id: 1
+ *         name: John
+ *         deleted: false
  */
 
 /**
@@ -46,13 +36,13 @@ const { check } = require('express-validator');
  * tags:
  *   name: Author
  *   description: The Author managing API
- * /author/{authorId}:
+ * /author/{author_id}:
  *   get:
  *     summary: Get the author
  *     tags: [Author]
  *     parameters:
  *       - in: path
- *         name: authorId
+ *         name: author_id
  *     responses:
  *       200:
  *         description: The author was found
