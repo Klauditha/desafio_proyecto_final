@@ -8,9 +8,18 @@ Content-Type: application/json
 }
 
 
-### Obtener libro - Funcionando !!
+###Obtener libro
 
-GET http://localhost:3000/book/11
+GET http://localhost:3000/genre/11
+Content-Type: application/json
+
+{
+ 
+}
+
+###Obtener libro
+
+GET http://localhost:3000/bookGenre/11
 Content-Type: application/json
 
 {

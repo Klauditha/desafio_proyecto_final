@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
+const { booksGenreController } = require('../controllers/index.js');
+const { check } = require('express-validator');
+
 /**
  * @swagger
  * components:
@@ -21,5 +24,7 @@ const router = express.Router();
  *         bookId: 1
  *         genreId: 1
  */
+
+router.get('/:book_id', booksGenreController.getBookGenreByIdBook);
 
 module.exports = router

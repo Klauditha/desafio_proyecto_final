@@ -4,34 +4,48 @@ const GenreService = require('../services/genre.service');
 const service = new GenreService();
 
 const createGenre = (req, res, next) => {
+  
+};
+
+const getGenre = async (req, res, next) => {
+ try {
+  const { genre_id } = req.params;
+  const genre = await service.findOne(genre_id);
+  res.status(200).json({
+    status: true,
+    message: 'Genre found',
+    data: {
+      genre,
+    },
+  })
+ } catch (error) {
+  res.status(500).json({
+    status: false,
+    message: error.message,
+    data: null,
+  })
+ }
+};
+
+const getGenreByIdBook = (req, res, next) => {
   try {
-    const body = req.body;
-    const newGenre = service.create(body);
+    const { book_id } = req.params;
+    const genre = service.getGenreByIdBook(book_id);
     res.status(200).json({
       status: true,
-      message: 'New genre created',
+      message: 'Genre found',
       data: {
-        author: newGenre,
+        genre,
       },
     });
   } catch (error) {
-    let codeError = error.isBoom ? error.output.statusCode : 500;
-    res.status(codeError).json({
+    res.status(500).json({
       status: false,
       message: error.message,
       data: null,
-    });
+    })
   }
-};
-
-const getGenre = (req, res, next) => {
-  try {
-    res.status(200).send('Genero obtenido');
-  } catch (error) {
-    res.status(500).send(error);
-  }
-};
-
+}
 const updateGenreById = (req, res, next) => {
   try {
     res.status(200).send('Genero actualizado');

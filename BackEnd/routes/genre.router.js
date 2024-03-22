@@ -89,7 +89,9 @@ const { check } = require('express-validator');
  *                   type: object
  *                   default: null
  */
-router.get('/:authorId', genreController.getGenreById);
+//router.get('/:authorId', genreController.getGenreById);
+
+router.get('/:genre_id', genreController.getGenre);
 
 /**
  * @swagger
@@ -152,7 +154,7 @@ router.get('/:authorId', genreController.getGenreById);
  *                   type: object
  *                   default: null
  */
-router.get('/all', genreController.getAllGenres);
+//router.get('/all', genreController.getAllGenres);
 
 /**
  * @swagger
@@ -230,12 +232,14 @@ router.get('/all', genreController.getAllGenres);
  *                   type: object
  *                   default: null
  */
+/*
 router.post(
   '/',
   [check('name', 'The name is required').not().isEmpty(), validarCampos],
   authMiddleware,
   genreController.createGenre
 );
+*/
 
 /**
  * @swagger
@@ -316,12 +320,14 @@ router.post(
  *                   type: object
  *                   default: null
  */
+
+/*
 router.put(
   '/:genreId',
   [check('name', 'The name is required').not().isEmpty(), validarCampos],
   authMiddleware,
   genreController.updateGenreById
-);
+);*/
 
 /**
  * @swagger
@@ -392,6 +398,6 @@ router.put(
  *                   type: object
  *                   default: null
  */
-router.delete('/:genreId', authMiddleware, genreController.deleteGenreById);
+//router.delete('/:genreId', authMiddleware, genreController.deleteGenreById);
 
 module.exports = router;

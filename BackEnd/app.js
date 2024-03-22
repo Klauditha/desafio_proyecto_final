@@ -5,7 +5,7 @@ const routes = require('./routes/index');
 const bodyParser = require('body-parser');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
-const pool = require('./config/db.js');
+//const pool = require('./config/db.js');
 
 /**
  * Configuracion Swagger 

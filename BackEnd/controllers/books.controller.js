@@ -1,9 +1,12 @@
 const BookService = require('../services/book.services');
+const GenreService = require('../services/genre.service');
+const BookGenreService = require('../services/bookGenre.service');
 const { bookSchema } = require('../schemas/book.schema');
 const boom = require('@hapi/boom');
 
 const service = new BookService();
-
+const genreService = new GenreService();
+const bookGenreService = new BookGenreService();
 
 const createBook = (req, res, next) => {
   try {
@@ -18,7 +21,6 @@ const createBook = (req, res, next) => {
       },
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       status: false,
       message: error.message,
@@ -28,32 +30,38 @@ const createBook = (req, res, next) => {
 };
 
 const getBook = async (req, res, next) => {
+  console.log('getBook');
   try {
-    const { bookId } = req.params;
-    if (['{bookId}', ':bookId', '', null, undefined, ' '].includes(bookId)) {
-      throw boom.badRequest('Parameter bookId is invalid or not provided');
+    //console.log(req.params);
+    const { book_id } = req.params;
+    //const genre = null;
+    const book = await service.findOne(book_id);
+    //console.log(book);
+    //console.log(bookGenre);
+    const bookGenre = await bookGenreService.findOneByBook(book.book_id);
+    console.log(bookGenre);
+    
+    if (bookGenre) {
+      genre = await genreService.findOne(bookGenre.book_id);
+      console.log(bookGenre);
     }
-    if (['1', '11', '21'].includes(bookId)) {
-      throw boom.notFound('Book not found');
-    }
-    const book = await service.findOne(bookId);
+
     res.status(200).json({
       status: true,
       message: 'Book found',
       data: {
-        book: book,
+        book,
+        genre: genre ?? null,
       },
     });
   } catch (error) {
-    let codeError = error.isBoom ? error.output.statusCode : 500;
-    res.status(codeError).json({
+    res.status(500).json({
       status: false,
       message: error.message,
       data: null,
     });
   }
 };
-
 
 const updateBookById = (req, res, next) => {
   try {
@@ -82,11 +90,10 @@ const getBooksByCategory = (req, res, next) => {
 const getAllBooks = (req, res, next) => {
   try {
     res.status(200).send('Libros');
-  }
-  catch (error) {
+  } catch (error) {
     res.status(500).send(error);
   }
-}
+};
 
 module.exports = {
   getBook,
@@ -94,5 +101,6 @@ module.exports = {
   createBook,
   deleteBookById,
   updateBookById,
-  getAllBooks
+  getAllBooks,
+
 };
