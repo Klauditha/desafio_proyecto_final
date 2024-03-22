@@ -26,8 +26,8 @@ const { check } = require('express-validator');
  *           type: boolean
  *           description: The state of the author
  *       example:
- *         author_id: 1
- *         name: John
+ *         author_id: 3
+ *         name: Isabel Allende
  *         deleted: false
  */
 
