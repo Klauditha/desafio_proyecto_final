@@ -7,6 +7,7 @@ const createGenre = (req, res, next) => {
   
 };
 
+/* Obtener un genero por su id */
 const getGenre = async (req, res, next) => {
  try {
   const { genre_id } = req.params;
@@ -19,7 +20,8 @@ const getGenre = async (req, res, next) => {
     },
   })
  } catch (error) {
-  res.status(500).json({
+  let codeError = error.isBoom ? error.output.statusCode : 500;
+  res.status(codeError).json({
     status: false,
     message: error.message,
     data: null,

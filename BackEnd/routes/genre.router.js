@@ -11,18 +11,23 @@ const { check } = require('express-validator');
  *     Genre:
  *       type: object
  *       required:
- *         - genreId
+ *         - genre_id
  *         - name
+ *         - deleted
  *       properties:
- *         genreId:
+ *         genre_id:
  *           type: number
  *           description: The id of the genre
  *         name:
  *           type: string
  *           description: The name of the genre
+ *         deleted:
+ *           type: boolean
+ *           description: The state of the genre
  *       example:
- *         genreId: 1
- *         name: Horror
+ *         genre_id: 9
+ *         name: Filosofía
+ *         deleted: false
  */
 
 /**
@@ -30,13 +35,13 @@ const { check } = require('express-validator');
  * tags:
  *   name: Genre
  *   description: The Genre managing API
- * /genre/{genreId}:
+ * /genre/{genre_id}:
  *   get:
  *     summary: Get the genre
  *     tags: [Genre]
  *     parameters:
  *       - in: path
- *         name: genreId
+ *         name: genre_id
  *     responses:
  *       200:
  *         description: The genre was found
@@ -89,8 +94,6 @@ const { check } = require('express-validator');
  *                   type: object
  *                   default: null
  */
-//router.get('/:authorId', genreController.getGenreById);
-
 router.get('/:genre_id', genreController.getGenre);
 
 /**
