@@ -5,8 +5,11 @@ const routes = require('./routes/index');
 const bodyParser = require('body-parser');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const pool = require('./config/db.js');
 
-//Configuracion Swagger
+/**
+ * Configuracion Swagger 
+ */
 const options = {
   definition: {
     openapi: '3.1.0',
@@ -15,8 +18,7 @@ const options = {
       version: '0.1.0',
       description:
         'Aqui encontraras todas las rutas de la API para el Backend.',
-    },
-    
+    },    
     securityDefinitions: {
       bearerAuth : {
         type: 'http',
@@ -24,7 +26,6 @@ const options = {
         in: 'header'
       }
     },
-
     Bearer: 'Authorization',
     components: {
       securitySchemes: {
@@ -34,12 +35,10 @@ const options = {
           description: 'JWT Authorization header using the Bearer scheme.',
           bearerFormat: 'JWT',
           in: 'header',
-          name: 'Authorization',
-          
+          name: 'Authorization',          
         },
       },
-    },
-    
+    },    
     servers: [
       {
         url: 'http://localhost:3000',
@@ -54,6 +53,7 @@ const options = {
   apis: ['./routes/*.js'],
   paths: {},
 };
+
 
 const specs = swaggerJsdoc(options);
 app.use(
