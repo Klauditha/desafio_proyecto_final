@@ -62,7 +62,7 @@ class AuthorService {
   }
 
   async activate(id_author) {
-    const author = await this.findOne(id_author);
+    const author = await models.Author.findByPk(id_author);
     const rta = await author.update({ deleted: false });
     return rta;
   }

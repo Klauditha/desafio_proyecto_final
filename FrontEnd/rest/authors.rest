@@ -55,18 +55,19 @@ Content-Type: application/json
 }
 
 
-###Modificar autor
+###Delete autor - Funcionando
 
-PUT http://localhost:3000/autor
+DELETE http://localhost:3000/author/3
 Content-Type: application/json
 
 {
   
 }
 
-###Modificar autor
 
-DELETE http://localhost:3000/autor
+###Activate autor - Funcionando
+
+PUT http://localhost:3000/author/activate/3
 Content-Type: application/json
 
 {

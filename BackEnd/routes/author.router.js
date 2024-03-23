@@ -457,14 +457,14 @@ router.put(
  *                   type: object
  *                   default: null
  */
-router.get('/:authorId', authMiddleware, authorController.deleteAuthor);
+router.delete('/:authorId', authMiddleware, authorController.deleteAuthor);
 
 /**
  * @swagger
  * tags:
  *   name: Author
  *   description: The Author managing API
- * /author/{author_id}:
+ * /author/activate/{author_id}:
  *   put:
  *     summary: Activate the author
  *     tags: [Author]
@@ -528,6 +528,10 @@ router.get('/:authorId', authMiddleware, authorController.deleteAuthor);
  *                   type: object
  *                   default: null
  */
-router.put('/:author_id', authMiddleware, authorController.activateAuthor);
+router.put(
+  '/activate/:author_id',
+  authMiddleware,
+  authorController.activateAuthor
+);
 
 module.exports = router;

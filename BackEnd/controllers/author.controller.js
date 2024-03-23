@@ -69,10 +69,10 @@ const updateAuthor = async(req, res, next) => {
   }
 };
 
-const deleteAuthor = (req, res, next) => {
+const deleteAuthor = async (req, res, next) => {
   try {
     const { author_id } = req.params;
-    const author = service.delete(author_id);
+    const author = await service.delete(author_id);
     res.status(200).json({
       status: true,
       message: 'Author deleted',
@@ -90,10 +90,10 @@ const deleteAuthor = (req, res, next) => {
   }
 };
 
-const activateAuthor = (req, res, next) => {
+const activateAuthor = async (req, res, next) => {
   try {
     const { author_id } = req.params;
-    const author = service.activate(author_id);
+    const author = await service.activate(author_id);
     res.status(200).json({
       status: true,
       message: 'Author activated',
