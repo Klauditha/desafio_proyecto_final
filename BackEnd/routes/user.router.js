@@ -170,17 +170,21 @@ const { check } = require('express-validator');
  *                   default: null
  */
 router.post(
-  '/',
+  "/",
+  authMiddleware,
   [
-    check('username', 'Username is required').not().isEmpty(),
-    check('password', 'Password is required').not().isEmpty(),
-    check('email', 'Email is required').isEmail(),
-    check('firstName', 'First name is required').not().isEmpty(),
-    check('lastName', 'Last name is required').not().isEmpty(),
-    check('phone', 'Phone is required').not().isEmpty(),
-    check('region', 'Region is required').not().isEmpty(),
-    check('address', 'Address is required').not().isEmpty(),
-    check('zipCode', 'Zip code is required').not().isEmpty(),
+    check("username", "Username is required").not().isEmpty(),
+    check("password", "Password is required").not().isEmpty(),
+    check("email", "Email is required").isEmail(),
+    check("first_name", "First name is required").not().isEmpty(),
+    check("last_name", "Last name is required").not().isEmpty(),
+    check("phone", "Phone is required").not().isEmpty(),
+    check("region", "Region is required").not().isEmpty(),
+    check("country", "Country is required").not().isEmpty(),
+    check("city", "City is required").not().isEmpty(),
+    check("district", "District is required").not().isEmpty(),
+    check("address", "Address is required").not().isEmpty(),
+    check("zip_code", "Zip code is required").not().isEmpty(),
     validarCampos,
   ],
   userController.createUser
@@ -357,7 +361,7 @@ response: { estado : boolean , message : string , data : object usuario }
  *
  */
 router.get(
-  '/:userId',
+  '/:user_id',
   authMiddleware,
   userController.getUser
 );
