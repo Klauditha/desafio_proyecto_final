@@ -4,10 +4,10 @@ CREATE DATABASE TintaAustral;
 
 -- Creacion de tablas
 
-CREATE TABLE "users"(
-    "user_id" INTEGER NOT NULL,
+CREATE TABLE "users" (
+    "user_id" SERIAL PRIMARY KEY,
     "username" VARCHAR(60) NOT NULL,
-    "password" VARCHAR(32) NOT NULL,
+    "password" VARCHAR(72) NOT NULL,
     "email" VARCHAR(100) NOT NULL,
     "first_name" VARCHAR(60) NOT NULL,
     "last_name" VARCHAR(60) NOT NULL,
@@ -23,10 +23,9 @@ CREATE TABLE "users"(
     "updated_at" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
     "deleted" BOOLEAN NOT NULL
 );
-ALTER TABLE
-    "users" ADD PRIMARY KEY("user_id");
+
 CREATE TABLE "books"(
-    "book_id" INTEGER NOT NULL,
+    "book_id" SERIAL PRIMARY KEY,
     "isbn" BIGINT NOT NULL,
     "img" VARCHAR(255) NOT NULL,
     "title" VARCHAR(64) NOT NULL,
@@ -39,47 +38,37 @@ CREATE TABLE "books"(
     "stock" BIGINT NOT NULL,
     "deleted" BOOLEAN NOT NULL
 );
-ALTER TABLE
-    "books" ADD PRIMARY KEY("book_id");
+
 CREATE TABLE "order_items"(
-    "order_item_id" INTEGER NOT NULL,
+    "order_item_id" SERIAL PRIMARY KEY,
     "order_id" INTEGER NOT NULL,
     "book_id" INTEGER NOT NULL,
     "quantity" BIGINT NOT NULL,
     "deleted" BOOLEAN NOT NULL
 );
-ALTER TABLE
-    "order_items" ADD PRIMARY KEY("order_item_id");
-COMMENT
-ON COLUMN
-    "order_items"."order_id" IS 'FK';
-COMMENT
-ON COLUMN
-    "order_items"."book_id" IS 'FK';
+
+COMMENT ON COLUMN "order_items"."order_id" IS 'FK';
+COMMENT ON COLUMN "order_items"."book_id" IS 'FK';
+
 CREATE TABLE "cart_items"(
-    "cart_item_id" INTEGER NOT NULL,
+    "cart_item_id" SERIAL PRIMARY KEY,
     "user_id" INTEGER NOT NULL,
     "book_id" INTEGER NOT NULL,
     "quantity" BIGINT NOT NULL,
     "deleted" BOOLEAN NOT NULL
 );
-ALTER TABLE
-    "cart_items" ADD PRIMARY KEY("cart_item_id");
-COMMENT
-ON COLUMN
-    "cart_items"."user_id" IS 'FK';
-COMMENT
-ON COLUMN
-    "cart_items"."book_id" IS 'FK';
+
+COMMENT ON COLUMN "cart_items"."user_id" IS 'FK';
+COMMENT ON COLUMN "cart_items"."book_id" IS 'FK';
+
 CREATE TABLE "authors"(
-    "author_id" INTEGER NOT NULL,
+    "author_id" SERIAL PRIMARY KEY,
     "name" VARCHAR(64) NOT NULL,
     "deleted" BOOLEAN NOT NULL
 );
-ALTER TABLE
-    "authors" ADD PRIMARY KEY("author_id");
+
 CREATE TABLE "ratings"(
-    "rating_id" INTEGER NOT NULL,
+    "rating_id" SERIAL PRIMARY KEY,
     "user_id" INTEGER NOT NULL,
     "book_id" INTEGER NOT NULL,
     "score" INTEGER NOT NULL,
@@ -89,76 +78,56 @@ CREATE TABLE "ratings"(
     "updated_at" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
     "deleted" BOOLEAN NOT NULL
 );
-ALTER TABLE
-    "ratings" ADD PRIMARY KEY("rating_id");
-COMMENT
-ON COLUMN
-    "ratings"."user_id" IS 'FK';
-COMMENT
-ON COLUMN
-    "ratings"."book_id" IS 'FK';
+
+COMMENT ON COLUMN "ratings"."user_id" IS 'FK';
+COMMENT ON COLUMN "ratings"."book_id" IS 'FK';
+
 CREATE TABLE "orders"(
-    "order_id" INTEGER NOT NULL,
+    "order_id" SERIAL PRIMARY KEY,
     "user_id" INTEGER NOT NULL,
     "order_date" DATE NOT NULL,
     "total_amount" BIGINT NOT NULL,
     "deleted" BOOLEAN NOT NULL
 );
-ALTER TABLE
-    "orders" ADD PRIMARY KEY("order_id");
-COMMENT
-ON COLUMN
-    "orders"."user_id" IS 'FK';
+
+COMMENT ON COLUMN "orders"."user_id" IS 'FK';
+
 CREATE TABLE "books_genres"(
-    "book_id" INTEGER NOT NULL,
+    "bookgenre_id" SERIAL PRIMARY KEY,
+	"book_id" INTEGER NOT NULL,
     "genre_id" INTEGER NOT NULL
 );
-COMMENT
-ON COLUMN
-    "books_genres"."book_id" IS 'FK';
-COMMENT
-ON COLUMN
-    "books_genres"."genre_id" IS 'FK';
+
+COMMENT ON COLUMN "books_genres"."book_id" IS 'FK';
+COMMENT ON COLUMN "books_genres"."genre_id" IS 'FK';
+
 CREATE TABLE "books_authors"(
+    "bookauthor_id" SERIAL PRIMARY KEY,
     "book_id" INTEGER NOT NULL,
     "author_id" INTEGER NOT NULL
 );
-COMMENT
-ON COLUMN
-    "books_authors"."book_id" IS 'FK';
-COMMENT
-ON COLUMN
-    "books_authors"."author_id" IS 'FK';
+
+COMMENT ON COLUMN "books_authors"."book_id" IS 'FK';
+COMMENT ON COLUMN "books_authors"."author_id" IS 'FK';
+
 CREATE TABLE "genres"(
-    "genre_id" INTEGER NOT NULL,
+    "genre_id" SERIAL PRIMARY KEY,
     "name" VARCHAR(32) NOT NULL,
     "deleted" BOOLEAN NOT NULL
 );
-ALTER TABLE
-    "genres" ADD PRIMARY KEY("genre_id");
-ALTER TABLE
-    "ratings" ADD CONSTRAINT "ratings_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "users"("user_id");
-ALTER TABLE
-    "orders" ADD CONSTRAINT "orders_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "users"("user_id");
-ALTER TABLE
-    "cart_items" ADD CONSTRAINT "cart_items_book_id_foreign" FOREIGN KEY("book_id") REFERENCES "books"("book_id");
-ALTER TABLE
-    "order_items" ADD CONSTRAINT "order_items_order_id_foreign" FOREIGN KEY("order_id") REFERENCES "orders"("order_id");
-ALTER TABLE
-    "books_genres" ADD CONSTRAINT "books_genres_book_id_foreign" FOREIGN KEY("book_id") REFERENCES "books"("book_id");
-ALTER TABLE
-    "books_authors" ADD CONSTRAINT "books_authors_author_id_foreign" FOREIGN KEY("author_id") REFERENCES "authors"("author_id");
-ALTER TABLE
-    "order_items" ADD CONSTRAINT "order_items_book_id_foreign" FOREIGN KEY("book_id") REFERENCES "books"("book_id");
-ALTER TABLE
-    "books_genres" ADD CONSTRAINT "books_genres_genre_id_foreign" FOREIGN KEY("genre_id") REFERENCES "genres"("genre_id");
-ALTER TABLE
-    "ratings" ADD CONSTRAINT "ratings_book_id_foreign" FOREIGN KEY("book_id") REFERENCES "books"("book_id");
-ALTER TABLE
-    "books_authors" ADD CONSTRAINT "books_authors_book_id_foreign" FOREIGN KEY("book_id") REFERENCES "books"("book_id");
-ALTER TABLE
-    "cart_items" ADD CONSTRAINT "cart_items_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "users"("user_id");
-	
+
+ALTER TABLE "ratings" ADD CONSTRAINT "ratings_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "users"("user_id");
+ALTER TABLE "orders" ADD CONSTRAINT "orders_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "users"("user_id");
+ALTER TABLE "cart_items" ADD CONSTRAINT "cart_items_book_id_foreign" FOREIGN KEY("book_id") REFERENCES "books"("book_id");
+ALTER TABLE "order_items" ADD CONSTRAINT "order_items_order_id_foreign" FOREIGN KEY("order_id") REFERENCES "orders"("order_id");
+ALTER TABLE "books_genres" ADD CONSTRAINT "books_genres_book_id_foreign" FOREIGN KEY("book_id") REFERENCES "books"("book_id");
+ALTER TABLE "books_authors" ADD CONSTRAINT "books_authors_author_id_foreign" FOREIGN KEY("author_id") REFERENCES "authors"("author_id");
+ALTER TABLE "order_items" ADD CONSTRAINT "order_items_book_id_foreign" FOREIGN KEY("book_id") REFERENCES "books"("book_id");
+ALTER TABLE "books_genres" ADD CONSTRAINT "books_genres_genre_id_foreign" FOREIGN KEY("genre_id") REFERENCES "genres"("genre_id");
+ALTER TABLE "ratings" ADD CONSTRAINT "ratings_book_id_foreign" FOREIGN KEY("book_id") REFERENCES "books"("book_id");
+ALTER TABLE "books_authors" ADD CONSTRAINT "books_authors_book_id_foreign" FOREIGN KEY("book_id") REFERENCES "books"("book_id");
+ALTER TABLE "cart_items" ADD CONSTRAINT "cart_items_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "users"("user_id");
+
 	
 --DATOS PARA TABLAS
 -- En la mayoria de las tablas, la entrada con su respectivo PK id 13 tiene deleted true.

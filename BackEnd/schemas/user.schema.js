@@ -1,53 +1,68 @@
 const Joi = require('joi');
 
-userId = Joi.string().required();
-userName = Joi.string().required();
-firstName = Joi.string().required();
-lastName = Joi.string().required();
-phone = Joi.number().required();
-region = Joi.string().required();
-email = Joi.string().email().required();
-address = Joi.string().required();
-zipCode = Joi.number().required();
-password = Joi.string().required();
-
 const userSchema = Joi.object({
-  userId: Joi.string(),
-  userName: Joi.string(),
-  firstName: Joi.string(),
-  lastName: Joi.string(),
-  phone: Joi.number(),
-  region: Joi.string(),
-  email: Joi.string(),
-  address: Joi.string(),
-  zipCode: Joi.number(),
-  password: Joi.string(),
+  user_id: Joi.number().integer().required(),
+  username: Joi.string().required(),
+  password: Joi.string().required(),
+  email: Joi.string().email().required(),
+  first_name: Joi.string().required(),
+  last_name: Joi.string().required(),
+  phone: Joi.string().required(),
+  region: Joi.string().required(),
+  admin: Joi.boolean().required(),
+  country: Joi.string().required(),
+  city: Joi.string().required(), 
+  district: Joi.string().required(),
+  address: Joi.string().required(),
+  zip_code: Joi.string().required(),
+  created_at: Joi.date().required(),
+  updated_at: Joi.date().required(),
+  deleted: Joi.boolean().required(),
 });
 
+
 const createUserSchema = Joi.object({
-  firstName: Joi.string().required(),
-  lastName: Joi.string().required(),
-  phone: Joi.number().required(),
-  region: Joi.string().required(),
-  email: Joi.string().email().required(),
-  address: Joi.string().required(),
-  zipCode: Joi.number().required(),
+  username: Joi.string().required(),
   password: Joi.string().required(),
+  email: Joi.string().email().required(),
+  first_name: Joi.string().required(),
+  last_name: Joi.string().required(),
+  phone: Joi.string().required(),
+  region: Joi.string().required(),
+  admin: Joi.boolean().required(),
+  country: Joi.string().required(),
+  city: Joi.string().required(),
+  district: Joi.string().required(),
+  address: Joi.string().required(),
+  zip_code: Joi.string().required(),
+  created_at: Joi.date(),
+  updated_at: Joi.date(),
+  deleted: Joi.boolean(),
 });
 
 const updateUserSchema = Joi.object({
-  firstName: Joi.string(),
-  lastName: Joi.string(),
-  phone: Joi.number(),
-  region: Joi.string(),
-  address: Joi.string(),
-  zipCode: Joi.number(),
+  username: Joi.string(),
   password: Joi.string(),
+  email: Joi.string().email(),
+  first_name: Joi.string(),
+  last_name: Joi.string(),
+  phone: Joi.string(),
+  region: Joi.string(),
+  admin: Joi.boolean(),
+  country: Joi.string(),
+  city: Joi.string(),
+  district: Joi.string(),
+  address: Joi.string(),
+  zip_code: Joi.string(),
+  created_at: Joi.date(),
+  updated_at: Joi.date(),
+  deleted: Joi.boolean(),
 });
 
 const getUserSchema = Joi.object({
-  
+  user_id: Joi.number().integer().required(),
 });
+
 module.exports = {
   userSchema,
   createUserSchema,
