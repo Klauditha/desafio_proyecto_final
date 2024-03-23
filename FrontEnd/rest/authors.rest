@@ -1,10 +1,20 @@
-##Crear autor
+##Crear autor - Funcionando
 
 POST http://localhost:3000/author/
 Content-Type: application/json
 
 {
-  
+  "name":"Test"
+}
+
+###
+##Editar autor - Funcionando
+
+PUT http://localhost:3000/author/16
+Content-Type: application/json
+
+{
+  "name":"Test"
 }
 
 
@@ -45,18 +55,19 @@ Content-Type: application/json
 }
 
 
-###Modificar autor
+###Delete autor - Funcionando
 
-PUT http://localhost:3000/autor
+DELETE http://localhost:3000/author/3
 Content-Type: application/json
 
 {
   
 }
 
-###Modificar autor
 
-DELETE http://localhost:3000/autor
+###Activate autor - Funcionando
+
+PUT http://localhost:3000/author/activate/3
 Content-Type: application/json
 
 {

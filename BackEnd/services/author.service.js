@@ -5,19 +5,18 @@ class AuthorService {
   constructor() {}
 
   async create(data) {
-    const newAuthor = {
-      authorId: faker.datatype.uuid(),
-      ...data,
-    };
-    if (newAuthor.name === 'Claudia') {
+    data = { ...data, deleted: false };
+    const { name } = data;
+    const author = await models.Author.findOne({ where: { name } });
+    if (author) {
       throw boom.conflict('Author already exists');
     }
-    this.authors.push(newAuthor);
+    const newAuthor = await models.Author.create(data);
     return newAuthor;
   }
 
   async findOne(id_author) {
-    const author = await models.Author.findByPk(id_author);
+    const author = await models.Author.findOne(id_author);
     if (!author) {
       throw boom.notFound('Author not found');
     }
@@ -36,6 +35,36 @@ class AuthorService {
       },
     });
     return authors;
+  }
+
+  async update(changes,id_author) {
+    const author = await models.Author.findByPk(id_author);
+    if (!author) {
+      throw boom.notFound('Author not found');
+    }
+
+    const { name } = changes;
+    if (name) {
+      const authorExists = await models.Author.findOne({ where: { name } });
+      if (authorExists) {
+        throw boom.conflict('Author already exists');
+      }
+    }
+    const rta = await author.update(changes);
+    console.log(rta);
+    return rta;
+  }
+
+  async delete(id_author) {
+    const author = await this.findOne(id_author);
+    const rta = await author.update({ deleted: true });
+    return rta;
+  }
+
+  async activate(id_author) {
+    const author = await models.Author.findByPk(id_author);
+    const rta = await author.update({ deleted: false });
+    return rta;
   }
 }
 

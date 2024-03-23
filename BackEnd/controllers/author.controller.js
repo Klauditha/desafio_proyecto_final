@@ -2,10 +2,11 @@ const boom = require('@hapi/boom');
 const AuthorService = require('../services/author.service');
 const service = new AuthorService();
 
-const createAuthor = (req, res, next) => {
+/** Crear un nuevo autor */
+const createAuthor = async (req, res, next) => {
   try {
     const body = req.body;
-    const newAuthor = service.create(body);
+    const newAuthor = await service.create(body);
     res.status(200).json({
       status: true,
       message: 'New author created',
@@ -45,20 +46,68 @@ const getAuthor = async (req, res, next) => {
   }
 };
 
-
-const updateAuthorById = (req, res, next) => {
+/** Actualizar un autor por su id */
+const updateAuthor = async(req, res, next) => {
   try {
-    res.status(200).send('Autor actualizado');
+    const body = req.body;
+    const { author_id } = req.params;
+    const author = await service.update(body, author_id);
+    res.status(200).json({
+      status: true,
+      message: 'Author updated',
+      data: {
+        author,
+      },
+    });
   } catch (error) {
-    res.status(500).send(error);
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    });
   }
 };
 
-const deleteAuthorById = (req, res, next) => {
+const deleteAuthor = async (req, res, next) => {
   try {
-    res.status(200).send('Autor eliminado');
+    const { author_id } = req.params;
+    const author = await service.delete(author_id);
+    res.status(200).json({
+      status: true,
+      message: 'Author deleted',
+      data: {
+        author,
+      },
+    });
   } catch (error) {
-    res.status(500).send(error);
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
+
+const activateAuthor = async (req, res, next) => {
+  try {
+    const { author_id } = req.params;
+    const author = await service.activate(author_id);
+    res.status(200).json({
+      status: true,
+      message: 'Author activated',
+      data: {
+        author,
+      },
+    });
+  } catch (error) {
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    });
   }
 };
 
@@ -106,8 +155,9 @@ const getAuthorsActive = async (req, res, next) => {
 module.exports = {
   createAuthor,
   getAuthor,
-  updateAuthorById,
-  deleteAuthorById,
+  updateAuthor,
+  deleteAuthor,
   getAuthors,
   getAuthorsActive,
+  activateAuthor,
 };
