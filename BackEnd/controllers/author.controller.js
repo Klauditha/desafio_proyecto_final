@@ -45,6 +45,7 @@ const getAuthor = async (req, res, next) => {
   }
 };
 
+
 const updateAuthorById = (req, res, next) => {
   try {
     res.status(200).send('Autor actualizado');
@@ -61,9 +62,30 @@ const deleteAuthorById = (req, res, next) => {
   }
 };
 
-const getAuthors = (req, res, next) => {
+/**Obtener todos los autores */
+const getAuthors = async (req, res, next) => {
   try {
-    const authors = service.findAll();
+    const authors = await service.findAll();
+    res.status(200).json({
+      status: true,
+      message: 'Authors found',
+      data: {
+        authors,
+      },
+    });
+  } catch (error) {
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
+
+const getAuthorsActive = async (req, res, next) => {
+  try {
+    const authors = await service.getAuthorsActive();
     res.status(200).json({
       status: true,
       message: 'Authors found',
@@ -87,4 +109,5 @@ module.exports = {
   updateAuthorById,
   deleteAuthorById,
   getAuthors,
+  getAuthorsActive,
 };

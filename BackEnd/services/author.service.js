@@ -23,6 +23,20 @@ class AuthorService {
     }
     return author;
   }
+
+  async findAll() {
+    const authors = await models.Author.findAll();
+    return authors;
+  }
+
+  async getAuthorsActive() {
+    const authors = await models.Author.findAll({
+      where: {
+        deleted: false,
+      },
+    });
+    return authors;
+  }
 }
 
 module.exports = AuthorService;

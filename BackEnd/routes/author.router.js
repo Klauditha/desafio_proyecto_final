@@ -103,8 +103,8 @@ router.get('/:author_id', authorController.getAuthor);
  *   name: Author
  *   description: The Author managing API
  * /author/all:
- *   get:
- *     summary: Get all the authors active
+ *   post:
+ *     summary: Get all the authors 
  *     tags: [Author]
  *     responses:
  *       200:
@@ -120,11 +120,9 @@ router.get('/:author_id', authorController.getAuthor);
  *                   type: string
  *                   default: Authors found
  *                 data:
- *                   type: object
- *                   properties:
- *                     authors:
- *                       type: object
- *                       $ref: '#/components/schemas/Author'
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Author'
  *       409:
  *         description: The authors does not exist
  *         content:
@@ -158,9 +156,69 @@ router.get('/:author_id', authorController.getAuthor);
  *                   type: object
  *                   default: null
  */
-/*
-router.get('/all', authorController.getAuthors);
-*/
+router.post('/all', authorController.getAuthors);
+
+/**
+ * @swagger
+ * tags:
+ *   name: Author
+ *   description: The Author managing API
+ * /author/allActive:
+ *   post:
+ *     summary: Get all the authors active
+ *     tags: [Author]
+ *     responses:
+ *       200:
+ *         description: The authors were found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                   default: Authors found
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Author'
+ *       409:
+ *         description: The authors does not exist
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Authors not found
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ */
+router.post('/allActive', authorController.getAuthorsActive);
+
 
 /**
  * @swagger

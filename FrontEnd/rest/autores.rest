@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 
-###Obtener autor
+###Obtener autor - Funcionando
 
 GET http://localhost:3000/author/3
 Content-Type: application/json
@@ -17,7 +17,25 @@ Content-Type: application/json
   
 }
 
-###Obtener autor
+###Obtener todos los autores - Funcionando
+
+POST http://localhost:3000/author/all
+Content-Type: application/json
+
+{
+ 
+}
+
+###Obtener todos los autores activos - Funcionando
+
+POST http://localhost:3000/author/allActive
+Content-Type: application/json
+
+{
+ 
+}
+
+###Obtener libro-autor - Funcionando
 
 GET http://localhost:3000/bookAuthor/3
 Content-Type: application/json
