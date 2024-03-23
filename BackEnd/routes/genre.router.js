@@ -4,6 +4,7 @@ const { authMiddleware } = require('../middlewares/auth.handler.js');
 const { genreController } = require('../controllers/index.js');
 const { validarCampos } = require('../middlewares/validation.handler.js');
 const { check } = require('express-validator');
+
 /**
  * @swagger
  * components:
@@ -102,8 +103,8 @@ router.get('/:genre_id', genreController.getGenre);
  *   name: Genre
  *   description: The Genre managing API
  * /genre/all:
- *   get:
- *     summary: Get all the genres active
+ *   post:
+ *     summary: Get all the genres 
  *     tags: [Genre]
  *     responses:
  *       200:
@@ -119,11 +120,9 @@ router.get('/:genre_id', genreController.getGenre);
  *                   type: string
  *                   default: Genres found
  *                 data:
- *                   type: object
- *                   properties:
- *                     genres:
- *                       type: object
- *                       $ref: '#/components/schemas/Genre'
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Genre'
  *       409:
  *         description: The genres does not exist
  *         content:
@@ -157,8 +156,69 @@ router.get('/:genre_id', genreController.getGenre);
  *                   type: object
  *                   default: null
  */
-//router.get('/all', genreController.getAllGenres);
+router.post('/all', genreController.getGenres);
 
+
+/**
+ * @swagger
+ * tags:
+ *   name: Genre
+ *   description: The Genre managing API
+ * /genre/allActive:
+ *   post:
+ *     summary: Get all the genres active
+ *     tags: [Genre]
+ *     responses:
+ *       200:
+ *         description: The genres were found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                   default: Genres found
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Genre'
+ *       409:
+ *         description: The genres does not exist
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Genres not found
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ */
+router.post('/allActive', genreController.getGenresActive);
 /**
  * @swagger
  * tags:
