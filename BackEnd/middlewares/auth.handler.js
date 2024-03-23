@@ -6,14 +6,25 @@ const authMiddleware = (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
   console.log("token",token);
   if (!token) {
+    console.log("No token provided");
     return res
       .status(401)
       .json({ status: false, message: 'No token provided', data: null });
   }
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    req.username = payload.username;
+    console.log("Decoded token payload:", payload);
+    req.user_id = payload.user_id;
     req.token = token;
+    console.log("User ID:", req.user_id);
+
+    if (req.params.user_id !== req.user_id.toString()) {
+      return res
+        .status(403)
+        .json({ status: false, message: "Forbidden", data: null });
+    }
+
+    
     next();
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
