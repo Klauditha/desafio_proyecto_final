@@ -104,7 +104,7 @@ router.get('/:author_id', authorController.getAuthor);
  *   description: The Author managing API
  * /author/all:
  *   post:
- *     summary: Get all the authors 
+ *     summary: Get all the authors
  *     tags: [Author]
  *     responses:
  *       200:
@@ -219,7 +219,6 @@ router.post('/all', authorController.getAuthors);
  */
 router.post('/allActive', authorController.getAuthorsActive);
 
-
 /**
  * @swagger
  * tags:
@@ -296,26 +295,25 @@ router.post('/allActive', authorController.getAuthorsActive);
  *                   type: object
  *                   default: null
  */
-/*
 router.post(
   '/',
   [check('name', 'The name is required').not().isEmpty(), validarCampos],
   authMiddleware,
   authorController.createAuthor
-);*/
+);
 
 /**
  * @swagger
  * tags:
  *   name: Author
  *   description: The Author managing API
- * /author/{authorId}:
+ * /author/{author_id}:
  *   put:
  *     summary: Update the author
  *     tags: [Author]
  *     parameters:
  *       - in: path
- *         name: authorId
+ *         name: author_id
  *     requestBody:
  *       required: true
  *       content:
@@ -383,22 +381,21 @@ router.post(
  *                   type: object
  *                   default: null
  */
-/*
 router.put(
-  '/:authorId',
+  '/:author_id',
   [check('name', 'The name is required').not().isEmpty(), validarCampos],
   authMiddleware,
-  authorController.updateAuthorById
-);*/
+  authorController.updateAuthor
+);
 
 /**
  * @swagger
  * tags:
  *   name: Author
  *   description: The Author managing API
- * /author/{authorId}:
+ * /author/{author_id}:
  *   delete:
- *     summary: Delete the author
+ *     summary: Desactivate the author
  *     tags: [Author]
  *     parameters:
  *       - in: path
@@ -410,7 +407,7 @@ router.put(
  *     ]
  *     responses:
  *       200:
- *         description: The author was deleted
+ *         description: The author was desactivated
  *         content:
  *           application/json:
  *             schema:
@@ -420,7 +417,7 @@ router.put(
  *                   type: boolean
  *                 message:
  *                   type: string
- *                   default: Author deleted
+ *                   default: Author desactivated
  *                 data:
  *                   type: object
  *                   properties:
@@ -460,7 +457,77 @@ router.put(
  *                   type: object
  *                   default: null
  */
-/*
-router.get('/:authorId', authMiddleware, authorController.deleteAuthorById);*/
+router.get('/:authorId', authMiddleware, authorController.deleteAuthor);
+
+/**
+ * @swagger
+ * tags:
+ *   name: Author
+ *   description: The Author managing API
+ * /author/{author_id}:
+ *   put:
+ *     summary: Activate the author
+ *     tags: [Author]
+ *     parameters:
+ *       - in: path
+ *         name: author_id
+ *     security: [
+ *       {
+ *         bearerAuth: []
+ *       }
+ *     ]
+ *     responses:
+ *       200:
+ *         description: The author was activated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                   default: Author activated
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     author:
+ *                       type: object
+ *                       $ref: '#/components/schemas/Author'
+ *       409:
+ *         description: The author does not exist
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Author not found
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ */
+router.put('/:author_id', authMiddleware, authorController.activateAuthor);
 
 module.exports = router;

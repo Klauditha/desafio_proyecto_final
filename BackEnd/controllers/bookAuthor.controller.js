@@ -5,7 +5,6 @@ const boom = require('@hapi/boom');
 const service = new BookAuthorService();
 
 const getBookAuthorByIdBook = async (req, res) => {
-  console.log('getBookAuthorByIdBook');
   try {
     const { book_id } = req.params;
     const bookAuthor = await service.findOneByBook(book_id);
