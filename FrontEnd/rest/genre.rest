@@ -1,14 +1,4 @@
-##Crear libro
-
-POST http://localhost:3000/libro
-Content-Type: application/json
-
-{
-  
-}
-
-
-###Obtener libro
+###Obtener libro - Funcionando 
 
 GET http://localhost:3000/genre/11
 Content-Type: application/json
@@ -17,7 +7,7 @@ Content-Type: application/json
  
 }
 
-###Obtener libro
+###Obtener libro genre - Funcionando
 
 GET http://localhost:3000/bookGenre/11
 Content-Type: application/json
@@ -25,6 +15,25 @@ Content-Type: application/json
 {
  
 }
+
+###Obtener todos los genres - Funcionando
+
+POST http://localhost:3000/genre/all
+Content-Type: application/json
+
+{
+ 
+}
+
+###Obtener todos los genres - Funcionando
+
+POST http://localhost:3000/genre/allActive
+Content-Type: application/json
+
+{
+ 
+}
+
 
 ###Modificar libro
 

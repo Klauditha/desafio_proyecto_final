@@ -29,6 +29,50 @@ const getGenre = async (req, res, next) => {
  }
 };
 
+/* Obtener todos los generos */
+const getGenres =  async(req, res, next) => {
+  console.log('getGenres');
+  try {
+    const genres =  await service.findAll();
+    res.status(200).json({
+      status: true,
+      message: 'Genres found',
+      data: {
+        genres,
+      },
+    })
+  } catch (error) {
+    console.log('error', error);
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    })
+  }
+}
+
+/* Obtener todos los generos activos */
+const getGenresActive = async (req, res, next) => {
+  try {
+    const genres = await service.getGenresActive();
+    res.status(200).json({
+      status: true,
+      message: 'Genres found',
+      data: {
+        genres,
+      },
+    })
+  } catch (error) {
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    })
+  }
+}
+
 const getGenreByIdBook = (req, res, next) => {
   try {
     const { book_id } = req.params;
@@ -64,31 +108,13 @@ const deleteGenreById = (req, res, next) => {
   }
 };
 
-const getGenres = (req, res, next) => {
-  try {
-    const genres = service.findAll();
-    res.status(200).json({
-      status: true,
-      message: 'Genres found',
-      data: {
-        genres,
-      }
-    });
-  }
-  catch (error) {
-    let codeError = error.isBoom ? error.output.statusCode : 500;
-    res.status(codeError).json({
-      status: false,
-      message: error.message,
-      data: null,
-    })
-  }
-}
 
 module.exports = {
     createGenre,
     getGenre,
     updateGenreById,
     deleteGenreById,
-    getGenres
+    getGenres,
+    getGenresActive,
+    getGenreByIdBook
 };

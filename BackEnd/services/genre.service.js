@@ -35,6 +35,20 @@ class GenreService {
 
     return genresbook;
   }
+
+  async findAll() {
+    const genres = await models.Genre.findAll();
+    return genres;
+  }
+
+  async getGenresActive() {
+    const genres = await models.Genre.findAll({
+      where: {
+        deleted: false,
+      },
+    });
+    return genres;
+  }
 }
 
 module.exports = GenreService;
