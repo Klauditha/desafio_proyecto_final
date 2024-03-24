@@ -1,4 +1,4 @@
-const UserService = require("../services/user.services");
+const UserService = require("../services/user.service");
 const { createUserSchema } = require("../schemas/user.schema");
 const boom = require("@hapi/boom");
 

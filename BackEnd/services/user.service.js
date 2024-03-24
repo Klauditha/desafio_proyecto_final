@@ -1,4 +1,3 @@
-const { faker } = require("@faker-js/faker");
 const { createUserSchema, userSchema } = require("../schemas/user.schema");
 const boom = require("@hapi/boom");
 const { pool } = require("../config/db");

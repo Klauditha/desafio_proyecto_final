@@ -2,8 +2,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { pool } = require("../config/db");
 const boom = require("@hapi/boom");
-const UserService = require("../services/user.services");
-const { generateToken } = require("../services/user.services");
+const UserService = require("../services/user.service");
+const { generateToken } = require("../services/user.service");
 const { authMiddleware } = require("../middlewares/auth.handler");
 
 const loginUser = async (req, res, next) => {

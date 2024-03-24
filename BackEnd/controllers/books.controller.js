@@ -1,4 +1,4 @@
-const BookService = require('../services/book.services');
+const BookService = require('../services/book.service');
 const GenreService = require('../services/genre.service');
 const BookGenreService = require('../services/bookGenre.service');
 const AuthorService = require('../services/author.service');
