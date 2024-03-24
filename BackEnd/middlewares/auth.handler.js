@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
+const UserService = require("../services/user.services");
 
-const authMiddleware = (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
   console.log(req.headers.authorization);
   const token = req.headers.authorization?.split(' ')[1];
-  console.log("token",token);
+  console.log("Extracted Token:", token);
   if (!token) {
     console.log("No token provided");
     return res
@@ -12,19 +13,25 @@ const authMiddleware = (req, res, next) => {
       .json({ status: false, message: 'No token provided', data: null });
   }
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
-    console.log("Decoded token payload:", payload);
-    req.user_id = payload.user_id;
-    req.token = token;
-    console.log("User ID:", req.user_id);
 
-    if (req.params.user_id !== req.user_id.toString()) {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log("Decoded Token:", decoded);
+
+    const user = await UserService.findOne(decoded.user_id);
+    console.log("User Data:", user);
+
+    if (!user) {
+      console.log("Invalid token: Usuario no encontrado");
+      return res.status(401).json({ message: "Unauthorized: Invalid token" });
+    }
+    if (!user.admin) {
+      console.log("Usuario no es admin");
       return res
         .status(403)
-        .json({ status: false, message: "Forbidden", data: null });
+        .json({ message: "Forbidden: No eres admin" });
     }
 
-    
+    console.log("Usuario está autorizado como admin");
     next();
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
