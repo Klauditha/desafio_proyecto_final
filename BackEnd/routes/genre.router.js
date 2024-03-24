@@ -104,7 +104,7 @@ router.get('/:genre_id', genreController.getGenre);
  *   description: The Genre managing API
  * /genre/all:
  *   post:
- *     summary: Get all the genres 
+ *     summary: Get all the genres
  *     tags: [Genre]
  *     responses:
  *       200:
@@ -157,7 +157,6 @@ router.get('/:genre_id', genreController.getGenre);
  *                   default: null
  */
 router.post('/all', genreController.getGenres);
-
 
 /**
  * @swagger
@@ -219,6 +218,7 @@ router.post('/all', genreController.getGenres);
  *                   default: null
  */
 router.post('/allActive', genreController.getGenresActive);
+
 /**
  * @swagger
  * tags:
@@ -295,27 +295,25 @@ router.post('/allActive', genreController.getGenresActive);
  *                   type: object
  *                   default: null
  */
-/*
 router.post(
   '/',
   [check('name', 'The name is required').not().isEmpty(), validarCampos],
   authMiddleware,
   genreController.createGenre
 );
-*/
 
 /**
  * @swagger
  * tags:
  *   name: Genre
  *   description: The Genre managing API
- * /genre/{genreId}:
+ * /genre/{genre_id}:
  *   put:
  *     summary: Update the genre
  *     tags: [Genre]
  *     parameters:
  *       - in: path
- *         name: genreId
+ *         name: genre_id
  *     requestBody:
  *       required: true
  *       content:
@@ -383,27 +381,25 @@ router.post(
  *                   type: object
  *                   default: null
  */
-
-/*
 router.put(
-  '/:genreId',
+  '/:genre_id',
   [check('name', 'The name is required').not().isEmpty(), validarCampos],
   authMiddleware,
-  genreController.updateGenreById
-);*/
+  genreController.updateGenre
+);
 
 /**
  * @swagger
  * tags:
  *   name: Genre
  *   description: The Genre managing API
- * /genre/{genreId}:
+ * /genre/{genre_id}:
  *   delete:
- *     summary: Delete the genre
+ *     summary: Desactivate the genre
  *     tags: [Genre]
  *     parameters:
  *       - in: path
- *         name: genreId
+ *         name: genre_id
  *     security: [
  *       {
  *         bearerAuth: []
@@ -411,7 +407,7 @@ router.put(
  *     ]
  *     responses:
  *       200:
- *         description: The genre was deleted
+ *         description: The genre was desactivated
  *         content:
  *           application/json:
  *             schema:
@@ -421,7 +417,7 @@ router.put(
  *                   type: boolean
  *                 message:
  *                   type: string
- *                   default: Genre deleted
+ *                   default: Genre desactivated
  *                 data:
  *                   type: object
  *                   properties:
@@ -461,6 +457,81 @@ router.put(
  *                   type: object
  *                   default: null
  */
-//router.delete('/:genreId', authMiddleware, genreController.deleteGenreById);
+router.delete('/:genre_id', authMiddleware, genreController.deleteGenre);
+
+/**
+ * @swagger
+ * tags:
+ *   name: Genre
+ *   description: The Genre managing API
+ * /genre/activate/{genre_id}:
+ *   put:
+ *     summary: Activate the genre
+ *     tags: [Genre]
+ *     parameters:
+ *       - in: path
+ *         name: genre_id
+ *     security: [
+ *       {
+ *         bearerAuth: []
+ *       }
+ *     ]
+ *     responses:
+ *       200:
+ *         description: The genre was activated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                   default: Genre activated
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     genre:
+ *                       type: object
+ *                       $ref: '#/components/schemas/Genre'
+ *       409:
+ *         description: The genre does not exist
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Genre not found
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ */
+router.put(
+  '/activate/:genre_id',
+  authMiddleware,
+  genreController.activateGenre
+);
 
 module.exports = router;
