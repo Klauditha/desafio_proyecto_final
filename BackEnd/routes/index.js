@@ -10,6 +10,7 @@ const authorRouter = require('./author.router');
 const genreRouter = require('./genre.router');
 const bookGenreRouter = require('./booksGenre.router');
 const bookAuthorRouter = require('./booksAuthor.router');
+const publisherRouter = require('./publisher.router');
 
 //middleware
 router.use('/', loginRouter);
@@ -22,5 +23,6 @@ router.use('/author', authorRouter);
 router.use('/genre', genreRouter);
 router.use('/bookGenre', bookGenreRouter);
 router.use('/bookAuthor', bookAuthorRouter);
+router.use('/publisher', publisherRouter);
 
 module.exports = router;
