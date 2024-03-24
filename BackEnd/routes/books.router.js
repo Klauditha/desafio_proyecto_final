@@ -144,6 +144,6 @@ const { booksController } = require('../controllers');
  */
 router.get('/:book_id', booksController.getBook);
 
-
+router.post('/byPublisher', booksController.getAllByPublisher);
 
 module.exports = router;

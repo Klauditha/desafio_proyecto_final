@@ -1,0 +1,12 @@
+##Crear rating
+POST http://localhost:3000/rating
+Content-Type: application/json
+
+{
+  "user_id": 111,
+  "book_id": 6,
+  "score": 2,
+  "comment": "Excelente libro lo quiero volver a leer",
+  "wishlist": true,
+  "deleted": true
+}

@@ -10,7 +10,7 @@ Content-Type: application/json
 
 ### Obtener libro - Funcionando !!
 
-GET http://localhost:3000/book/11
+GET http://localhost:3000/book/3
 Content-Type: application/json
 
 {
@@ -35,5 +35,14 @@ Content-Type: application/json
   
 }
 
+####
+###Modificar libro
+
+POST http://localhost:3000/book/byPublisher
+Content-Type: application/json
+
+{
+  "publisher":"Alianza"
+}
 
 

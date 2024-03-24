@@ -1,6 +1,9 @@
 const express = require('express');
 const { authMiddleware } = require('../middlewares/auth.handler');
 const router = express.Router();
+const { ratingController } = require('../controllers/index');
+const { validarCampos } = require('../middlewares/validation.handler');
+const { check } = require('express-validator');
 
 /**
  * @swagger
@@ -9,21 +12,23 @@ const router = express.Router();
  *     Rating:
  *       type: object
  *       required:
- *         - ratingId
- *         - userId
- *         - bookId
+ *         - rating_id
+ *         - user_id
+ *         - book_id
  *         - score
  *         - comment
  *         - whishlist
- *         - createdAt
+ *         - created_at
+ *         - updated_at
+ *         - deleted
  *       properties:
- *         ratingId:
+ *         rating_id:
  *           type: number
  *           description: The id of the valuation
- *         userId:
+ *         user_id:
  *           type: number
  *           description: The id of the user
- *         bookId:
+ *         book_id:
  *           type: number
  *           description: The id of the book
  *         score:
@@ -35,21 +40,24 @@ const router = express.Router();
  *         whishlist:
  *           type: boolean
  *           description: The whishlist of the book
- *         createdAt:
+ *         created_at:
  *           type: timestamp
  *           description: The date of the valuation
- *         updatedAt:
+ *         updated_at:
  *           type: timestamp
  *           description: The date of the valuation
+ *         deleted:
+ *           type: boolean
+ *           description: The status of the valuation
  *       example:
- *         ratingId: 1
- *         userId: 1
- *         bookId: 1
- *         score: 1
- *         comment: "comment"
- *         whishlist: true
- *         createdAt: 2022-01-01
- *         updatedAt: 2022-01-01
+ *         rating_id: 3
+ *         user_id: 3
+ *         book_id: 3
+ *         comment: Me encantó, muy recomendado.
+ *         whishlist: false
+ *         created_at: 2023-03-31T10:00:00
+ *         updated_at: 2023-03-31T10:00:00
+ *         deleted: false
  */
 
 /**
@@ -59,7 +67,7 @@ const router = express.Router();
  *   description: The Rating managing API
  * /rating:
  *   post:
- *     summary: Create a new rating
+ *     summary: Add rating to a book
  *     tags: [Rating]
  *     requestBody:
  *       required: true
@@ -68,10 +76,10 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             properties:
- *               userId:
+ *               user_id:
  *                 type: number
  *                 description: The id of the user
- *               bookId:
+ *               book_id:
  *                 type: number
  *                 description: The id of the book
  *               score:
@@ -134,11 +142,24 @@ const router = express.Router();
  *                 message:
  *                   type: string
  *                   default: Unauthorized
- *                 data: 
+ *                 data:
  *                   type: object
  *                   default: null
  *
- * 
+ *
  * */
-router.post('/');
-module.exports = router
+
+router.post(
+  '/',
+  [
+    check('user_id', 'The user is required').not().isEmpty(),
+    check('book_id', 'The book is required').not().isEmpty(),
+    check('score', 'The score is required').not().isEmpty(),
+    check('comment', 'The comment is required').not().isEmpty(),
+    check('wishlist', 'The wishlist is required').not().isEmpty(),
+    validarCampos,
+  ],
+  authMiddleware,
+  ratingController.createUpdateRating
+);
+module.exports = router;
