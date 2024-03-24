@@ -8,36 +8,9 @@ require('dotenv').config();
 class UserService {
   constructor() {
     this.users = [];
-    /*          this.generate(); */
   }
 
-  /*   generate() {
-    const limit = 10;
-
-    for (let index = 0; index < limit; index++) {
-      this.users.push({
-        user_id: faker.datatype.uuid(),
-        username: faker.internet.userName(),
-        first_name: faker.person.firstName(),
-        last_name: faker.person.lastName(),
-        phone: faker.phone.number(),
-        region: faker.address.country(),
-        email: faker.internet.email(),
-        address: faker.address.streetAddress(),
-        zip_code: faker.address.zipCode(),
-        password: faker.internet.password(),
-        admin: false,
-        country: faker.address.country(),
-        city: faker.address.city(),
-        district: faker.address.county(),
-        created_at: faker.date.past().toISOString(),
-        updated_at: faker.date.recent().toISOString(),
-        deleted: false,
-      });
-    }
-  } */
-
-  async create(data) {
+  static async create(data) {
     try {
       console.log('Data recibida para creacion de usuario:', data);
 
@@ -49,9 +22,11 @@ class UserService {
       const hashedPassword = await bcrypt.hash(password, 10);
       console.log('Password hash exitoso');
       validatedData.admin = false;
-      const existingUser = this.users.find((user) => user.email === email);
-      if (existingUser) {
-        console.log('Usuario ya existe:', existingUser);
+      const existingUser = await pool.query(
+        'SELECT * FROM users WHERE email = $1',
+        [validatedData.email]
+      );
+      if (existingUser.rows.length > 0) {
         throw boom.conflict('Usuario ya existe');
       }
 
@@ -67,12 +42,27 @@ class UserService {
       console.log('Data de nuevo usuario:', newUser);
       const client = await pool.connect();
       try {
+        const maxUserIdQuery = await client.query(
+          'SELECT MAX(user_id) FROM users'
+        );
+        const maxUserId = maxUserIdQuery.rows[0].max;
+
+        const nextUserId = maxUserId ? maxUserId + 1 : 1;
+        console.log('nextUserId:', nextUserId);
+
+        const validatedData = await createUserSchema.validateAsync(data, {
+          abortEarly: false,
+        });
+
+        validatedData.user_id = nextUserId;
+
         const query = `
-            INSERT INTO users (username, password, email, first_name, last_name, phone, region, admin, country, city, district, address, zip_code, created_at, updated_at, deleted)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
-            RETURNING *`;
+            INSERT INTO users (user_id, username, password, email, first_name, last_name, phone, region, admin, country, city, district, address, zip_code, created_at, updated_at, deleted)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+          RETURNING *`;
 
         const result = await client.query(query, [
+          nextUserId,
           newUser.username,
           newUser.password,
           newUser.email,
@@ -103,8 +93,6 @@ class UserService {
   }
 
   static async findOne(user_id) {
-    console.log('find user');
-    console.log('user_id:', user_id);
     const client = await pool.connect();
     try {
       const query = 'SELECT * FROM users WHERE user_id = $1';
@@ -112,25 +100,9 @@ class UserService {
       const user = result.rows[0];
 
       if (!user) {
-        console.log('No se encontro el usuario');
         throw boom.notFound('Usuario no encontrado.');
       }
 
-      return user;
-    } finally {
-      client.release();
-    }
-  }
-
-  async findById(user_id) {
-    const client = await pool.connect();
-    try {
-      const query = 'SELECT * FROM users WHERE user_id = $1';
-      const result = await client.query(query, [user_id]);
-      const user = result.rows[0];
-      if (!user) {
-        throw boom.notFound('User not found');
-      }
       return user;
     } finally {
       client.release();
@@ -196,6 +168,31 @@ class UserService {
       expiresIn: expiredIn,
     });
     return token;
+  }
+
+  static async deleteUser(user_id) {
+    const client = await pool.connect();
+    try {
+      const query = 'UPDATE users SET deleted = true WHERE user_id = $1';
+      await client.query(query, [user_id]);
+    } finally {
+      client.release();
+    }
+  }
+
+  async findById(user_id) {
+    const client = await pool.connect();
+    try {
+      const query = 'SELECT * FROM users WHERE user_id = $1';
+      const result = await client.query(query, [user_id]);
+      const user = result.rows[0];
+      if (!user) {
+        throw boom.notFound('User not found');
+      }
+      return user;
+    } finally {
+      client.release();
+    }
   }
 }
 
