@@ -60,7 +60,34 @@ const getUser = async (req, res, next) => {
   }
 };
 
-module.exports = {
-  createUser,
-  getUser,
+const deleteUser = async (req, res, next) => {
+  try {
+    const { user_id } = req.params;
+
+    /*
+    if (!req.user || !req.user.admin) {
+      return res.status(403).json({
+        status: false,
+        message: "Forbidden. Solo admin puede borrar usuarios.",
+        data: null,
+      });
+    } */
+
+    await UserService.deleteUser(user_id);
+    res
+      .status(200)
+      .json({ status: true, message: "User deleted successfully", data: null });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res
+      .status(500)
+      .json({ status: false, message: "Internal server error", data: null });
+  }
 };
+
+
+  module.exports = {
+    createUser,
+    getUser,
+    deleteUser,
+  };
