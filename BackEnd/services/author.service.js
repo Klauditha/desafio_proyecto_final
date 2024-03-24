@@ -16,7 +16,7 @@ class AuthorService {
   }
 
   async findOne(id_author) {
-    const author = await models.Author.findOne(id_author);
+    const author = await models.Author.findByPk(id_author);
     if (!author) {
       throw boom.notFound('Author not found');
     }
@@ -50,7 +50,6 @@ class AuthorService {
       }
     }
     const rta = await author.update(changes);
-    console.log(rta);
     return rta;
   }
 

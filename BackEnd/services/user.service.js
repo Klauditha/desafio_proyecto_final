@@ -1,9 +1,9 @@
-const { createUserSchema, userSchema } = require("../schemas/user.schema");
-const boom = require("@hapi/boom");
-const { pool } = require("../config/db");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
+const { createUserSchema, userSchema } = require('../schemas/user.schema');
+const boom = require('@hapi/boom');
+const { pool } = require('../config/db');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 class UserService {
   constructor() {
@@ -39,20 +39,20 @@ class UserService {
 
   async create(data) {
     try {
-      console.log("Data recibida para creacion de usuario:", data);
+      console.log('Data recibida para creacion de usuario:', data);
 
       const validatedData = await createUserSchema.validateAsync(data, {
         abortEarly: false,
       });
-      console.log("Validated data:", validatedData);
+      console.log('Validated data:', validatedData);
       const { email, password } = validatedData;
       const hashedPassword = await bcrypt.hash(password, 10);
-      console.log("Password hash exitoso");
+      console.log('Password hash exitoso');
       validatedData.admin = false;
       const existingUser = this.users.find((user) => user.email === email);
       if (existingUser) {
-        console.log("Usuario ya existe:", existingUser);
-        throw boom.conflict("Usuario ya existe");
+        console.log('Usuario ya existe:', existingUser);
+        throw boom.conflict('Usuario ya existe');
       }
 
       const newUser = {
@@ -62,9 +62,9 @@ class UserService {
         updated_at: new Date().toISOString(),
         deleted: false,
       };
-      console.log("Nuevo objeto de usuario construido:", newUser);
+      console.log('Nuevo objeto de usuario construido:', newUser);
 
-      console.log("Data de nuevo usuario:", newUser);
+      console.log('Data de nuevo usuario:', newUser);
       const client = await pool.connect();
       try {
         const query = `
@@ -91,28 +91,46 @@ class UserService {
           newUser.deleted,
         ]);
         const insertedUser = result.rows[0];
-        console.log("Usuario creado exitosamente:", insertedUser);
+        console.log('Usuario creado exitosamente:', insertedUser);
         return insertedUser;
       } finally {
         client.release();
       }
     } catch (error) {
-      console.error("Error creando usuario:", error.message);
+      console.error('Error creando usuario:', error.message);
       throw error;
     }
   }
 
   static async findOne(user_id) {
+    console.log('find user');
+    console.log('user_id:', user_id);
     const client = await pool.connect();
     try {
-      const query = "SELECT * FROM users WHERE user_id = $1";
+      const query = 'SELECT * FROM users WHERE user_id = $1';
       const result = await client.query(query, [user_id]);
       const user = result.rows[0];
 
       if (!user) {
-        throw boom.notFound("Usuario no encontrado.");
+        console.log('No se encontro el usuario');
+        throw boom.notFound('Usuario no encontrado.');
       }
 
+      return user;
+    } finally {
+      client.release();
+    }
+  }
+
+  async findById(user_id) {
+    const client = await pool.connect();
+    try {
+      const query = 'SELECT * FROM users WHERE user_id = $1';
+      const result = await client.query(query, [user_id]);
+      const user = result.rows[0];
+      if (!user) {
+        throw boom.notFound('User not found');
+      }
       return user;
     } finally {
       client.release();
@@ -139,28 +157,28 @@ class UserService {
   static async authenticateUser(email, password) {
     const client = await pool.connect();
     try {
-      const query = "SELECT * FROM users WHERE email = $1";
+      const query = 'SELECT * FROM users WHERE email = $1';
       const result = await client.query(query, [email]);
       const user = result.rows[0];
 
       if (!user) {
-        throw boom.unauthorized("Usuario no encontrado.");
+        throw boom.unauthorized('Usuario no encontrado.');
       }
 
-      console.log("Usuario traido:", user);
-      console.log("Hashed password de la bdd:", user.password);
+      console.log('Usuario traido:', user);
+      console.log('Hashed password de la bdd:', user.password);
 
       const isPasswordValid = await bcrypt.compare(password, user.password);
       console.log(
-        "Password input:",
+        'Password input:',
         password,
-        "Hashed password de la bdd:",
+        'Hashed password de la bdd:',
         user.password,
-        "Password comparacion:",
+        'Password comparacion:',
         isPasswordValid
       );
       if (!isPasswordValid) {
-        throw boom.unauthorized("Contraseña incorrecta.");
+        throw boom.unauthorized('Contraseña incorrecta.');
       }
 
       return user;
@@ -170,7 +188,7 @@ class UserService {
   }
 
   static async generateToken(user_id, expiredIn) {
-    console.log("user_id generateToken:", user_id);
+    console.log('user_id generateToken:', user_id);
     const payload = {
       user_id: user_id,
     };

@@ -10,7 +10,7 @@ class BookService {
   }
 
   async findOne(book_id) {
-    const book = await models.Book.findByPk(book_id);
+    const book = await models.Book.findOne({ where: { book_id } });
     if (!book) {
       throw boom.notFound('Book not found');
     }
@@ -29,8 +29,20 @@ class BookService {
       }
     });
     publishers = publishers.sort();
-     
+
     return publishers;
+  }
+
+  async getAllByPublisher(publisher) {
+    const books = await models.Book.findAll({
+      where: {
+        publisher: publisher,
+      },
+    });
+    if (!books) {
+      throw boom.notFound('Books not found');
+    }
+    return books;
   }
 }
 

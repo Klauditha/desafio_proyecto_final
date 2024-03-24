@@ -50,7 +50,6 @@ const getBook = async (req, res, next) => {
     if (bookAuthor) {
       author = await authorService.findOne(bookAuthor.book_id);
     }
-
     res.status(200).json({
       status: true,
       message: 'Book found',
@@ -103,6 +102,29 @@ const findAllPublishers = async (req, res, next) => {
   }
 };
 
+const getAllByPublisher = async (req, res, next) => {
+
+  try {
+    const { publisher } = req.body;
+    console.log("Publisher:", publisher);
+    const books = await service.getAllByPublisher(publisher);
+    res.status(200).json({
+      status: true,
+      message: 'Books found',
+      data: {
+        books,
+      },
+    })
+  } catch (error) {
+    let codeError = error.isBoom ? error.output.statusCode : 500
+    res(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    })
+  }
+};
+
 module.exports = {
   getBook,
   getBooksByCategory,
@@ -111,4 +133,5 @@ module.exports = {
   deleteBook,
   updateBook,
   findAllPublishers,
+  getAllByPublisher
 };
