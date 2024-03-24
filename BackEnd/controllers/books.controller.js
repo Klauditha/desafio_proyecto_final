@@ -12,10 +12,13 @@ const bookGenreService = new BookGenreService();
 const authorService = new AuthorService();
 const bookAuthorService = new BookAuthorService();
 
-const createBook = (req, res, next) => {
+/**
+ * Crea un nuevo libro
+ */
+const createBook = async (req, res, next) => {
   try {
     const body = req.body;
-    const newBook = service.create(body);
+    const newBook = await service.create(body);
     res.status(201).json({
       status: true,
       message: 'New book created',
@@ -66,35 +69,37 @@ const getBook = async (req, res, next) => {
   }
 };
 
-const updateBookById = (req, res, next) => {
-  try {
-    res.status(200).send('Libro actualizado');
-  } catch (error) {
-    res.status(500).send(error);
-  }
-};
+/**
+ * Actualiza un libro
+ */
+const updateBook = async (req, res, next) => {};
 
-const deleteBookById = (req, res, next) => {
-  try {
-    res.status(200).send('Libro eliminado');
-  } catch (error) {
-    res.status(500).send(error);
-  }
-};
+const deleteBook = async (req, res, next) => {};
 
-const getBooksByCategory = (req, res, next) => {
-  try {
-    res.status(200).send('Libros por categoria');
-  } catch (error) {
-    res.status(500).send(error);
-  }
-};
+const getBooksByCategory = async (req, res, next) => {};
 
-const getAllBooks = (req, res, next) => {
+const getAllBooks = async (req, res, next) => {};
+
+/**
+ * Obtiene todas las editoriales
+ */
+const findAllPublishers = async (req, res, next) => {
   try {
-    res.status(200).send('Libros');
+    const publishes = await service.findAllPublishers();
+    res.status(200).json({
+      status: true,
+      message: 'Publishes found',
+      data: {
+        publishes,
+      },
+    });
   } catch (error) {
-    res.status(500).send(error);
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    });
   }
 };
 
@@ -102,8 +107,8 @@ module.exports = {
   getBook,
   getBooksByCategory,
   createBook,
-  deleteBookById,
-  updateBookById,
   getAllBooks,
-
+  deleteBook,
+  updateBook,
+  findAllPublishers,
 };

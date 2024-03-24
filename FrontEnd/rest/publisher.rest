@@ -1,0 +1,7 @@
+###Obtener editoriales - funcionando
+POST http://localhost:3000/publisher/all
+Content-Type: application/json
+
+{
+  
+}

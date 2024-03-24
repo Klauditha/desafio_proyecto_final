@@ -16,6 +16,22 @@ class BookService {
     }
     return book;
   }
+
+  async findAllPublishers() {
+    const books = await models.Book.findAll();
+    let publishers = [];
+    if (!books) {
+      throw boom.notFound('Books not found');
+    }
+    books.forEach((book) => {
+      if (!publishers.includes(book.publisher)) {
+        publishers.push(book.publisher);
+      }
+    });
+    publishers = publishers.sort();
+     
+    return publishers;
+  }
 }
 
 module.exports = BookService;
