@@ -37,12 +37,11 @@ class AuthorService {
     return authors;
   }
 
-  async update(changes,id_author) {
+  async update(changes, id_author) {
     const author = await models.Author.findByPk(id_author);
     if (!author) {
       throw boom.notFound('Author not found');
     }
-
     const { name } = changes;
     if (name) {
       const authorExists = await models.Author.findOne({ where: { name } });
@@ -57,12 +56,18 @@ class AuthorService {
 
   async delete(id_author) {
     const author = await this.findOne(id_author);
+    if (!author) {
+      throw boom.notFound('Author not found');
+    }
     const rta = await author.update({ deleted: true });
     return rta;
   }
 
   async activate(id_author) {
     const author = await models.Author.findByPk(id_author);
+    if (!author) {
+      throw boom.notFound('Author not found');
+    }
     const rta = await author.update({ deleted: false });
     return rta;
   }

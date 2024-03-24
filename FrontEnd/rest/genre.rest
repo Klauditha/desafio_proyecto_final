@@ -34,19 +34,39 @@ Content-Type: application/json
  
 }
 
+####
+##Crear genre - Funcionando
 
-###Modificar libro
+POST http://localhost:3000/genre/
+Content-Type: application/json
 
-PUT http://localhost:3000/book
+{
+  "name":"Misterio"
+}
+
+####
+##Modificar genre - Funcionando
+
+PUT http://localhost:3000/genre/1
+Content-Type: application/json
+
+{
+  "name":"Misterio Modificado"
+}
+
+###
+###Delete genre - Funcionando
+
+DELETE http://localhost:3000/genre/1
 Content-Type: application/json
 
 {
   
 }
 
-###Modificar libro
+###Activate genre - Funcionando
 
-DELETE http://localhost:3000/libro
+PUT http://localhost:3000/genre/activate/1
 Content-Type: application/json
 
 {
