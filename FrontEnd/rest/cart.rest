@@ -1,0 +1,31 @@
+## Obtener cartItems por user_id - Funcionando 
+
+GET http://localhost:3000/cart/3
+Content-Type: application/json
+
+{
+  
+}
+
+###
+## Modificación y/o eliminacion logica - Funcionando
+PUT http://localhost:3000/cart/2
+Content-Type: application/json
+
+{
+    "user_id":6,
+    "book_id":12,
+    "quantity":1,
+    "deleted":true
+}
+
+###
+## Crear item - Funcionando
+POST http://localhost:3000/cart/
+Content-Type: application/json
+
+{
+    "user_id":1,
+    "book_id":11,
+    "quantity":5    
+}

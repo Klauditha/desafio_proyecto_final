@@ -6,6 +6,7 @@ const genreController = require('./genre.controller');
 const ratingController = require('./rating.controller');
 const booksGenreController = require('./bookGenre.controller');
 const booksAuthorController = require('./bookAuthor.controller');
+const cartController = require('./cartItem.controller');
 
 module.exports = {
   userController,
@@ -16,4 +17,5 @@ module.exports = {
   ratingController,
   booksGenreController,
   booksAuthorController,
+  cartController,
 };
