@@ -1,7 +1,20 @@
-/*Obtener cartItems por user_id - Funcionando*/
+## Obtener cartItems por user_id - Funcionando 
+
 GET http://localhost:3000/cart/3
 Content-Type: application/json
 
 {
   
+}
+
+###
+##Obtener cartItems por user_id - Fu
+PUT http://localhost:3000/cart/2
+Content-Type: application/json
+
+{
+    "user_id":6,
+    "book_id":12,
+    "quantity":1,
+    "deleted":true
 }

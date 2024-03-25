@@ -3,20 +3,7 @@ const { models } = require('../config/sequelize');
 
 class CartItemService {
   constructor() {}
-
-  async createCartItem(data) {
-    const newCartItem = await models.CartItem.create(data);
-    return newCartItem;
-  }
-
-  async findOneCartItem(id) {
-    const cartItem = await models.CartItem.findByPk(id);
-    if (!cartItem) {
-      throw boom.notFound('Cart item not found');
-    }
-    return cartItem;
-  }
-
+  
   async getCartItemsByUser(user_id) {
     const cartItems = await models.Cart.findAll({
       where: {
@@ -28,6 +15,20 @@ class CartItemService {
       throw boom.notFound('Cart items not found');
     }
     return cartItems;
+  }
+
+  async create(data) {
+    const newCartItem = await models.Cart.create(data);
+    return newCartItem;
+  }
+
+  async update(cart_item_id, changes) {
+    const cart = await models.Cart.findByPk(cart_item_id);
+    if (!cart) {
+      throw boom.notFound('Cart not found');
+    }
+    const rta = await cart.update(changes);
+    return rta;
   }
 }
 
