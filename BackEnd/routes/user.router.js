@@ -171,7 +171,7 @@ const { check } = require('express-validator');
  */
 router.post(
   "/",
-/*   authMiddleware, */ //Activar flag si se quiere que la creacion de usuario requiera token
+/*   authMiddleware, */ //Activar si se quiere que la creacion de usuario requiera token
   [
     check("username", "Username is required").not().isEmpty(),
     check("password", "Password is required").not().isEmpty(),
@@ -192,6 +192,9 @@ router.post(
 
 // DELETE /user/:user_id
 router.delete('/:user_id', authMiddleware, userController.deleteUser);
+
+// PUT /user/:user_id
+router.put('/:user_id', authMiddleware, userController.updateUser);
 
 /**
  * tags:
