@@ -12,22 +12,22 @@ class UserService {
 
   static async create(data) {
     try {
-      console.log('Data recibida para creacion de usuario:', data);
+      console.log("Data recibida para creacion de usuario:", data);
 
       const validatedData = await createUserSchema.validateAsync(data, {
         abortEarly: false,
       });
-      console.log('Validated data:', validatedData);
+      console.log("Validated data:", validatedData);
       const { email, password } = validatedData;
       const hashedPassword = await bcrypt.hash(password, 10);
-      console.log('Password hash exitoso');
+      console.log("Password hash exitoso");
       validatedData.admin = false;
       const existingUser = await pool.query(
-        'SELECT * FROM users WHERE email = $1',
+        "SELECT * FROM users WHERE email = $1",
         [validatedData.email]
       );
       if (existingUser.rows.length > 0) {
-        throw boom.conflict('Usuario ya existe');
+        throw boom.conflict("Usuario ya existe");
       }
 
       const newUser = {
@@ -37,18 +37,18 @@ class UserService {
         updated_at: new Date().toISOString(),
         deleted: false,
       };
-      console.log('Nuevo objeto de usuario construido:', newUser);
+      console.log("Nuevo objeto de usuario construido:", newUser);
 
-      console.log('Data de nuevo usuario:', newUser);
+      console.log("Data de nuevo usuario:", newUser);
       const client = await pool.connect();
       try {
         const maxUserIdQuery = await client.query(
-          'SELECT MAX(user_id) FROM users'
+          "SELECT MAX(user_id) FROM users"
         );
         const maxUserId = maxUserIdQuery.rows[0].max;
 
         const nextUserId = maxUserId ? maxUserId + 1 : 1;
-        console.log('nextUserId:', nextUserId);
+        console.log("nextUserId:", nextUserId);
 
         const validatedData = await createUserSchema.validateAsync(data, {
           abortEarly: false,
@@ -81,13 +81,13 @@ class UserService {
           newUser.deleted,
         ]);
         const insertedUser = result.rows[0];
-        console.log('Usuario creado exitosamente:', insertedUser);
+        console.log("Usuario creado exitosamente:", insertedUser);
         return insertedUser;
       } finally {
         client.release();
       }
     } catch (error) {
-      console.error('Error creando usuario:', error.message);
+      console.error("Error creando usuario:", error.message);
       throw error;
     }
   }
@@ -95,12 +95,12 @@ class UserService {
   static async findOne(user_id) {
     const client = await pool.connect();
     try {
-      const query = 'SELECT * FROM users WHERE user_id = $1';
+      const query = "SELECT * FROM users WHERE user_id = $1";
       const result = await client.query(query, [user_id]);
       const user = result.rows[0];
 
       if (!user) {
-        throw boom.notFound('Usuario no encontrado.');
+        throw boom.notFound("Usuario no encontrado.");
       }
 
       return user;
@@ -129,28 +129,28 @@ class UserService {
   static async authenticateUser(email, password) {
     const client = await pool.connect();
     try {
-      const query = 'SELECT * FROM users WHERE email = $1';
+      const query = "SELECT * FROM users WHERE email = $1";
       const result = await client.query(query, [email]);
       const user = result.rows[0];
 
       if (!user) {
-        throw boom.unauthorized('Usuario no encontrado.');
+        throw boom.unauthorized("Usuario no encontrado.");
       }
 
-      console.log('Usuario traido:', user);
-      console.log('Hashed password de la bdd:', user.password);
+      console.log("Usuario traido:", user);
+      console.log("Hashed password de la bdd:", user.password);
 
       const isPasswordValid = await bcrypt.compare(password, user.password);
       console.log(
-        'Password input:',
+        "Password input:",
         password,
-        'Hashed password de la bdd:',
+        "Hashed password de la bdd:",
         user.password,
-        'Password comparacion:',
+        "Password comparacion:",
         isPasswordValid
       );
       if (!isPasswordValid) {
-        throw boom.unauthorized('Contraseña incorrecta.');
+        throw boom.unauthorized("Contraseña incorrecta.");
       }
 
       return user;
@@ -160,7 +160,7 @@ class UserService {
   }
 
   static async generateToken(user_id, expiredIn) {
-    console.log('user_id generateToken:', user_id);
+    console.log("user_id generateToken:", user_id);
     const payload = {
       user_id: user_id,
     };
@@ -173,7 +173,7 @@ class UserService {
   static async deleteUser(user_id) {
     const client = await pool.connect();
     try {
-      const query = 'UPDATE users SET deleted = true WHERE user_id = $1';
+      const query = "UPDATE users SET deleted = true WHERE user_id = $1";
       await client.query(query, [user_id]);
     } finally {
       client.release();
@@ -183,13 +183,62 @@ class UserService {
   async findById(user_id) {
     const client = await pool.connect();
     try {
-      const query = 'SELECT * FROM users WHERE user_id = $1';
+      const query = "SELECT * FROM users WHERE user_id = $1";
       const result = await client.query(query, [user_id]);
       const user = result.rows[0];
       if (!user) {
-        throw boom.notFound('User not found');
+        throw boom.notFound("User not found");
       }
       return user;
+    } finally {
+      client.release();
+    }
+  }
+
+  static async updateUser(user_id, newData) {
+    
+    newData.admin = false; // Desactivar para permitir cambiar estado admin de usuario
+
+    const client = await pool.connect();
+    try {
+      const query = `
+      UPDATE users
+      SET 
+        username = COALESCE($2, username),
+        password = COALESCE($3, password),
+        email = COALESCE($4, email),
+        first_name = COALESCE($5, first_name),
+        last_name = COALESCE($6, last_name),
+        phone = COALESCE($7, phone),
+        region = COALESCE($8, region),
+        country = COALESCE($9, country),
+        city = COALESCE($10, city),
+        district = COALESCE($11, district),
+        address = COALESCE($12, address),
+        zip_code = COALESCE($13, zip_code),
+        updated_at = $14
+      WHERE user_id = $1
+      RETURNING *
+    `;
+
+      const result = await client.query(query, [
+        user_id,
+        newData.username,
+        newData.password,
+        newData.email,
+        newData.first_name,
+        newData.last_name,
+        newData.phone,
+        newData.region,
+        newData.country,
+        newData.city,
+        newData.district,
+        newData.address,
+        newData.zip_code,
+        new Date().toISOString(),
+      ]);
+
+      return result.rows[0];
     } finally {
       client.release();
     }

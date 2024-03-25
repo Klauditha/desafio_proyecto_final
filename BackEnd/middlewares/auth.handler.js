@@ -13,7 +13,6 @@ const authMiddleware = async (req, res, next) => {
       .json({ status: false, message: 'No token provided', data: null });
   }
   try {
-
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     console.log("Decoded Token:", decoded);
 
@@ -24,14 +23,17 @@ const authMiddleware = async (req, res, next) => {
       console.log("Invalid token: Usuario no encontrado");
       return res.status(401).json({ message: "Unauthorized: Invalid token" });
     }
-    if (!user.admin) {
+
+    req.user = user;
+
+    /* if (!user.admin) {
       console.log("Usuario no es admin");
       return res
         .status(403)
         .json({ message: "Forbidden: No eres admin" });
     }
+    console.log("Usuario está autorizado como admin"); */
 
-    console.log("Usuario está autorizado como admin");
     next();
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
