@@ -18,6 +18,11 @@ class CartItemService {
   }
 
   async create(data) {
+    data = { ...data, deleted: false };
+    const cart = await models.Cart.findOne({ where: { user_id: data.user_id, book_id: data.book_id } });
+    if (cart) {
+      throw boom.conflict('Cart already exists');
+    }
     const newCartItem = await models.Cart.create(data);
     return newCartItem;
   }

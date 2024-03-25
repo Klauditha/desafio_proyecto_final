@@ -66,19 +66,16 @@ const updateCartItem = async (req, res, next) => {
 
 const createCartItem = async (req, res, next) => {
   const body = req.body;
-  console.log(body);
-
   const { user_id, book_id } = body;
   const user = await userService.findById(user_id);
   if (!user) {
     throw boom.notFound('User not found');
   }
-  const book = await service.findOne(book_id);
+  const book = await bookService.findOne(book_id);
   if (!book) {
     throw boom.notFound('Book not found');
   }
-
-  const cart = await service.create(data);
+  const cart = await service.create(body);
   res.status(201).json({
     status: true,
     message: 'Cart item created',

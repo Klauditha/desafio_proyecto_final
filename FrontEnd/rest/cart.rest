@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 ###
-##Obtener cartItems por user_id - Fu
+## Modificación y/o eliminacion logica - Funcionando
 PUT http://localhost:3000/cart/2
 Content-Type: application/json
 
@@ -17,4 +17,15 @@ Content-Type: application/json
     "book_id":12,
     "quantity":1,
     "deleted":true
+}
+
+###
+## Crear item - Funcionando
+POST http://localhost:3000/cart/
+Content-Type: application/json
+
+{
+    "user_id":1,
+    "book_id":11,
+    "quantity":5    
 }
