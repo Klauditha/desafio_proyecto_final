@@ -27,7 +27,7 @@ const CartItemSchema = {
         defaultValue: false
 }};
 
-class CartItem extends Model {
+class Cart extends Model {
     static config(sequelize) {
         return {
             sequelize,
@@ -37,4 +37,4 @@ class CartItem extends Model {
         }; 
     }}
 
-module.exports = {CartItem, CartItemSchema, CART_ITEM_TABLE}
+module.exports = {Cart, CartItemSchema, CART_ITEM_TABLE}

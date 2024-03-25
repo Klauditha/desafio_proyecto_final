@@ -1,0 +1,7 @@
+/*Obtener cartItems por user_id - Funcionando*/
+GET http://localhost:3000/cart/3
+Content-Type: application/json
+
+{
+  
+}
