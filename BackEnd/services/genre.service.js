@@ -16,19 +16,22 @@ class GenreService {
     return newGenre;
   }
 
+  async createByName(genre) {
+    console.log(genre);
+    const newGenre = await models.Genre.create({ name: genre, deleted: false });
+    return newGenre;
+  }
+
   async findOne(id_genre) {
-    console.log(id_genre);
     const genre = await models.Genre.findByPk(id_genre);
-    if (!genre) {
-      return null;
-    }
     return genre;
   }
 
   async findOneByName(name) {
-    const genre = await models.Genre.findOne({ where: { name: name } })
+    const genre = await models.Genre.findOne({ where: { name: name } });
+    console.log(name);
     if (!genre) {
-      throw boom.notFound('Genre not found');
+      return null;
     }
     return genre;
   }
@@ -69,7 +72,7 @@ class GenreService {
     return genres;
   }
 
-  async update(changes,id_genre) {
+  async update(changes, id_genre) {
     const genre = await models.Genre.findByPk(id_genre);
     if (!genre) {
       throw boom.notFound('Genre not found');
@@ -87,7 +90,7 @@ class GenreService {
 
   async delete(id_genre) {
     const genre = await this.findOne(id_genre);
-    if(!genre){
+    if (!genre) {
       throw boom.notFound('Genre not found');
     }
     const rta = await genre.update({ deleted: true });

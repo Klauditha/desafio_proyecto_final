@@ -1,0 +1,6 @@
+DB_USER=root
+DB_PASSWORD=XPteJDfN2ltQAGBxpIffN71bz2n8zT13
+DB_HOST=dpg-cnuf5efjbltc73c3l020-a.oregon-postgres.render.com
+DB_DATABASE=TintaAustral
+DB_PORT=5432
+JWT_SECRET=TintaAustralSecret

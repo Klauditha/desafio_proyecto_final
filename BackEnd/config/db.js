@@ -9,9 +9,12 @@ const pool = new Pool({
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
   allowExitOnIdle: true,
+  
+  //Comentar para local
   ssl: {
     rejectUnauthorized: false,
   },
+  
 });
 const getData = async () => {
   try {

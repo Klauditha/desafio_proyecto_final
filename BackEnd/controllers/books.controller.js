@@ -18,29 +18,33 @@ const bookAuthorService = new BookAuthorService();
 const createBook = async (req, res, next) => {
   try {
     const body = req.body;
-    let bookGenre, bookAuthor = [];
+    let bookGenre,
+      bookAuthor,
+      newGenre,
+      newAuthor = [];
+    const existBook = await service.findOneByName(body.title);
+    if (existBook) {
+      throw boom.conflict('Book already exists');
+    }
     const newBook = await service.create(body);
-    console.log(newBook);
-    const genre = await genreService.findOne(newBook.book_id);
-    if (genre) {
+    const genre = await genreService.findOneByName(body.genre);
+    if (genre != null) {
       bookGenre = await bookGenreService.create({
         book_id: newBook.book_id,
-        genre: genre.genre_id,
+        genre_id: genre.genre_id,
       });
     } else {
-      const newGenre = await genreService.create({
-        name: body.genre,
-      });
+      newGenre = await genreService.createByName(body.genre);
       bookGenre = await bookGenreService.create({
         book_id: newBook.book_id,
-        genre: newGenre.genre_id,
+        genre_id: newGenre.genre_id,
       });
     }
-    const author = await authorService.findOne(newBook.book_id);
-    if (author) {
+    const author = await authorService.findOneByName(body.author);
+    if (author!=null) {
       bookAuthor = await bookAuthorService.create({
         book_id: newBook.book_id,
-        author: author.author_id,
+        author_id: author.author_id,
       });
     } else {
       const newAuthor = await authorService.create({
@@ -48,7 +52,7 @@ const createBook = async (req, res, next) => {
       });
       bookAuthor = await bookAuthorService.create({
         book_id: newBook.book_id,
-        author: newAuthor.author_id,
+        author_id: newAuthor.author_id,
       });
     }
     res.status(201).json({
@@ -56,8 +60,8 @@ const createBook = async (req, res, next) => {
       message: 'New book created',
       data: {
         book: newBook,
-        genre: bookGenre,
-        author: bookAuthor,
+        genre: genre != null ? genre : newGenre,
+        author: author != null ? author : newAuthor,
       },
     });
   } catch (error) {
