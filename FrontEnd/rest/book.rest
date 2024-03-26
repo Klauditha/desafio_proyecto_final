@@ -1,4 +1,4 @@
-##Crear libro
+##Crear libro - Funcionandi
 
 POST http://localhost:3000/book
 Content-Type: application/json
@@ -36,9 +36,9 @@ Content-Type: application/json
   
 }
 
-###Modificar libro
+###DELETE libro - Funcionando
 
-DELETE http://localhost:3000/libro
+PUT http://localhost:3000/book/delete/1
 Content-Type: application/json
 
 {

@@ -5,6 +5,10 @@ class BookGenreService {
   constructor() {}
 
   async create(data) {
+    data = {
+      ...data,
+      deleted: false,
+    };
     const newBookGenre = await models.BookGenre.create(data);
     return newBookGenre;
   }
@@ -15,6 +19,14 @@ class BookGenreService {
     if (!bookGenre) {
       throw boom.notFound('BookGenre not found');
     }
+    return bookGenre;
+  }
+
+  async updateDeletedByBook(book_id) {
+    const bookGenre = await models.BookGenre.update(
+      { deleted: true },
+      { where: { book_id } }
+    );
     return bookGenre;
   }
 }

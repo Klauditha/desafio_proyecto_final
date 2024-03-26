@@ -112,7 +112,36 @@ const getBook = async (req, res, next) => {
  */
 const updateBook = async (req, res, next) => {};
 
-const deleteBook = async (req, res, next) => {};
+const deleteBook = async (req, res, next) => {
+  try {
+    const { book_id } = req.params;
+    const existBook = await service.findOne(book_id);
+    if (!existBook) {
+      throw boom.notFound('Book not found');
+    }
+    const book = await service.updateDeleted(book_id);
+    if (!book) {
+      throw boom.notFound('Book not found');
+    }
+    const bookGenre = await bookGenreService.updateDeletedByBook(book.book_id);
+    const bookAuthor = await bookAuthorService.updateDeletedByBook(book.book_id);
+    
+    res.status(200).json({
+      status: true,
+      message: 'Book deleted',
+      data: {
+        book,
+      },
+    });
+  } catch (error) {
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
 
 const getBooksByCategory = async (req, res, next) => {};
 

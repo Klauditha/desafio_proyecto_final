@@ -23,7 +23,7 @@ class BookService {
   }
 
   async findOneByName(title) {
-    const book = await models.Book.findOne({ where: { title : title } });
+    const book = await models.Book.findOne({ where: { title: title } });
     return book;
   }
 
@@ -53,6 +53,15 @@ class BookService {
       throw boom.notFound('Books not found');
     }
     return books;
+  }
+
+  async updateDeleted(id_book) {
+    const book = await this.findOne(id_book);
+    if (!book) {
+      return null;
+    }
+    const rta = await book.update({ deleted: true });
+    return rta;
   }
 }
 
