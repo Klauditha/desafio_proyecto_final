@@ -41,7 +41,7 @@ const createBook = async (req, res, next) => {
       });
     }
     const author = await authorService.findOneByName(body.author);
-    if (author!=null) {
+    if (author != null) {
       bookAuthor = await bookAuthorService.create({
         book_id: newBook.book_id,
         author_id: author.author_id,
@@ -110,7 +110,47 @@ const getBook = async (req, res, next) => {
 /**
  * Actualiza un libro
  */
-const updateBook = async (req, res, next) => {};
+const updateBook = async (req, res, next) => {
+  try {
+    const { book_id } = req.params;
+    const body = req.body;
+    const existBook = await service.findOne(book_id);
+    if (!existBook) {
+      throw boom.notFound('Book not found');
+    }
+    const book = await service.updateBook(book_id, body);
+    if (book == null) {
+      throw boom.notFound('Book not found');
+    }
+    const bookGenre = await bookGenreService.updateByGenreBook(book_id, body.genre_id);
+    const genre = await genreService.findOne(body.genre_id);
+    if (!genre) {
+      throw boom.notFound('Genre not found');
+    }
+    const bookAuthor = await bookAuthorService.updateByAuthorBook(book_id, body.author_id);
+    const author = await authorService.findOne(body.author_id);
+    if (!author) {
+      throw boom.notFound('Author not found');
+    }
+
+    res.status(200).json({
+      status: true,
+      message: 'Book updated',
+      data: {
+        book,
+        genre,
+        author,
+      },
+    });
+  } catch (error) {
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
 
 const deleteBook = async (req, res, next) => {
   try {
@@ -124,8 +164,10 @@ const deleteBook = async (req, res, next) => {
       throw boom.notFound('Book not found');
     }
     const bookGenre = await bookGenreService.updateDeletedByBook(book.book_id);
-    const bookAuthor = await bookAuthorService.updateDeletedByBook(book.book_id);
-    
+    const bookAuthor = await bookAuthorService.updateDeletedByBook(
+      book.book_id
+    );
+
     res.status(200).json({
       status: true,
       message: 'Book deleted',

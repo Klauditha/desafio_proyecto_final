@@ -39,6 +39,20 @@ class BookAuthorService {
     );
     return bookAuthor;
   }
+
+  async updateByAuthorBook(book_id, author_id) {
+    const bookAuthor = await models.BookAuthor.update(
+      {
+        author_id,
+      },
+      {
+        where: {
+          book_id,
+        },
+      }
+    );
+    return bookAuthor;
+  }
 }
 
 module.exports = BookAuthorService;

@@ -5,10 +5,6 @@ class BookGenreService {
   constructor() {}
 
   async create(data) {
-    data = {
-      ...data,
-      deleted: false,
-    };
     const newBookGenre = await models.BookGenre.create(data);
     return newBookGenre;
   }
@@ -25,6 +21,14 @@ class BookGenreService {
   async updateDeletedByBook(book_id) {
     const bookGenre = await models.BookGenre.update(
       { deleted: true },
+      { where: { book_id } }
+    );
+    return bookGenre;
+  }
+
+  async updateByGenreBook(genre_id, book_id) {
+    const bookGenre = await models.BookGenre.update(
+      { genre_id },
       { where: { book_id } }
     );
     return bookGenre;
