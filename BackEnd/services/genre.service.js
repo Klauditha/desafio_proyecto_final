@@ -105,6 +105,15 @@ class GenreService {
     const rta = await genre.update({ deleted: false });
     return rta;
   }
+
+  async updateDeleted(id_genre) {
+    const genre = await this.findOne(id_genre);
+    if (!genre) {
+      return null;
+    }
+    const rta = await genre.update({ deleted: true });
+    return rta;
+  }
 }
 
 module.exports = GenreService;

@@ -103,7 +103,7 @@ const { check } = require('express-validator');
  *                 message:
  *                   type: string
  *                 data:
- *                   type: boject
+ *                   type: array
  *                   properties:
  *                     book:
  *                       $ref: '#/components/schemas/Book'
@@ -149,6 +149,115 @@ router.get('/:book_id', booksController.getBook);
 
 router.post('/byPublisher', booksController.getAllByPublisher);
 
+/**
+ * @swagger
+ * /book:
+ *   post:
+ *     summary: Create a new book
+ *     tags: [Book]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *              properties:
+ *                isbn:
+ *                  type: string
+ *                  description: The isbn of the book
+ *                img:
+ *                  type: string
+ *                  description: The img of the book
+ *                title:
+ *                  type: string
+ *                  description: The title of the book
+ *                description:
+ *                  type: string
+ *                  description: The description of the book
+ *                language:
+ *                  type: string
+ *                  description: The language of the book
+ *                pages:
+ *                  type: number
+ *                  description: The pages of the book  
+ *                publisher:
+ *                  type: string
+ *                  description: The publisher of the book
+ *                pub_date:
+ *                  type: date
+ *                  description: The pub_date of the book
+ *                price:
+ *                  type: float
+ *                  description: The price of the book
+ *                stock:
+ *                  type: number
+ *                  description: The stock of the book
+ *                genre:
+ *                  type: string
+ *                  description: The genre of the book
+ *                author:
+ *                  type: string
+ *                  description: The author of the book
+ *     security: [
+ *       {
+ *         bearerAuth: []
+ *       }
+ *     ]
+ *     responses:
+ *       200:
+ *         description: The book was created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: true
+ *                 message:
+ *                   type: string
+ *                   default: The book was created
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     book:
+ *                       $ref: '#/components/schemas/Book'
+ *                     genre:
+ *                       $ref: '#/components/schemas/Genre'
+ *                     author:
+ *                       $ref: '#/components/schemas/Author'
+ *       409:
+ *         description: The book already exists
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: The book already exists
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ * */
 router.post(
   '/',
   [
@@ -165,8 +274,79 @@ router.post(
     check('author', 'The author is required').not().isEmpty(),
     validarCampos,
   ],
-  //authMiddleware,
+  authMiddleware,
   booksController.createBook
+);
+
+/**
+ * @swagger
+ * /book/delete/{book_id}:
+ *   put:
+ *     summary: Disable a book
+ *     tags: [Book]
+ *     parameters:
+ *       - in: path
+ *         name: book_id
+ *     security: [
+ *       {
+ *         bearerAuth: []
+ *       }
+ *     ]
+ *     responses:
+ *       200:
+ *         description: The book was disable
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: true
+ *                 message:
+ *                   type: string
+ *                   default: The book was disable
+ *                 data:
+ *                   type: object
+ *                   schema:
+ *                     $ref: '#/components/schemas/Book'
+ *       404:
+ *         description: The book was not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: The book was not found
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ * */
+router.put(
+  '/delete/:book_id',
+  authMiddleware,
+  booksController.deleteBook
 );
 
 module.exports = router;
