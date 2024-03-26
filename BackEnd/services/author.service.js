@@ -23,6 +23,14 @@ class AuthorService {
     return author;
   }
 
+  async findOneByName(name) {
+    const author = await models.Author.findOne({ where: { name } });
+    if (!author) {
+      return null;
+    }
+    return author;
+  }
+
   async findAll() {
     const authors = await models.Author.findAll();
     return authors;

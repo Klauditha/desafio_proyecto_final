@@ -8,7 +8,10 @@ const HOST = process.env.DB_HOST;
 const PORT = process.env.DB_PORT;
 const dbName = process.env.DB_DATABASE;
 
+// DESCOMENTAR PARA LOCAL
 //const URI = `postgres://${USER}:${PASSWORD}@${HOST}:${PORT}/${dbName}`;
+
+
 const URI = `postgres://${USER}:${PASSWORD}@${HOST}/${dbName}`;
 
 console.log(URI);
@@ -17,10 +20,12 @@ console.log(URI);
 const sequelize = new Sequelize(URI, {
   dialect: 'postgres',
   logging: false,
+
+  //COMENTAR PARA LOCAL
   dialectOptions: {
     ssl: {
-      require: true,
-      rejectUnauthorized: false,
+      require: false,
+      rejectUnauthorized: true,
     },
   },
 });

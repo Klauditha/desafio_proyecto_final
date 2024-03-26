@@ -5,6 +5,11 @@ class BookService {
   constructor() {}
 
   async create(data) {
+    data = {
+      ...data,
+      deleted: false,
+      img: data.img ? data.img : '/books/notAvailable.jpg',
+    };
     const newBook = await models.Book.create(data);
     return newBook;
   }
@@ -14,6 +19,11 @@ class BookService {
     if (!book) {
       throw boom.notFound('Book not found');
     }
+    return book;
+  }
+
+  async findOneByName(title) {
+    const book = await models.Book.findOne({ where: { title : title } });
     return book;
   }
 
