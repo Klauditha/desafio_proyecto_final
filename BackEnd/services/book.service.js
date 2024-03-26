@@ -56,11 +56,25 @@ class BookService {
   }
 
   async updateDeleted(id_book) {
-    const book = await this.findOne(id_book);
+    const book = await models.Book.findOne(id_book);
     if (!book) {
       return null;
     }
     const rta = await book.update({ deleted: true });
+    return rta;
+  }
+
+  async updateBook(book_id, changes) {
+    changes = {
+      ...changes,
+      img: changes.img ? changes.img : '/books/notAvailable.jpg',
+    };
+
+    const book = await models.Book.findByPk(book_id);
+    if (!book) {
+      return null;
+    }
+    const rta = await book.update(changes);
     return rta;
   }
 }

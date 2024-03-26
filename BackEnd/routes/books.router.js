@@ -178,7 +178,7 @@ router.post('/byPublisher', booksController.getAllByPublisher);
  *                  description: The language of the book
  *                pages:
  *                  type: number
- *                  description: The pages of the book  
+ *                  description: The pages of the book
  *                publisher:
  *                  type: string
  *                  description: The publisher of the book
@@ -274,7 +274,7 @@ router.post(
     check('author', 'The author is required').not().isEmpty(),
     validarCampos,
   ],
-  authMiddleware,
+  //authMiddleware,
   booksController.createBook
 );
 
@@ -343,10 +343,135 @@ router.post(
  *                   type: object
  *                   default: null
  * */
-router.put(
-  '/delete/:book_id',
-  authMiddleware,
-  booksController.deleteBook
-);
+router.put('/delete/:book_id', authMiddleware, booksController.deleteBook);
 
+/**
+ * @swagger
+ * /book/{book_id}:
+ *   put:
+ *     summary: Update a book
+ *     tags: [Book]
+ *     parameters:
+ *       - in: path
+ *         name: book_id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               isbn:
+ *                 type: string
+ *                 description: The isbn of the book
+ *               title:
+ *                 type: string
+ *                 description: The title of the book
+ *               description:
+ *                 type: string
+ *                 description: The description of the book
+ *               language:
+ *                 type: string
+ *                 description: The language of the book
+ *               pages:
+ *                 type: number
+ *                 description: The pages of the book
+ *               publisher:
+ *                 type: string
+ *                 description: The publisher of the book
+ *               pub_date:
+ *                 type: string
+ *                 description: The pub_date of the book
+ *               price:
+ *                 type: number
+ *                 description: The price of the book
+ *               stock:
+ *                 type: number
+ *                 description: The stock of the book
+ *               genre_id:
+ *                 type: number
+ *                 description: The genre_id of the book
+ *               author_id:
+ *                 type: number
+ *                 description: The author_id of the book
+ *     security: [
+ *       {
+ *         bearerAuth: []
+ *       }
+ *     ]
+ *     responses:
+ *       200:
+ *         description: The book was updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: true
+ *                 message:
+ *                   type: string
+ *                   default: The book was updated
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     book:
+ *                       $ref: '#/components/schemas/Book'
+ *                     genre:
+ *                       $ref: '#/components/schemas/Genre'
+ *                     author:
+ *                       $ref: '#/components/schemas/Author'
+ *       404:
+ *         description: The book was not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: The book was not found
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ * */
+router.put(
+  '/:book_id',
+  [
+    check('isbn', 'The isbn is required').not().isEmpty(),
+    check('title', 'The title is required').not().isEmpty(),
+    check('description', 'The description is required').not().isEmpty(),
+    check('language', 'The language is required').not().isEmpty(),
+    check('pages', 'The pages is required').not().isEmpty(),
+    check('publisher', 'The publisher is required').not().isEmpty(),
+    check('pub_date', 'The pub_date is required').not().isEmpty(),
+    check('price', 'The price is required').not().isEmpty(),
+    check('stock', 'The stock is required').not().isEmpty(),
+    check('genre_id', 'The genre_id is required').not().isEmpty(),
+    check('author_id', 'The author_id is required').not().isEmpty(),
+    validarCampos,
+  ],
+  authMiddleware,
+  booksController.updateBook
+);
 module.exports = router;

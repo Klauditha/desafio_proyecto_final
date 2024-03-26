@@ -7,7 +7,6 @@ class GenreService {
   async create(data) {
     const { name } = data;
     data = { ...data, deleted: false };
-    console.log(data);
     const genre = await models.Genre.findOne({ where: { name } });
     if (genre) {
       throw boom.conflict('Genre already exists');
@@ -17,7 +16,6 @@ class GenreService {
   }
 
   async createByName(genre) {
-    console.log(genre);
     const newGenre = await models.Genre.create({ name: genre, deleted: false });
     return newGenre;
   }
@@ -29,7 +27,6 @@ class GenreService {
 
   async findOneByName(name) {
     const genre = await models.Genre.findOne({ where: { name: name } });
-    console.log(name);
     if (!genre) {
       return null;
     }

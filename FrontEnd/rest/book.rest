@@ -5,16 +5,16 @@ Content-Type: application/json
 
 {
   "isbn":"97895640101063",
-  "title":"HACERSE EL WEON -asssssgggfddffdfjdddfdfsfhdsfgssdisss",
+  "title":"HACERSE EL WEON",
   "description":"¿De qué quiero hacerme cargo en mi vida? ¿En qué me he estado haciendo el weón? ¿Cómo confiar en ti mismo y salir del cascarón a vivir la vida? ¡De la mano del coaching es posible! El coach Pablo Riccheri trabaja con preguntas y se propone ayudarnos a reconocer las señales que nos avisan cuándo nos estamos haciendo los weones",
   "language":"Español",
   "pages":161,
-  "publisher":"PERFORMANCErfdi",
+  "publisher":"PERFORMANCE",
   "pub_date":"2022-03-12",
   "price":13000,
   "stock":50,
-  "genre":"Crecimiento Personaldfsf",
-  "author":"Pablo Riccheridfdgf"
+  "genre":"Crecimiento Personal",
+  "author":"Pablo Riccher"
 }
 
 
@@ -29,11 +29,21 @@ Content-Type: application/json
 
 ###Modificar libro
 
-PUT http://localhost:3000/book
+PUT http://localhost:3000/book/16
 Content-Type: application/json
 
 {
-  
+  "isbn":"97895640101063",
+  "title":"HACERSE EL WEON 2",
+  "description":"¿De qué quiero hacerme cargo en mi vida? ¿En qué me he estado haciendo el weón? ¿Cómo confiar en ti mismo y salir del cascarón a vivir la vida? ¡De la mano del coaching es posible! El coach Pablo Riccheri trabaja con preguntas y se propone ayudarnos a reconocer las señales que nos avisan cuándo nos estamos haciendo los weones",
+  "language":"Español",
+  "pages":161,
+  "publisher":"PERFORMANCE",
+  "pub_date":"2022-03-12",
+  "price":13000,
+  "stock":50,
+  "genre_id":3,
+  "author_id":2
 }
 
 ###DELETE libro - Funcionando
