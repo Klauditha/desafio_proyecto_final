@@ -18,16 +18,51 @@ const bookAuthorService = new BookAuthorService();
 const createBook = async (req, res, next) => {
   try {
     const body = req.body;
+    let bookGenre, bookAuthor = [];
     const newBook = await service.create(body);
+    console.log(newBook);
+    const genre = await genreService.findOne(newBook.book_id);
+    if (genre) {
+      bookGenre = await bookGenreService.create({
+        book_id: newBook.book_id,
+        genre: genre.genre_id,
+      });
+    } else {
+      const newGenre = await genreService.create({
+        name: body.genre,
+      });
+      bookGenre = await bookGenreService.create({
+        book_id: newBook.book_id,
+        genre: newGenre.genre_id,
+      });
+    }
+    const author = await authorService.findOne(newBook.book_id);
+    if (author) {
+      bookAuthor = await bookAuthorService.create({
+        book_id: newBook.book_id,
+        author: author.author_id,
+      });
+    } else {
+      const newAuthor = await authorService.create({
+        name: body.author,
+      });
+      bookAuthor = await bookAuthorService.create({
+        book_id: newBook.book_id,
+        author: newAuthor.author_id,
+      });
+    }
     res.status(201).json({
       status: true,
       message: 'New book created',
       data: {
         book: newBook,
+        genre: bookGenre,
+        author: bookAuthor,
       },
     });
   } catch (error) {
-    res.status(500).json({
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
       status: false,
       message: error.message,
       data: null,
@@ -103,10 +138,9 @@ const findAllPublishers = async (req, res, next) => {
 };
 
 const getAllByPublisher = async (req, res, next) => {
-
   try {
     const { publisher } = req.body;
-    console.log("Publisher:", publisher);
+    console.log('Publisher:', publisher);
     const books = await service.getAllByPublisher(publisher);
     res.status(200).json({
       status: true,
@@ -114,14 +148,14 @@ const getAllByPublisher = async (req, res, next) => {
       data: {
         books,
       },
-    })
+    });
   } catch (error) {
-    let codeError = error.isBoom ? error.output.statusCode : 500
+    let codeError = error.isBoom ? error.output.statusCode : 500;
     res(codeError).json({
       status: false,
       message: error.message,
       data: null,
-    })
+    });
   }
 };
 
@@ -133,5 +167,5 @@ module.exports = {
   deleteBook,
   updateBook,
   findAllPublishers,
-  getAllByPublisher
+  getAllByPublisher,
 };

@@ -5,6 +5,17 @@ class BookService {
   constructor() {}
 
   async create(data) {
+    console.log('create book service', data);
+    data = {
+      ...data,
+      deleted: false,
+      img: data.img ? data.img : '/books/notAvailable.jpg',
+    };
+    console.log(data);
+    const book = await models.Book.findOne({ where: { title: data.title } });
+    if (book) {
+      throw boom.conflict('Book already exists');
+    }
     const newBook = await models.Book.create(data);
     return newBook;
   }

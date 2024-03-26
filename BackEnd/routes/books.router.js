@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { booksController } = require('../controllers');
+const { authMiddleware } = require('../middlewares/auth.handler');
+const { validarCampos } = require('../middlewares/validation.handler');
+const { check } = require('express-validator');
 
 /**
  * @swagger
@@ -145,5 +148,25 @@ const { booksController } = require('../controllers');
 router.get('/:book_id', booksController.getBook);
 
 router.post('/byPublisher', booksController.getAllByPublisher);
+
+router.post(
+  '/',
+  [
+    check('isbn', 'The isbn is required').not().isEmpty(),
+    check('title', 'The title is required').not().isEmpty(),
+    check('description', 'The description is required').not().isEmpty(),
+    check('language', 'The language is required').not().isEmpty(),
+    check('pages', 'The pages is required').not().isEmpty(),
+    check('publisher', 'The publisher is required').not().isEmpty(),
+    check('pub_date', 'The pub_date is required').not().isEmpty(),
+    check('price', 'The price is required').not().isEmpty(),
+    check('stock', 'The stock is required').not().isEmpty(),
+    check('genre', 'The genre is required').not().isEmpty(),
+    check('author', 'The author is required').not().isEmpty(),
+    validarCampos,
+  ],
+  //authMiddleware,
+  booksController.createBook
+);
 
 module.exports = router;
