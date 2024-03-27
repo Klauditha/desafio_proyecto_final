@@ -1,4 +1,4 @@
-##Crear rating
+##Crear rating - Funcionando
 POST http://localhost:3000/rating
 Content-Type: application/json
 
@@ -9,4 +9,14 @@ Content-Type: application/json
   "comment": "Excelente libro lo quiero volver a leer",
   "wishlist": true,
   "deleted": true
+}
+
+
+###
+### Obtener comentarios por libro - Funcionando 
+GET http://localhost:3000/rating/comments/3
+Content-Type: application/json
+
+{
+
 }

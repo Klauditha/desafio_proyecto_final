@@ -162,4 +162,86 @@ router.post(
   authMiddleware,
   ratingController.createUpdateRating
 );
+
+/**
+ * @swagger
+ * tags:
+ *   name: Rating
+ *   description: The Rating managing API
+ * /rating/comments/{book_id}:
+ *   get:
+ *     summary: Get comments by book
+ *     tags: [Rating]
+ *     parameters:
+ *       - in: path
+ *         name: book_id
+ *         schema:
+ *           type: number
+ *         required: true
+ *         description: The book id
+ *     responses:
+ *       200:
+ *         description: The comments were get
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: true
+ *                 message:
+ *                   type: string
+ *                   default: The comments were get
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     comments:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           comment:
+ *                             type: string
+ *                           user:
+ *                             type: string
+ *                           score:
+ *                             type: number
+ *                           date:
+ *                             type: string
+ *       404:
+ *         description: The comments were not get
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: The comments were not get
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ * */
+router.get('/comments/:book_id', ratingController.getCommentsByBook);
+
 module.exports = router;
