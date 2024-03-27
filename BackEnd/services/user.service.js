@@ -19,9 +19,11 @@ class UserService {
       });
       console.log("Validated data:", validatedData);
       const { email, password } = validatedData;
+      console.log("password user.service:", password);
       const hashedPassword = await bcrypt.hash(password, 10);
       console.log("Password hash exitoso");
       validatedData.admin = false;
+
       const existingUser = await pool.query(
         "SELECT * FROM users WHERE email = $1",
         [validatedData.email]
