@@ -195,6 +195,23 @@ class UserService {
     }
   }
 
+  async findAll() {
+    const client = await pool.connect();
+    try {
+      const query = "SELECT * FROM users";
+      const result = await client.query(query);
+      const user = result.rows;
+      if (!user) {
+        throw boom.notFound("User not found");
+      }
+
+      return user;
+      
+    } finally {
+      client.release();
+    }
+  }
+
   static async updateUser(user_id, newData) {
     
     newData.admin = false; // Desactivar para permitir cambiar estado admin de usuario

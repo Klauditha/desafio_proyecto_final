@@ -55,6 +55,16 @@ class RatingService {
     const rta = await rating.update({ deleted: false });
     return rta;
   }
+
+  async getCommentsByBook(book_id) {
+    const comments = await models.Rating.findAll({
+      where: { book_id, deleted: false },
+    });
+    if (!comments) {
+      return null;
+    }
+    return comments;
+  }
 }
 
 module.exports = RatingService;

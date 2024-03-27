@@ -37,6 +37,41 @@ const createUpdateRating = async (req, res, next) => {
   }
 };
 
+const getCommentsByBook = async (req, res, next) => {
+  try {
+    const { book_id } = req.params;
+    const comments = []
+    const commentsData = await service.getCommentsByBook(book_id);
+    if (!commentsData) {
+      throw boom.notFound('Comments not found');
+    }
+    const users = await userService.findAll();
+    commentsData.forEach((comment) => {
+      let user = users.find(user => user.user_id == comment.user_id);
+      comments.push({
+        comment: comment.comment,
+        user: user!==undefined ? user.first_name : null,
+        score: comment.score,
+        date: comment.created_at
+      });
+    })
+    res.status(200).json({
+      status: true,
+      message: 'Comments found',
+      data: {
+        comments,
+      },
+    });
+  } catch (error) {
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    });
+  }
+}
 module.exports = {
   createUpdateRating,
+  getCommentsByBook
 };
