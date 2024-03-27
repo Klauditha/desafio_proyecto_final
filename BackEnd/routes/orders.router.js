@@ -1,5 +1,9 @@
 const express = require('express');
+const { check } = require('express-validator');
+const { authMiddleware } = require('../middlewares/auth.handler');
 const router = express.Router();
+const { ordersController } = require('../controllers');
+
 
 /**
  * @swagger
@@ -8,28 +12,33 @@ const router = express.Router();
  *     Orders:
  *       type: object
  *       required:
- *         - orderId
- *         - userId
- *         - orderDate
+ *         - order_id
+ *         - user_id
+ *         - order_date
  *         - total_amount
+ *         - deleted
  *       properties:
- *         orderId:
+ *         order_id:
  *           type: number
  *           description: The id of the order
- *         userId:
+ *         user_id:
  *           type: number
  *           description: The id of the user
- *         orderDate:
+ *         order_date:
  *           type: string
  *           description: The date of the order
  *         total_amount:
  *           type: number
  *           description: The total amount of the order
+ *         deleted:
+ *           type: boolean
+ *           description: The status of the order
  *       example:
- *         orderId: 1
- *         userId: 1
- *         orderDate: 2022-01-01
- *         total_amount: 100
+ *         order_id: 1
+ *         user_id: 1
+ *         order_date: '2022-01-01'
+ *         total_amount: 48000
+ *         deleted: false
  */
 
 /**
@@ -37,13 +46,13 @@ const router = express.Router();
  * tags:
  *   name: Orders
  *   description: The Orders managing API
- * /orders/{userId}:
+ * /orders/all/{user_id}:
  *   get:
  *     summary: Get all orders by user
  *     tags: [Orders]
  *     parameters:
  *       - in: path
- *         name: userId
+ *         name: user_id
  *     security: [
  *       {
  *         bearerAuth: []
@@ -51,7 +60,7 @@ const router = express.Router();
  *     ]
  *     responses:
  *       200:
- *         description: The orders were found
+ *         description: Orders found
  *         content:
  *           application/json:
  *             schema:
@@ -59,17 +68,16 @@ const router = express.Router();
  *               properties:
  *                 status:
  *                   type: boolean
+ *                   default: true
  *                 message:
  *                   type: string
+ *                   default: The orders were get
  *                 data:
- *                   type: object
- *                   properties:
- *                     orders:
- *                       type: array
- *                       items:
- *                         $ref: '#/components/schemas/Orders'
- *       404:
- *         description: The orders were not found
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Orders'
+ *       409:
+ *         description: The orders does not exist
  *         content:
  *           application/json:
  *             schema:
@@ -77,8 +85,10 @@ const router = express.Router();
  *               properties:
  *                 status:
  *                   type: boolean
+ *                   default: false
  *                 message:
  *                   type: string
+ *                   default: The orders does not exist
  *                 data:
  *                   type: object
  *                   default: null
@@ -99,6 +109,10 @@ const router = express.Router();
  *                   type: object
  *                   default: null
  */
-router.get('/:userId');
+router.get(
+  '/all/:user_id',
+  authMiddleware,
+  ordersController.getAllByUser
+);
 
 module.exports = router;
