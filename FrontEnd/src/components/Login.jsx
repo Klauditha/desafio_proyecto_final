@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -43,7 +44,6 @@ export default function Login() {
     axios
       .post(ENDPOINT.login, { email: lowercaseEmail, password })
       .then((response) => {
-        console.log(response.data);
         if (response.data.status == true) {
           token = response.data.token;
           sessionStorage.setItem('user', JSON.stringify({ email, token }));
