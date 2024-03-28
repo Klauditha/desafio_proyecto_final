@@ -25,6 +25,7 @@ export const ECommerceProvider = ({ children }) => {
   const [publishers, setPublishers] = useState(null);
   const [editoriales, setEditoriales] = useState(null);
 
+  /* CARRITO */
   const addToCart = async (book) => {
     // Funcionalidad POST con servidor para futuro
     console.log(
@@ -300,11 +301,7 @@ export const ECommerceProvider = ({ children }) => {
     });
     setBooks(books);
   };
-  const handleLogin = (user) => {
-    sessionStorage.setItem('user', JSON.stringify(user));
-    setAuthenticatedUser(user);
-  };
-
+  
   const handleLogout = () => {
     sessionStorage.removeItem('user');
     setAuthenticatedUser(null);
@@ -401,6 +398,7 @@ export const ECommerceProvider = ({ children }) => {
       setSoldBook();
       setBooks();
       removeFromCart();
+      /*
       fetchData().then((booksData) => {
         let user = JSON.parse(sessionStorage.getItem('user'));
         if (user) {
@@ -408,6 +406,7 @@ export const ECommerceProvider = ({ children }) => {
           fetchCartItems();
         }
       });
+      */
     }
     //setDataPublishers();
   }, [searchBooks, searchPublishers, authenticatedUser]);
@@ -429,7 +428,6 @@ export const ECommerceProvider = ({ children }) => {
         authenticatedUser,
         users,
         registerUser,
-        handleLogin,
         handleLogout,
         genres,
         booksAuthors,
