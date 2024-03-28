@@ -1,6 +1,4 @@
 /* eslint-disable no-undef */
-import React, { useContext, useState } from 'react';
-import { ECommerceContext } from '@/Context/ECommerceContext';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -16,18 +14,20 @@ import { Button } from './ui/button';
 import { Label } from './ui/label';
 import Register from './Register';
 import { Link, Route, Routes } from 'react-router-dom';
+import axios from 'axios';
+import { ENDPOINT } from '../config/constants';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function Login() {
   const navigate = useNavigate();
-  const { users, handleLogin } = useContext(ECommerceContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loginMessage, setLoginMessage] = useState('');
 
   const handleLoginSubmit = () => {
+    let token = '';
     setError('');
     if (!email || !password) {
       setError('Por favor ingrese correo y contraseña.');
@@ -37,26 +37,42 @@ export default function Login() {
       setError('Por favor ingrese un correo valido.');
       return;
     }
-    const lowercaseEmail = email.toLowerCase();
-    const user = users.find(
-      (user) =>
-        user.email.toLowerCase() === lowercaseEmail &&
-        user.password === password
-    );
 
-    if (user) {
-      handleLogin(user);
-      setError('');
-      setLoginMessage('Ingreso exitoso.');
-      alertify.success("Ingreso exitoso. Bienvenido");
-      setTimeout(() => {
-        navigate('/');
-      }, 2000);
-    } else {
-      alertify.error('Correo o contraseña invalidos. Por favor intente nuevamente');
-      setError('Correo o contraseña invalidos. Por favor intente nuevamente.');
-      setLoginMessage('');
-    }
+    const lowercaseEmail = email.toLowerCase();
+
+    axios
+      .post(ENDPOINT.login, { email: lowercaseEmail, password })
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.status == true) {
+          token = response.data.token;
+          sessionStorage.setItem('user', JSON.stringify({ email, token }));
+          setError('');
+          setLoginMessage('Ingreso exitoso.');
+          alertify.success('Ingreso exitoso. Bienvenido');
+          setTimeout(() => {
+            navigate('/');
+          }, 2000);
+        } else {
+          alertify.error(
+            'Correo o contraseña invalidos. Por favor intente nuevamente'
+          );
+          setError(
+            'Correo o contraseña invalidos. Por favor intente nuevamente.'
+          );
+          setLoginMessage('');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        alertify.error(
+          'Correo o contraseña invalidos. Por favor intente nuevamente'
+        );
+        setError(
+          'Correo o contraseña invalidos. Por favor intente nuevamente.'
+        );
+        setLoginMessage('');
+      });
   };
 
   return (
