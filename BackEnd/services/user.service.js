@@ -12,24 +12,19 @@ class UserService {
 
   static async create(data) {
     try {
-      console.log("Data recibida para creacion de usuario:", data);
-
       const validatedData = await createUserSchema.validateAsync(data, {
         abortEarly: false,
       });
-      console.log("Validated data:", validatedData);
       const { email, password } = validatedData;
-      console.log("password user.service:", password);
       const hashedPassword = await bcrypt.hash(password, 10);
-      console.log("Password hash exitoso");
       validatedData.admin = false;
 
       const existingUser = await pool.query(
-        "SELECT * FROM users WHERE email = $1",
+        'SELECT * FROM users WHERE email = $1',
         [validatedData.email]
       );
       if (existingUser.rows.length > 0) {
-        throw boom.conflict("Usuario ya existe");
+        throw boom.conflict('Usuario ya existe');
       }
 
       const newUser = {
@@ -39,19 +34,16 @@ class UserService {
         updated_at: new Date().toISOString(),
         deleted: false,
       };
-      console.log("Nuevo objeto de usuario construido:", newUser);
-
-      console.log("Data de nuevo usuario:", newUser);
+      
       const client = await pool.connect();
       try {
         const maxUserIdQuery = await client.query(
-          "SELECT MAX(user_id) FROM users"
+          'SELECT MAX(user_id) FROM users'
         );
         const maxUserId = maxUserIdQuery.rows[0].max;
 
         const nextUserId = maxUserId ? maxUserId + 1 : 1;
-        console.log("nextUserId:", nextUserId);
-
+        
         const validatedData = await createUserSchema.validateAsync(data, {
           abortEarly: false,
         });
@@ -59,12 +51,11 @@ class UserService {
         validatedData.user_id = nextUserId;
 
         const query = `
-            INSERT INTO users (user_id, username, password, email, first_name, last_name, phone, region, admin, country, city, district, address, zip_code, created_at, updated_at, deleted)
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+            INSERT INTO users (username, password, email, first_name, last_name, phone, region, admin, country, city, district, address, zip_code, created_at, updated_at, deleted)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
           RETURNING *`;
 
         const result = await client.query(query, [
-          nextUserId,
           newUser.username,
           newUser.password,
           newUser.email,
@@ -83,13 +74,12 @@ class UserService {
           newUser.deleted,
         ]);
         const insertedUser = result.rows[0];
-        console.log("Usuario creado exitosamente:", insertedUser);
         return insertedUser;
       } finally {
         client.release();
       }
     } catch (error) {
-      console.error("Error creando usuario:", error.message);
+      console.error('Error creando usuario:', error.message);
       throw error;
     }
   }
@@ -97,12 +87,12 @@ class UserService {
   static async findOne(user_id) {
     const client = await pool.connect();
     try {
-      const query = "SELECT * FROM users WHERE user_id = $1";
+      const query = 'SELECT * FROM users WHERE user_id = $1';
       const result = await client.query(query, [user_id]);
       const user = result.rows[0];
 
       if (!user) {
-        throw boom.notFound("Usuario no encontrado.");
+        throw boom.notFound('Usuario no encontrado');
       }
 
       return user;
@@ -111,48 +101,21 @@ class UserService {
     }
   }
 
-  /* static async findOne(email) {
-    const client = await pool.connect();
-    try {
-      const query = "SELECT * FROM users WHERE email = $1";
-      const result = await client.query(query, [email]);
-      const user = result.rows[0];
-
-      if (!user) {
-        throw boom.notFound("Usuario no encontrado.");
-      }
-
-      return user;
-    } finally {
-      client.release();
-    }
-  } */
-
   static async authenticateUser(email, password) {
     const client = await pool.connect();
     try {
-      const query = "SELECT * FROM users WHERE email = $1";
+      const query = 'SELECT * FROM users WHERE email = $1';
       const result = await client.query(query, [email]);
       const user = result.rows[0];
 
       if (!user) {
-        throw boom.unauthorized("Usuario no encontrado.");
+        throw boom.unauthorized('Usuario no encontrado.');
       }
 
-      console.log("Usuario traido:", user);
-      console.log("Hashed password de la bdd:", user.password);
-
       const isPasswordValid = await bcrypt.compare(password, user.password);
-      console.log(
-        "Password input:",
-        password,
-        "Hashed password de la bdd:",
-        user.password,
-        "Password comparacion:",
-        isPasswordValid
-      );
+
       if (!isPasswordValid) {
-        throw boom.unauthorized("Contraseña incorrecta.");
+        throw boom.unauthorized('Contraseña incorrecta.');
       }
 
       return user;
@@ -162,7 +125,6 @@ class UserService {
   }
 
   static async generateToken(user_id, expiredIn) {
-    console.log("user_id generateToken:", user_id);
     const payload = {
       user_id: user_id,
     };
@@ -175,7 +137,7 @@ class UserService {
   static async deleteUser(user_id) {
     const client = await pool.connect();
     try {
-      const query = "UPDATE users SET deleted = true WHERE user_id = $1";
+      const query = 'UPDATE users SET deleted = true WHERE user_id = $1';
       await client.query(query, [user_id]);
     } finally {
       client.release();
@@ -185,11 +147,11 @@ class UserService {
   async findById(user_id) {
     const client = await pool.connect();
     try {
-      const query = "SELECT * FROM users WHERE user_id = $1";
+      const query = 'SELECT * FROM users WHERE user_id = $1';
       const result = await client.query(query, [user_id]);
       const user = result.rows[0];
       if (!user) {
-        throw boom.notFound("User not found");
+        throw boom.notFound('User not found');
       }
       return user;
     } finally {
@@ -200,24 +162,22 @@ class UserService {
   async findAll() {
     const client = await pool.connect();
     try {
-      const query = "SELECT * FROM users";
+      const query = 'SELECT * FROM users';
       const result = await client.query(query);
       const user = result.rows;
       if (!user) {
-        throw boom.notFound("User not found");
+        throw boom.notFound('User not found');
       }
 
       return user;
-      
     } finally {
       client.release();
     }
   }
 
   static async updateUser(user_id, newData) {
-    
     newData.admin = false; // Desactivar para permitir cambiar estado admin de usuario
-
+    newData.password = await bcrypt.hash(newData.password, 10);
     const client = await pool.connect();
     try {
       const query = `

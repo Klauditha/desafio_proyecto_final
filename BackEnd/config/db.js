@@ -1,8 +1,6 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-console.log('IS_RENDER:',process.env.IS_RENDER);
-
 let pool;
 
 if(process.env.IS_RENDER == 'true')

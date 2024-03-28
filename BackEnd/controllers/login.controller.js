@@ -28,18 +28,7 @@ const loginUser = async (req, res, next) => {
   }
 };
 
-/* const createPayload = async (email, expiredIn) => {
-  const payload = {
-    email: email,
-  };
-  const token = jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: expiredIn,
-  });
-  return token;
-}; */
-
-
-
 module.exports = {
-  loginUser,
+  loginUser
+
 };
