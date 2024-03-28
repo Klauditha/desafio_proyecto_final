@@ -38,11 +38,6 @@ else {
 }
 
 
-
-console.log(URI);
-
-
-
 setupModels(sequelize);
 sequelize.sync();
 module.exports = sequelize;

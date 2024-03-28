@@ -9,7 +9,6 @@ const { authMiddleware } = require("../middlewares/auth.handler");
 const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    console.group( email, password );
     const user = await UserService.authenticateUser(email, password);
     const user_id = user.user_id;
     const token = await UserService.generateToken(user_id, "10m");
@@ -29,18 +28,7 @@ const loginUser = async (req, res, next) => {
   }
 };
 
-/* const createPayload = async (email, expiredIn) => {
-  const payload = {
-    email: email,
-  };
-  const token = jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: expiredIn,
-  });
-  return token;
-}; */
-
-
-
 module.exports = {
-  loginUser,
+  loginUser
+
 };
