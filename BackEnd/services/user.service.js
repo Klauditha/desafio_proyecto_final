@@ -111,22 +111,6 @@ class UserService {
     }
   }
 
-  /* static async findOne(email) {
-    const client = await pool.connect();
-    try {
-      const query = "SELECT * FROM users WHERE email = $1";
-      const result = await client.query(query, [email]);
-      const user = result.rows[0];
-
-      if (!user) {
-        throw boom.notFound("Usuario no encontrado.");
-      }
-
-      return user;
-    } finally {
-      client.release();
-    }
-  } */
 
   static async authenticateUser(email, password) {
     const client = await pool.connect();
@@ -138,19 +122,9 @@ class UserService {
       if (!user) {
         throw boom.unauthorized("Usuario no encontrado.");
       }
-
-      console.log("Usuario traido:", user);
-      console.log("Hashed password de la bdd:", user.password);
-
+     
       const isPasswordValid = await bcrypt.compare(password, user.password);
-      console.log(
-        "Password input:",
-        password,
-        "Hashed password de la bdd:",
-        user.password,
-        "Password comparacion:",
-        isPasswordValid
-      );
+    
       if (!isPasswordValid) {
         throw boom.unauthorized("Contraseña incorrecta.");
       }

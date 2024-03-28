@@ -21,8 +21,8 @@ const { validarCampos } = require('../middlewares/validation.handler');
  *           type: string
  *           description: The password of the user
  *       example:
- *         email: 6UqQK@example.com
- *         password: 123456
+ *         email: user3@example.com
+ *         password: password3
  */
 
 /**
@@ -43,10 +43,10 @@ const { validarCampos } = require('../middlewares/validation.handler');
  *             properties:
  *              email:
  *                 type: string
- *                 default: claudiav@gmail.com
+ *                 default: user3@example.com
  *              password:
  *                 type: string
- *                 default: secretPassword
+ *                 default: password3
  *     responses:
  *       200:
  *         description: The user was authenticated
