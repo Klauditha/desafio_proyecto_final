@@ -11,24 +11,37 @@ const dbName = process.env.DB_DATABASE;
 // DESCOMENTAR PARA LOCAL
 //const URI = `postgres://${USER}:${PASSWORD}@${HOST}:${PORT}/${dbName}`;
 
+let URI;
+let sequelize;
+if (process.env.IS_RENDER == 'true') {
+  URI = `postgres://${USER}:${PASSWORD}@${HOST}/${dbName}`;
+  sequelize = new Sequelize(URI, {
+    dialect: 'postgres',
+    logging: false,
+  
+    //COMENTAR PARA LOCAL
+    dialectOptions: {
+      ssl: {
+        require: false,
+        rejectUnauthorized: true,
+      },
+    },
+  });
+}
+else {
+  URI = `postgres://${USER}:${PASSWORD}@${HOST}:${PORT}/${dbName}`;
+  sequelize = new Sequelize(URI, {
+    dialect: 'postgres',
+    logging: false,
+  
+  });
+}
 
-const URI = `postgres://${USER}:${PASSWORD}@${HOST}/${dbName}`;
+
 
 console.log(URI);
 
 
-const sequelize = new Sequelize(URI, {
-  dialect: 'postgres',
-  logging: false,
-
-  //COMENTAR PARA LOCAL
-  dialectOptions: {
-    ssl: {
-      require: false,
-      rejectUnauthorized: true,
-    },
-  },
-});
 
 setupModels(sequelize);
 sequelize.sync();
