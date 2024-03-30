@@ -1,11 +1,7 @@
 const request = require('supertest');
 const app = require('../app');
 const bcrypt = require('bcrypt');
-const UserService = require('../services/user.service');
-const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const { createUserSchema, userSchema } = require('../schemas/user.schema');
-const { authMiddleware } = require('../middlewares/auth.handler');
 
 describe('User API Routes', () => {
   describe('GET /user/:user_id', () => {

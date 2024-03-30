@@ -30,7 +30,6 @@ const getData = async () => {
   
   try {
     const res = await pool.query('select NOW()');
-    console.log(res.rows);
   } catch (error) {
     console.log('Error al conectar con la base de datos', error);
   }

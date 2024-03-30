@@ -117,7 +117,7 @@ class UserService {
       const isPasswordValid = await bcrypt.compare(password, user.password);
 
       if (!isPasswordValid) {
-        throw boom.unauthorized('Contraseña incorrecta.');
+        throw boom.unauthorized('Credenciales inválidas.');
       }
 
       return user;

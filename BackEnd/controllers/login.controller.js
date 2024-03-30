@@ -15,7 +15,7 @@ const loginUser = async (req, res, next) => {
 
     res.status(200).json({
       status: true,
-      message: "El usuario está logeado.",
+      message: "Usuario autenticado exitosamente",
       data: { token: token },
     });
   } catch (error) {
