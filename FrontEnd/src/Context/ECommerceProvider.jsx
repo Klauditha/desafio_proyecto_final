@@ -449,6 +449,7 @@ export const ECommerceProvider = ({ children }) => {
         setSearchPublishers,
         filterBySearch,
         addCartLocal,
+        setAuthenticatedUser
       }}
     >
       {children}
