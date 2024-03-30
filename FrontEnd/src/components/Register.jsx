@@ -7,6 +7,8 @@ import {
 } from "@/components/ui/card";
 import React, { useContext, useState } from "react";
 import { ECommerceContext } from "@/Context/ECommerceContext";
+import axios from "axios";
+import { ENDPOINT } from '../config/constants';
 
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
@@ -35,7 +37,7 @@ export default function Register() {
     district: "",
     address: "",
     zip_code: "",
-    user_id: "",
+    /* user_id: "", */
     created_at: "",
     updated_at: "",
     deleted: false,
@@ -107,7 +109,7 @@ export default function Register() {
       newErrors.phone = "Por favor ingrese su numero de telefono.";
       valid = false;
     } else if (!phoneRegex.test(formData.phone)) {
-      newErrors.phone = "Por favor ingrese un numero de telefono valido.";
+      newErrors.phone = "Por favor ingrese un numero de telefono valido sin espacios.";
       valid = false;
     } else {
       newErrors.phone = "";
@@ -172,35 +174,44 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log("Forma enviada");
+
     const isValid = validateForm();
 
     if (!isValid) {
+      console.log("Validación de forma ha fallado.");
       return;
     }
 
+    console.log("Data de forma es valida:", formData);
+
     const newUser = {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
+      username: formData.firstName, // Usa primer nombre por ahora
+      first_name: formData.firstName,
+      last_name: formData.lastName,
       email: formData.email,
       password: formData.password,
       phone: formData.phone,
       region: formData.region,
       admin: false,
+      country: "Chile",
       city: formData.city,
       district: formData.district,
       address: formData.address,
       zip_code: formData.zip_code,
-      user_id: users.length + 1,
+      /* user_id: users.length + 1, */
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       deleted: false,
     };
 
+    console.log("Data de usuario nuevo:", newUser);
+
     registerUser(newUser);
 
     // Funcionalidad PUT con servidor para futuro
 
-    try {
+    /* try {
       const response = await fetch("data/data.json");
       const data = await response.json();
       data.users.push(newUser);
@@ -222,8 +233,26 @@ export default function Register() {
       );
       alert(
         "Ocurrió un error mientras se registraba el usuario. Por favor intente más tarde."
-      );
-    }
+      ); */
+
+       try {
+         const response = await axios.post(ENDPOINT.users, newUser, {
+           headers: {
+             "Content-Type": "application/json",
+           },
+         });
+
+         if (response.status === 201) {
+           console.log("Usuario registrado correctamente:", response.data);
+           // Redireccionar
+         } else {
+           console.error("Registro fallido:", response.data);
+           // Mostrar mensaje de error a usuario
+         }
+       } catch (error) {
+         console.error("Error registrando usuario:", error);
+         // Mostrar mensaje de error a usuario
+       }
   };
 
   return (
@@ -350,7 +379,7 @@ export default function Register() {
                       <SelectItem value="Metropolitana">
                         Metropolitana
                       </SelectItem>
-                      <SelectItem value="ohiggins">O'Higgins</SelectItem>
+                      <SelectItem value="ohiggins">O&#39;Higgins</SelectItem>
                       <SelectItem value="maule">Maule</SelectItem>
                       <SelectItem value="nuble">Ñuble</SelectItem>
                       <SelectItem value="biobio">Biobío</SelectItem>
