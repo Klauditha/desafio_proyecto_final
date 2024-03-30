@@ -38,9 +38,9 @@ class UserService {
       const client = await pool.connect();
       try {
         const maxUserIdQuery = await client.query(
-          'SELECT MAX(user_id) FROM users'
+          "SELECT MAX(user_id) AS max_id FROM users"
         );
-        const maxUserId = maxUserIdQuery.rows[0].max;
+        const maxUserId = maxUserIdQuery.rows[0].max_id;
 
         const nextUserId = maxUserId ? maxUserId + 1 : 1;
         
@@ -51,11 +51,13 @@ class UserService {
         validatedData.user_id = nextUserId;
 
         const query = `
-            INSERT INTO users (username, password, email, first_name, last_name, phone, region, admin, country, city, district, address, zip_code, created_at, updated_at, deleted)
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
-          RETURNING *`;
+          INSERT INTO users (user_id, username, password, email, first_name, last_name, phone, region, admin, country, city, district, address, zip_code, created_at, updated_at, deleted)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+          RETURNING *
+          `;
 
         const result = await client.query(query, [
+          validatedData.user_id,
           newUser.username,
           newUser.password,
           newUser.email,
