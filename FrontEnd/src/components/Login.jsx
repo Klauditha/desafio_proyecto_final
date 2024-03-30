@@ -1,6 +1,8 @@
 /* eslint-disable no-undef */
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { ECommerceContext } from '../Context/ECommerceContext';
 
 import {
   CardTitle,
@@ -21,12 +23,15 @@ import { ENDPOINT } from '../config/constants';
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function Login() {
+  const { setAuthenticatedUser } = useContext(ECommerceContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loginMessage, setLoginMessage] = useState('');
 
+  /* Valida el formulario y en caso de ser correcto llama a la api
+   para obtener el token */
   const handleLoginSubmit = () => {
     let token = '';
     setError('');
@@ -45,8 +50,10 @@ export default function Login() {
       .post(ENDPOINT.login, { email: lowercaseEmail, password })
       .then((response) => {
         if (response.data.status == true) {
-          token = response.data.token;
-          sessionStorage.setItem('user', JSON.stringify({ email, token }));
+          token = response.data.data.token;
+          sessionStorage.setItem('username', JSON.stringify({ email }));
+          sessionStorage.setItem('token', token);
+          setAuthenticatedUser(email, token);
           setError('');
           setLoginMessage('Ingreso exitoso.');
           alertify.success('Ingreso exitoso. Bienvenido');

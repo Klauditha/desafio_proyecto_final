@@ -181,4 +181,24 @@ describe('User API Routes', () => {
       expect(response.body.data).toBe(null);
     });
   });
+
+  describe('GET /byusername/:username', () => {
+    it('debe retornar detalles de un usuario', async () => {
+      const email = 'user4@example.com';
+      const password = 'password4';
+      const username = 'user4@example.com';
+      const responseToken = await request(app)
+        .post('/login')
+        .send({ email, password });
+        const token = responseToken.body.data.token;
+        const response = await request(app)
+          .get(`/user/byusername/${username}`)
+          .set('Authorization', 'bearer ' + token);
+        expect(response.status).toBe(200);
+        expect(response.body.message).toBe('Usuario encontrado');
+        expect(response.body.status).toBe(true);
+        expect(response.body.data.user.email).toBe(username);
+            
+    });
+  });
 });

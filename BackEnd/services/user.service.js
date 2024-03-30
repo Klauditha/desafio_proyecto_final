@@ -161,6 +161,21 @@ class UserService {
     }
   }
 
+  static async  findByUsername(username) {
+    const client = await pool.connect();
+    try {
+      const query = 'SELECT * FROM users WHERE email = $1';
+      const result = await client.query(query, [username]);
+      const user = result.rows[0];
+      if (!user) {
+        throw boom.notFound('User not found');
+      }
+      return user;
+    } finally {
+      client.release();
+    }
+  }
+
   async findAll() {
     const client = await pool.connect();
     try {

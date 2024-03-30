@@ -68,6 +68,27 @@ const getUser = async (req, res, next) => {
   }
 };
 
+const getUserByUsername = async (req, res, next) => {
+  try {
+    const { username } = req.params;
+    const user = await UserService.findByUsername(username);
+    res.status(200).json({
+      status: true,
+      message: 'Usuario encontrado',
+      data: {
+        user: user,
+      },
+    });
+  } catch (error) {
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    });
+  }
+  
+}
 const deleteUser = async (req, res, next) => {
   try {
     const { user_id } = req.params;
@@ -128,4 +149,5 @@ module.exports = {
   getUser,
   deleteUser,
   updateUser,
+  getUserByUsername
 };
