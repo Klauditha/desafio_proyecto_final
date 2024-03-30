@@ -298,7 +298,7 @@ router.get(
  */
 router.post(
   '/',
-  authMiddleware, //Activar si se quiere que la creacion de usuario requiera token
+  // authMiddleware, //Activar si se quiere que la creacion de usuario requiera token
   [
     check('username', 'Username is required').not().isEmpty(),
     check('password', 'Password is required').not().isEmpty(),
