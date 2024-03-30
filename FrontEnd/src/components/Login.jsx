@@ -45,7 +45,6 @@ export default function Login() {
     }
 
     const lowercaseEmail = email.toLowerCase();
-
     axios
       .post(ENDPOINT.login, { email: lowercaseEmail, password })
       .then((response) => {
