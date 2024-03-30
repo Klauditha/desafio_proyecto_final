@@ -3,6 +3,8 @@
 import { ECommerceContext } from '@/Context/ECommerceContext';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { ENDPOINT } from '../config/constants';
 
 export const ECommerceProvider = ({ children }) => {
   const navigate = useNavigate();
@@ -18,7 +20,8 @@ export const ECommerceProvider = ({ children }) => {
   const [genres, setGenres] = useState([]);
   const [bookGenres, setBookGenres] = useState([]);
   const [orderItems, setOrderItems] = useState([]);
-  const [authenticatedUser, setAuthenticatedUser] = useState(null);
+  const [authenticatedUser, setAuthenticatedUser] = useState([]); //Almacena el correo del usuario autenticado
+  const [dataAuthenticatedUser, setDataAuthenticatedUser] = useState([]);
   const [orders, setOrders] = useState([]);
   const [searchBooks, setSearchBooks] = useState('');
   const [searchPublishers, setSearchPublishers] = useState('');
@@ -75,10 +78,10 @@ export const ECommerceProvider = ({ children }) => {
         };
 
         cart_items.push(newCart);
-        alertify.success("Libro agregado al carrito");
+        alertify.success('Libro agregado al carrito');
       } catch (error) {
         console.log(error);
-        alertify.error("Error al agregar libro al carrito");
+        alertify.error('Error al agregar libro al carrito');
       }
     } else {
       navigate('/login');
@@ -128,9 +131,7 @@ export const ECommerceProvider = ({ children }) => {
       console.log('Fetching los carritos del usuario...');
       const cartsResponse = await fetch('data/data.json');
       const data = await cartsResponse.json();
-      const userCart = data.carts.find(
-        (cart) => cart.user_id === user.user_id
-      );
+      const userCart = data.carts.find((cart) => cart.user_id === user.user_id);
 
       if (!userCart) {
         console.error('Carrito del usuario no encontrado.');
@@ -301,7 +302,7 @@ export const ECommerceProvider = ({ children }) => {
     });
     setBooks(books);
   };
-  
+
   const handleLogout = () => {
     sessionStorage.removeItem('user');
     setAuthenticatedUser(null);
@@ -371,6 +372,35 @@ export const ECommerceProvider = ({ children }) => {
       publishers.push(book.publisher);
     });
     setEditoriales(publishers);
+  };
+
+  /*Obtiene el usuario autenticado mediante la sesion, 
+  llama a la api y setea el usuario en DataUserAuth
+   */
+  const setearDataUserAuth = () => {
+    let username = sessionStorage.getItem('username');
+    let token = sessionStorage.getItem('token');
+
+    if (username && token) {
+      axios
+        .get(
+          ENDPOINT.users +
+            '/byusername/' +
+            JSON.parse(sessionStorage.getItem('username'))['email'],
+          {
+            headers: {
+              Authorization: 'Bearer ' + token,
+            },
+          }
+        )
+        .then((response) => {
+          setDataAuthenticatedUser(response.data.data.user);
+        })
+        .catch((error) => {
+          navigate('/login');
+          console.error('Error fetching user:', error);
+        });
+    }
   };
 
   useEffect(() => {
@@ -449,7 +479,10 @@ export const ECommerceProvider = ({ children }) => {
         setSearchPublishers,
         filterBySearch,
         addCartLocal,
-        setAuthenticatedUser
+        setAuthenticatedUser,
+        dataAuthenticatedUser,
+        setDataAuthenticatedUser,
+        setearDataUserAuth,
       }}
     >
       {children}

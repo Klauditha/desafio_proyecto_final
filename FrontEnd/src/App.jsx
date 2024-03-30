@@ -1,14 +1,9 @@
 /* eslint-disable no-unused-vars */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ECommerceContext } from '@/Context/ECommerceContext';
 import { ECommerceProvider } from '@/Context/ECommerceProvider';
 import ECommerceRoutes from './components/Routes/ECommerceRoutes';
-import Login from '@/components/Login';
-import Register from './components/Register';
 import Navbar from './components/Navbar';
-import Productdetail from './components/Productdetail';
-import Loginpage from './components/pages/Loginpage';
-import Topnavbar from './components/Topnavbar';
 import Footer from './components/Footer';
 
 function App() {
@@ -20,13 +15,26 @@ function App() {
 }
 
 function AppContent() {
-  const { users, authenticatedUser } = useContext(ECommerceContext);
-  const isAdmin = authenticatedUser && authenticatedUser.admin;
-  const dataUser = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')) : null;
+  const {
+    setearDataUserAuth,
+    dataAuthenticatedUser,
+    authenticatedUser,
+    setDataAuthenticatedUser,
+    setAuthenticatedUser,
+  } = useContext(ECommerceContext);
+
+  useEffect(() => {
+    if (sessionStorage.getItem('username') != null) {
+      setearDataUserAuth();
+    } else {
+      setAuthenticatedUser(null);
+      setDataAuthenticatedUser(null);
+    }
+  }, [authenticatedUser]);
 
   return (
     <div className="flex-col space-y-8">
-      <Navbar isAdmin={isAdmin} dataUser={dataUser}  />
+      <Navbar />
       <ECommerceRoutes />
       <Footer />
     </div>

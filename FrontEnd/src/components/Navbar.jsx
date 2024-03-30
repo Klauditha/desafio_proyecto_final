@@ -8,8 +8,14 @@ import { useContext } from 'react';
 import { ECommerceContext } from '../Context/ECommerceContext';
 import { Icon } from '@radix-ui/react-select';
 
-export default function Navbar({ isAdmin, dataUser }) {
-  const { setSearchBooks } = useContext(ECommerceContext);
+export default function Navbar() {
+  const {
+    setSearchBooks,
+    setDataAuthenticatedUser,
+    setAuthenticatedUser,
+    authenticatedUser,
+    dataAuthenticatedUser,
+  } = useContext(ECommerceContext);
 
   return (
     <>
@@ -35,7 +41,7 @@ export default function Navbar({ isAdmin, dataUser }) {
               />
             </div>
             <div className="flex gap-8">
-              {dataUser ? (
+              {dataAuthenticatedUser ? (
                 <NavLink
                   className={({ isActive }) =>
                     isActive
@@ -58,7 +64,7 @@ export default function Navbar({ isAdmin, dataUser }) {
                         d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
                       />
                     </svg>
-                    {dataUser.first_name} {dataUser.last_name}
+                    {dataAuthenticatedUser.first_name} {dataAuthenticatedUser.last_name}
                   </div>
                 </NavLink>
               ) : (
@@ -74,7 +80,7 @@ export default function Navbar({ isAdmin, dataUser }) {
                 <span className="hidden md:flex">Carrito</span>
                 <ShoppingCartIcon className="h-4 w-4 fill-current" />
               </Link>
-              {dataUser ? (
+              {dataAuthenticatedUser ? (
                 <Button className="hidden md:flex md:bg-gray-700" asChild>
                   <Link
                     onClick={() => {
@@ -124,7 +130,7 @@ export default function Navbar({ isAdmin, dataUser }) {
                 Editoriales
               </NavLink>
 
-              {isAdmin && (
+              {dataAuthenticatedUser && dataAuthenticatedUser.admin && (
                 <>
                   {/*
                   <NavLink
@@ -160,7 +166,7 @@ export default function Navbar({ isAdmin, dataUser }) {
                   </NavLink>
                 </>
               )}
-              {!isAdmin && (
+              {dataAuthenticatedUser && !dataAuthenticatedUser.admin && (
                 <NavLink
                   className={({ isActive }) =>
                     isActive
