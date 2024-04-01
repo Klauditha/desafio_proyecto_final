@@ -45,7 +45,7 @@ const Bookcard = ({
               objectFit: 'contain',
             }}
             width={400}
-            onClick={() => navigate(`/book/${book.bookId}`)}
+            onClick={() => navigate(`/book/${book.book_id}`)}
           />
         </div>
       </div>
@@ -68,7 +68,7 @@ const Bookcard = ({
         ) : null}
         {displayPubDate ? (
           <CardDescription className="text-sm font-medium">
-            Publicado: {book.pubDate}
+            Publicado: {book.pub_date}
           </CardDescription>
         ) : null}
 

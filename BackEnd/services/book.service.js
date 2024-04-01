@@ -88,7 +88,6 @@ class BookService {
     if (!books) {
       throw boom.notFound('Libros no encontrados');
     }
-    console.log(books)
     return books;
   }
 }
