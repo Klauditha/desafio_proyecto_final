@@ -50,8 +50,11 @@ class BookService {
         publisher: publisher,
       },
     });
+    if(books.length === 0) {
+      throw boom.notFound('No existen libros para la editorial');
+    }
     if (!books) {
-      throw boom.notFound('Editoriales no encontradas');
+      throw boom.notFound('No existen libros para la editorial');
     }
     return books;
   }

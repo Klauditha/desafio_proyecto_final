@@ -606,4 +606,7 @@ router.put(
  * 
  * */
 router.post('/news', booksController.getNews);
+
+router.post('/bypublisher/', booksController.getAllByPublisher);
+
 module.exports = router;

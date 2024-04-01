@@ -41,4 +41,33 @@ describe('Book API Routes', () => {
       expect(response.body.data).not.toBe(null);
     });
   });
+
+  describe('POST /book/bypublisher', () => {
+    it('Obtener libros por editorial correctamente', async () => {
+      const publisher = 'Alianza';
+      const response = await request(app)
+        .post('/book/bypublisher')
+        .send({ publisher });
+      console.log(response.body);
+      expect(response.status).toBe(200);
+      expect(response.body.status).toBe(true);
+      expect(response.body.message).toBe(
+        'Libros encontrados para la editorial'
+      );
+      expect(response.body.data).not.toBe(null);
+    });
+    
+    it('Obtener libros por editorial que no existe', async () => {
+        const publisher = 'Cualquiera';
+        const response = await request(app)
+          .post('/book/bypublisher')
+          .send({ publisher });
+        expect(response.status).toBe(404);
+        expect(response.body.status).toBe(false);
+        expect(response.body.message).toBe(
+          'No existen libros para la editorial'
+        );
+        expect(response.body.data).toBe(null);
+      });
+  });
 });

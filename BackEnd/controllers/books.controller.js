@@ -228,14 +228,14 @@ const getAllByPublisher = async (req, res, next) => {
     const books = await service.getAllByPublisher(publisher);
     res.status(200).json({
       status: true,
-      message: 'Editoriales encontradas',
+      message: 'Libros encontrados para la editorial',
       data: {
         books,
       },
     });
   } catch (error) {
     let codeError = error.isBoom ? error.output.statusCode : 500;
-    res(codeError).json({
+    res.status(codeError).json({
       status: false,
       message: error.message,
       data: null,
