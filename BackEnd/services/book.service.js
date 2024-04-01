@@ -1,5 +1,6 @@
 const boom = require('@hapi/boom');
 const { models } = require('../config/sequelize');
+const { Op } = require('sequelize');
 
 class BookService {
   constructor() {}
@@ -76,6 +77,19 @@ class BookService {
     }
     const rta = await book.update(changes);
     return rta;
+  }
+  async getNewBooks() {
+    const books = await models.Book.findAll({
+      where: {
+        pub_date: { [Op.gt]: new Date(2023, 12,31) },
+        deleted: false,
+      },
+    });
+    if (!books) {
+      throw boom.notFound('Libros no encontrados');
+    }
+    console.log(books)
+    return books;
   }
 }
 

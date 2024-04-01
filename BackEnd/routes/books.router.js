@@ -345,7 +345,7 @@ router.post(
     check('author', 'The author is required').not().isEmpty(),
     validarCampos,
   ],
-  //authMiddleware,
+  authMiddleware,
   booksController.createBook
 );
 
@@ -545,4 +545,65 @@ router.put(
   authMiddleware,
   booksController.updateBook
 );
+
+/**
+ * @swagger
+ * /book/news:
+ *   post:
+ *     summary: Get news
+ *     tags: [Book]
+ *     responses:
+ *       200:
+ *         description: Libros encontrados
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: true
+ *                 message:
+ *                   type: string
+ *                   default: Libros encontrados
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     books:
+ *                       $ref: '#/components/schemas/Book'
+ *       404:
+ *         description: No se encontraron libros
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: No se encontraron libros
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ * 
+ * */
+router.post('/news', booksController.getNews);
 module.exports = router;

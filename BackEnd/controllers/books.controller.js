@@ -243,6 +243,26 @@ const getAllByPublisher = async (req, res, next) => {
   }
 };
 
+const getNews = async (req, res, next) => {
+  try {
+    const books = await service.getNewBooks();
+    res.status(200).json({
+      status: true,
+      message: 'Libros encontrados',
+      data: {
+        books,
+      },
+    });
+  } catch (error) {
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    });
+  }
+}
+
 module.exports = {
   getBook,
   getBooksByCategory,
@@ -252,4 +272,5 @@ module.exports = {
   updateBook,
   findAllPublishers,
   getAllByPublisher,
+  getNews
 };
