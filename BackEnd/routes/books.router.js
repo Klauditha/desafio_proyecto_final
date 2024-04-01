@@ -92,7 +92,7 @@ const { check } = require('express-validator');
  *         name: book_id
  *     responses:
  *       200:
- *         description: The book was get
+ *         description: Libro encontrado
  *         content:
  *           application/json:
  *             schema:
@@ -100,8 +100,10 @@ const { check } = require('express-validator');
  *               properties:
  *                 status:
  *                   type: boolean
+ *                   default: true
  *                 message:
  *                   type: string
+ *                   default: Libro encontrado
  *                 data:
  *                   type: array
  *                   properties:
@@ -112,7 +114,7 @@ const { check } = require('express-validator');
  *                     author:
  *                       $ref: '#/components/schemas/Author'
  *       404:
- *         description: The book was not found
+ *         description: El libro no fue encontrado
  *         content:
  *           application/json:
  *             schema:
@@ -123,7 +125,7 @@ const { check } = require('express-validator');
  *                   default: false
  *                 message:
  *                   type: string
- *                   default: The book was not found
+ *                   default: Libro no encontrado
  *                 data:
  *                   type: object
  *                   default: null

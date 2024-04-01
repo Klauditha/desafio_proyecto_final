@@ -17,7 +17,7 @@ class BookService {
   async findOne(book_id) {
     const book = await models.Book.findOne({ where: { book_id } });
     if (!book) {
-      throw boom.notFound('Book not found');
+      throw boom.notFound('Libro no encontrado');
     }
     return book;
   }
