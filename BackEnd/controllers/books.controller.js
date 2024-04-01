@@ -204,7 +204,7 @@ const findAllPublishers = async (req, res, next) => {
     const publishes = await service.findAllPublishers();
     res.status(200).json({
       status: true,
-      message: 'Publishes found',
+      message: 'Editoriales encontradas',
       data: {
         publishes,
       },
@@ -219,13 +219,16 @@ const findAllPublishers = async (req, res, next) => {
   }
 };
 
+/**
+ * Obtiene todos los libros por editorial
+ */
 const getAllByPublisher = async (req, res, next) => {
   try {
     const { publisher } = req.body;
     const books = await service.getAllByPublisher(publisher);
     res.status(200).json({
       status: true,
-      message: 'Books found',
+      message: 'Editoriales encontradas',
       data: {
         books,
       },

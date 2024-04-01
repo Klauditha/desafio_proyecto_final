@@ -149,7 +149,76 @@ const { check } = require('express-validator');
  */
 router.get('/:book_id', booksController.getBook);
 
-router.post('/byPublisher', booksController.getAllByPublisher);
+/**
+ * @swagger
+ * /book/allPublishers:
+ *   post:
+ *     summary: Get all publishers
+ *     tags: [Book]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *              properties:
+ *                publisher:
+ *                  type: string
+ *                  description: The publisher of the book
+ *     responses:
+ *       200:
+ *         description: Editoriales encontradas
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: true
+ *                 message:
+ *                   type: string
+ *                   default: Editoriales encontradas
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     editoriales:
+ *                       type: string
+ *                       default: Sudamericana
+ *       404:
+ *         description: No se encontraron editoriales
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: No se encontraron editoriales
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ * 
+ * */
+router.post('/allPublishers', booksController.findAllPublishers);
 
 /**
  * @swagger

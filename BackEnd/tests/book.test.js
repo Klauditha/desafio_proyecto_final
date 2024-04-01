@@ -23,4 +23,15 @@ describe('Login API Routes', () => {
             expect(response.body.data).toBe(null);
         });
     });
+
+    describe('POST /book/byPublisher', () => {
+        it('Obtener editoriales correctamente', async () => {
+            const response = await request(app)
+                .post('/book/allPublishers');
+            expect(response.status).toBe(200);
+            expect(response.body.status).toBe(true);
+            expect(response.body.message).toBe('Editoriales encontradas');
+            expect(response.body.data).not.toBe(null);
+        });
+    });
 })

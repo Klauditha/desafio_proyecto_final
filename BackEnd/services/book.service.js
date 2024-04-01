@@ -31,7 +31,7 @@ class BookService {
     const books = await models.Book.findAll();
     let publishers = [];
     if (!books) {
-      throw boom.notFound('Books not found');
+      throw boom.notFound('Editoriales no encontradas');
     }
     books.forEach((book) => {
       if (!publishers.includes(book.publisher)) {
@@ -50,7 +50,7 @@ class BookService {
       },
     });
     if (!books) {
-      throw boom.notFound('Books not found');
+      throw boom.notFound('Editoriales no encontradas');
     }
     return books;
   }
