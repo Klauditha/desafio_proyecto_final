@@ -21,9 +21,9 @@ const Productdetail = ({ book }) => {
   const navigate = useNavigate();
   let [quantity, setQuantity] = useState();
 
-  const getRatingsByBook = (bookId, ratings) => {
+  const getRatingsByBook = (book_id, ratings) => {
     const ratingsByBook = ratings.filter(
-      (rating) => rating.bookId.toString() === bookId
+      (rating) => rating.book_id.toString() === book_id
     );
     let sum = 0;
     ratingsByBook.map((item) => {
@@ -34,7 +34,7 @@ const Productdetail = ({ book }) => {
   };
 
   const setRating = () => {
-    const rating = getRatingsByBook(book.bookId, ratings);
+    const rating = getRatingsByBook(book.book_id, ratings);
     if (rating) {
       for (let i = 1; i <= 5; i++) {
         if (i <= rating) {
@@ -60,7 +60,7 @@ const Productdetail = ({ book }) => {
 
   const handleAddToWishList = () => {
     const updatedBooks = books.map((b) => {
-      if (b.bookId == book.bookId) {
+      if (b.book_id == book.book_id) {
         return { ...b, wishlist: !b.wishlist };
       }
       return b;
@@ -77,7 +77,7 @@ const Productdetail = ({ book }) => {
   };
   useEffect(() => {
     setRating();
-  }, [book.bookId]);
+  }, [book.book_id]);
 
   return (
     <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">

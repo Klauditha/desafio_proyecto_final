@@ -1,5 +1,6 @@
 const boom = require('@hapi/boom');
 const { models } = require('../config/sequelize');
+const { Op } = require('sequelize');
 
 class BookService {
   constructor() {}
@@ -17,7 +18,7 @@ class BookService {
   async findOne(book_id) {
     const book = await models.Book.findOne({ where: { book_id } });
     if (!book) {
-      throw boom.notFound('Book not found');
+      throw boom.notFound('Libro no encontrado');
     }
     return book;
   }
@@ -31,7 +32,7 @@ class BookService {
     const books = await models.Book.findAll();
     let publishers = [];
     if (!books) {
-      throw boom.notFound('Books not found');
+      throw boom.notFound('Editoriales no encontradas');
     }
     books.forEach((book) => {
       if (!publishers.includes(book.publisher)) {
@@ -50,7 +51,7 @@ class BookService {
       },
     });
     if (!books) {
-      throw boom.notFound('Books not found');
+      throw boom.notFound('Editoriales no encontradas');
     }
     return books;
   }
@@ -76,6 +77,18 @@ class BookService {
     }
     const rta = await book.update(changes);
     return rta;
+  }
+  async getNewBooks() {
+    const books = await models.Book.findAll({
+      where: {
+        pub_date: { [Op.gt]: new Date(2023, 12,31) },
+        deleted: false,
+      },
+    });
+    if (!books) {
+      throw boom.notFound('Libros no encontrados');
+    }
+    return books;
   }
 }
 

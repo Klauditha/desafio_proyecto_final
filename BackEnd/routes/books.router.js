@@ -92,7 +92,7 @@ const { check } = require('express-validator');
  *         name: book_id
  *     responses:
  *       200:
- *         description: The book was get
+ *         description: Libro encontrado
  *         content:
  *           application/json:
  *             schema:
@@ -100,8 +100,10 @@ const { check } = require('express-validator');
  *               properties:
  *                 status:
  *                   type: boolean
+ *                   default: true
  *                 message:
  *                   type: string
+ *                   default: Libro encontrado
  *                 data:
  *                   type: array
  *                   properties:
@@ -112,7 +114,7 @@ const { check } = require('express-validator');
  *                     author:
  *                       $ref: '#/components/schemas/Author'
  *       404:
- *         description: The book was not found
+ *         description: El libro no fue encontrado
  *         content:
  *           application/json:
  *             schema:
@@ -123,7 +125,7 @@ const { check } = require('express-validator');
  *                   default: false
  *                 message:
  *                   type: string
- *                   default: The book was not found
+ *                   default: Libro no encontrado
  *                 data:
  *                   type: object
  *                   default: null
@@ -147,7 +149,76 @@ const { check } = require('express-validator');
  */
 router.get('/:book_id', booksController.getBook);
 
-router.post('/byPublisher', booksController.getAllByPublisher);
+/**
+ * @swagger
+ * /book/allPublishers:
+ *   post:
+ *     summary: Get all publishers
+ *     tags: [Book]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *              properties:
+ *                publisher:
+ *                  type: string
+ *                  description: The publisher of the book
+ *     responses:
+ *       200:
+ *         description: Editoriales encontradas
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: true
+ *                 message:
+ *                   type: string
+ *                   default: Editoriales encontradas
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     editoriales:
+ *                       type: string
+ *                       default: Sudamericana
+ *       404:
+ *         description: No se encontraron editoriales
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: No se encontraron editoriales
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ * 
+ * */
+router.post('/allPublishers', booksController.findAllPublishers);
 
 /**
  * @swagger
@@ -274,7 +345,7 @@ router.post(
     check('author', 'The author is required').not().isEmpty(),
     validarCampos,
   ],
-  //authMiddleware,
+  authMiddleware,
   booksController.createBook
 );
 
@@ -474,4 +545,65 @@ router.put(
   authMiddleware,
   booksController.updateBook
 );
+
+/**
+ * @swagger
+ * /book/news:
+ *   post:
+ *     summary: Get news
+ *     tags: [Book]
+ *     responses:
+ *       200:
+ *         description: Libros encontrados
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: true
+ *                 message:
+ *                   type: string
+ *                   default: Libros encontrados
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     books:
+ *                       $ref: '#/components/schemas/Book'
+ *       404:
+ *         description: No se encontraron libros
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: No se encontraron libros
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ * 
+ * */
+router.post('/news', booksController.getNews);
 module.exports = router;

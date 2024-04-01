@@ -91,7 +91,7 @@ const getBook = async (req, res, next) => {
     }
     res.status(200).json({
       status: true,
-      message: 'Book found',
+      message: 'Libro encontrado',
       data: {
         book,
         genre: genre ?? null,
@@ -99,7 +99,8 @@ const getBook = async (req, res, next) => {
       },
     });
   } catch (error) {
-    res.status(500).json({
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
       status: false,
       message: error.message,
       data: null,
@@ -203,7 +204,7 @@ const findAllPublishers = async (req, res, next) => {
     const publishes = await service.findAllPublishers();
     res.status(200).json({
       status: true,
-      message: 'Publishes found',
+      message: 'Editoriales encontradas',
       data: {
         publishes,
       },
@@ -218,13 +219,16 @@ const findAllPublishers = async (req, res, next) => {
   }
 };
 
+/**
+ * Obtiene todos los libros por editorial
+ */
 const getAllByPublisher = async (req, res, next) => {
   try {
     const { publisher } = req.body;
     const books = await service.getAllByPublisher(publisher);
     res.status(200).json({
       status: true,
-      message: 'Books found',
+      message: 'Editoriales encontradas',
       data: {
         books,
       },
@@ -239,6 +243,26 @@ const getAllByPublisher = async (req, res, next) => {
   }
 };
 
+const getNews = async (req, res, next) => {
+  try {
+    const books = await service.getNewBooks();
+    res.status(200).json({
+      status: true,
+      message: 'Libros encontrados',
+      data: {
+        books,
+      },
+    });
+  } catch (error) {
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    });
+  }
+}
+
 module.exports = {
   getBook,
   getBooksByCategory,
@@ -248,4 +272,5 @@ module.exports = {
   updateBook,
   findAllPublishers,
   getAllByPublisher,
+  getNews
 };

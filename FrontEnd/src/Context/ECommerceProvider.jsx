@@ -27,6 +27,7 @@ export const ECommerceProvider = ({ children }) => {
   const [searchPublishers, setSearchPublishers] = useState('');
   const [publishers, setPublishers] = useState(null);
   const [editoriales, setEditoriales] = useState(null);
+  const [booksNews, setBooksNews] = useState([]);
 
   /* CARRITO */
   const addToCart = async (book) => {
@@ -403,6 +404,38 @@ export const ECommerceProvider = ({ children }) => {
     }
   };
 
+  /*Obtener novedades de libros */
+  const obtenerNovedadesLibros = () => {
+    axios
+      .post(ENDPOINT.book + '/news/')
+      .then((response) => {
+        if (searchBooks != '' || searchPublishers != '') {
+          let filteredBooksResult = [];
+          response.data.data.books.map((book) => {
+            if (
+              searchBooks != '' &&
+              book.title.toLowerCase().includes(searchBooks.toLowerCase()) &&
+              searchPublishers != '' &&
+              book.publisher
+                .toLowerCase()
+                .includes(searchPublishers.toLowerCase())
+            ) {
+              let valor = filteredBooksResult.find(
+                (item) => item.book_id.toString() == book.book_id
+              );
+              if (!valor) filteredBooksResult.push(book);
+            }
+          });
+          setBooksNews(filteredBooksResult);
+        } else {
+          setBooksNews(response.data.data.books);
+        }
+      })
+      .catch((error) => {
+        console.log('Error al obtener novedades de libros:', error);
+      });
+  };
+
   useEffect(() => {
     if (
       (searchBooks != '' && searchBooks != null && searchBooks != undefined) ||
@@ -424,7 +457,7 @@ export const ECommerceProvider = ({ children }) => {
       getGenres();
       getBookGenres();
       getBooks();
-      setAuthorsBook();
+      //setAuthorsBook();
       setSoldBook();
       setBooks();
       removeFromCart();
@@ -479,10 +512,14 @@ export const ECommerceProvider = ({ children }) => {
         setSearchPublishers,
         filterBySearch,
         addCartLocal,
+        /*Proceso de autenticacion*/
         setAuthenticatedUser,
         dataAuthenticatedUser,
         setDataAuthenticatedUser,
         setearDataUserAuth,
+        /*Novedades*/
+        booksNews,
+        obtenerNovedadesLibros,
       }}
     >
       {children}
