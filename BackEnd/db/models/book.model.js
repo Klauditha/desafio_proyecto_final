@@ -55,20 +55,26 @@ const BookSchema = {
   }
 };
 
+
 class Book extends Model {
   static associate(models) {
-    this.belongsToMany(models.Author, {
+    Book.belongsToMany(models.Author, {
       through: models.BookAuthor,
       foreignKey: 'book_id',
       otherKey: 'author_id',
       as: 'authors',
     });
-    this.belongsToMany(models.Genre, {
+    Book.belongsToMany(models.Genre, {
       through: models.BookGenre,
       foreignKey: 'book_id',
       otherKey: 'genre_id',
       as: 'genres',
     });
+   models.Book.belongsToMany(models.orderItems, {
+      as: 'order_items',
+      foreignKey: 'book_id',
+    });
+  
   }
   static config(sequelize) {
     return {

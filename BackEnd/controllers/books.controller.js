@@ -199,29 +199,17 @@ const deleteBook = async (req, res, next) => {
 
 
 /* Obtiene todos los libros activos */
-const getAllBooksActive = async (req, res, next) => {
+const getBooksMoreSold = async (req, res, next) => {
   try {
-    let quantitySold = 0;
-    let results = [];
-    const books = await service.getAllActive();
-    if(!books){
+    const books = await service.getAllMoreSold();
+    if(!books || books.length == 0) {
       throw boom.notFound('Books not found');
     }
-
-    quantitySold = await orderItemsService.getQuantitySoldByBook(books[0].book_id);
-    console.log(quantitySold);
-    /*books.forEach(async (book) => {
-      quantitySold = await orderItemsService.getQuantitySoldByBook(book.book_id);
-      results.push({
-        ...book,
-        quantitySold,
-      })
-    });*/
     res.status(200).json({
       status: true,
-      message: 'Libros encontrados',
+      message: 'Libros más vendidos encontrados',
       data: {
-        books: results
+        books
       },
     });
   } catch (error) {
@@ -312,5 +300,6 @@ module.exports = {
   findAllPublishers,
   getAllByPublisher,
   getNews,
-  getAllBooksActive
+  //getAllBooksActive
+  getBooksMoreSold
 };

@@ -1,5 +1,7 @@
 const { models } = require('../config/sequelize');
 const boom = require('@hapi/boom');
+const { Book } = require('../db/models/book.model');
+//const { Book } = require('../db/models/book.model');
 
 class OrderItemsService {
   constructor() {}
@@ -56,24 +58,6 @@ class OrderItemsService {
     return rta;
   }
 
-
-  /* Obtiene la suma de la cantidad de libros vendidos por cada libro */
-  async getQuantitySoldByBook(book_id) {
-    //console.log(book_id);
-    let sum = 0;
-    const orderItems = await models.OrderItem.findAll({
-      where: {
-        book_id: book_id,
-        deleted: false,
-      },
-    });
-    console.log(orderItems);
-    orderItems.map((orderItem) => {
-      sum = sum + parseInt(orderItem.quantity)
-    });
-    //console.log(sum);
-    return sum;
-  }
 }
 
 module.exports = OrderItemsService;

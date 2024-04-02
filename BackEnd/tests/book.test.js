@@ -71,10 +71,9 @@ describe('Book API Routes', () => {
       });
   });
 
-  describe('POST /book/all', () => {
-    it('Obtener todos los libros activos correctamente', async () => {
-      const response = await request(app).post('/book/all');
-      console.log(response.body);
+  describe('POST /book/moresold', () => {
+    it('Obtener todos los libros más vendidos correctamente', async () => {
+      const response = await request(app).post('/book/moresold');
       expect(response.status).toBe(200);
       expect(response.body.status).toBe(true);
       expect(response.body.data).not.toBe(null);
