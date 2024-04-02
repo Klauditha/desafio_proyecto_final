@@ -11,6 +11,7 @@ import BookDetail from '../pages/BookDetail';
 import Home from '../pages/Home';
 import AdminBooks from '../pages/AdminBooks/AdminBooks';
 import AddEditBook from '../pages/AdminBooks/AddEditBook';
+import Userprofile from '../pages/Userprofile';
 
 const ECommerceRoutes = () => {
   return (
@@ -28,6 +29,7 @@ const ECommerceRoutes = () => {
       <Route path="/deleteBook" element={<Home />} />
       <Route path="/managerbooks/edit/:bookId" element={<AddEditBook />} />
       <Route path="/managerbooks/add" element={<AddEditBook />} />
+      <Route path="/profile" element={<Userprofile />} />
     </Routes>
   );
 };
