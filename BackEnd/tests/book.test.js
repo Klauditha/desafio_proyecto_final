@@ -22,7 +22,7 @@ describe('Book API Routes', () => {
     });
   });
 
-  describe('POST /book/byPublisher', () => {
+  describe('POST /book/allPublishers', () => {
     it('Obtener editoriales correctamente', async () => {
       const response = await request(app).post('/book/allPublishers');
       expect(response.status).toBe(200);

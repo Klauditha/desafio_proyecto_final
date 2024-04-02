@@ -93,6 +93,18 @@ class BookService {
     }
     return books;
   }
+
+  async getAllActive() {
+    const books = await models.Book.findAll({
+      where: {
+        deleted: false,
+      },
+    });
+    if (!books) {
+      throw boom.notFound('Libros no encontrados');
+    }
+    return books;
+  }
 }
 
 module.exports = BookService;
