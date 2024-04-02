@@ -25,9 +25,10 @@ export const ECommerceProvider = ({ children }) => {
   const [orders, setOrders] = useState([]);
   const [searchBooks, setSearchBooks] = useState('');
   const [searchPublishers, setSearchPublishers] = useState('');
-  const [publishers, setPublishers] = useState(null);
+  //const [publishers, setPublishers] = useState(null);
   const [editoriales, setEditoriales] = useState(null);
   const [booksNews, setBooksNews] = useState([]);
+  const [booksEditoriales, setBooksEditoriales] = useState([]);
 
   /* CARRITO */
   const addToCart = async (book) => {
@@ -365,14 +366,16 @@ export const ECommerceProvider = ({ children }) => {
     }
   };
 
-  const setDataPublishers = async () => {
-    const response = await fetch('data/books.json');
-    const data = await response.json();
-    let publishers = [];
-    data.map((book) => {
-      publishers.push(book.publisher);
-    });
-    setEditoriales(publishers);
+  const setDataEditoriales = async () => {
+    axios
+      .post(ENDPOINT.book + '/allPublishers/')
+      .then((response) => {
+        setEditoriales(response.data.data.publishes);
+      })
+      .catch((error) => {
+        console.log('Error al obtener editoriales:', error);
+        setEditoriales([]);
+      });
   };
 
   /*Obtiene el usuario autenticado mediante la sesion, 
@@ -436,7 +439,37 @@ export const ECommerceProvider = ({ children }) => {
       });
   };
 
+  const obtenerLibrosPorEditorial = (publisher = '') => {
+    axios
+      .post(ENDPOINT.book + '/byPublisher/', {
+        publisher: publisher,
+      })
+      .then((response) => {
+        if (searchBooks != '') {
+          let filteredBooksResult = [];
+          response.data.data.books.map((book) => {
+            if (
+              searchBooks != '' &&
+              book.title.toLowerCase().includes(searchBooks.toLowerCase())
+            ) {
+              let valor = filteredBooksResult.find(
+                (item) => item.book_id.toString() == book.book_id
+              );
+              if (!valor) filteredBooksResult.push(book);
+            }
+          });
+          setBooksEditoriales(filteredBooksResult);
+        } else {
+          setBooksEditoriales(response.data.data.books);
+        }
+      })
+      .catch((error) => {
+        console.log('Error al obtener libros por editorial:', error);
+      });
+  };
+
   useEffect(() => {
+    setDataEditoriales();
     if (
       (searchBooks != '' && searchBooks != null && searchBooks != undefined) ||
       (searchPublishers != '' &&
@@ -448,7 +481,7 @@ export const ECommerceProvider = ({ children }) => {
     //  else if(searchPublishers != '') filterByPublisher(searchPublishers);
     //setDataPublishers();
     else {
-      setDataPublishers();
+      setDataEditoriales();
       getBooksAuthors();
       getOrderItems();
       getRatings();
@@ -458,7 +491,7 @@ export const ECommerceProvider = ({ children }) => {
       getBookGenres();
       getBooks();
       //setAuthorsBook();
-      setSoldBook();
+      //setSoldBook();
       setBooks();
       removeFromCart();
       /*
@@ -504,10 +537,9 @@ export const ECommerceProvider = ({ children }) => {
         updateCartItemQuantity,
         removeFromCart,
         searchBooks,
-        publishers,
+        //publishers,
         setSearchBooks,
-        setPublishers,
-        editoriales,
+        //setPublishers,
         searchPublishers,
         setSearchPublishers,
         filterBySearch,
@@ -520,6 +552,12 @@ export const ECommerceProvider = ({ children }) => {
         /*Novedades*/
         booksNews,
         obtenerNovedadesLibros,
+        /*Listado editoriales */
+        editoriales,
+        /*Libros por editorial*/
+        booksEditoriales,
+        setBooksEditoriales,
+        obtenerLibrosPorEditorial,
       }}
     >
       {children}

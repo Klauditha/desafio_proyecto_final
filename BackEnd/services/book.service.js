@@ -50,8 +50,11 @@ class BookService {
         publisher: publisher,
       },
     });
+    if(books.length === 0) {
+      throw boom.notFound('No existen libros para la editorial');
+    }
     if (!books) {
-      throw boom.notFound('Editoriales no encontradas');
+      throw boom.notFound('No existen libros para la editorial');
     }
     return books;
   }
@@ -82,6 +85,18 @@ class BookService {
     const books = await models.Book.findAll({
       where: {
         pub_date: { [Op.gt]: new Date(2023, 12,31) },
+        deleted: false,
+      },
+    });
+    if (!books) {
+      throw boom.notFound('Libros no encontrados');
+    }
+    return books;
+  }
+
+  async getAllActive() {
+    const books = await models.Book.findAll({
+      where: {
         deleted: false,
       },
     });

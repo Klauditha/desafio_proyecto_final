@@ -225,17 +225,20 @@ const findAllPublishers = async (req, res, next) => {
 const getAllByPublisher = async (req, res, next) => {
   try {
     const { publisher } = req.body;
-    const books = await service.getAllByPublisher(publisher);
+    let books = [];
+    if (publisher == '') {
+      books = await service.getAllActive();
+    } else books = await service.getAllByPublisher(publisher);
     res.status(200).json({
       status: true,
-      message: 'Editoriales encontradas',
+      message: 'Libros encontrados para la editorial',
       data: {
         books,
       },
     });
   } catch (error) {
     let codeError = error.isBoom ? error.output.statusCode : 500;
-    res(codeError).json({
+    res.status(codeError).json({
       status: false,
       message: error.message,
       data: null,
@@ -261,7 +264,7 @@ const getNews = async (req, res, next) => {
       data: null,
     });
   }
-}
+};
 
 module.exports = {
   getBook,
@@ -272,5 +275,5 @@ module.exports = {
   updateBook,
   findAllPublishers,
   getAllByPublisher,
-  getNews
+  getNews,
 };

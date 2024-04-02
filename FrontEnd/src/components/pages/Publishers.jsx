@@ -1,29 +1,24 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ECommerceContext } from '../../Context/ECommerceContext';
 import Bookcard from '../Bookcard';
 const Publishers = () => {
   const {
-    books,
+    booksEditoriales,
+    obtenerLibrosPorEditorial,
     searchBooks,
-    setPublishers,
     editoriales,
-    setSearchBooks,
-    searchPublishers,
-    setSearchPublishers,
-    filterBySearch
   } = useContext(ECommerceContext);
   const [seleccion, setSeleccion] = React.useState('');
-  const [booksByPublisher, setBooksByPublisher] = useState(books);
 
   const filterByPublisher = (publisher) => {
-    setSearchPublishers(publisher);
+    obtenerLibrosPorEditorial(publisher);
   };
 
   useEffect(() => {
-    setBooksByPublisher(filterBySearch());
-  }, [searchBooks,searchPublishers]);
+    obtenerLibrosPorEditorial(seleccion);
+  }, [searchBooks]);
 
   return (
     <div>
@@ -49,10 +44,10 @@ const Publishers = () => {
       </div>
 
       <div className="grid gap-8 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 w-full justify-center">
-        {booksByPublisher
-          ? booksByPublisher.map((book) => (
+        {booksEditoriales
+          ? booksEditoriales.map((book) => (
               <Bookcard
-                key={book.bookId}
+                key={book.book_id}
                 book={book}
                 btnAddCart={true}
                 displayPrice={true}
