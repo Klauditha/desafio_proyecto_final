@@ -6,8 +6,8 @@ const RequireAuth = ({ children }) => {
   const { authenticatedUser } = useContext(ECommerceContext);
   const navigate = useNavigate();
 
-  const dataUser = sessionStorage.getItem('user')
-    ? JSON.parse(sessionStorage.getItem('user'))
+  const dataUser = sessionStorage.getItem('username')
+    ? JSON.parse(sessionStorage.getItem('username'))
     : null;
 
   useEffect(() => {
@@ -15,6 +15,7 @@ const RequireAuth = ({ children }) => {
     // Check if the user is authenticated
     if (!dataUser) {
       // Redirect to the login page
+      console.log("Redirect a login.")
       navigate('/login');
     }
   }, [dataUser, navigate]);
