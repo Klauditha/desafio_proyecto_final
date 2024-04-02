@@ -34,6 +34,7 @@ export default function Login() {
    para obtener el token */
   const handleLoginSubmit = () => {
     let token = '';
+    let user_id = '';
     setError('');
     if (!email || !password) {
       setError('Por favor ingrese correo y contraseña.');
@@ -50,8 +51,10 @@ export default function Login() {
       .then((response) => {
         if (response.data.status == true) {
           token = response.data.data.token;
+          user_id = response.data.data.user_id; 
           sessionStorage.setItem('username', JSON.stringify({ email }));
           sessionStorage.setItem('token', token);
+          sessionStorage.setItem('user_id', user_id);
           setAuthenticatedUser(email, token);
           setError('');
           setLoginMessage('Ingreso exitoso.');

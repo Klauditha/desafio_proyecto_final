@@ -17,7 +17,7 @@ const { check } = require('express-validator');
  *         - book_id
  *         - score
  *         - comment
- *         - whishlist
+ *         - wishlist
  *         - created_at
  *         - updated_at
  *         - deleted
@@ -37,9 +37,9 @@ const { check } = require('express-validator');
  *         comment:
  *           type: string
  *           description: The comment of the book
- *         whishlist:
+ *         wishlist:
  *           type: boolean
- *           description: The whishlist of the book
+ *           description: The wishlist of the book
  *         created_at:
  *           type: timestamp
  *           description: The date of the valuation
@@ -54,7 +54,7 @@ const { check } = require('express-validator');
  *         user_id: 3
  *         book_id: 3
  *         comment: Me encantó, muy recomendado.
- *         whishlist: false
+ *         wishlist: false
  *         created_at: 2023-03-31T10:00:00
  *         updated_at: 2023-03-31T10:00:00
  *         deleted: false
@@ -88,9 +88,9 @@ const { check } = require('express-validator');
  *               comment:
  *                 type: string
  *                 description: The comment of the book
- *               whishlist:
+ *               wishlist:
  *                 type: boolean
- *                 description: The whishlist of the book
+ *                 description: The wishlist of the book
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -243,5 +243,6 @@ router.post(
  *                   default: null
  * */
 router.get('/comments/:book_id', ratingController.getCommentsByBook);
+router.get('/wishlist', authMiddleware, ratingController.getWishlist);
 
 module.exports = router;

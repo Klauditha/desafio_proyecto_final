@@ -37,6 +37,24 @@ const createUpdateRating = async (req, res, next) => {
   }
 };
 
+const getWishlist = async (req, res, next) => {
+  try {
+    const wishlist = await service.getWishlist(req.user.user_id);
+    res.status(200).json({
+      status: true,
+      message: "Wishlist fetched",
+      data: { wishlist },
+    });
+  } catch (error) {
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
+
 const getCommentsByBook = async (req, res, next) => {
   try {
     const { book_id } = req.params;
@@ -73,5 +91,6 @@ const getCommentsByBook = async (req, res, next) => {
 }
 module.exports = {
   createUpdateRating,
-  getCommentsByBook
+  getCommentsByBook,
+  getWishlist,
 };
