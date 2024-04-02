@@ -668,4 +668,6 @@ router.post('/bypublisher/', booksController.getAllByPublisher);
  * */
 router.post('/allPublishers', booksController.findAllPublishers);
 
+router.post('/all', booksController.getAllBooksActive);
+
 module.exports = router;

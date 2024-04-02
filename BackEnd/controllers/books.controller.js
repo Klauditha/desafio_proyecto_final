@@ -3,7 +3,7 @@ const GenreService = require('../services/genre.service');
 const BookGenreService = require('../services/bookGenre.service');
 const AuthorService = require('../services/author.service');
 const BookAuthorService = require('../services/bookAuthor.service');
-const { bookSchema } = require('../schemas/book.schema');
+const OrderItemsService = require('../services/orderItems.service');
 const boom = require('@hapi/boom');
 
 const service = new BookService();
@@ -11,6 +11,7 @@ const genreService = new GenreService();
 const bookGenreService = new BookGenreService();
 const authorService = new AuthorService();
 const bookAuthorService = new BookAuthorService();
+const orderItemsService = new OrderItemsService();
 
 /**
  * Crea un nuevo libro
@@ -159,6 +160,9 @@ const updateBook = async (req, res, next) => {
   }
 };
 
+/**
+ * Realiza eliminacion de un libro logico
+ */
 const deleteBook = async (req, res, next) => {
   try {
     const { book_id } = req.params;
@@ -192,9 +196,43 @@ const deleteBook = async (req, res, next) => {
   }
 };
 
-const getBooksByCategory = async (req, res, next) => {};
 
-const getAllBooks = async (req, res, next) => {};
+
+/* Obtiene todos los libros activos */
+const getAllBooksActive = async (req, res, next) => {
+  try {
+    let quantitySold = 0;
+    let results = [];
+    const books = await service.getAllActive();
+    if(!books){
+      throw boom.notFound('Books not found');
+    }
+
+    quantitySold = await orderItemsService.getQuantitySoldByBook(books[0].book_id);
+    console.log(quantitySold);
+    /*books.forEach(async (book) => {
+      quantitySold = await orderItemsService.getQuantitySoldByBook(book.book_id);
+      results.push({
+        ...book,
+        quantitySold,
+      })
+    });*/
+    res.status(200).json({
+      status: true,
+      message: 'Libros encontrados',
+      data: {
+        books: results
+      },
+    });
+  } catch (error) {
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
 
 /**
  * Obtiene todas las editoriales
@@ -268,12 +306,11 @@ const getNews = async (req, res, next) => {
 
 module.exports = {
   getBook,
-  getBooksByCategory,
   createBook,
-  getAllBooks,
   deleteBook,
   updateBook,
   findAllPublishers,
   getAllByPublisher,
   getNews,
+  getAllBooksActive
 };
