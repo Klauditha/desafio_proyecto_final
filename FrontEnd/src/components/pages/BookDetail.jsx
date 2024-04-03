@@ -23,6 +23,7 @@ const BookDetail = () => {
           setAuthor(response.data.data.author);
         })
         .catch((error) => {
+          
           console.log(error);
         });
     } catch (error) {

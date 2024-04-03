@@ -8,11 +8,11 @@ const Bestselling = () => {
     booksMasVendidos,
     searchBooks,
     filtrarMasVendidos,
+    obtenerLibrosMasVendidos,
   } = useContext(ECommerceContext);
 
   useEffect(() => {
-    console.log('Obteniendo libros más vendidos metodos...');
-    filtrarMasVendidos();
+    obtenerLibrosMasVendidos();
   }, [searchBooks]);
 
   return (

@@ -386,28 +386,32 @@ export const ECommerceProvider = ({ children }) => {
           }
         })
         .catch((error) => {
+          alertify.error('Error al obtener libros por editorial ');
           console.log('Error al obtener libros por editorial:', error);
         });
     } catch (error) {
+      alertify.error('Error al obtener libros por editorial ');
       console.log('Error al obtener libros por editorial:', error);
     }
     console.log('booksEditoriales', booksEditoriales);
   };
 
   const obtenerLibrosMasVendidos = () => {
-    console.log('Obteniendo libros más vendidos...');
-    //console.log(searchBooks);
+    
     try {
       axios
         .post(ENDPOINT.book + '/moresold/')
         .then((response) => {
           console.log(response);
           setBooksMasVendidos(response.data.data.books);
+          if(searchBooks != '') filtrarMasVendidos();
         })
         .catch((error) => {
+          alertify.error('Error al obtener libros más vendidos');
           console.log('Error al obtener libros más vendidos:', error);
         });
     } catch (error) {
+      alertify.error('Error al obtener libros mas vendidos');
       console.log('Error al obtener libros más vendidos:', error);
     }
     //console.log('booksMasVendidos', booksMasVendidos);
@@ -428,6 +432,7 @@ export const ECommerceProvider = ({ children }) => {
         } else obtenerLibrosMasVendidos();
       });
     } catch (error) {
+      alertify.error('Error al obtener libros mas vendidos');
       console.log('Error al obtener libros más vendidos:', error);
       obtenerLibrosMasVendidos();
     }
@@ -435,7 +440,7 @@ export const ECommerceProvider = ({ children }) => {
 
   useEffect(() => {
     setDataEditoriales();
-    obtenerLibrosMasVendidos();
+    //obtenerLibrosMasVendidos();
     //getUsers();
     removeFromCart();
   }, [authenticatedUser]);
