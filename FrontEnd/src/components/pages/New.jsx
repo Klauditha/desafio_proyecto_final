@@ -8,7 +8,6 @@ const New = () => {
     useContext(ECommerceContext);
 
   useEffect(() => {
-    //setSearchBooks(searchBooks);
     obtenerNovedadesLibros();
   }, [searchBooks]);
 
@@ -21,11 +20,11 @@ const New = () => {
           ? booksNews.map((book) => (
               <Bookcard
                 key={book.book_id}
-                book={book}
+                book_id={book.book_id}
                 btnAddCart={true}
                 displayPrice={true}
                 displayLanguage={false}
-                displayQuantitySold={true} /*Pendiente*/
+                displayQuantitySold={false} /*Pendiente*/
                 displayPubDate={true}
               />
             ))

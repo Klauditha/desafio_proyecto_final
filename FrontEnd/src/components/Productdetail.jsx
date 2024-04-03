@@ -15,12 +15,13 @@ import { ECommerceContext } from '../Context/ECommerceContext';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Productdetail = ({ book }) => {
+const Productdetail = ({ book , genre, author}) => {
   const { ratings, books, setBooks, addCartLocal, authenticatedUser } =
     useContext(ECommerceContext);
   const navigate = useNavigate();
   let [quantity, setQuantity] = useState();
 
+  /*
   const getRatingsByBook = (book_id, ratings) => {
     const ratingsByBook = ratings.filter(
       (rating) => rating.book_id.toString() === book_id
@@ -32,6 +33,7 @@ const Productdetail = ({ book }) => {
     let avg = sum / ratingsByBook.length;
     return Math.trunc(avg);
   };
+  */
 
   const setRating = () => {
     const rating = getRatingsByBook(book.book_id, ratings);
@@ -76,7 +78,7 @@ const Productdetail = ({ book }) => {
     addCartLocal(book,quantity ? quantity : 1);
   };
   useEffect(() => {
-    setRating();
+    //setRating();
   }, [book.book_id]);
 
   return (

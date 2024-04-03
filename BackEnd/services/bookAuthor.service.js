@@ -16,10 +16,9 @@ class BookAuthorService {
   async findOneByBook(book_id) {
     const bookAuthor = await models.BookAuthor.findOne({
       where: {
-        book_id,
+        book_id: book_id,
       },
     });
-
     if (!bookAuthor) {
       throw boom.notFound('BookAuthor not found');
     }

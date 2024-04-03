@@ -5,8 +5,9 @@ require('dotenv').config();
 describe('Book API Routes', () => {
   describe('GET /book/:book_id', () => {
     it('Obtener libro por id correctamente', async () => {
-      const book_id = 1;
+      const book_id = 4;
       const response = await request(app).get('/book/' + book_id);
+      console.log(response.body);
       expect(response.status).toBe(200);
       expect(response.body.status).toBe(true);
       expect(response.body.message).toBe('Libro encontrado');

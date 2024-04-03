@@ -440,7 +440,7 @@ export const ECommerceProvider = ({ children }) => {
   useEffect(() => {
     setDataEditoriales();
     obtenerLibrosMasVendidos();
-    getUsers();
+    //getUsers();
     removeFromCart();
   }, [authenticatedUser]);
 

@@ -6,13 +6,12 @@ import Bookcard from '../Bookcard';
 const Bestselling = () => {
   const {
     booksMasVendidos,
-    //obtenerLibrosMasVendidos,
     searchBooks,
     filtrarMasVendidos,
   } = useContext(ECommerceContext);
 
   useEffect(() => {
-    console.log('Obteniendo libros más vendidos...');
+    console.log('Obteniendo libros más vendidos metodos...');
     filtrarMasVendidos();
   }, [searchBooks]);
 
@@ -25,11 +24,11 @@ const Bestselling = () => {
           booksMasVendidos.map((book) => (
             <Bookcard
               key={book.book_id}
-              book={book}
+              book_id = {book.book_id}
               btnAddCart={true}
               displayPrice={true}
               displayLanguage={false}
-              displayQuantitySold={true}
+              displayQuantitySold={false}
             />
           ))
         ) : (

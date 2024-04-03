@@ -10,7 +10,11 @@ class BookGenreService {
   }
 
   async findOneByBook(book_id) {
-    const bookGenre = await models.BookGenre.findByPk(book_id);
+    const bookGenre = await models.BookGenre.findOne({
+      where: {
+        book_id,
+      },
+    })
     if (!bookGenre) {
       throw boom.notFound('BookGenre not found');
     }

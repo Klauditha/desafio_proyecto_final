@@ -84,11 +84,11 @@ const getBook = async (req, res, next) => {
     const book = await service.findOne(book_id);
     const bookGenre = await bookGenreService.findOneByBook(book.book_id);
     if (bookGenre) {
-      genre = await genreService.findOne(bookGenre.book_id);
+      genre = await genreService.findOne(bookGenre.genre_id);
     }
     const bookAuthor = await bookAuthorService.findOneByBook(book.book_id);
     if (bookAuthor) {
-      author = await authorService.findOne(bookAuthor.book_id);
+      author = await authorService.findOne(bookAuthor.author_id);
     }
     res.status(200).json({
       status: true,

@@ -1,18 +1,43 @@
 /* eslint-disable no-unused-vars */
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ECommerceContext } from '../../Context/ECommerceContext';
 import { useParams } from 'react-router-dom';
 import Productdetail from '../Productdetail';
+import axios from 'axios';
+import { ENDPOINT } from '../../config/constants';
 
 const BookDetail = () => {
   const { id } = useParams();
-  const { books } = useContext(ECommerceContext);
+  const [book, setBook] = useState({});
+  const [genre, setGenre] = useState({});
+  const [author, setAuthor] = useState({});
 
-  const bookFiltrado = books.filter((book) => book.bookId === id);
+  /**Implementar getbook*/
+  const obtenerLibroAPI = () => {
+    try {
+      axios
+        .get(ENDPOINT.book + '/' + id)
+        .then((response) => {
+          console.log(response.data.data);
+          setBook(response.data.data.book);
+          setGenre(response.data.data.genre);
+          setAuthor(response.data.data.author);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
+    obtenerLibroAPI();
+  }, [id]);
+  //obtenerLibroAPI();
   return (
     <div>
-      <Productdetail book={bookFiltrado[0]} />
+      <Productdetail book={book} genre={genre} author={author} />
     </div>
   );
 };
