@@ -13,8 +13,6 @@ export const ECommerceProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [cart_items, setCartItems] = useState([]);
   const [book, setBook] = useState([]);
-  //const [books, setBooks] = useState([]);
-  //const [booksData, setBooksData] = useState([]);
   const [authors, setAuthors] = useState([]);
   const [booksAuthors, setBooksAuthors] = useState([]);
   const [ratings, setRatings] = useState([]);
@@ -27,7 +25,6 @@ export const ECommerceProvider = ({ children }) => {
   const [searchBooks, setSearchBooks] = useState('');
   const [searchPublishers, setSearchPublishers] = useState('');
   const [wishlist, setWishlist] = useState([]);
-  //const [publishers, setPublishers] = useState(null);
   const [editoriales, setEditoriales] = useState(null);
   const [booksNews, setBooksNews] = useState([]);
   const [booksEditoriales, setBooksEditoriales] = useState([]);

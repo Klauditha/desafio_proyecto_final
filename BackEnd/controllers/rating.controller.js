@@ -89,8 +89,31 @@ const getCommentsByBook = async (req, res, next) => {
     });
   }
 }
+
+const getRatingByBook = async (req, res, next) => {
+  try {
+    const { book_id } = req.params;
+    const rating = await service.getRatingByBook(book_id);
+    res.status(200).json({
+      status: true,
+      message: 'Rating de libro encontrado',
+      data: {
+        rating,
+      },
+    });
+  } catch (error) {
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
+
 module.exports = {
   createUpdateRating,
   getCommentsByBook,
   getWishlist,
+  getRatingByBook
 };

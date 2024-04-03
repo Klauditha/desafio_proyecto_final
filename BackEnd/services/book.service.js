@@ -75,6 +75,7 @@ class BookService {
     }
     return books;
   }
+
   async updateDeleted(id_book) {
     const book = await models.Book.findOne(id_book);
     if (!book) {

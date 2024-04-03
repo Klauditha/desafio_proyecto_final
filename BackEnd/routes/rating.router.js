@@ -243,6 +243,74 @@ router.post(
  *                   default: null
  * */
 router.get('/comments/:book_id', ratingController.getCommentsByBook);
+
+/**
+ * 
+ * tags:
+ *   name: Rating
+ *   description: The Rating managing API
+ * /rating/wishlist:
+ *   get:
+ *     summary: Get wishlist
+ *     tags: [Rating]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: The wishlist was get
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: true
+ *                 message:
+ *                   type: string
+ *                   default: The wishlist was get
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     wishlist:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *       404:
+ *         description: The wishlist was not get
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: The wishlist was not get
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ * */
 router.get('/wishlist', authMiddleware, ratingController.getWishlist);
+
+router.get('/:book_id', ratingController.getRatingByBook);
 
 module.exports = router;
