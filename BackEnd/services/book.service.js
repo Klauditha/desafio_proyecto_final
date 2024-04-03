@@ -76,6 +76,14 @@ class BookService {
     return books;
   }
 
+  async getAll() {
+    const books = await models.Book.findAll();
+    if (!books) {
+      throw boom.notFound('Libros no encontrados');
+    }
+    return books;
+  }
+
   async updateDeleted(id_book) {
     const book = await models.Book.findOne(id_book);
     if (!book) {
