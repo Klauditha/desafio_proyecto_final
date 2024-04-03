@@ -48,7 +48,7 @@ describe('Book API Routes', () => {
       const response = await request(app)
         .post('/book/bypublisher')
         .send({ publisher });
-      console.log(response.body);
+      //console.log(response.body);
       expect(response.status).toBe(200);
       expect(response.body.status).toBe(true);
       expect(response.body.message).toBe(
@@ -69,5 +69,14 @@ describe('Book API Routes', () => {
         );
         expect(response.body.data).toBe(null);
       });
+  });
+
+  describe('POST /book/moresold', () => {
+    it('Obtener todos los libros más vendidos correctamente', async () => {
+      const response = await request(app).post('/book/moresold');
+      expect(response.status).toBe(200);
+      expect(response.body.status).toBe(true);
+      expect(response.body.data).not.toBe(null);
+    });
   });
 });

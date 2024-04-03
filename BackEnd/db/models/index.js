@@ -6,6 +6,7 @@ const { Cart, CartItemSchema } = require('./cart.model');
 const { OrderSchema, Order } = require('./orders.model');
 const { BookAuthorSchema, BookAuthor } = require('./bookAuthor.model');
 const { BookGenreSchema, BookGenre } = require('./bookGenre.model');
+const { OrderItemSchema, OrderItem } = require('./orderItems.model');
 
 function setupModels(sequelize) {
   Book.init(BookSchema, Book.config(sequelize));
@@ -16,6 +17,7 @@ function setupModels(sequelize) {
   Cart.init(CartItemSchema, Cart.config(sequelize));
   BookAuthor.init(BookAuthorSchema, BookAuthor.config(sequelize));
   BookGenre.init(BookGenreSchema, BookGenre.config(sequelize));
+  OrderItem.init(OrderItemSchema, OrderItem.config(sequelize));
 }
 
 module.exports = setupModels;

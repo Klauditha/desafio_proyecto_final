@@ -4,10 +4,11 @@ import { ECommerceContext } from '../../Context/ECommerceContext';
 import Bookcard from '../Bookcard';
 
 const New = () => {
-  const { booksNews, searchBooks, obtenerNovedadesLibros } =
+  const { booksNews, searchBooks, obtenerNovedadesLibros , setSearchBooks} =
     useContext(ECommerceContext);
 
   useEffect(() => {
+    //setSearchBooks(searchBooks);
     obtenerNovedadesLibros();
   }, [searchBooks]);
 

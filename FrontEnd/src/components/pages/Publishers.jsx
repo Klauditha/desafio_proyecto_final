@@ -34,7 +34,7 @@ const Publishers = () => {
             }}
           >
             <option value="">Seleccione una editorial</option>
-            {editoriales.map((publisher, index) => (
+            {editoriales && editoriales.map((publisher, index) => (
               <option key={index} value={publisher}>
                 {publisher}
               </option>

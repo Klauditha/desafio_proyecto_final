@@ -1,6 +1,11 @@
 const boom = require('@hapi/boom');
 const { models } = require('../config/sequelize');
-const { Op } = require('sequelize');
+const { Op, JSON } = require('sequelize');
+const OrderItemsService = require('../services/orderItems.service');
+const { OrderItem } = require('../db/models/orderItems.model');
+const { pool } = require('../config/db');
+
+const orderItemsService = new OrderItemsService();
 
 class BookService {
   constructor() {}
@@ -50,7 +55,7 @@ class BookService {
         publisher: publisher,
       },
     });
-    if(books.length === 0) {
+    if (books.length === 0) {
       throw boom.notFound('No existen libros para la editorial');
     }
     if (!books) {
@@ -59,6 +64,17 @@ class BookService {
     return books;
   }
 
+  async getAllActive() {
+    const books = await models.Book.findAll({
+      where: {
+        deleted: false,
+      },
+    });
+    if (!books) {
+      throw boom.notFound('Libros no encontrados');
+    }
+    return books;
+  }
   async updateDeleted(id_book) {
     const book = await models.Book.findOne(id_book);
     if (!book) {
@@ -84,7 +100,7 @@ class BookService {
   async getNewBooks() {
     const books = await models.Book.findAll({
       where: {
-        pub_date: { [Op.gt]: new Date(2023, 12,31) },
+        pub_date: { [Op.gt]: new Date(2023, 12, 31) },
         deleted: false,
       },
     });
@@ -94,16 +110,16 @@ class BookService {
     return books;
   }
 
-  async getAllActive() {
-    const books = await models.Book.findAll({
-      where: {
-        deleted: false,
-      },
-    });
-    if (!books) {
-      throw boom.notFound('Libros no encontrados');
+  async getAllMoreSold() {
+    try {
+      const client = await pool.connect();
+      const query =
+        'select B.*, cast(count(OI.quantity) as integer)  quantitySold from books B INNER JOIN order_items OI ON B.book_id = OI.book_id  GROUP BY B.book_id  ORDER BY quantitySold DESC limit 10';
+      const result = await client.query(query);
+      return result.rows;
+    } catch (error) {
+      return null;
     }
-    return books;
   }
 }
 

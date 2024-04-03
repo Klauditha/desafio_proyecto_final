@@ -668,4 +668,101 @@ router.post('/bypublisher/', booksController.getAllByPublisher);
  * */
 router.post('/allPublishers', booksController.findAllPublishers);
 
+/**
+ * @swagger
+ * /book/moresold:
+ *   post:
+ *     summary: Get books more sold
+ *     tags: [Book]
+ *     responses:
+ *       200:
+ *         description: Top 10 books more sold
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: true
+ *                 message:
+ *                   type: string
+ *                   default: Libros más vendidos encontrados
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     books:
+ *                      items:
+ *                        book_id:
+ *                          type: number
+ *                          default: 6
+ *                        isbn:
+ *                          type: string
+ *                          default: '9789562820005'
+ *                        title:
+ *                          type: string
+ *                          default: 'Cien años de soledad'
+ *                        description:
+ *                          type: string
+ *                          default: 'Novela del escritor colombiano Gabriel García Márquez que narra la historia de la familia Buendía a lo largo de siete generaciones en el pueblo ficticio de Macondo.'
+ *                        language:
+ *                          type: string
+ *                          default: 'Español'
+ *                        pages:
+ *                          type: number
+ *                          default: 432
+ *                        publisher:
+ *                          type: string
+ *                          default: 'DeBolsillo'
+ *                        pub_date:
+ *                          type: string
+ *                          default: '1967-05-30' 
+ *                        price:
+ *                          type: number
+ *                          default: 14990
+ *                        stock:
+ *                          type: number
+ *                          default: 10
+ *                        deleted:
+ *                          type: boolean
+ *                          default: false
+ *                        quantitysold:
+ *                          type: number
+ *                          default: 10
+ *       404:
+ *         description: No se encontraron libros
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: No se encontraron libros
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *       500:
+ *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   default: false
+ *                 message:
+ *                   type: string
+ *                   default: Internal server error
+ *                 data:
+ *                   type: object
+ *                   default: null
+ *
+ * */
+router.post('/moresold', booksController.getBooksMoreSold);
+
 module.exports = router;

@@ -58,7 +58,7 @@ const Bookcard = ({
         </CardTitle>
         {displayQuantitySold ? (
           <CardDescription className="text-sm font-semibold text-blue-500 text-center mb-2">
-            Vendidos: {book.sold}
+            Vendidos: {book.quantitysold}
           </CardDescription>
         ) : null}
         {displayLanguage ? (
