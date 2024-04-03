@@ -393,7 +393,6 @@ export const ECommerceProvider = ({ children }) => {
       alertify.error('Error al obtener libros por editorial ');
       console.log('Error al obtener libros por editorial:', error);
     }
-    console.log('booksEditoriales', booksEditoriales);
   };
 
   const obtenerLibrosMasVendidos = () => {
