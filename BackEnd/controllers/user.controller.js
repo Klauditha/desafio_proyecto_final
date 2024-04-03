@@ -39,14 +39,7 @@ const getUser = async (req, res, next) => {
       throw boom.badRequest('Parametro user_id es invalido o no se provee');
     }
 
-    const user = await UserService.findOne(user_id);
-    res.status(200).json({
-      status: true,
-      message: 'Usuario encontrado',
-      data: {
-        user: user,
-      },
-    });
+    let user = await UserService.findOne(user_id);
 
     if (requestedUserId !== authenticatedUserId) {
       return res.status(403).json({
@@ -56,8 +49,6 @@ const getUser = async (req, res, next) => {
         data: null,
       });
     }
-
-  
   } catch (error) {
     let codeError = error.isBoom ? error.output.statusCode : 500;
     res.status(codeError).json({
