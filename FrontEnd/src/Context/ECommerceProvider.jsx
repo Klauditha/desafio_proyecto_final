@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ENDPOINT } from '../config/constants';
+import SearchBook from '@/components/pages/SearchBook';
 
 export const ECommerceProvider = ({ children }) => {
   const navigate = useNavigate();
@@ -12,8 +13,8 @@ export const ECommerceProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [cart_items, setCartItems] = useState([]);
   const [book, setBook] = useState([]);
-  const [books, setBooks] = useState([]);
-  const [booksData, setBooksData] = useState([]);
+  //const [books, setBooks] = useState([]);
+  //const [booksData, setBooksData] = useState([]);
   const [authors, setAuthors] = useState([]);
   const [booksAuthors, setBooksAuthors] = useState([]);
   const [ratings, setRatings] = useState([]);
@@ -25,10 +26,10 @@ export const ECommerceProvider = ({ children }) => {
   const [orders, setOrders] = useState([]);
   const [searchBooks, setSearchBooks] = useState('');
   const [searchPublishers, setSearchPublishers] = useState('');
-  //const [publishers, setPublishers] = useState(null);
   const [editoriales, setEditoriales] = useState(null);
   const [booksNews, setBooksNews] = useState([]);
   const [booksEditoriales, setBooksEditoriales] = useState([]);
+  const [booksMasVendidos, setBooksMasVendidos] = useState([]);
 
   /* CARRITO */
   const addToCart = async (book) => {
@@ -157,6 +158,7 @@ export const ECommerceProvider = ({ children }) => {
     }
   };
 
+  /*
   const fetchData = async () => {
     try {
       //const response = await fetch('data/data.json');
@@ -188,7 +190,7 @@ export const ECommerceProvider = ({ children }) => {
       return [];
     }
   };
-
+*/
   const getBookDetailsById = (bookId) => {
     const foundBook = books.find((book) => book.bookId == bookId);
     if (foundBook) {
@@ -218,24 +220,6 @@ export const ECommerceProvider = ({ children }) => {
     setCartItems(updatedCartItems);
   };
 
-  const getAuthors = async () => {
-    const response = await fetch('data/authors.json');
-    const data = await response.json();
-    setAuthors(data);
-  };
-
-  const getBooksAuthors = async () => {
-    const response = await fetch('data/booksAuthors.json');
-    const data = await response.json();
-    setBooksAuthors(data);
-  };
-
-  const getRatings = async () => {
-    const response = await fetch('data/ratings.json');
-    const data = await response.json();
-    setRatings(data);
-  };
-
   const getUsers = async () => {
     try {
       const response = await fetch('data/data.json');
@@ -256,46 +240,8 @@ export const ECommerceProvider = ({ children }) => {
     }
   };
 
-  const getBookGenres = async () => {
-    try {
-      const response = await fetch('data/bookGenres.json');
-      const data = await response.json();
-      setBookGenres(data);
-    } catch (error) {
-      console.error('Error fetching book genres:', error);
-    }
-  };
-
-  const getOrderItems = async () => {
-    try {
-      const response = await fetch('data/orderItems.json');
-      const data = await response.json();
-      setOrderItems(data);
-    } catch (error) {
-      console.error('Error fetching order items:', error);
-    }
-  };
-
-  const getBooks = async () => {
-    const response = await fetch('data/books.json');
-    const data = await response.json();
-    data.map((book) => {
-      book.author = getAuthorBook(book.bookId);
-      book.sold = getSoldBook(book.bookId);
-      book.wishlist = false;
-    });
-    setBooks(data);
-  };
-
   const registerUser = (newUser) => {
     setUsers([...users, newUser]);
-  };
-
-  const setAuthorsBook = async () => {
-    books.map((book) => {
-      book.author = getAuthorBook(book.bookId);
-    });
-    setBooks(books);
   };
 
   const setSoldBook = async () => {
@@ -308,62 +254,6 @@ export const ECommerceProvider = ({ children }) => {
   const handleLogout = () => {
     sessionStorage.removeItem('user');
     setAuthenticatedUser(null);
-  };
-
-  const filterBySearch = () => {
-    let filteredBooksResult = [];
-    if (searchBooks != '' && searchPublishers != '') {
-      getBooks();
-      books.map((book) => {
-        if (
-          searchBooks != '' &&
-          book.title.toLowerCase().includes(searchBooks.toLowerCase()) &&
-          searchPublishers != '' &&
-          book.publisher.toLowerCase().includes(searchPublishers.toLowerCase())
-        ) {
-          let valor = filteredBooksResult.find(
-            (item) => item.bookId.toString() == book.bookId
-          );
-          if (!valor) filteredBooksResult.push(book);
-        }
-      });
-      return filteredBooksResult;
-    }
-    if (searchBooks != '' && searchPublishers == '') {
-      getBooks();
-      books.map((book) => {
-        if (
-          searchBooks != '' &&
-          book.title.toLowerCase().includes(searchBooks.toLowerCase()) &&
-          searchPublishers == ''
-        ) {
-          let valor = filteredBooksResult.find(
-            (item) => item.bookId.toString() == book.bookId.toString()
-          );
-          if (!valor) filteredBooksResult.push(book);
-        }
-      });
-      return filteredBooksResult;
-    }
-    if (searchBooks == '' && searchPublishers != '') {
-      getBooks();
-      books.map((book) => {
-        if (
-          searchBooks == '' &&
-          searchPublishers != '' &&
-          book.publisher.toLowerCase().includes(searchPublishers.toLowerCase())
-        ) {
-          let valor = filteredBooksResult.find(
-            (item) => item.bookId.toString() == book.bookId
-          );
-          if (!valor) filteredBooksResult.push(book);
-        }
-      });
-      return filteredBooksResult;
-    } else {
-      getBooks();
-      return books;
-    }
   };
 
   const setDataEditoriales = async () => {
@@ -409,19 +299,19 @@ export const ECommerceProvider = ({ children }) => {
 
   /*Obtener novedades de libros */
   const obtenerNovedadesLibros = () => {
+    console.log('Obteniendo novedades de libros...');
+    console.log('searchBooks', searchBooks);
     axios
       .post(ENDPOINT.book + '/news/')
       .then((response) => {
-        if (searchBooks != '' || searchPublishers != '') {
+        console.info(response);
+        if (searchBooks != '') {
           let filteredBooksResult = [];
+
           response.data.data.books.map((book) => {
             if (
               searchBooks != '' &&
-              book.title.toLowerCase().includes(searchBooks.toLowerCase()) &&
-              searchPublishers != '' &&
-              book.publisher
-                .toLowerCase()
-                .includes(searchPublishers.toLowerCase())
+              book.title.toLowerCase().includes(searchBooks.toLowerCase())
             ) {
               let valor = filteredBooksResult.find(
                 (item) => item.book_id.toString() == book.book_id
@@ -437,75 +327,96 @@ export const ECommerceProvider = ({ children }) => {
       .catch((error) => {
         console.log('Error al obtener novedades de libros:', error);
       });
+    console.log('booksNews', booksNews);
   };
 
   const obtenerLibrosPorEditorial = (publisher = '') => {
-    axios
-      .post(ENDPOINT.book + '/byPublisher/', {
-        publisher: publisher,
-      })
-      .then((response) => {
+    console.log('Obteniendo libros por editorial...');
+    console.log('searchBooks', searchBooks);
+    console.log('publisher', publisher);
+    try {
+      axios
+        .post(ENDPOINT.book + '/byPublisher/', {
+          publisher: publisher,
+        })
+        .then((response) => {
+          if (searchBooks != '') {
+            let filteredBooksResult = [];
+            response.data.data.books.map((book) => {
+              if (
+                searchBooks != '' &&
+                book.title.toLowerCase().includes(searchBooks.toLowerCase())
+              ) {
+                /*
+                let valor = filteredBooksResult.find(
+                  (item) => item.book_id.toString() == book.book_id
+                );
+                if (!valor)*/ filteredBooksResult.push(book);
+              }
+            });
+            setBooksEditoriales(filteredBooksResult);
+          } else {
+            setBooksEditoriales(response.data.data.books);
+          }
+        })
+        .catch((error) => {
+          console.log('Error al obtener libros por editorial:', error);
+        });
+    } catch (error) {
+      console.log('Error al obtener libros por editorial:', error);
+    }
+    console.log('booksEditoriales', booksEditoriales);
+  };
+
+  const obtenerLibrosMasVendidos = () => {
+    console.log('Obteniendo libros más vendidos...');
+    //console.log(searchBooks);
+    try {
+      axios
+        .post(ENDPOINT.book + '/moresold/')
+        .then((response) => {
+          console.log(response);
+          setBooksMasVendidos(response.data.data.books);
+        })
+        .catch((error) => {
+          console.log('Error al obtener libros más vendidos:', error);
+        });
+    } catch (error) {
+      console.log('Error al obtener libros más vendidos:', error);
+    }
+    //console.log('booksMasVendidos', booksMasVendidos);
+  };
+
+  const filtrarMasVendidos = () => {
+    try {
+      console.log('Obteniendo libros más vendidos metodos...');
+      console.log('searchBooks', searchBooks);
+      let filteredBooksResult = [];
+      booksMasVendidos.map((book) => {
         if (searchBooks != '') {
-          let filteredBooksResult = [];
-          response.data.data.books.map((book) => {
-            if (
-              searchBooks != '' &&
-              book.title.toLowerCase().includes(searchBooks.toLowerCase())
-            ) {
-              let valor = filteredBooksResult.find(
-                (item) => item.book_id.toString() == book.book_id
-              );
-              if (!valor) filteredBooksResult.push(book);
-            }
-          });
-          setBooksEditoriales(filteredBooksResult);
-        } else {
-          setBooksEditoriales(response.data.data.books);
+          if (
+            searchBooks != '' &&
+            book.title.toLowerCase().includes(searchBooks.toLowerCase())
+          ) {
+            console.log('book', book);
+            filteredBooksResult.push(book);
+            //setBooksMasVendidos(book);
+          }
+          setBooksMasVendidos(filteredBooksResult);
         }
-      })
-      .catch((error) => {
-        console.log('Error al obtener libros por editorial:', error);
       });
+    } catch (error) {
+      console.log('Error al obtener libros más vendidos:', error);
+      obtenerLibrosMasVendidos();
+    }
   };
 
   useEffect(() => {
     setDataEditoriales();
-    if (
-      (searchBooks != '' && searchBooks != null && searchBooks != undefined) ||
-      (searchPublishers != '' &&
-        searchPublishers != null &&
-        searchPublishers != undefined)
-    ) {
-      filterBySearch();
-    }
-    //  else if(searchPublishers != '') filterByPublisher(searchPublishers);
-    //setDataPublishers();
-    else {
-      setDataEditoriales();
-      getBooksAuthors();
-      getOrderItems();
-      getRatings();
-      getAuthors();
-      getUsers();
-      getGenres();
-      getBookGenres();
-      getBooks();
-      //setAuthorsBook();
-      //setSoldBook();
-      setBooks();
-      removeFromCart();
-      /*
-      fetchData().then((booksData) => {
-        let user = JSON.parse(sessionStorage.getItem('user'));
-        if (user) {
-          console.log('Fetching cart items...');
-          fetchCartItems();
-        }
-      });
-      */
-    }
-    //setDataPublishers();
-  }, [searchBooks, searchPublishers, authenticatedUser]);
+    obtenerLibrosMasVendidos();
+    getUsers();
+    removeFromCart();
+  }, [authenticatedUser]);
 
   return (
     <ECommerceContext.Provider
@@ -516,8 +427,6 @@ export const ECommerceProvider = ({ children }) => {
         setBook,
         addToCart,
         cart_items,
-        books,
-        setBooks,
         authors,
         setAuthors,
         ratings,
@@ -542,7 +451,7 @@ export const ECommerceProvider = ({ children }) => {
         //setPublishers,
         searchPublishers,
         setSearchPublishers,
-        filterBySearch,
+
         addCartLocal,
         /*Proceso de autenticacion*/
         setAuthenticatedUser,
@@ -558,6 +467,10 @@ export const ECommerceProvider = ({ children }) => {
         booksEditoriales,
         setBooksEditoriales,
         obtenerLibrosPorEditorial,
+        /* Libros mas vendidos */
+        booksMasVendidos,
+        obtenerLibrosMasVendidos,
+        filtrarMasVendidos,
       }}
     >
       {children}

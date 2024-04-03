@@ -1,7 +1,5 @@
 const { models } = require('../config/sequelize');
 const boom = require('@hapi/boom');
-const { Book } = require('../db/models/book.model');
-//const { Book } = require('../db/models/book.model');
 
 class OrderItemsService {
   constructor() {}
@@ -57,7 +55,6 @@ class OrderItemsService {
     const rta = await orderItem.destroy();
     return rta;
   }
-
 }
 
 module.exports = OrderItemsService;

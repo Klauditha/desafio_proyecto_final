@@ -200,11 +200,13 @@ const deleteBook = async (req, res, next) => {
 
 /* Obtiene todos los libros activos */
 const getBooksMoreSold = async (req, res, next) => {
+  //console.log('Obteniendo libros más vendidos...');
   try {
     const books = await service.getAllMoreSold();
     if(!books || books.length == 0) {
       throw boom.notFound('Books not found');
     }
+    console.log(books);
     res.status(200).json({
       status: true,
       message: 'Libros más vendidos encontrados',
@@ -213,6 +215,7 @@ const getBooksMoreSold = async (req, res, next) => {
       },
     });
   } catch (error) {
+    console.log(error);
     let codeError = error.isBoom ? error.output.statusCode : 500;
     res.status(codeError).json({
       status: false,
@@ -249,6 +252,7 @@ const findAllPublishers = async (req, res, next) => {
  * Obtiene todos los libros por editorial
  */
 const getAllByPublisher = async (req, res, next) => {
+  console.log('Obteniendo libros por editorial...');
   try {
     const { publisher } = req.body;
     let books = [];

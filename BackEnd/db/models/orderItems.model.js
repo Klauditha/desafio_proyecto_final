@@ -38,8 +38,14 @@ const OrderItemSchema = {
 
 class OrderItem extends Model {
   static associate(models) {
-    this.belongsTo(models.Order, { foreignKey: 'order_id' });
-    //models.OrderItem.hasOne(models.Book, { foreignKey: 'book_id' , sourceKey: 'book_id'});
+    this.belongsTo(models.Order, {
+      as: 'order',
+      foreignKey: 'order_id',
+    });
+    this.belongsTo(models.Book, {
+      as: 'book',
+      foreignKey: 'book_id',
+    });
   }
   static config(sequelize) {
     return {

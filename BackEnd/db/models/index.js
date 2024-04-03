@@ -9,8 +9,6 @@ const { BookGenreSchema, BookGenre } = require('./bookGenre.model');
 const { OrderItemSchema, OrderItem } = require('./orderItems.model');
 
 function setupModels(sequelize) {
-  
- 
   Book.init(BookSchema, Book.config(sequelize));
   Genre.init(GenreSchema, Genre.config(sequelize));
   Author.init(AuthorSchema, Author.config(sequelize));
@@ -20,11 +18,6 @@ function setupModels(sequelize) {
   BookAuthor.init(BookAuthorSchema, BookAuthor.config(sequelize));
   BookGenre.init(BookGenreSchema, BookGenre.config(sequelize));
   OrderItem.init(OrderItemSchema, OrderItem.config(sequelize));
-  OrderItem.associate({
-    Book: Book,
-    Order: Order,
-  });
-
 }
 
 module.exports = setupModels;

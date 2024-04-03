@@ -64,6 +64,17 @@ class BookService {
     return books;
   }
 
+  async getAllActive() {
+    const books = await models.Book.findAll({
+      where: {
+        deleted: false,
+      },
+    });
+    if (!books) {
+      throw boom.notFound('Libros no encontrados');
+    }
+    return books;
+  }
   async updateDeleted(id_book) {
     const book = await models.Book.findOne(id_book);
     if (!book) {
