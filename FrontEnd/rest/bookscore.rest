@@ -1,0 +1,8 @@
+## Obtener calificación book por rating_id - Funcionando 
+
+GET http://localhost:3000/rating_id/7
+Content-Type: application/json
+
+{
+  
+}

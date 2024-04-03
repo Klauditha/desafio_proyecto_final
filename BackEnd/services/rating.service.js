@@ -76,6 +76,26 @@ class RatingService {
       throw error;
     }
   }
+
+  async getRatingByBook(book_id) {
+    let promedio = 0;
+    try {
+      const rating = await models.Rating.findAll({
+        where: { book_id, deleted: false },
+      });
+      if(rating.length == 0) {
+        throw boom.notFound("Rating no encontrado");
+      }
+      rating.forEach((rating) => {
+        promedio = promedio + rating.score;
+      });
+      promedio = promedio / rating.length;
+      return promedio;
+
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = RatingService;

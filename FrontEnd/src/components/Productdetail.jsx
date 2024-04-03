@@ -15,31 +15,19 @@ import { ECommerceContext } from '../Context/ECommerceContext';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Productdetail = ({ book , genre, author}) => {
-  const { ratings, books, setBooks, addCartLocal, authenticatedUser } =
+const Productdetail = ({ book , genre, author, rating}) => {
+  const { addCartLocal, authenticatedUser } =
     useContext(ECommerceContext);
   const navigate = useNavigate();
   let [quantity, setQuantity] = useState();
 
-  /*
-  const getRatingsByBook = (book_id, ratings) => {
-    const ratingsByBook = ratings.filter(
-      (rating) => rating.book_id.toString() === book_id
-    );
-    let sum = 0;
-    ratingsByBook.map((item) => {
-      sum = item.score;
-    });
-    let avg = sum / ratingsByBook.length;
-    return Math.trunc(avg);
-  };
-  */
+  
 
   const setRating = () => {
-    const rating = getRatingsByBook(book.book_id, ratings);
-    if (rating) {
+    let auxRating =  Math.trunc(rating)
+    if (auxRating) {
       for (let i = 1; i <= 5; i++) {
-        if (i <= rating) {
+        if (i <= auxRating) {
           document
             .getElementById(`ratingIcon${i}`)
             .classList.add('fill-primary');
@@ -78,8 +66,8 @@ const Productdetail = ({ book , genre, author}) => {
     addCartLocal(book,quantity ? quantity : 1);
   };
   useEffect(() => {
-    //setRating();
-  }, [book.book_id]);
+    setRating();
+  }, [book.book_id, rating]);
 
   return (
     <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
