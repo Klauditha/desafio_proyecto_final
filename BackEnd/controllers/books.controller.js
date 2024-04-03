@@ -206,7 +206,7 @@ const getBooksMoreSold = async (req, res, next) => {
     if(!books || books.length == 0) {
       throw boom.notFound('Books not found');
     }
-    console.log(books);
+    //console.log(books);
     res.status(200).json({
       status: true,
       message: 'Libros más vendidos encontrados',
@@ -252,7 +252,7 @@ const findAllPublishers = async (req, res, next) => {
  * Obtiene todos los libros por editorial
  */
 const getAllByPublisher = async (req, res, next) => {
-  console.log('Obteniendo libros por editorial...');
+  //console.log('Obteniendo libros por editorial...');
   try {
     const { publisher } = req.body;
     let books = [];
