@@ -397,23 +397,24 @@ export const ECommerceProvider = ({ children }) => {
   };
 
   const obtenerLibrosMasVendidos = () => {
-    
-    try {
-      axios
-        .post(ENDPOINT.book + '/moresold/')
-        .then((response) => {
-          console.log(response);
-          setBooksMasVendidos(response.data.data.books);
-          if(searchBooks != '') filtrarMasVendidos();
-        })
-        .catch((error) => {
-          alertify.error('Error al obtener libros más vendidos');
-          console.log('Error al obtener libros más vendidos:', error);
-        });
-    } catch (error) {
-      alertify.error('Error al obtener libros mas vendidos');
-      console.log('Error al obtener libros más vendidos:', error);
+    if (searchBooks != '' && booksMasVendidos.length > 0) filtrarMasVendidos();
+    else {
+      try {
+        axios
+          .post(ENDPOINT.book + '/moresold/', { timeout: 5000 })
+          .then((response) => {
+            setBooksMasVendidos(response.data.data.books);
+          })
+          .catch((error) => {
+            alertify.error('Error al obtener libros más vendidos');
+            console.log('Error al obtener libros más vendidos:', error);
+          });
+      } catch (error) {
+        alertify.error('Error al obtener libros mas vendidos');
+        console.log('Error al obtener libros más vendidos:', error);
+      }
     }
+
     //console.log('booksMasVendidos', booksMasVendidos);
   };
 
@@ -429,12 +430,12 @@ export const ECommerceProvider = ({ children }) => {
             filteredBooksResult.push(book);
           }
           setBooksMasVendidos(filteredBooksResult);
-        } else obtenerLibrosMasVendidos();
+        } //else obtenerLibrosMasVendidos();
       });
     } catch (error) {
       alertify.error('Error al obtener libros mas vendidos');
       console.log('Error al obtener libros más vendidos:', error);
-      obtenerLibrosMasVendidos();
+      //obtenerLibrosMasVendidos();
     }
   };
 
