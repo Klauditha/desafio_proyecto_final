@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { Link, NavLink } from 'react-router-dom';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
-import { useContext } from 'react';
-import { ECommerceContext } from '../Context/ECommerceContext';
-import { Icon } from '@radix-ui/react-select';
+import { Link, NavLink } from "react-router-dom";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { useContext } from "react";
+import { ECommerceContext } from "../Context/ECommerceContext";
+import { Icon } from "@radix-ui/react-select";
 
 export default function Navbar() {
   const {
@@ -19,9 +19,9 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="flex-col flex px-4 md:px-20">
+      <div className="flex-col flex justify-between px-4 md:px-20">
         <div>
-          <nav className="flex items-center justify-between py-4 px-4 border-b bg-white md:px-6 dark:bg-gray-950 border-gray-100 dark:border-gray-800">
+          <nav className="flex items-center justify-between py-4 border-b bg-white md:px-6 dark:bg-gray-950 border-gray-100 dark:border-gray-800">
             <div>
               <Link className="mr-6 flex items-center gap-2" to="/">
                 <AustralInk className="h-6 w-6" />
@@ -40,16 +40,141 @@ export default function Navbar() {
                 }}
               />
             </div>
-            <div className="flex gap-8">
+            <div className="flex items-center gap-6">
+              <div className="flex md:hidden gap-4">
+                <div className="flex md:hidden md:gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                    />
+                  </svg>
+                </div>
+                <NavLink
+                  to="/cart"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "font-bold text-blue-900 dark:text-gray-50 "
+                      : "text-gray-500 dark:text-gray-500"
+                  }
+                >
+                  <div className="flex gap-2">
+                    <span>
+                      {" "}
+                      <ShoppingCartIcon className="h-4 w-4 fill-current" />
+                    </span>
+                    <span className="hidden md:flex">Carrito</span>
+                  </div>
+                </NavLink>
+              </div>
+              <div className="flex md:hidden">
+                <Popover className="w-max mx-auto">
+                  <PopoverTrigger asChild>
+                    <Button
+                      className="w-10 h-10 rounded-full border-2 border-gray-100 dark:border-gray-850"
+                      id="menu"
+                      size="icon"
+                      variant="outline"
+                    >
+                      <MenuIcon className="h-4 w-4" />
+                      <span className="sr-only">Toggle menu</span>
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent
+  align="end"
+  className="rounded-t-2xl w-56 mt-2"
+  side="bottom"
+>
+  <div />
+  <div className="grid gap-8 p-2">
+    <div>
+      <NavLink
+        to="/news"
+        className={({ isActive }) =>
+          isActive
+            ? "font-bold text-blue-900 dark:text-gray-50 "
+            : "text-gray-500 dark:text-gray-500"
+        }
+      >
+        Novedades
+      </NavLink>
+    </div>
+
+    <div>
+      <NavLink
+        to="/bestselling"
+        className={({ isActive }) =>
+          isActive
+            ? "font-bold text-blue-900 dark:text-gray-50 "
+            : "text-gray-500 dark:text-gray-500"
+        }
+      >
+        Lo + vendido
+      </NavLink>
+    </div>
+
+    <div>
+      <NavLink
+        to="/publishers"
+        className={({ isActive }) =>
+          isActive
+            ? "font-bold text-blue-900 dark:text-gray-50 "
+            : "text-gray-500 dark:text-gray-500"
+        }
+      >
+        Editoriales
+      </NavLink>
+    </div>
+
+    <div>
+      <NavLink
+        to="/wishlist"
+        className={({ isActive }) =>
+          isActive
+            ? "font-bold text-blue-900 dark:text-gray-50 "
+            : "text-gray-500 dark:text-gray-500"
+        }
+      >
+        Lista de deseos
+      </NavLink>
+    </div>
+    <div>
+      {dataAuthenticatedUser ? (
+        <NavLink to="/logout" className="flex md:hidden md:bg-gray-700" asChild>
+          <Link
+            onClick={() => {
+              sessionStorage.clear();
+              window.location.href = "/";
+            }}
+          >
+            Cerrar sesión
+          </Link>
+        </NavLink>
+      ) : <NavLink className="text-gray-500 dark:text-gray-500" to="/login">Inicia sesión</NavLink>}
+    </div>
+  </div>
+</PopoverContent>
+                </Popover>
+              </div>
+            </div>
+            <div className="hidden md:flex md:gap-8">
               {dataAuthenticatedUser ? (
                 <NavLink
                   className={({ isActive }) =>
                     isActive
-                      ? 'font-bold text-blue-900 dark:text-gray-50 mt-2'
-                      : 'font-bold text-green-700 dark:text-green-500 mt-2'
+                      ? "font-bold text-blue-900 dark:text-gray-50 mt-2"
+                      : "font-bold text-green-700 dark:text-green-500 mt-2"
                   }
                 >
-                  <div className="hidden md:flex gap-2">
+                  <div className="hidden md:flex md:gap-2">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -64,28 +189,30 @@ export default function Navbar() {
                         d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
                       />
                     </svg>
-                    {dataAuthenticatedUser.first_name} {dataAuthenticatedUser.last_name}
+                    {dataAuthenticatedUser.first_name}{" "}
+                    {dataAuthenticatedUser.last_name}
                   </div>
                 </NavLink>
               ) : (
-                <Button className="hidden md:flex  " asChild>
+                <Button className="hidden md:flex" asChild>
                   <Link to="/login">Inicia sesión</Link>
                 </Button>
               )}
-
-              <Link
-                className="ml-auto flex items-center gap-2 text-mm font-medium"
-                to="/cart"
-              >
-                <span className="hidden md:flex">Carrito</span>
-                <ShoppingCartIcon className="h-4 w-4 fill-current" />
-              </Link>
+              <div className="hidden md:flex">
+                <Link
+                  className="ml-auto flex items-center gap-2 text-mm font-medium"
+                  to="/cart"
+                >
+                  <span className="hidden md:flex">Carrito</span>
+                  <ShoppingCartIcon className="h-4 w-4 fill-current" />
+                </Link>
+              </div>
               {dataAuthenticatedUser ? (
                 <Button className="hidden md:flex md:bg-gray-700" asChild>
                   <Link
                     onClick={() => {
                       sessionStorage.clear();
-                      window.location.href = '/';
+                      window.location.href = "/";
                     }}
                   >
                     Cerrar sesión
@@ -95,6 +222,7 @@ export default function Navbar() {
             </div>
           </nav>
         </div>
+
         {/* second row */}
         <div>
           <nav className="flex items-center justify-between py-4 px-4 border-b bg-white md:px-6 dark:bg-gray-950 border-gray-100 dark:border-gray-800">
@@ -103,8 +231,8 @@ export default function Navbar() {
                 to="/news"
                 className={({ isActive }) =>
                   isActive
-                    ? 'font-bold text-blue-900 dark:text-gray-50 '
-                    : 'text-gray-500 dark:text-gray-500'
+                    ? "font-bold text-blue-900 dark:text-gray-50 "
+                    : "text-gray-500 dark:text-gray-500"
                 }
               >
                 Novedades
@@ -112,8 +240,8 @@ export default function Navbar() {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? 'font-bold text-blue-900 dark:text-gray-50 '
-                    : 'text-gray-500 dark:text-gray-500'
+                    ? "font-bold text-blue-900 dark:text-gray-50 "
+                    : "text-gray-500 dark:text-gray-500"
                 }
                 to="/bestselling"
               >
@@ -122,8 +250,8 @@ export default function Navbar() {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? 'font-bold text-blue-900 dark:text-gray-50 '
-                    : 'text-gray-500 dark:text-gray-500'
+                    ? "font-bold text-blue-900 dark:text-gray-50 "
+                    : "text-gray-500 dark:text-gray-500"
                 }
                 to="/publishers"
               >
@@ -157,8 +285,8 @@ export default function Navbar() {
                   <NavLink
                     className={({ isActive }) =>
                       isActive
-                        ? 'font-bold text-blue-900 dark:text-gray-50 '
-                        : 'text-gray-500 dark:text-gray-500'
+                        ? "font-bold text-blue-900 dark:text-gray-50 "
+                        : "text-gray-500 dark:text-gray-500"
                     }
                     to="/managerbooks"
                   >
@@ -170,109 +298,14 @@ export default function Navbar() {
                 <NavLink
                   className={({ isActive }) =>
                     isActive
-                      ? 'font-bold text-blue-900 dark:text-gray-50 '
-                      : 'text-gray-500 dark:text-gray-500'
+                      ? "font-bold text-blue-900 dark:text-gray-50 "
+                      : "text-gray-500 dark:text-gray-500"
                   }
                   to="/wishlist"
                 >
                   Lista de deseos
                 </NavLink>
               )}
-            </div>
-            {/* mobile menu */}
-            <div className="flex md:hidden px-4 md:px-6">
-              <Popover className="w-max mx-auto">
-                <PopoverTrigger asChild>
-                  <Button
-                    className="w-10 h-10 rounded-full border-2 border-gray-100 top-4 right-4 absolute dark:border-gray-850"
-                    id="menu"
-                    size="icon"
-                    variant="outline"
-                  >
-                    <MenuIcon className="h-4 w-4" />
-                    <span className="sr-only">Toggle menu</span>
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent
-                  align="end"
-                  className="rounded-t-2xl w-56 mt-2"
-                  side="bottom"
-                >
-                  <div />
-                  <div className="grid gap-8 p-2">
-                    <div>
-                      <NavLink
-                        to="/news"
-                        className={({ isActive }) =>
-                          isActive
-                            ? 'font-bold text-blue-900 dark:text-gray-50 '
-                            : 'text-gray-500 dark:text-gray-500'
-                        }
-                      >
-                        Novedades
-                      </NavLink>
-                    </div>
-
-                    <div>
-                      <NavLink
-                        to="/bestselling"
-                        className={({ isActive }) =>
-                          isActive
-                            ? 'font-bold text-blue-900 dark:text-gray-50 '
-                            : 'text-gray-500 dark:text-gray-500'
-                        }
-                      >
-                        Lo + vendido
-                      </NavLink>
-                    </div>
-
-                    <div>
-                      <NavLink
-                        to="/publishers"
-                        className={({ isActive }) =>
-                          isActive
-                            ? 'font-bold text-blue-900 dark:text-gray-50 '
-                            : 'text-gray-500 dark:text-gray-500'
-                        }
-                      >
-                        Editoriales
-                      </NavLink>
-                    </div>
-
-                    <div>
-                      <NavLink
-                        to="/wishlist"
-                        className={({ isActive }) =>
-                          isActive
-                            ? 'font-bold text-blue-900 dark:text-gray-50 '
-                            : 'text-gray-500 dark:text-gray-500'
-                        }
-                      >
-                        Lista de deseos
-                      </NavLink>
-                    </div>
-
-                    <div>
-                      <NavLink
-                        to="/cart"
-                        className={({ isActive }) =>
-                          isActive
-                            ? 'font-bold text-blue-900 dark:text-gray-50 '
-                            : 'text-gray-500 dark:text-gray-500'
-                        }
-                      >
-                        <div className="flex gap-2">
-                          <span>
-                            {' '}
-                            <ShoppingCartIcon className="h-4 w-4 fill-current" />
-                          </span>
-                          <span>Carrito</span>
-                        </div>
-                      </NavLink>
-                    </div>
-                  </div>
-                </PopoverContent>
-              </Popover>
             </div>
           </nav>
         </div>

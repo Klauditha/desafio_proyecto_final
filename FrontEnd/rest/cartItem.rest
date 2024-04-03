@@ -1,0 +1,8 @@
+###Obtener libro-autor - Funcionando
+
+GET http://localhost:3000/cartitem/1
+Content-Type: application/json
+
+{
+  
+}
