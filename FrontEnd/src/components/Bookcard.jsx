@@ -26,6 +26,7 @@ const Bookcard = ({
   const { addToCart,addCartLocal } = useContext(ECommerceContext);
   const { setWishlist } = useContext(ECommerceContext);
 
+  console.log('book', book);
   const handleAddToCart = () => {
     addCartLocal(book, );
     //addToCart(book);

@@ -20,7 +20,7 @@ const New = () => {
           ? booksNews.map((book) => (
               <Bookcard
                 key={book.book_id}
-                book_id={book.book_id}
+                book={book}
                 btnAddCart={true}
                 displayPrice={true}
                 displayLanguage={false}

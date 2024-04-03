@@ -18,6 +18,7 @@ const BookDetail = () => {
       axios
         .get(ENDPOINT.book + '/' + id)
         .then((response) => {
+          console.log('get book');
           console.log(response.data.data);
           setBook(response.data.data.book);
           setGenre(response.data.data.genre);
