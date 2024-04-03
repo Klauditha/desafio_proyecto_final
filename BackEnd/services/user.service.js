@@ -89,12 +89,12 @@ class UserService {
   static async findOne(user_id) {
     const client = await pool.connect();
     try {
-      const query = 'SELECT * FROM users WHERE user_id = $1';
+      const query = "SELECT * FROM users WHERE user_id = $1";
       const result = await client.query(query, [user_id]);
       const user = result.rows[0];
 
       if (!user) {
-        throw boom.notFound('Usuario no encontrado');
+        throw boom.notFound("Usuario no encontrado");
       }
 
       return user;

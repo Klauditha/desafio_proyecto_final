@@ -4,14 +4,56 @@ import { Card } from "../ui/card";
 import React, { useContext, useState, useEffect } from "react";
 import { ECommerceContext } from "../../Context/ECommerceContext";
 import RequireAuth from "../RequireAuth";
+import axios from "axios";
+import { ENDPOINT } from "../../config/constants";
+import { useNavigate } from "react-router-dom";
 
 const Userprofile = () => {
   const { dataAuthenticatedUser, setearDataUserAuth } =
     useContext(ECommerceContext);
+    const [confirmationDialog, setConfirmationDialog] = useState(false);
 
     useEffect(() => {
       setearDataUserAuth();
     }, []);
+
+    const navigate = useNavigate();
+
+    const handleDeleteAccount = () => {
+      setConfirmationDialog(true);
+    };
+
+    const confirmDeleteAccount = async () => {
+      try {
+        const token = sessionStorage.getItem("token");
+
+        if (token) {
+          const response = await axios.delete(
+            `${ENDPOINT.users}/${dataAuthenticatedUser.user_id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          if (response.status === 200) {
+            sessionStorage.clear();
+            window.location.href = "/";
+            console.log("Cuenta de usuario ha sido borrada exitosamente.");
+          } else {
+            console.error("No se ha podido borrar la cuenta de usuario.");
+          }
+        } else {
+          navigate("/login");
+        }
+      } catch (error) {
+        console.error("Error borrando cuenta de usuario:", error);
+      }
+    };
+
+    const cancelDeleteAccount = () => {
+      setConfirmationDialog(false);
+    };
 
   return (
     <RequireAuth>
@@ -65,13 +107,37 @@ const Userprofile = () => {
                 </Link>
               </div>
             </div>
-            <div className="flex w-full justify-center">
-              <Link>
-                <Button variant="destructive" className="w-64" to="/">
-                  Eliminar cuenta
-                </Button>
-              </Link>
-            </div>
+            {dataAuthenticatedUser && dataAuthenticatedUser.admin && ( //boton para eliminar cuenta solo cuando el usuario es admin
+              <div className="flex w-full justify-center">
+                <Link>
+                  <Button
+                    variant="destructive"
+                    className="w-64"
+                    onClick={handleDeleteAccount}
+                  >
+                    Eliminar cuenta (Admin)
+                  </Button>
+                </Link>
+              </div>
+            )}
+            {confirmationDialog && (
+              <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+                <Card className="p-8">
+                  <p>¿Estás seguro de que quieres eliminar tu cuenta?</p>
+                  <div className="flex justify-center gap-4 mt-4">
+                    <Button
+                      variant="destructive"
+                      onClick={confirmDeleteAccount}
+                    >
+                      Sí, eliminar
+                    </Button>
+                    <Button variant="secondary" onClick={cancelDeleteAccount}>
+                      Cancelar
+                    </Button>
+                  </div>
+                </Card>
+              </div>
+            )}
           </div>
         </Card>
       </div>
