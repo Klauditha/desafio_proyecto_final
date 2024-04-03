@@ -15,10 +15,7 @@ export const ECommerceProvider = ({ children }) => {
   const [book, setBook] = useState([]);
   const [authors, setAuthors] = useState([]);
   const [booksAuthors, setBooksAuthors] = useState([]);
-  const [ratings, setRatings] = useState([]);
-  const [genres, setGenres] = useState([]);
   const [bookGenres, setBookGenres] = useState([]);
-  const [orderItems, setOrderItems] = useState([]);
   const [authenticatedUser, setAuthenticatedUser] = useState([]); //Almacena el correo del usuario autenticado
   const [dataAuthenticatedUser, setDataAuthenticatedUser] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -88,21 +85,6 @@ export const ECommerceProvider = ({ children }) => {
     } else {
       navigate('/login');
     }
-  };
-
-  /**
-   * Obtiene el autor de un libro concreto
-   * @param {*} bookId
-   * @returns
-   */
-  const getAuthorBook = (bookId) => {
-    const authorId = booksAuthors.find(
-      (bookAuthor) => bookAuthor.bookId == bookId
-    );
-    const authorName = authors.find(
-      (author) => author.authorId == authorId?.authorId
-    );
-    return authorName?.name;
   };
 
   /**
@@ -219,26 +201,6 @@ export const ECommerceProvider = ({ children }) => {
     setCartItems(updatedCartItems);
   };
 
-  const getUsers = async () => {
-    try {
-      const response = await fetch('data/data.json');
-      const data = await response.json();
-      setUsers(data.users);
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    }
-  };
-
-  const getGenres = async () => {
-    try {
-      const response = await fetch('data/genres.json');
-      const data = await response.json();
-      setGenres(data);
-    } catch (error) {
-      console.error('Error fetching genres:', error);
-    }
-  };
-
   const registerUser = (newUser) => {
     setUsers([...users, newUser]);
   };
@@ -322,15 +284,11 @@ export const ECommerceProvider = ({ children }) => {
 
   /*Obtener novedades de libros */
   const obtenerNovedadesLibros = () => {
-    console.log('Obteniendo novedades de libros...');
-    console.log('searchBooks', searchBooks);
     axios
       .post(ENDPOINT.book + '/news/')
       .then((response) => {
-        console.info(response);
         if (searchBooks != '') {
           let filteredBooksResult = [];
-
           response.data.data.books.map((book) => {
             if (
               searchBooks != '' &&
@@ -350,13 +308,9 @@ export const ECommerceProvider = ({ children }) => {
       .catch((error) => {
         console.log('Error al obtener novedades de libros:', error);
       });
-    console.log('booksNews', booksNews);
   };
 
   const obtenerLibrosPorEditorial = (publisher = '') => {
-    console.log('Obteniendo libros por editorial...');
-    console.log('searchBooks', searchBooks);
-    console.log('publisher', publisher);
     try {
       axios
         .post(ENDPOINT.book + '/byPublisher/', {
@@ -370,11 +324,7 @@ export const ECommerceProvider = ({ children }) => {
                 searchBooks != '' &&
                 book.title.toLowerCase().includes(searchBooks.toLowerCase())
               ) {
-                /*
-                let valor = filteredBooksResult.find(
-                  (item) => item.book_id.toString() == book.book_id
-                );
-                if (!valor)*/ filteredBooksResult.push(book);
+                filteredBooksResult.push(book);
               }
             });
             setBooksEditoriales(filteredBooksResult);
@@ -426,18 +376,17 @@ export const ECommerceProvider = ({ children }) => {
             filteredBooksResult.push(book);
           }
           setBooksMasVendidos(filteredBooksResult);
-        } //else obtenerLibrosMasVendidos();
+        }
       });
     } catch (error) {
       alertify.error('Error al obtener libros mas vendidos');
       console.log('Error al obtener libros más vendidos:', error);
-      //obtenerLibrosMasVendidos();
     }
   };
 
   useEffect(() => {
     setDataEditoriales();
-    //obtenerLibrosMasVendidos();
+    
     //getUsers();
     removeFromCart();
   }, [authenticatedUser]);
@@ -453,12 +402,10 @@ export const ECommerceProvider = ({ children }) => {
         cart_items,
         authors,
         setAuthors,
-        ratings,
         authenticatedUser,
         users,
         registerUser,
         handleLogout,
-        genres,
         booksAuthors,
         bookGenres,
         setBooksAuthors,

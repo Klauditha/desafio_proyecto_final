@@ -765,4 +765,6 @@ router.post('/allPublishers', booksController.findAllPublishers);
  * */
 router.post('/moresold', booksController.getBooksMoreSold);
 
+router.post('/all', booksController.getBooks);
+
 module.exports = router;

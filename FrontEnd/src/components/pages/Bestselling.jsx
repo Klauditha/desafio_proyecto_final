@@ -7,7 +7,6 @@ const Bestselling = () => {
   const {
     booksMasVendidos,
     searchBooks,
-    filtrarMasVendidos,
     obtenerLibrosMasVendidos,
   } = useContext(ECommerceContext);
 

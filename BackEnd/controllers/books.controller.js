@@ -317,6 +317,26 @@ const getBooksActive = async (req, res, next) => {
   }
 };
 
+const getBooks = async (req, res, next) => {
+  try {
+    const books = await service.getAll();
+    res.status(200).json({
+      status: true,
+      message: 'Libros encontrados',
+      data: {
+        books,
+      },
+    });
+  } catch (error) {
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
+
 module.exports = {
   getBook,
   createBook,
@@ -326,6 +346,6 @@ module.exports = {
   getAllByPublisher,
   getNews,
   getBooksActive,
-  getBooksMoreSold
-  
+  getBooksMoreSold,
+  getBooks
 };

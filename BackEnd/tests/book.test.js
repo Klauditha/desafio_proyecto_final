@@ -79,4 +79,13 @@ describe('Book API Routes', () => {
       expect(response.body.data).not.toBe(null);
     });
   });
+
+  describe('POST /book/all', () => {
+    it('Obtener todos los libros correctamente', async () => {
+      const response = await request(app).post('/book/all');
+      expect(response.status).toBe(200);
+      expect(response.body.status).toBe(true);
+      expect(response.body.data).not.toBe(null);
+    });
+  });
 });
