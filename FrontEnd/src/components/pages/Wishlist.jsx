@@ -8,9 +8,7 @@ import RequireAuth from '../RequireAuth';
 const Wishlist = () => {
   const { books, wishlist } = useContext(ECommerceContext);
   const wishlistBookIds = wishlist.map((item) => item.book_id);
-  const booksWishlist = books.filter(
-    (book) => wishlistBookIds.includes(parseInt(book.book_id)) //reemplazar book.book_id por book.bookId para pruebas con JSON anterior
-  );
+  const booksWishlist = null;
   
   return (
     <RequireAuth>
@@ -30,7 +28,7 @@ const Wishlist = () => {
               />
             ))
           ) : (
-            <p>No se encontraron resultados</p>
+            <p style={{ textAlign: 'center' }}>No se encontraron resultados</p>
           )}
         </div>
       </div>

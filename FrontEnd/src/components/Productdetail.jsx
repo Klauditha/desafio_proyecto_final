@@ -48,6 +48,7 @@ const Productdetail = ({ book , genre, author, rating}) => {
     return arrayQuantify;
   };
 
+  /*
   const handleAddToWishList = () => {
     const updatedBooks = books.map((b) => {
       if (b.book_id == book.book_id) {
@@ -60,10 +61,15 @@ const Productdetail = ({ book , genre, author, rating}) => {
     if (!authenticatedUser) {
       navigate('/login');
     }
-  };
+  };*/
+
+  const handleAddToWishList = () => {
+    alertify.success('Funcionalidad no disponible');
+  }
 
   const handleAddToCart = () => {
-    addCartLocal(book,quantity ? quantity : 1);
+    alertify.success('Funcionalidad no disponible');
+    //addCartLocal(book,quantity ? quantity : 1);
   };
   useEffect(() => {
     setRating();

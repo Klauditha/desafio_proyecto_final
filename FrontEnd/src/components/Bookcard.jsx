@@ -28,7 +28,8 @@ const Bookcard = ({
 
   
   const handleAddToCart = () => {
-    addCartLocal(book, );
+    alertify.success('Funcionalidad no disponible');
+    //addCartLocal(book, );
     //addToCart(book);
   };
 
