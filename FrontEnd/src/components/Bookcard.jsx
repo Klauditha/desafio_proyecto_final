@@ -90,7 +90,7 @@ const Bookcard = ({
             <Button
               size="sm"
               className="m-auto bg-lime-700 hover:bg-lime-800 mt-4"
-              onClick={() => navigate(`/managerbooks/edit/${book.bookId}`)}
+              onClick={() => navigate(`/managerbooks/edit/${book.book_id}`)}
             >
               Editar
             </Button>
@@ -99,7 +99,7 @@ const Bookcard = ({
             <Button
               size="sm"
               className="bg-red-500 hover:bg-red-600"
-              onClick={() => navigate(`/deleteBook/${book.bookId}`)}
+              onClick={() => navigate(`/deleteBook/${book.book_id}`)}
             >
               Eliminar
             </Button>
