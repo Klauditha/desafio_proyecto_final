@@ -33,7 +33,7 @@ function AppContent() {
   }, [authenticatedUser]);
 
   return (
-    <div className="flex-col space-y-8">
+    <div className="flex-col space-y-8 overflow-x-hidden">
       <Navbar />
       <ECommerceRoutes />
       <Footer />
