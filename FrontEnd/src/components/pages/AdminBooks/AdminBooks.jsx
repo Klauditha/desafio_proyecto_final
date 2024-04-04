@@ -9,7 +9,7 @@ import axios from 'axios';
 import { ENDPOINT } from '../../../config/constants';
 
 const AdminBooks = () => {
-  const { searchBooks, filterBySearch } = useContext(ECommerceContext);
+  const { searchBooks } = useContext(ECommerceContext);
   const [booksAdmin, setBookAmin] = useState([]);
   const navigate = useNavigate();
 

@@ -21,9 +21,15 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const AddEditBook = () => {
-  let { bookId } = useParams();
-  const { genres, authors, books, booksAuthors, bookGenres } =
-    useContext(ECommerceContext);
+  let { book_id } = useParams();
+  const {
+    genres,
+    authors,
+    bookFound,
+    authorFound,
+    genreFound,
+    obtenerLibroAdminAPI,
+  } = useContext(ECommerceContext);
   const navigate = useNavigate();
   const [estadoCarga, setEstadoCarga] = useState(false);
   const [formData, setFormData] = useState({
@@ -34,12 +40,12 @@ const AddEditBook = () => {
     description: '',
     language: '',
     pages: '',
+    author_id: '',
+    genre_id: '',
     price: '',
     pubDate: '',
     publisher: '',
     stock: '',
-    author_id: '',
-    genre_id: '',
   });
 
   const handleChange = (e) => {
@@ -64,7 +70,11 @@ const AddEditBook = () => {
     });
   };
   const handleChangeGenre = (value) => {
-    formData.genre_id = value;
+    console.log(value);
+    setFormData({
+      ...formData,
+      genre_id: value,
+    });
   };
 
   const validateForm = () => {
@@ -105,7 +115,7 @@ const AddEditBook = () => {
             booksAuthors.push(newBookAuthor);
             bookGenres.push(newBookGenre);
 
-            alertify.success("Libro agregado exitosamente");
+            alertify.success('Libro agregado exitosamente');
             navigate('/managerbooks');
 
             break;
@@ -150,8 +160,8 @@ const AddEditBook = () => {
             booksAuthors[index] = bookAuthorFound;
             bookGenres[index] = bookGenreFound;
 
-            alertify.success("Libro editado exitosamente");
-            
+            alertify.success('Libro editado exitosamente');
+
             navigate('/managerbooks');
             break;
           default:
@@ -164,44 +174,36 @@ const AddEditBook = () => {
   };
 
   const setearDatosEdicion = () => {
-    if (bookId && !estadoCarga) {
-      const bookFound = books.find((book) => book.bookId.toString() === bookId);
-      const bookAuthorsFound = booksAuthors.find(
-        (bookAuthor) => bookAuthor.bookId === bookId
-      );
-      const bookGenresFound = bookGenres.find(
-        (bookGenre) => bookGenre.book_id.toString() === bookId
-      );
-
-      if (bookFound) {
-        formData.bookId = bookFound.bookId;
-        formData.isbn = bookFound.isbn;
-        formData.img = bookFound.img;
-        formData.title = bookFound.title;
-        formData.description = bookFound.description;
-        formData.language = bookFound.language;
-        formData.pages = bookFound.pages;
-        formData.price = bookFound.price;
-        formData.pubDate = bookFound.pubDate;
-        formData.publisher = bookFound.publisher;
-        formData.stock = bookFound.stock;
-      }
-
-      if (bookAuthorsFound) formData.author_id = bookAuthorsFound.authorId;
-      if (bookGenresFound) formData.genre_id = bookGenresFound.genre_id;
+    if (bookFound) {
+      formData.bookId = bookFound.book_id;
+      formData.isbn = bookFound.isbn;
+      formData.img = bookFound.img;
+      formData.title = bookFound.title;
+      formData.description = bookFound.description;
+      formData.language = bookFound.language;
+      formData.pages = bookFound.pages;
+      formData.price = bookFound.price;
+      formData.pubDate = bookFound.pub_date;
+      formData.publisher = bookFound.publisher;
+      formData.stock = bookFound.stock;
     }
+    if (authorFound) formData.author_id = authorFound.author_id;
+    if (genreFound) formData.genre_id = genreFound.genre_id;
 
     setEstadoCarga(true);
   };
 
   useEffect(() => {
-    if (!estadoCarga) setearDatosEdicion();
-  }, [bookId]);
+    if (!estadoCarga) {
+      obtenerLibroAdminAPI(book_id);
+      setearDatosEdicion();
+    }
+  }, []);
 
   return (
     <div className="flex flex-col gap-4 px-4 md:px-20">
       <h1 className="font-bold text-2xl">
-        {bookId ? 'Editar libro' : 'Nuevo libro'}
+        {book_id ? 'Editar libro' : 'Nuevo libro'}
       </h1>
       <form className="w-full" onSubmit={handleSubmit}>
         <div className="flex flex-wrap -mx-3 mb-6">
@@ -230,33 +232,24 @@ const AddEditBook = () => {
             >
               Autor
             </Label>
-            <Select
-              name="author_id"
-              value={formData.author_id}
-              required
-              onValueChange={handleChangeAuthor}
+            <select
+              id="author_id"
+              className="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+              onChange={(event) => {
+                setFormData({
+                  ...formData,
+                  author_id: event.target.value,
+                });
+              }}
             >
-              <SelectTrigger className="w-full">
-                <SelectValue
-                  placeholder="Selecciona un autor"
-                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Selecciona un autor</SelectLabel>
-                  {authors ? (
-                    authors.map((author) => (
-                      <SelectItem key={author.authorId} value={author.authorId}>
-                        {author.name}
-                      </SelectItem>
-                    ))
-                  ) : (
-                    <SelectItem value="1">No hay autores</SelectItem>
-                  )}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+              <option value="">Seleccione un autor</option>
+              {authors &&
+                authors.map((autor) => (
+                  <option key={autor.author_id} value={autor.author_id}>
+                    {autor.name}
+                  </option>
+                ))}
+            </select>
           </div>
 
           <div className="w-full md:w-full px-3 mt-2">
@@ -348,33 +341,24 @@ const AddEditBook = () => {
             >
               Genero
             </Label>
-            <Select
-              name="genre_id"
-              value={formData.genre_id}
-              required
-              onValueChange={handleChangeGenre}
+            <select
+              id="genre_id"
+              className="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+              onChange={(event) => {
+                setFormData({
+                  ...formData,
+                  genre_id: event.target.value,
+                });
+              }}
             >
-              <SelectTrigger className="w-full">
-                <SelectValue
-                  placeholder="Selecciona un genero"
-                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Selecciona un genero</SelectLabel>
-                  {genres ? (
-                    genres.map((genre) => (
-                      <SelectItem key={genre.genre_id} value={genre.genre_id}>
-                        {genre.name}
-                      </SelectItem>
-                    ))
-                  ) : (
-                    <p>Cargando...</p>
-                  )}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+              <option value="">Seleccione un genero</option>
+              {genres &&
+                genres.map((genre) => (
+                  <option key={genre.genre_id} value={genre.genre_id}>
+                    {genre.name}
+                  </option>
+                ))}
+            </select>
           </div>
           <div className="w-full md:w-1/2 px-3 mt-2">
             <Label
@@ -445,7 +429,7 @@ const AddEditBook = () => {
             />
           </div>
           <div className="w-full md:w-full px-3 mt-2 flex justify-end">
-            {bookId ? (
+            {book_id ? (
               <Button className="bg-lime-700">Editar</Button>
             ) : (
               <Button className="bg-blue-500">Agregar</Button>

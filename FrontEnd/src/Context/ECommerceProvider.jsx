@@ -14,6 +14,7 @@ export const ECommerceProvider = ({ children }) => {
   const [cart_items, setCartItems] = useState([]);
   const [book, setBook] = useState([]);
   const [authors, setAuthors] = useState([]);
+  const [genres, setGenres] = useState([]);
   const [booksAuthors, setBooksAuthors] = useState([]);
   const [bookGenres, setBookGenres] = useState([]);
   const [authenticatedUser, setAuthenticatedUser] = useState([]); //Almacena el correo del usuario autenticado
@@ -26,6 +27,9 @@ export const ECommerceProvider = ({ children }) => {
   const [booksNews, setBooksNews] = useState([]);
   const [booksEditoriales, setBooksEditoriales] = useState([]);
   const [booksMasVendidos, setBooksMasVendidos] = useState([]);
+  const [bookFound, setBookFound] = useState({});
+  const [authorFound, setAuthorFound] = useState({});
+  const [genreFound, setGenreFound] = useState({});
 
   /* CARRITO */
   const addToCart = async (book) => {
@@ -384,9 +388,77 @@ export const ECommerceProvider = ({ children }) => {
     }
   };
 
+  const ObtenerAutoresActivos = () => {
+    try {
+      axios
+        .post(ENDPOINT.author + '/allActive/', { timeout: 5000 })
+        .then((response) => {
+          setAuthors(response.data.data.authors);
+        })
+        .catch((error) => {
+          alertify.error('Error al obtener autores');
+          console.log('Error al obtener autores:', error);
+        });
+    } catch (error) {
+      alertify.error('Error al obtener autores');
+      console.log('Error al obtener autores:', error);
+    }
+  };
+
+  const ObtenerGenerosActivos = () => {
+    try {
+      axios
+        .post(ENDPOINT.genre + '/allActive/', { timeout: 5000 })
+        .then((response) => {
+          setGenres(response.data.data.genres);
+        })
+        .catch((error) => {
+          alertify.error('Error al obtener generos');
+          console.log('Error al obtener generos:', error);
+        });
+    } catch (error) {
+      alertify.error('Error al obtener generos');
+      console.log('Error al obtener generos:', error);
+    }
+  }
+  const obtenerLibroAdminAPI = (book_id) => {
+    console.log('Obteniendo libro...');
+    try {
+      axios
+        .get(ENDPOINT.book + '/' + book_id)
+        .then((response) => {
+          console.log(response.data.data);
+          setBookFound(response.data.data.book);
+          setGenreFound(response.data.data.genre);
+          setAuthorFound(response.data.data.author);
+          console.log('Libro obtenido:', bookFound);
+          console.log('Genero obtenido:', genreFound);
+          console.log('Autor obtenido:', authorFound);
+          
+          //if (!estadoCarga) 
+          //setearDatosEdicion(bookFound);
+        })
+        .catch((error) => {
+          console.log(error);
+          alertify.error(
+            'No se ha podido obtener el libro. Por favor, inténtelo de nuevo.'
+          );
+        });
+    } catch (error) {
+      alertify.error(
+        'No se ha podido obtener el libro. Por favor, inténtelo de nuevo.'
+      );
+      console.log(error);
+      
+    }
+
+  };
+
   useEffect(() => {
     setDataEditoriales();
-    
+    ObtenerAutoresActivos();
+    ObtenerGenerosActivos();
+    //obtenerLibroAdminAPI();
     //getUsers();
     removeFromCart();
   }, [authenticatedUser]);
@@ -400,8 +472,6 @@ export const ECommerceProvider = ({ children }) => {
         setBook,
         addToCart,
         cart_items,
-        authors,
-        setAuthors,
         authenticatedUser,
         users,
         registerUser,
@@ -443,6 +513,21 @@ export const ECommerceProvider = ({ children }) => {
         booksMasVendidos,
         obtenerLibrosMasVendidos,
         filtrarMasVendidos,
+        /*Autores*/
+        authors,
+        setAuthors,
+        /*Generos  */
+        genres,
+        setGenres,
+        /*Data admin edit*/
+        bookFound,
+        setBookFound,
+        authorFound,
+        setAuthorFound,
+        genreFound,
+        setGenreFound,
+        obtenerLibroAdminAPI,
+        
       }}
     >
       {children}

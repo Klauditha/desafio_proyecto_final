@@ -6,5 +6,7 @@ export const ENDPOINT = {
   book: `${URLBASE}/book`,
   orders: `${URLBASE}/order`,
   rating: `${URLBASE}/rating`,
+  author: `${URLBASE}/author`,
+  genre: `${URLBASE}/genre`,
 };
   

@@ -27,7 +27,7 @@ const ECommerceRoutes = () => {
       <Route path="/book/:id" element={<BookDetail />} />
       <Route path="/managerbooks" element={<AdminBooks />} />
       <Route path="/deleteBook" element={<Home />} />
-      <Route path="/managerbooks/edit/:bookId" element={<AddEditBook />} />
+      <Route path="/managerbooks/edit/:book_id" element={<AddEditBook />} />
       <Route path="/managerbooks/add" element={<AddEditBook />} />
       <Route path="/profile" element={<Userprofile />} />
     </Routes>
