@@ -194,7 +194,7 @@ const AddEditBook = () => {
   };
 
   useEffect(() => {
-    if (!estadoCarga) {
+    if (!estadoCarga && book_id) {
       obtenerLibroAdminAPI(book_id);
       setearDatosEdicion();
     }
