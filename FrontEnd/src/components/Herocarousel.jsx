@@ -1,4 +1,4 @@
-import * as React from "react";
+/* eslint-disable no-undef */
 import Autoplay from "embla-carousel-autoplay";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -15,7 +15,7 @@ export function HeroCarousel() {
   const desktopImages = ["hero-desktop1", "hero-desktop2", "hero-desktop3"];
 
   return (
-    <div className="w-full px-2">
+    <div className="w-full px-0">
       <Carousel
         className="md:w-100"
         opts={{
@@ -33,7 +33,7 @@ export function HeroCarousel() {
             <CarouselItem key={index}>
               <div className="p-1">
                 <Card>
-                  <CardContent className="flex items-center justify-center p-6">
+                  <CardContent className="flex items-center justify-center sm:p-10 md:p-2 xl:p-0 2xl:p-12">
                     <div className="block md:hidden">
                       <img
                         id="landingImageMobile"

@@ -19,9 +19,9 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="flex-col flex justify-between px-4 md:px-20">
+      <div className="flex-col flex justify-between px-2 md:px-6">
         <div>
-          <nav className="flex items-center justify-between py-4 border-b bg-white md:px-6 dark:bg-gray-950 border-gray-100 dark:border-gray-800">
+          <nav className="flex items-center justify-between sm:py-0 md:py-2 py-4 border-b bg-white md:px-6 dark:bg-gray-950 border-gray-100 dark:border-gray-800">
             <div>
               <Link className="mr-6 flex items-center gap-2" to="/">
                 <AustralInk className="h-6 w-6" />
