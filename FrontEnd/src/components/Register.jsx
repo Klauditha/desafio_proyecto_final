@@ -113,7 +113,7 @@ export default function Register() {
       newErrors.phone = 'Por favor ingrese su numero de telefono.';
       valid = false;
     } else if (!phoneRegex.test(formData.phone)) {
-      newErrors.phone = 'Por favor ingrese un numero de telefono valido sin espacios.';
+      newErrors.phone = 'Por favor ingrese un numero de telefono valido sin espacios de diez numeros.';
       valid = false;
     } else {
       newErrors.phone = '';
