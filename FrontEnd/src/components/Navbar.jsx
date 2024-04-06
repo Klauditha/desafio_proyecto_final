@@ -42,7 +42,7 @@ export default function Navbar() {
             </div>
             <div className="flex items-center gap-6">
               <div className="flex md:hidden gap-4">
-                <div className="flex md:hidden md:gap-2">
+                <div className="flex  md:hidden  md:gap-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -309,7 +309,7 @@ export default function Navbar() {
               )}
             </div>
             {/* mobile menu */}
-            <div className="flex md:hidden px-4 md:px-6">
+            <div className="flex hidden md:hidden px-4 md:px-6">
               <Popover className="w-max mx-auto">
                 <PopoverTrigger asChild>
                   <Button

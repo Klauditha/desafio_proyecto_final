@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
-    <div className="min-[768px]:w-3/4  min-[768px]:h-3/4 min-[1024px]:w-full min-[1280]:w-3/4 sm:mt-4 md:mt-0 xl:mt-0 2xl:mt-4 bg-slate-300 w-screen flex flex-col sm:flex-col md:flex-row xl:gap-8 sm:gap-8 md:gap-8 gap-4 justify-around sm:py-4 py-2 items-center sm:items-start">
-      <div className="flex flex-col gap-2 sm:gap-0 xl:gap-0 md:gap-0 2xl:gap-6">
-        <h2 className="md:text-md sm:text-sm xl:text-md font-bold text-primary ">
+    <div className="min-[768px]:w-3/4  min-[768px]:h-3/4 min-[1024px]:w-full sm:mt-4 md:mt-0 xl:mt-0 bg-slate-300 w-screen flex flex-col sm:flex-col md:flex-row xl:gap-8 sm:gap-8 md:gap-8 gap-4 justify-around sm:py-4 py-2 items-center sm:items-start">
+      <div className="flex flex-col gap-2 sm:gap-0 xl:gap-0">
+        <h2 className="md:text-xl sm:text-sm font-bold text-primary ">
           Síguenos
         </h2>
         <div className="flex justify-between">
