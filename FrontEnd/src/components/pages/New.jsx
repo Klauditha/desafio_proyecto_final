@@ -15,7 +15,7 @@ const New = () => {
     <div>
       <h1 className="font-bold text-xl text-center">Novedades</h1>
       <h2 className="text-md font-bold text-center mb-4">Del 2024</h2>
-      <div className="grid grid-auto-cols gap-8 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 w-full justify-center md:justify-center  lg:justify-space-between">
+      <div className="grid gap-8 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 w-full justify-center">
         {booksNews
           ? booksNews.map((book) => (
               <Bookcard
