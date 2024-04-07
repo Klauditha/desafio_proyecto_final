@@ -5,7 +5,7 @@ require('dotenv').config();
 describe('Rating API Routes', () => {
   describe('GET /rating/:book_id', () => {
     it('Obtener rating por idbook correctamente', async () => {
-      const book_id = 6;
+      const book_id = 16;
       const response = await request(app).get('/rating/' + book_id);
       expect(response.status).toBe(200);
       expect(response.body.status).toBe(true);

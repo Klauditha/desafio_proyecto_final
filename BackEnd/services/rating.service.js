@@ -84,7 +84,7 @@ class RatingService {
         where: { book_id, deleted: false },
       });
       if(rating.length == 0) {
-        throw boom.notFound("Rating no encontrado");
+        return 0;
       }
       rating.forEach((rating) => {
         promedio = promedio + rating.score;

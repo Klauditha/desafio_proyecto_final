@@ -69,7 +69,7 @@ const Bookcard = ({
           </CardDescription>
         ) : null}
         {displayPubDate ? (
-          <CardDescription className="text-sm font-medium">
+          <CardDescription className="text-sm font-semibold text-blue-500 text-center mb-2">
             Publicado: {book.pub_date}
           </CardDescription>
         ) : null}
@@ -81,10 +81,10 @@ const Bookcard = ({
           {btnAddCart ? (
             <Button
               size="sm"
-              className="bg-blue-500 hover:bg-blue-600 mt-1"
+              className="bg-blue-500 hover:bg-blue-600 mt-2 "
               onClick={(e) => handleAddToCart(book)}
             >
-              Agregar al carrito
+              Agregar<br /> al carrito
             </Button>
           ) : null}
           {btnEditBook ? (
