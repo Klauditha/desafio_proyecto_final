@@ -6,7 +6,17 @@ describe('Book API Routes', () => {
   describe('GET /book/:book_id', () => {
     it('Obtener libro por id correctamente', async () => {
       const book_id = 4;
-      const response = await request(app).get('/book/' + book_id);
+      const user_id = 0;
+      const response = await request(app).get('/book/' + book_id + '&' + user_id);
+      expect(response.status).toBe(200);
+      expect(response.body.status).toBe(true);
+      expect(response.body.message).toBe('Libro encontrado');
+      expect(response.body.data).not.toBe(null);
+    });
+    it('Obtener libro por id correctamente con wishlist del usuario', async () => {
+      const book_id = 9;
+      const user_id=3
+      const response = await request(app).get('/book/' + book_id + '&' + user_id);
       expect(response.status).toBe(200);
       expect(response.body.status).toBe(true);
       expect(response.body.message).toBe('Libro encontrado');
@@ -14,7 +24,8 @@ describe('Book API Routes', () => {
     });
     it('Obtener libro por id fallido, no existe', async () => {
       const book_id = 1000;
-      const response = await request(app).get('/book/' + book_id);
+      const user_id = 0;
+      const response = await request(app).get('/book/' + book_id + '&' + user_id);
       expect(response.status).toBe(404);
       expect(response.body.status).toBe(false);
       expect(response.body.message).toBe('Libro no encontrado');

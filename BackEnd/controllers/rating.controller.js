@@ -111,9 +111,31 @@ const getRatingByBook = async (req, res, next) => {
   }
 };
 
+const getWishlistByBook_User = async (req, res, next) => {
+  try {
+    const { book_id } = req.params;
+    const wishlist = await service.getWishlistByBook_User(book_id, req.user.user_id);
+    res.status(200).json({
+      status: true,
+      message: 'Wishlist de libro encontrado',
+      data: {
+        wishlist,
+      },
+    });
+  } catch (error) {
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    });
+  }
+}
+
 module.exports = {
   createUpdateRating,
   getCommentsByBook,
   getWishlist,
-  getRatingByBook
+  getRatingByBook,
+  getWishlistByBook_User
 };

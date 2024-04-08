@@ -13,16 +13,23 @@ const BookDetail = () => {
   const [genre, setGenre] = useState({});
   const [author, setAuthor] = useState({});
   const [rating, setRating] = useState(0);
+  const [wishlist, setWishlist] = useState(null);
+  const {dataAuthenticatedUser} = useContext(ECommerceContext);
+ 
 
-  /**Implementar getbook*/
   const obtenerLibroAPI = () => {
+    let user_id = 0;
+    if (dataAuthenticatedUser) {
+      user_id = dataAuthenticatedUser.user_id;
+    }
     try {
       axios
-        .get(ENDPOINT.book + '/' + id)
+        .get(ENDPOINT.book + '/' + id + '&' + user_id)
         .then((response) => {
           setBook(response.data.data.book);
           setGenre(response.data.data.genre);
           setAuthor(response.data.data.author);
+          setWishlist(response.data.data.wishlist);
           obtenerRatingAPI(response.data.data.book.book_id);
         })
         .catch((error) => {
@@ -60,7 +67,7 @@ const BookDetail = () => {
   //obtenerLibroAPI();
   return (
     <div>
-      <Productdetail book={book} genre={genre} author={author} rating={rating}/>
+      <Productdetail book={book} genre={genre} author={author} rating={rating} wishlist={wishlist}/>
     </div>
   );
 };

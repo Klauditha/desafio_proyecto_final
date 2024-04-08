@@ -422,18 +422,13 @@ export const ECommerceProvider = ({ children }) => {
     }
   }
   const obtenerLibroAdminAPI = (book_id) => {
-    console.log('Obteniendo libro...');
     try {
       axios
         .get(ENDPOINT.book + '/' + book_id)
         .then((response) => {
-          console.log(response.data.data);
           setBookFound(response.data.data.book);
           setGenreFound(response.data.data.genre);
           setAuthorFound(response.data.data.author);
-          console.log('Libro obtenido:', bookFound);
-          console.log('Genero obtenido:', genreFound);
-          console.log('Autor obtenido:', authorFound);
           
           //if (!estadoCarga) 
           //setearDatosEdicion(bookFound);

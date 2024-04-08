@@ -4,6 +4,7 @@ const BookGenreService = require('../services/bookGenre.service');
 const AuthorService = require('../services/author.service');
 const BookAuthorService = require('../services/bookAuthor.service');
 const OrderItemsService = require('../services/orderItems.service');
+const RatingService = require('../services/rating.service');
 const boom = require('@hapi/boom');
 
 const service = new BookService();
@@ -12,6 +13,7 @@ const bookGenreService = new BookGenreService();
 const authorService = new AuthorService();
 const bookAuthorService = new BookAuthorService();
 const orderItemsService = new OrderItemsService();
+const ratingService = new RatingService();
 
 /**
  * Crea un nuevo libro
@@ -80,7 +82,13 @@ const createBook = async (req, res, next) => {
  */
 const getBook = async (req, res, next) => {
   try {
+
     const { book_id } = req.params;
+    const { user_id } = req.params;
+    
+    console.log('book_id', book_id)
+    console.log('user_id', user_id)
+    let wishlist = null;
     const book = await service.findOne(book_id);
     const bookGenre = await bookGenreService.findOneByBook(book.book_id);
     if (bookGenre) {
@@ -90,6 +98,10 @@ const getBook = async (req, res, next) => {
     if (bookAuthor) {
       author = await authorService.findOne(bookAuthor.author_id);
     }
+    if (user_id!=0) {
+      wishlist = await ratingService.getWishlistByBook_User(book_id, user_id);
+    }
+
     res.status(200).json({
       status: true,
       message: 'Libro encontrado',
@@ -97,6 +109,7 @@ const getBook = async (req, res, next) => {
         book,
         genre: genre ?? null,
         author: author ?? null,
+        wishlist,
       },
     });
   } catch (error) {
@@ -196,14 +209,12 @@ const deleteBook = async (req, res, next) => {
   }
 };
 
-
-
 /* Obtiene todos los libros activos */
 const getBooksMoreSold = async (req, res, next) => {
   //console.log('Obteniendo libros más vendidos...');
   try {
     const books = await service.getAllMoreSold();
-    if(!books || books.length == 0) {
+    if (!books || books.length == 0) {
       throw boom.notFound('Books not found');
     }
     //console.log(books);
@@ -211,7 +222,7 @@ const getBooksMoreSold = async (req, res, next) => {
       status: true,
       message: 'Libros más vendidos encontrados',
       data: {
-        books
+        books,
       },
     });
   } catch (error) {
@@ -296,7 +307,6 @@ const getNews = async (req, res, next) => {
   }
 };
 
-
 const getBooksActive = async (req, res, next) => {
   try {
     const books = await service.getAllActive();
@@ -328,6 +338,7 @@ const getBooks = async (req, res, next) => {
       },
     });
   } catch (error) {
+    console.log(error);
     let codeError = error.isBoom ? error.output.statusCode : 500;
     res.status(codeError).json({
       status: false,
@@ -347,5 +358,5 @@ module.exports = {
   getNews,
   getBooksActive,
   getBooksMoreSold,
-  getBooks
+  getBooks,
 };
