@@ -774,4 +774,7 @@ router.post('/moresold', booksController.getBooksMoreSold);
 
 router.post('/all', booksController.getBooks);
 
+router.get('/wishlist/:user_id', booksController.getWishlistBooks);
+
+
 module.exports = router;

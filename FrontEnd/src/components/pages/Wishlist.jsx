@@ -6,10 +6,18 @@ import Bookcard from '../Bookcard';
 import RequireAuth from '../RequireAuth';
 
 const Wishlist = () => {
-  const { books, wishlist } = useContext(ECommerceContext);
-  const wishlistBookIds = wishlist.map((item) => item.book_id);
-  const booksWishlist = null;
-  
+  const { fetchWishlistBooks } = useContext(ECommerceContext);
+  const [booksWishlist, setBooksWishlist] = useState(null);
+
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      const wishlistBooks = await fetchWishlistBooks();
+      setBooksWishlist(wishlistBooks);
+    };
+
+    fetchWishlist();
+  }, [fetchWishlistBooks]);
+
   return (
     <RequireAuth>
       <div>
@@ -28,7 +36,7 @@ const Wishlist = () => {
               />
             ))
           ) : (
-            <p style={{ textAlign: 'center' }}>No se encontraron resultados</p>
+            <p style={{ textAlign: "center" }}>No se encontraron resultados</p>
           )}
         </div>
       </div>

@@ -110,6 +110,22 @@ class RatingService {
       throw error;
     }
   }
+
+
+  async getWishlistBooksByUser(user_id) {
+    try {
+      const wishlistBooks = await models.Rating.findAll({
+        where: { user_id, wishlist: true, deleted: false },
+      });
+      if (wishlistBooks.length == 0) {
+        return false;
+      }
+      return wishlistBooks;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
+
 
 module.exports = RatingService;

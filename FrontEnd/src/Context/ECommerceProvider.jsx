@@ -239,7 +239,8 @@ export const ECommerceProvider = ({ children }) => {
   const setearDataUserAuth = () => {
     let username = sessionStorage.getItem('username');
     let token = sessionStorage.getItem('token');
-
+    let user_id = '';
+    
     if (username && token) {
       axios
         .get(
@@ -254,6 +255,8 @@ export const ECommerceProvider = ({ children }) => {
         )
         .then((response) => {
           const userData = response.data.data.user;
+          user_id = userData.user_id;
+          sessionStorage.setItem("user_id", user_id);
           setDataAuthenticatedUser(userData);
         })
         .catch((error) => {
@@ -263,28 +266,32 @@ export const ECommerceProvider = ({ children }) => {
     }
   };
 
-  const fetchWishlist = () => {
-    let username = sessionStorage.getItem('username');
-    let token = sessionStorage.getItem('token');
+/* Obtener wishlist
+*/
+  const fetchWishlistBooks = async () => {
+    let loggedUserId = sessionStorage.getItem('user_id');
+  
+    try {
+      if (!loggedUserId) {
+        console.error("Usuario no autentificado.");
+        return;
+      }
+      const response = await axios.get(ENDPOINT.book + '/wishlist/' + loggedUserId);
+      const data = response.data;
 
-    if (username && token) {
-      axios
-        .get(ENDPOINT.rating + '/wishlist', {
-          headers: {
-            Authorization: 'Bearer ' + token,
-          },
-        })
-        .then((response) => {
-          const wishlistData = response.data.data.wishlist;
-          console.log('Wishlist data:', wishlistData);
-          setWishlist(wishlistData);
-        })
-        .catch((error) => {
-          navigate('/login');
-          console.error('Error fetching wishlist:', error);
-        });
+      if (data.status) {
+        const wishlistBooks = data.data.wishlistBooks;
+        return wishlistBooks;
+      } else {
+        console.error("Error consiguiendo libros de wishlist", data.message);
+        return [];
+      }
+    } catch (error) {
+    console.error("Error consiguiendo libros de wishlist:", error);
+    return [];
     }
   };
+
 
   /*Obtener novedades de libros */
   const obtenerNovedadesLibros = () => {
@@ -514,6 +521,8 @@ export const ECommerceProvider = ({ children }) => {
         /*Generos  */
         genres,
         setGenres,
+        /*Wishlist */
+        fetchWishlistBooks,
         /*Data admin edit*/
         bookFound,
         setBookFound,
