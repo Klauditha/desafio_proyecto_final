@@ -349,6 +349,39 @@ const getBooks = async (req, res, next) => {
   }
 };
 
+const getWishlistBooks = async (req, res, next) => {
+  try {
+    const { user_id } = req.params;
+
+    const wishlistBooks = await ratingService.getWishlistBooksByUser(user_id);
+
+    let detailedBooks = [];
+
+    for (const wishlistBook of wishlistBooks) {
+      const book = await service.findOne(wishlistBook.book_id);
+      if (book) {
+        detailedBooks.push(book);
+      }
+    }
+
+    // Send the response
+    res.status(200).json({
+      status: true,
+      message: "Libros de Wishlist obtenidos exitosamente",
+      data: {
+        wishlistBooks: detailedBooks,
+      },
+    });
+  } catch (error) {
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
+
 module.exports = {
   getBook,
   createBook,
@@ -360,4 +393,5 @@ module.exports = {
   getBooksActive,
   getBooksMoreSold,
   getBooks,
+  getWishlistBooks,
 };
