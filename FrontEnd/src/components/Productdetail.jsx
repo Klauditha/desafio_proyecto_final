@@ -2,13 +2,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { Label } from '@/components/ui/label';
-import {
-  SelectValue,
-  SelectTrigger,
-  SelectItem,
-  SelectContent,
-  Select,
-} from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { useContext, useState } from 'react';
 import { ECommerceContext } from '../Context/ECommerceContext';
@@ -20,8 +13,6 @@ const Productdetail = ({ book , genre, author, rating}) => {
     useContext(ECommerceContext);
   const navigate = useNavigate();
   let [quantity, setQuantity] = useState();
-
-  
 
   const setRating = () => {
     let auxRating =  Math.trunc(rating)

@@ -30,7 +30,7 @@ class RatingService {
   async findOne(id) {
     const rating = await models.Rating.findByPk(id);
     if (!rating) {
-      throw boom.notFound("Rating not found");
+      throw boom.notFound('Rating not found');
     }
     return rating;
   }
@@ -50,7 +50,7 @@ class RatingService {
   async activate(id) {
     const rating = await models.Rating.findByPk(id);
     if (!rating) {
-      throw boom.notFound("Rating not found");
+      throw boom.notFound('Rating not found');
     }
     const rta = await rating.update({ deleted: false });
     return rta;
@@ -83,7 +83,7 @@ class RatingService {
       const rating = await models.Rating.findAll({
         where: { book_id, deleted: false },
       });
-      if(rating.length == 0) {
+      if (rating.length == 0) {
         return 0;
       }
       rating.forEach((rating) => {
@@ -91,7 +91,21 @@ class RatingService {
       });
       promedio = promedio / rating.length;
       return promedio;
+    } catch (error) {
+      throw error;
+    }
+  }
 
+  /* Obtiene el estado de la wishlist del usuario para un libro */
+  async getWishlistByBook_User(book_id, user_id) {
+    try {
+      const wishlist = await models.Rating.findAll({
+        where: { book_id, user_id, wishlist: true, deleted: false },
+      });
+      if (wishlist.length == 0) {
+        return false;
+      }
+      return wishlist[0].wishlist;
     } catch (error) {
       throw error;
     }

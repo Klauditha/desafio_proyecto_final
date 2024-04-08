@@ -23,7 +23,7 @@ const New = () => {
                 book={book}
                 btnAddCart={true}
                 displayPrice={true}
-                displayLanguage={false}
+                displayLanguage={true}
                 displayQuantitySold={false} /*Pendiente*/
                 displayPubDate={true}
               />

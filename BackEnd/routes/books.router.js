@@ -83,7 +83,7 @@ const { check } = require('express-validator');
  * tags:
  *   name: Book
  *   description: The Book managing API
- * /book/{book_id}:
+ * /book/{book_id}&{user_id}:
  *   get:
  *     summary: Get the book
  *     tags: [Book]
@@ -113,6 +113,9 @@ const { check } = require('express-validator');
  *                       $ref: '#/components/schemas/Genre'
  *                     author:
  *                       $ref: '#/components/schemas/Author'
+ *                     wishlist:
+ *                       type: boolean
+ *                       default: false
  *       404:
  *         description: El libro no fue encontrado
  *         content:
@@ -147,7 +150,7 @@ const { check } = require('express-validator');
  *                   default: null
  *
  */
-router.get('/:book_id', booksController.getBook);
+router.get('/:book_id&:user_id', booksController.getBook);
 
 /**
  * @swagger
