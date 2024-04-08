@@ -8,14 +8,20 @@ import { ECommerceContext } from '../Context/ECommerceContext';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Productdetail = ({ book , genre, author, rating}) => {
-  const { addCartLocal, authenticatedUser } =
-    useContext(ECommerceContext);
+const Productdetail = ({
+  book,
+  genre,
+  author,
+  rating,
+  dataAuthenticatedUser,
+  wishlist,
+}) => {
+  const { addCartLocal, authenticatedUser } = useContext(ECommerceContext);
   const navigate = useNavigate();
   let [quantity, setQuantity] = useState();
 
   const setRating = () => {
-    let auxRating =  Math.trunc(rating)
+    let auxRating = Math.trunc(rating);
     if (auxRating) {
       for (let i = 1; i <= 5; i++) {
         if (i <= auxRating) {
@@ -56,7 +62,7 @@ const Productdetail = ({ book , genre, author, rating}) => {
 
   const handleAddToWishList = () => {
     alertify.success('Funcionalidad no disponible');
-  }
+  };
 
   const handleAddToCart = () => {
     alertify.success('Funcionalidad no disponible');
@@ -142,13 +148,13 @@ const Productdetail = ({ book , genre, author, rating}) => {
                 handleAddToWishList();
               }}
             >
-              {book.wishlist ? (
+              {wishlist ? (
                 <HeartIcon className="w-4 h-4 mr-2 fill-primary" />
               ) : (
                 <HeartIcon className="w-4 h-4 mr-2" />
               )}
 
-              {book.wishlist
+              {wishlist
                 ? 'Quitar de lista de deseos'
                 : 'Agregar a lista de deseos'}
             </Button>

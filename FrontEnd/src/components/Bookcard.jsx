@@ -23,10 +23,8 @@ const Bookcard = ({
   displayPubDate,
 }) => {
   const navigate = useNavigate();
-  const { addToCart,addCartLocal } = useContext(ECommerceContext);
-  const { setWishlist } = useContext(ECommerceContext);
+  const { addToCart, addCartLocal } = useContext(ECommerceContext);
 
-  
   const handleAddToCart = () => {
     alertify.success('Funcionalidad no disponible');
     //addCartLocal(book, );
@@ -84,7 +82,8 @@ const Bookcard = ({
               className="bg-blue-500 hover:bg-blue-600 mt-2 "
               onClick={(e) => handleAddToCart(book)}
             >
-              Agregar<br /> al carrito
+              Agregar
+              <br /> al carrito
             </Button>
           ) : null}
           {btnEditBook ? (
