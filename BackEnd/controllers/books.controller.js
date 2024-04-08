@@ -86,9 +86,8 @@ const getBook = async (req, res, next) => {
     const { book_id } = req.params;
     const { user_id } = req.params;
     
-    console.log('book_id', book_id)
-    console.log('user_id', user_id)
     let wishlist = null;
+    let comments = null;
     const book = await service.findOne(book_id);
     const bookGenre = await bookGenreService.findOneByBook(book.book_id);
     if (bookGenre) {
@@ -101,6 +100,7 @@ const getBook = async (req, res, next) => {
     if (user_id!=0) {
       wishlist = await ratingService.getWishlistByBook_User(book_id, user_id);
     }
+    comments = await ratingService.getCommentsByBook(book_id);
 
     res.status(200).json({
       status: true,
@@ -110,6 +110,7 @@ const getBook = async (req, res, next) => {
         genre: genre ?? null,
         author: author ?? null,
         wishlist,
+        comments
       },
     });
   } catch (error) {

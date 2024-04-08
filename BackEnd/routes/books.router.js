@@ -116,6 +116,10 @@ const { check } = require('express-validator');
  *                     wishlist:
  *                       type: boolean
  *                       default: false
+ *                   comments:
+ *                       type: array
+ *                       items:
+ *                         $ref: '#/components/schemas/Rating' 
  *       404:
  *         description: El libro no fue encontrado
  *         content:
