@@ -27,7 +27,7 @@ const createBook = async (req, res, next) => {
       newAuthor = [];
     const existBook = await service.findOneByName(body.title);
     if (existBook) {
-      throw boom.conflict('Book already exists');
+      throw boom.conflict('Libro ya existe'); 
     }
     const newBook = await service.create(body);
     const genre = await genreService.findOneByName(body.genre);
@@ -60,7 +60,7 @@ const createBook = async (req, res, next) => {
     }
     res.status(201).json({
       status: true,
-      message: 'New book created',
+      message: 'Libro agregado',
       data: {
         book: newBook,
         genre: genre != null ? genre : newGenre,

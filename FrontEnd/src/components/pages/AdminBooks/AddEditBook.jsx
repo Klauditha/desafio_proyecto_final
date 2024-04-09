@@ -19,6 +19,8 @@ import {
 } from '../../ui/select';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { ENDPOINT } from '../../../config/constants';
 
 const AddEditBook = () => {
   let { book_id } = useParams();
@@ -56,67 +58,78 @@ const AddEditBook = () => {
     });
   };
 
-  const handleChangeAuthor = (value) => {
-    setFormData({
-      ...formData,
-      author_id: value,
-    });
-  };
-
   const handleChangeLanguage = (value) => {
     setFormData({
       ...formData,
       language: value,
     });
   };
-  const handleChangeGenre = (value) => {
-    console.log(value);
-    setFormData({
-      ...formData,
-      genre_id: value,
-    });
-  };
 
   const validateForm = () => {
     return true;
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     let metodo = formData.bookId ? 'edit' : 'add';
-
     if (validateForm()) {
       try {
         switch (metodo) {
           case 'add':
-            const id = Math.floor(Math.random() * 1000);
-            const newBook = {
-              bookId: id.toString(),
-              isbn: formData.isbn,
-              img: '/books/notAvailable.jpg',
-              title: formData.title,
-              description: formData.description,
-              language: formData.language,
-              pages: formData.pages,
-              publisher: formData.publisher,
-              pubDate: formData.pubDate,
-              stock: formData.stock,
-              price: formData.price,
-            };
-            const newBookAuthor = {
-              bookId: id.toString(),
-              authorId: formData.author_id.toString(),
-            };
-            const newBookGenre = {
-              book_id: id.toString(),
-              genre_id: formData.genre_id,
-            };
+            let isbn = formData.isbn;
+            let title = formData.title;
+            let description = formData.description;
+            let language = formData.language;
+            let pages = formData.pages;
+            let publisher = formData.publisher;
+            let pub_date = formData.pubDate;
+            let stock = formData.stock;
+            let price = formData.price;
+            let genre = genres.find(
+              (genre) => genre.genre_id == formData.genre_id
+            ).name;
+            let author = authors.find(
+              (author) => author.author_id == formData.author_id
+            ).name;
 
-            books.push(newBook);
-            booksAuthors.push(newBookAuthor);
-            bookGenres.push(newBookGenre);
+            const token = sessionStorage.getItem('token');
+            try {
+              const response = await axios.post(
+                `${ENDPOINT.book}`,
+                {
+                  isbn,
+                  title,
+                  description,
+                  language,
+                  pages,
+                  publisher,
+                  pub_date,
+                  stock,
+                  price,
+                  genre,
+                  author,
+                },
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              );
 
-            alertify.success('Libro agregado exitosamente');
-            navigate('/managerbooks');
+              if (response.status === 201) {
+                alertify.success('Libro agregado exitosamente');
+                setTimeout(() => {
+                  navigate('/managerbooks');
+                }, 2000);
+              } else {
+                alertify.error('Error al agregar libro');
+              }
+            } catch (error) {
+              if (error.response.data.message) {
+                alertify.error(error.response.data.message);
+              } else {
+                alertify.error('Error al agregar libro');
+              }
+            }
 
             break;
           case 'edit':

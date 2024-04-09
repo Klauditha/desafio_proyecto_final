@@ -142,7 +142,7 @@ describe('Book API Routes', () => {
       });
       expect(response.status).toBe(201);
       expect(response.body.status).toBe(true);
-      expect(response.body.message).toBe('New book created');
+      expect(response.body.message).toBe('Libro agregado');
       expect(response.body.data).not.toBe(null);
     });
   });

@@ -419,7 +419,7 @@ router.put(
  *                   default: true
  *                 message:
  *                   type: string
- *                   default: New book created
+ *                   default: Libro agregado
  *                 data:
  *                   type: array
  *                   items:
@@ -441,7 +441,7 @@ router.put(
  *                   default: false
  *                 message:
  *                   type: string
- *                   default: Book already exists
+ *                   default: Libro ya existe
  *                 data:
  *                   type: object
  *                   default: null
