@@ -407,7 +407,7 @@ router.put(
  *       }
  *     ]
  *     responses:
- *       200:
+ *       201:
  *         description: The book was created
  *         content:
  *           application/json:
@@ -419,7 +419,7 @@ router.put(
  *                   default: true
  *                 message:
  *                   type: string
- *                   default: The book was created
+ *                   default: New book created
  *                 data:
  *                   type: array
  *                   items:
@@ -441,7 +441,7 @@ router.put(
  *                   default: false
  *                 message:
  *                   type: string
- *                   default: The book already exists
+ *                   default: Book already exists
  *                 data:
  *                   type: object
  *                   default: null
