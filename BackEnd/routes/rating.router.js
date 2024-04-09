@@ -163,6 +163,12 @@ router.post(
   ratingController.createUpdateRating
 );
 
+router.post(
+  '/:book_id/wishlist',
+  authMiddleware,
+  ratingController.addToWishlist
+);
+
 /**
  * @swagger
  * tags:
