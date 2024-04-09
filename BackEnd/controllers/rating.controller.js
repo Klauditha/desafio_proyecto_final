@@ -132,10 +132,37 @@ const getWishlistByBook_User = async (req, res, next) => {
   }
 }
 
+const addToWishlist = async (req, res, next) => {
+  try {
+    const { user_id } = req.body;
+    const book_id = parseInt(req.params.book_id, 10);
+    const { wishlist } = req.body;
+
+    console.log(
+      "user_id:",
+      user_id,
+      " book_id:",
+      book_id,
+      " wishlist:",
+      wishlist
+    );
+
+    await service.updateWishlist(user_id, book_id, wishlist);
+
+    res.status(200).json({ success: true });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, error: "No se ha logrado actualizar wishlist" });
+  }
+};
+
+
 module.exports = {
   createUpdateRating,
   getCommentsByBook,
   getWishlist,
   getRatingByBook,
-  getWishlistByBook_User
+  getWishlistByBook_User,
+  addToWishlist,
 };

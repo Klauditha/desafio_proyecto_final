@@ -16,7 +16,8 @@ const Productdetail = ({
   dataAuthenticatedUser,
   wishlist,
 }) => {
-  const { addCartLocal, authenticatedUser } = useContext(ECommerceContext);
+  const { addCartLocal, authenticatedUser, handleAddToWishlist } =
+    useContext(ECommerceContext);
   const navigate = useNavigate();
   let [quantity, setQuantity] = useState();
 
@@ -45,6 +46,15 @@ const Productdetail = ({
     return arrayQuantify;
   };
 
+  const handleToggleWishlist = async () => {
+    try {
+      await handleAddToWishlist(book.book_id, !wishlist);
+      alertify.success("Cambio exitoso");
+    } catch (error) {
+      console.error("Error cambiando wishlist:", error);
+    }
+  };
+
   /*
   const handleAddToWishList = () => {
     const updatedBooks = books.map((b) => {
@@ -60,9 +70,10 @@ const Productdetail = ({
     }
   };*/
 
-  const handleAddToWishList = () => {
+/*   const handleAddToWishList = () => {
     alertify.success('Funcionalidad no disponible');
-  };
+  }; */
+
 
   const handleAddToCart = () => {
     alertify.success('Funcionalidad no disponible');
@@ -145,7 +156,7 @@ const Productdetail = ({
               variant="outline"
               onClick={(e) => {
                 e.preventDefault();
-                handleAddToWishList();
+                handleToggleWishlist();
               }}
             >
               {wishlist ? (

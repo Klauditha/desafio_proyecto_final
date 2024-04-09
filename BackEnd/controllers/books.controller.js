@@ -355,6 +355,16 @@ const getWishlistBooks = async (req, res, next) => {
 
     const wishlistBooks = await ratingService.getWishlistBooksByUser(user_id);
 
+    if (wishlistBooks === false) {
+      return res.status(200).json({
+        status: true,
+        message: 'No hay libros en la lista de deseos para este usuario',
+        data: {
+          wishlistBooks: [],
+        },
+      });
+    }
+
     let detailedBooks = [];
 
     for (const wishlistBook of wishlistBooks) {
@@ -367,7 +377,7 @@ const getWishlistBooks = async (req, res, next) => {
     // Send the response
     res.status(200).json({
       status: true,
-      message: "Libros de Wishlist obtenidos exitosamente",
+      message: 'Libros de Wishlist obtenidos exitosamente',
       data: {
         wishlistBooks: detailedBooks,
       },

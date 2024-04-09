@@ -218,6 +218,7 @@ export const ECommerceProvider = ({ children }) => {
 
   const handleLogout = () => {
     sessionStorage.removeItem('user');
+    sessionStorage.removeItem('user_id');
     setAuthenticatedUser(null);
   };
 
@@ -258,6 +259,7 @@ export const ECommerceProvider = ({ children }) => {
           user_id = userData.user_id;
           sessionStorage.setItem("user_id", user_id);
           setDataAuthenticatedUser(userData);
+          fetchWishlistBooks();
         })
         .catch((error) => {
           navigate('/login');
@@ -292,6 +294,33 @@ export const ECommerceProvider = ({ children }) => {
     }
   };
 
+ const handleAddToWishlist = async (book_id, wishlistStatus) => {
+   let token = sessionStorage.getItem("token");
+   let user_id = parseInt(sessionStorage.getItem("user_id"), 10);
+
+   if (token) {
+     const headers = {
+       Authorization: `Bearer ${token}`,
+     };
+
+     axios
+       .post(
+         `${ENDPOINT.rating}/${book_id}/wishlist`,
+         { user_id, wishlist: wishlistStatus },
+         { headers }
+       )
+       .then((response) => {
+         console.log("Response:", response.data);
+         console.log("Wishlist actualizado exitosamente");
+       })
+       .catch((error) => {
+         console.error("Error:", error);
+         console.error("No se ha podido actualizar wishlist");
+       });
+   } else {
+     console.error("Token no encontrado");
+   }
+ };
 
   /*Obtener novedades de libros */
   const obtenerNovedadesLibros = () => {
@@ -531,7 +560,7 @@ export const ECommerceProvider = ({ children }) => {
         genreFound,
         setGenreFound,
         obtenerLibroAdminAPI,
-        
+        handleAddToWishlist,
       }}
     >
       {children}

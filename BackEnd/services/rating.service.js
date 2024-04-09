@@ -1,5 +1,5 @@
-const { models } = require('../config/sequelize');
-const boom = require('@hapi/boom');
+const { models } = require("../config/sequelize");
+const boom = require("@hapi/boom");
 
 class RatingService {
   constructor() {}
@@ -30,7 +30,7 @@ class RatingService {
   async findOne(id) {
     const rating = await models.Rating.findByPk(id);
     if (!rating) {
-      throw boom.notFound('Rating not found');
+      throw boom.notFound("Rating not found");
     }
     return rating;
   }
@@ -50,7 +50,7 @@ class RatingService {
   async activate(id) {
     const rating = await models.Rating.findByPk(id);
     if (!rating) {
-      throw boom.notFound('Rating not found');
+      throw boom.notFound("Rating not found");
     }
     const rta = await rating.update({ deleted: false });
     return rta;
@@ -111,7 +111,6 @@ class RatingService {
     }
   }
 
-
   async getWishlistBooksByUser(user_id) {
     try {
       const wishlistBooks = await models.Rating.findAll({
@@ -125,7 +124,36 @@ class RatingService {
       throw error;
     }
   }
-}
 
+  async updateWishlist(user_id, book_id, wishlist) {
+    try {
+      let rating = await models.Rating.findAll({
+        where: { user_id, book_id, deleted: false },
+      });
+
+      if (rating.length === 0) {
+        rating = await models.Rating.create({
+          user_id,
+          book_id,
+          score: 5,
+          comment: "",
+          wishlist,
+          created_at: new Date(),
+          updated_at: new Date(),
+          deleted: false,
+        });
+      } else {
+        await models.Rating.update(
+          { wishlist, updated_at: new Date() },
+          { where: { user_id, book_id } }
+        );
+      }
+
+      return rating;
+    } catch (error) {
+      throw error;
+    }
+  }
+}
 
 module.exports = RatingService;
