@@ -11,6 +11,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { ECommerceContext } from '@/Context/ECommerceContext';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
 
 const Bookcard = ({
   book,
@@ -26,9 +27,7 @@ const Bookcard = ({
   const { addToCart, addCartLocal } = useContext(ECommerceContext);
 
   const handleAddToCart = () => {
-    alertify.success('Funcionalidad no disponible');
-    //addCartLocal(book, );
-    //addToCart(book);
+    addToCart(book, 1);
   };
 
   return (

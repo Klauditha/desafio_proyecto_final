@@ -3,34 +3,48 @@ const { models } = require('../config/sequelize');
 
 class CartItemService {
   constructor() {}
-  
+
   async getCartItemsByUser(user_id) {
     const cartItems = await models.Cart.findAll({
       where: {
-        user_id : user_id,
+        user_id: user_id,
         deleted: false,
       },
     });
     if (!cartItems) {
-      throw boom.notFound('Cart items not found');
+      throw boom.notFound("Libros del carrito no encontrados.");
     }
     return cartItems;
   }
 
   async create(data) {
     data = { ...data, deleted: false };
-    const cart = await models.Cart.findOne({ where: { user_id: data.user_id, book_id: data.book_id } });
-    if (cart) {
-      throw boom.conflict('Cart already exists');
+    const existingCart = await models.Cart.findOne({
+      where: { user_id: data.user_id, book_id: data.book_id },
+    });
+    if (existingCart) {
+      const updatedCart = await existingCart.update({
+        quantity: parseInt(data.quantity, 10),
+        deleted: false,
+      });
+      const book = await models.Book.findByPk(data.book_id);
+      return { cartItem: updatedCart, book };
     }
-    const newCartItem = await models.Cart.create(data);
-    return newCartItem;
+
+    const updatedCart = await models.Cart.create({
+      user_id: data.user_id,
+      book_id: data.book_id,
+      quantity: data.quantity,
+      deleted: false,
+    });
+    const book = await models.Book.findByPk(data.book_id);
+    return { cartItem: updatedCart, book };
   }
 
   async update(cart_item_id, changes) {
     const cart = await models.Cart.findByPk(cart_item_id);
     if (!cart) {
-      throw boom.notFound('Cart not found');
+      throw boom.notFound("Carrito no encontrado");
     }
     const rta = await cart.update(changes);
     return rta;

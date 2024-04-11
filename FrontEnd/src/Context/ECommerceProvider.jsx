@@ -32,39 +32,72 @@ export const ECommerceProvider = ({ children }) => {
   const [genreFound, setGenreFound] = useState({});
 
   /* CARRITO */
-  const addToCart = async (book) => {
-    // Funcionalidad POST con servidor para futuro
-    console.log(
-      'Intentando agregar libro al carro antes de autenticación de usuario:',
-      book
-    );
-
+  const addToCart = async (book, quantity) => {
     if (authenticatedUser) {
       try {
-        const response = await fetch('/api/cart/add', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: authenticatedUser.userId,
-            bookId: book.bookId,
-          }),
-        });
+        let token = sessionStorage.getItem("token");
+        let user_id = parseInt(sessionStorage.getItem("user_id"), 10);
 
-        if (response.ok) {
-          console.log('Libro correctamente agregado al carro del servidor');
-          setCart([...cart, book]);
-          console.log('Carrito actualizado:', cart);
-          fetchCartItems();
+        if (!token || isNaN(user_id)) {
+          return;
+        }
+        const headers = {
+          Authorization: `Bearer ${token}`,
+        };
+        const existingCartItem = cart_items.find(
+          (item) => item.book_id === book.book_id && item.user_id === user_id
+        );
+
+        if (existingCartItem) {
+          const updatedQuantity =
+            parseInt(existingCartItem.quantity, 10) + parseInt(quantity, 10);
+          await axios.put(
+            `${ENDPOINT.cart}/${existingCartItem.cart_item_id}`,
+            {
+              user_id,
+              book_id: existingCartItem.book_id,
+              deleted: false,
+              quantity: updatedQuantity,
+            },
+            {
+              headers,
+            }
+          );
+          setCartItems(
+            cart_items.map((item) => {
+              if (item.cart_item_id === existingCartItem.cart_item_id) {
+                return { ...item, quantity: updatedQuantity };
+              }
+              return item;
+            })
+          );
+          alertify.success("Cantidad de copias en el carrito actualizada");
         } else {
-          console.error('Fallo al agregar libro al carrito en el servidor');
+          const response = await axios.post(
+            ENDPOINT.cart,
+            {
+              user_id: user_id,
+              book_id: book.book_id,
+              quantity: quantity ? parseInt(quantity) : 1,
+            },
+            {
+              headers,
+            }
+          );
+          if (response.data.status) {
+            const newCartItem = response.data.data.cart;
+            setCartItems([...cart_items, newCartItem]);
+            alertify.success("Libro agregado al carrito");
+          } else {
+            console.error("No se ha podido agregar libro al carrito");
+          }
         }
       } catch (error) {
-        console.error('Error agregar libro al carro:', error);
+        console.error("Error al agregar libro al carrito:", error);
       }
     } else {
-      navigate('/login');
+      console.log("Redirigiendo a login...");
+      navigate("/login");
     }
   };
 
@@ -91,6 +124,44 @@ export const ECommerceProvider = ({ children }) => {
     }
   };
 
+
+const fetchCartItems = async () => {
+  try {
+    const token = sessionStorage.getItem("token");
+    const user_id = parseInt(sessionStorage.getItem("user_id"), 10);
+
+    if (!token || isNaN(user_id)) {
+      console.error("Token o id de usuario invalidos.");
+      return;
+    }
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const response = await axios.get(`${ENDPOINT.cart}/${user_id}`, {
+      headers: headers,
+    });
+    const cartItems = response.data.data.cart;
+    const cart_items = await Promise.all(
+      cartItems.map(async (cartItem) => {
+        const bookResponse = await axios.get(
+          `${ENDPOINT.book}/${cartItem.book_id}&${user_id}`
+        );
+        const bookDetails = bookResponse.data.data;
+        return { ...cartItem, book: bookDetails };
+      })
+    );
+
+    setCartItems(cart_items);
+  } catch (error) {
+    console.error("Error fetching cart items:", error);
+    return [];
+  }
+};
+
+
+
   /**
    * Obtiene la cantidad de libros vendidos de un libro concreto
    * @param {*} bookId
@@ -107,41 +178,7 @@ export const ECommerceProvider = ({ children }) => {
     return sold;
   };
 
-  const fetchCartItems = async () => {
-    try {
-      let user = JSON.parse(sessionStorage.getItem('user'));
 
-      if (!user) {
-        console.error('Usuario no autentificado.');
-        return;
-      }
-
-      console.log('Fetching los carritos del usuario...');
-      const cartsResponse = await fetch('data/data.json');
-      const data = await cartsResponse.json();
-      const userCart = data.carts.find((cart) => cart.user_id === user.user_id);
-
-      if (!userCart) {
-        console.error('Carrito del usuario no encontrado.');
-        return;
-      }
-
-      console.log('Carrito del usuario encontrado:', userCart);
-
-      console.log('Fetching items del carrito...');
-      const cartItemsResponse = await fetch('data/data.json');
-      const cartItemsData = await cartItemsResponse.json();
-      const userCartItems = cartItemsData.cart_items.filter(
-        (item) => item.cart_id === userCart.cart_id
-      );
-
-      console.log('Items del carrito del usuario:', userCartItems);
-
-      setCartItems(userCartItems);
-    } catch (error) {
-      console.error('Error haciendo fetch a los items del carrito:', error);
-    }
-  };
 
   /*
   const fetchData = async () => {
@@ -186,23 +223,60 @@ export const ECommerceProvider = ({ children }) => {
     }
   };
 
-  const updateCartItemQuantity = (cartItemId, newQuantity) => {
-    //No modifican valores JSON
-    setCartItems((prevCartItems) =>
-      prevCartItems.map((item) =>
-        item.cart_item_id === cartItemId
-          ? { ...item, quantity: newQuantity }
-          : item
-      )
-    );
+  const updateCartItemQuantity = async (cart_item_id, book_id, newQuantity) => {
+    try {
+      let user_id = parseInt(sessionStorage.getItem("user_id"), 10);
+      let token = sessionStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const response = await axios.put(
+        `${ENDPOINT.cart}/${cart_item_id}`,
+        {
+          user_id,
+          book_id,
+          deleted: false,
+          quantity: newQuantity,
+        },
+        { headers }
+      );
+      const updatedCartItem = response.data.data.cartItem;
+
+      setCartItems((cartItems) =>
+        cartItems.map((item) =>
+          item.cart_item_id === updatedCartItem.cart_item_id &&
+          item.book_id === updatedCartItem.book_id
+            ? { ...item, quantity: updatedCartItem.quantity }
+            : item
+        )
+      );
+    } catch (error) {
+      console.error("Error actualizando cantidad de item en el carrito:", error);
+    }
   };
 
-  const removeFromCart = (cartItemId) => {
-    const updatedCartItems = cart_items.filter(
-      (item) => item.cart_item_id !== cartItemId
-    );
-
-    setCartItems(updatedCartItems);
+  const removeFromCart = async (cart_item_id, book_id) => {
+    try {
+      let user_id = parseInt(sessionStorage.getItem("user_id"), 10);
+      let token = sessionStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+       await axios.delete(`${ENDPOINT.cart}/${cart_item_id}`, {
+         headers,
+         data: {
+           user_id,
+           book_id,
+           deleted: true,
+           quantity: 0,
+         },
+       });
+      setCartItems(
+        cartItems.filter((item) => item.cart_item_id !== cart_item_id)
+      );
+    } catch (error) {
+      console.error("Error removiendo item del carrito:", error);
+    }
   };
 
   const registerUser = (newUser) => {
@@ -259,6 +333,7 @@ export const ECommerceProvider = ({ children }) => {
           user_id = userData.user_id;
           sessionStorage.setItem("user_id", user_id);
           setDataAuthenticatedUser(userData);
+          fetchCartItems();
           fetchWishlistBooks();
         })
         .catch((error) => {
@@ -491,7 +566,6 @@ export const ECommerceProvider = ({ children }) => {
     ObtenerGenerosActivos();
     //obtenerLibroAdminAPI();
     //getUsers();
-    removeFromCart();
   }, [authenticatedUser]);
 
   return (
@@ -561,6 +635,7 @@ export const ECommerceProvider = ({ children }) => {
         setGenreFound,
         obtenerLibroAdminAPI,
         handleAddToWishlist,
+        fetchCartItems,
       }}
     >
       {children}

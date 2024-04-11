@@ -16,7 +16,7 @@ const Productdetail = ({
   dataAuthenticatedUser,
   wishlist,
 }) => {
-  const { addCartLocal, authenticatedUser, handleAddToWishlist } =
+  const { addToCart, authenticatedUser, handleAddToWishlist } =
     useContext(ECommerceContext);
   const navigate = useNavigate();
   let [quantity, setQuantity] = useState();
@@ -76,9 +76,9 @@ const Productdetail = ({
 
 
   const handleAddToCart = () => {
-    alertify.success('Funcionalidad no disponible');
-    //addCartLocal(book,quantity ? quantity : 1);
+    addToCart(book, quantity ? parseInt(quantity) : 1);
   };
+  
   useEffect(() => {
     setRating();
   }, [book.book_id, rating]);

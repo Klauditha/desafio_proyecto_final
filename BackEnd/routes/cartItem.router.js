@@ -207,6 +207,8 @@ router.put(
   cartController.updateCartItem
 );
 
+router.delete("/:cart_item_id", authMiddleware, cartController.deleteCartItem);
+
 /**
  * @swagger
  * tags:
