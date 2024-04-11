@@ -8,5 +8,6 @@ export const ENDPOINT = {
   rating: `${URLBASE}/rating`,
   author: `${URLBASE}/author`,
   genre: `${URLBASE}/genre`,
+  cart: `${URLBASE}/cart`,
 };
   
