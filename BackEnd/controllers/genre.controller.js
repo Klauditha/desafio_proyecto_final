@@ -53,7 +53,7 @@ const getGenres = async (req, res, next) => {
     const genres = await service.findAll();
     res.status(200).json({
       status: true,
-      message: 'Genres found',
+      message: 'Generos encontrados',
       data: {
         genres,
       },
@@ -74,7 +74,7 @@ const getGenresActive = async (req, res, next) => {
     const genres = await service.getGenresActive();
     res.status(200).json({
       status: true,
-      message: 'Genres found',
+      message: 'Generos activos encontrados',
       data: {
         genres,
       },
