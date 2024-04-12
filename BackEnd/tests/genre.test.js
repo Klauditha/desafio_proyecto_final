@@ -12,4 +12,13 @@ describe('Genre API Routes', () => {
             expect(response.body.data).not.toBe(null);
         });
     });
+    describe('POST /genre/allActive', () => {
+        it('Obtener generos activos correctamente', async () => {
+            const response = await request(app).post('/genre/allActive');
+            expect(response.status).toBe(200);
+            expect(response.body.status).toBe(true);
+            expect(response.body.message).toBe('Generos activos encontrados');
+            expect(response.body.data).not.toBe(null);
+        });
+    });
 })
