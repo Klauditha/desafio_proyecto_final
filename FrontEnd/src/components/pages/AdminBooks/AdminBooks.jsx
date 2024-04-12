@@ -9,7 +9,7 @@ import axios from 'axios';
 import { ENDPOINT } from '../../../config/constants';
 
 const AdminBooks = () => {
-  const { searchBooks } = useContext(ECommerceContext);
+  const { searchBooks, setBookFound } = useContext(ECommerceContext);
   const [booksAdmin, setBookAmin] = useState([]);
   const navigate = useNavigate();
 
@@ -39,6 +39,7 @@ const AdminBooks = () => {
 
   useEffect(() => {
     obtenerLibrosAPI();
+    setBookFound([]);
   }, [searchBooks]);
   return (
     <div>

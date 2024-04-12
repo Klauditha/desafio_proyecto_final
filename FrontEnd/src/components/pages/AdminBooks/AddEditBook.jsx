@@ -49,6 +49,20 @@ const AddEditBook = () => {
     publisher: '',
     stock: '',
   });
+  let isbn = '';
+  let title = '';
+  let description = '';
+  let language = '';
+  let pages = '';
+  let publisher = '';
+  let pub_date = '';
+  let stock = '';
+  let price = '';
+  let genre = '';
+  let author = '';
+  let genre_id = '';
+  let author_id = '';
+  let img = '';
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -73,25 +87,26 @@ const AddEditBook = () => {
     let metodo = formData.bookId ? 'edit' : 'add';
     if (validateForm()) {
       try {
+        const token = sessionStorage.getItem('token');
         switch (metodo) {
           case 'add':
-            let isbn = formData.isbn;
-            let title = formData.title;
-            let description = formData.description;
-            let language = formData.language;
-            let pages = formData.pages;
-            let publisher = formData.publisher;
-            let pub_date = formData.pubDate;
-            let stock = formData.stock;
-            let price = formData.price;
-            let genre = genres.find(
+            isbn = formData.isbn;
+            title = formData.title;
+            description = formData.description;
+            language = formData.language;
+            pages = formData.pages;
+            publisher = formData.publisher;
+            pub_date = formData.pubDate;
+            stock = formData.stock;
+            price = formData.price;
+            genre = genres.find(
               (genre) => genre.genre_id == formData.genre_id
             ).name;
-            let author = authors.find(
+            author = authors.find(
               (author) => author.author_id == formData.author_id
             ).name;
 
-            const token = sessionStorage.getItem('token');
+            
             try {
               const response = await axios.post(
                 `${ENDPOINT.book}`,
@@ -107,6 +122,7 @@ const AddEditBook = () => {
                   price,
                   genre,
                   author,
+                  
                 },
                 {
                   headers: {
@@ -133,55 +149,66 @@ const AddEditBook = () => {
 
             break;
           case 'edit':
-            const bookFound = books.find(
-              (book) => book.bookId.toString() === bookId
-            );
-
-            if (bookFound) {
-              bookFound.isbn = formData.isbn;
-              bookFound.img = formData.img;
-              bookFound.title = formData.title;
-              bookFound.description = formData.description;
-              bookFound.language = formData.language;
-              bookFound.pages = formData.pages;
-              bookFound.publisher = formData.publisher;
-              bookFound.pubDate = formData.pubDate;
-              bookFound.stock = formData.stock;
-              bookFound.price = formData.price;
+            isbn = formData.isbn;
+            title = formData.title;
+            description = formData.description;
+            language = formData.language;
+            pages = formData.pages;
+            publisher = formData.publisher;
+            pub_date = formData.pubDate;
+            stock = formData.stock;
+            price = formData.price;
+            genre_id = formData.genre_id;
+            author_id = formData.author_id;
+            img = formData.img;
+            
+            try {
+              const response = await axios.put(
+                `${ENDPOINT.book}/${formData.bookId}`,
+                {
+                  isbn,
+                  title,
+                  description,
+                  language,
+                  pages,
+                  publisher,
+                  pub_date,
+                  stock,
+                  price,
+                  genre_id,
+                  author_id,
+                  img,
+                },
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              );
+              if (response.status === 200) {
+                alertify.success('Libro editado exitosamente');
+                setTimeout(() => {
+                  navigate('/managerbooks');
+                }, 2000);
+              } else {
+                alertify.error('Error al editar libro');
+              }
+            } catch (error) {
+              if (error.response.data.message) {
+                alertify.error(error.response.data.message);
+              } else {
+                alertify.error('Error al editar libro');
+              }
             }
 
-            const bookAuthorFound = booksAuthors.find(
-              (bookAuthor) => bookAuthor.bookId.toString() === bookId
-            );
-
-            if (bookAuthorFound) {
-              bookAuthorFound.authorId = formData.author_id.toString();
-            }
-
-            const bookGenreFound = bookGenres.find(
-              (bookGenre) => bookGenre.book_id.toString() === bookId
-            );
-
-            if (bookGenreFound) {
-              bookGenreFound.genre_id = formData.genre_id;
-            }
-
-            const index = books.findIndex(
-              (book) => book.bookId.toString() === bookId
-            );
-            books[index] = bookFound;
-            booksAuthors[index] = bookAuthorFound;
-            bookGenres[index] = bookGenreFound;
-
-            alertify.success('Libro editado exitosamente');
-
-            navigate('/managerbooks');
+           
             break;
           default:
             break;
         }
       } catch (error) {
-        alertify.error('Error al agregar el libro. Intenta de nuevo');
+        console.log(error);
+        alertify.error('Error en el proceso. Intenta de nuevo');
       }
     }
   };
@@ -202,16 +229,18 @@ const AddEditBook = () => {
     }
     if (authorFound) formData.author_id = authorFound.author_id;
     if (genreFound) formData.genre_id = genreFound.genre_id;
-
-    setEstadoCarga(true);
+    document.getElementById('genre_id').value = formData.genre_id;
+    document.getElementById('author_id').value = formData.author_id;
+    document.getElementsByName('language').value = formData.language;
+    handleChangeLanguage(formData.language);
   };
 
   useEffect(() => {
-    if (!estadoCarga && book_id) {
+    if (book_id && bookFound.book_id != book_id) {
       obtenerLibroAdminAPI(book_id);
-      setearDatosEdicion();
     }
-  }, []);
+    setearDatosEdicion();
+  }, [book_id, bookFound]);
 
   return (
     <div className="flex flex-col gap-4 px-4 md:px-20">
@@ -310,6 +339,7 @@ const AddEditBook = () => {
             </Label>
             <Select
               name="language"
+              id="language"
               value={formData.language}
               required
               onValueChange={handleChangeLanguage}

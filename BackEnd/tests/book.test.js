@@ -109,15 +109,16 @@ describe('Book API Routes', () => {
       /*Datos de libro , modificar los datos si es necesario*/
       const isbn = '9789566184638';
       const title = 'Terapia Para Llevar';
-      const description = 'Salud mental, gestión emocional… palabras de moda que no paramos de escuchar pero, ¿qué significan? y, sobre todo, ¿cómo podemos trabajar en ellos? Nací Dramática pone en tus manos 20 conceptos clave de la psicología y 100 herramientas prácticas para llevar mejor el día a día. Aprende a relativizar, a evitar los pensamientos dicotómicos, a gestionar el fracaso y el miedo y, en general, a entender tus emociones. Todo con un tono cercano, práctico y útil lleno de humor, dibujos y gráficos con la estética pop y llamativa característica';
+      const description =
+        'Salud mental, gestión emocional… palabras de moda que no paramos de escuchar pero, ¿qué significan? y, sobre todo, ¿cómo podemos trabajar en ellos? Nací Dramática pone en tus manos 20 conceptos clave de la psicología y 100 herramientas prácticas para llevar mejor el día a día. Aprende a relativizar, a evitar los pensamientos dicotómicos, a gestionar el fracaso y el miedo y, en general, a entender tus emociones. Todo con un tono cercano, práctico y útil lleno de humor, dibujos y gráficos con la estética pop y llamativa característica';
       const language = 'Espanol';
       const pages = 224;
       const publisher = 'Montena';
       const pub_date = '2024-03-01';
       const price = 14450;
       const stock = 10;
-      const genre = "Autoayuda";
-      const author = "Ana Perez";
+      const genre = 'Autoayuda';
+      const author = 'Ana Perez';
       /*Datos usuario admin*/
       const email = 'user4@example.com';
       const password = 'password4';
@@ -125,24 +126,70 @@ describe('Book API Routes', () => {
         .post('/login')
         .send({ email, password });
       const token = responseToken.body.data.token;
-      const response = await request(app).post('/book/')
-      .set('Authorization', 'bearer ' + token)
-      .send({
-        isbn,
-        title,
-        description,
-        language,
-        pages,
-        publisher,
-        pub_date,
-        price,
-        stock,
-        genre,
-        author
-      });
+      const response = await request(app)
+        .post('/book/')
+        .set('Authorization', 'bearer ' + token)
+        .send({
+          isbn,
+          title,
+          description,
+          language,
+          pages,
+          publisher,
+          pub_date,
+          price,
+          stock,
+          genre,
+          author,
+        });
       expect(response.status).toBe(201);
       expect(response.body.status).toBe(true);
       expect(response.body.message).toBe('Libro agregado');
+      expect(response.body.data).not.toBe(null);
+    });
+  });
+
+  describe('PUT /book/:book_id', () => {
+    it('Editar libro correctamente', async () => {
+      const book_id = 22;
+      /*Datos usuario admin*/
+      const email = 'user4@example.com';
+      const password = 'password4';
+      /*Datos libro a modificar*/
+      const isbn = '5665565';
+      const title = 'Titulo de prueba de edicion2';
+      const description = 'Descripcion de prueba de edicion';
+      const language = 'Espanol';
+      const pages = 100;
+      const publisher = 'Montena';
+      const pub_date = '2024-03-01';
+      const price = 14450;
+      const stock = 10;
+      const genre_id = 1;
+      const author_id = 1;
+      const responseToken = await request(app)
+        .post('/login')
+        .send({ email, password });
+      const token = responseToken.body.data.token;
+      const response = await request(app)
+        .put('/book/' + book_id)
+        .set('Authorization', 'bearer ' + token)
+        .send({
+          isbn,
+          title,
+          description,
+          language,
+          pages,
+          publisher,
+          pub_date,
+          price,
+          stock,
+          genre_id,
+          author_id,
+        });
+      expect(response.status).toBe(200);
+      expect(response.body.status).toBe(true);
+      expect(response.body.message).toBe('Libro actualizado correctamente');
       expect(response.body.data).not.toBe(null);
     });
   });

@@ -458,16 +458,18 @@ export const ECommerceProvider = ({ children }) => {
     }
   }
   const obtenerLibroAdminAPI = (book_id) => {
+    let user_id = 0;
+    if (dataAuthenticatedUser) {
+      user_id = dataAuthenticatedUser.user_id;
+    }
     try {
       axios
-        .get(ENDPOINT.book + '/' + book_id)
+      .get(ENDPOINT.book + '/' + book_id + '&' + user_id)
         .then((response) => {
           setBookFound(response.data.data.book);
           setGenreFound(response.data.data.genre);
           setAuthorFound(response.data.data.author);
           
-          //if (!estadoCarga) 
-          //setearDatosEdicion(bookFound);
         })
         .catch((error) => {
           console.log(error);
