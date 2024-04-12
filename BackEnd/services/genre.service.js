@@ -88,7 +88,7 @@ class GenreService {
   async delete(id_genre) {
     const genre = await this.findOne(id_genre);
     if (!genre) {
-      throw boom.notFound('Genre not found');
+      throw boom.notFound('Genero no encontrado');
     }
     const rta = await genre.update({ deleted: true });
     return rta;
@@ -97,7 +97,7 @@ class GenreService {
   async activate(id_genre) {
     const genre = await models.Genre.findByPk(id_genre);
     if (!genre) {
-      throw boom.notFound('Genre not found');
+      throw boom.notFound('Genero no encontrado');
     }
     const rta = await genre.update({ deleted: false });
     return rta;
