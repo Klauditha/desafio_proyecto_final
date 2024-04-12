@@ -30,6 +30,8 @@ export const ECommerceProvider = ({ children }) => {
   const [bookFound, setBookFound] = useState({});
   const [authorFound, setAuthorFound] = useState({});
   const [genreFound, setGenreFound] = useState({});
+  const [genresAll, setGenresAll] = useState([]);
+  const [authorsAll, setAuthorsAll] = useState([]);
 
   /* CARRITO */
   const addToCart = async (book, quantity) => {
@@ -556,17 +558,33 @@ const fetchCartItems = async () => {
       alertify.error(
         'No se ha podido obtener el libro. Por favor, inténtelo de nuevo.'
       );
-      console.log(error);
-      
+      console.log(error);      
     }
-
   };
+
+  const ObtenerGenerosTodosAPI = () => {
+    try {
+      axios
+        .post(ENDPOINT.genre + '/all/', { timeout: 5000 })
+        .then((response) => {
+          //console.log(response.data.data.genres);
+          setGenresAll(response.data.data.genres);
+        })
+        .catch((error) => {
+          alertify.error('Error al obtener generos');
+          console.log('Error al obtener generos:', error);
+        });
+    } catch (error) {
+      alertify.error('Error al obtener generos');
+      console.log('Error al obtener generos:', error);
+    }
+  }
 
   useEffect(() => {
     setDataEditoriales();
     ObtenerAutoresActivos();
     ObtenerGenerosActivos();
-    //obtenerLibroAdminAPI();
+    ObtenerGenerosTodosAPI();
     //getUsers();
   }, [authenticatedUser]);
 
@@ -638,6 +656,13 @@ const fetchCartItems = async () => {
         obtenerLibroAdminAPI,
         handleAddToWishlist,
         fetchCartItems,
+        /* Todos los generos */
+        genresAll,
+        setGenresAll,
+        /* Todos los autores */
+        authorsAll,
+        setAuthorsAll,
+//        ObtenerGenerosTodosAPI,
       }}
     >
       {children}
