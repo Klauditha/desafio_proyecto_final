@@ -132,11 +132,11 @@ const updateBook = async (req, res, next) => {
     const body = req.body;
     const existBook = await service.findOne(book_id);
     if (!existBook) {
-      throw boom.notFound('Book not found');
+      throw boom.notFound('Libro no encontrado');
     }
     const book = await service.updateBook(book_id, body);
     if (book == null) {
-      throw boom.notFound('Book not found');
+      throw boom.notFound('Libro no encontrado');
     }
     const bookGenre = await bookGenreService.updateByGenreBook(
       book_id,
@@ -144,7 +144,7 @@ const updateBook = async (req, res, next) => {
     );
     const genre = await genreService.findOne(body.genre_id);
     if (!genre) {
-      throw boom.notFound('Genre not found');
+      throw boom.notFound('Genero no encontrado');
     }
     const bookAuthor = await bookAuthorService.updateByAuthorBook(
       book_id,
@@ -152,12 +152,12 @@ const updateBook = async (req, res, next) => {
     );
     const author = await authorService.findOne(body.author_id);
     if (!author) {
-      throw boom.notFound('Author not found');
+      throw boom.notFound('Autor no encontrado');
     }
 
     res.status(200).json({
       status: true,
-      message: 'Book updated',
+      message: 'Libro actualizado correctamente',
       data: {
         book,
         genre,

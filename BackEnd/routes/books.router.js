@@ -290,7 +290,7 @@ router.put('/delete/:book_id', authMiddleware, booksController.deleteBook);
  *                   default: true
  *                 message:
  *                   type: string
- *                   default: The book was updated
+ *                   default: Libro actualizado correctamente
  *                 data:
  *                   type: array
  *                   items:
@@ -312,7 +312,7 @@ router.put('/delete/:book_id', authMiddleware, booksController.deleteBook);
  *                   default: false
  *                 message:
  *                   type: string
- *                   default: The book was not found
+ *                   default: Libro no encontrado
  *                 data:
  *                   type: object
  *                   default: null
