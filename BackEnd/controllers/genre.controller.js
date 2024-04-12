@@ -53,7 +53,7 @@ const getGenres = async (req, res, next) => {
     const genres = await service.findAll();
     res.status(200).json({
       status: true,
-      message: 'Genres found',
+      message: 'Generos encontrados',
       data: {
         genres,
       },
@@ -74,7 +74,7 @@ const getGenresActive = async (req, res, next) => {
     const genres = await service.getGenresActive();
     res.status(200).json({
       status: true,
-      message: 'Genres found',
+      message: 'Generos activos encontrados',
       data: {
         genres,
       },
@@ -139,7 +139,7 @@ const deleteGenre = async (req, res, next) => {
     const genre = await service.delete(genre_id);
     res.status(200).json({
       status: true,
-      message: 'Genre deleted',
+      message: 'Genero desactivado',
       data: {
         genre,
       },
@@ -161,7 +161,7 @@ const activateGenre = async (req, res, next) => {
     const genre = await service.activate(genre_id);
     res.status(200).json({
       status: true,
-      message: 'Genre activated',
+      message: 'Genero activado',
       data: {
         genre,
       },

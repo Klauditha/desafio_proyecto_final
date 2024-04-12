@@ -417,7 +417,7 @@ router.put(
  *                   type: boolean
  *                 message:
  *                   type: string
- *                   default: Genre desactivated
+ *                   default: Genero desactivado
  *                 data:
  *                   type: object
  *                   properties:
@@ -436,7 +436,7 @@ router.put(
  *                   default: false
  *                 message:
  *                   type: string
- *                   default: Genre not found
+ *                   default: Genero no encontrado
  *                 data:
  *                   type: object
  *                   default: null
@@ -488,7 +488,7 @@ router.delete('/:genre_id', authMiddleware, genreController.deleteGenre);
  *                   type: boolean
  *                 message:
  *                   type: string
- *                   default: Genre activated
+ *                   default: Genero activado
  *                 data:
  *                   type: object
  *                   properties:
@@ -507,7 +507,7 @@ router.delete('/:genre_id', authMiddleware, genreController.deleteGenre);
  *                   default: false
  *                 message:
  *                   type: string
- *                   default: Genre not found
+ *                   default: Genero no encontrado
  *                 data:
  *                   type: object
  *                   default: null
