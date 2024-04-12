@@ -567,7 +567,6 @@ const fetchCartItems = async () => {
       axios
         .post(ENDPOINT.genre + '/all/', { timeout: 5000 })
         .then((response) => {
-          //console.log(response.data.data.genres);
           setGenresAll(response.data.data.genres);
         })
         .catch((error) => {
@@ -662,7 +661,7 @@ const fetchCartItems = async () => {
         /* Todos los autores */
         authorsAll,
         setAuthorsAll,
-//        ObtenerGenerosTodosAPI,
+        ObtenerGenerosTodosAPI,
       }}
     >
       {children}

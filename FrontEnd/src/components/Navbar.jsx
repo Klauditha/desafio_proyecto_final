@@ -165,7 +165,7 @@ export default function Navbar() {
                           )}
                       </div>
                       <div>
-                      {dataAuthenticatedUser &&
+                        {dataAuthenticatedUser &&
                           dataAuthenticatedUser.admin && (
                             <NavLink
                               className={({ isActive }) =>
@@ -179,8 +179,9 @@ export default function Navbar() {
                             </NavLink>
                           )}
                       </div>
+                      {/* 
                       <div>
-                      {dataAuthenticatedUser &&
+                        {dataAuthenticatedUser &&
                           dataAuthenticatedUser.admin && (
                             <NavLink
                               className={({ isActive }) =>
@@ -188,12 +189,13 @@ export default function Navbar() {
                                   ? 'font-bold text-blue-900 dark:text-gray-50 '
                                   : 'text-gray-500 dark:text-gray-500'
                               }
-                              to="/managergenres"
+                              to="/managerauthors"
                             >
                               Gestión de Autores
                             </NavLink>
                           )}
                       </div>
+                      */}
                       <div>
                         {dataAuthenticatedUser ? (
                           <NavLink
@@ -320,28 +322,6 @@ export default function Navbar() {
 
               {dataAuthenticatedUser && dataAuthenticatedUser.admin && (
                 <>
-                  {/*
-                  <NavLink
-                    className={({ isActive }) =>
-                      isActive
-                        ? "font-bold text-blue-900 dark:text-gray-50 "
-                        : "text-gray-500 dark:text-gray-500"
-                    }
-                    to="/authors"
-                  >
-                    Autores
-                  </NavLink>
-                  <NavLink
-                    className={({ isActive }) =>
-                      isActive
-                        ? "font-bold text-blue-900 dark:text-gray-50 "
-                        : "text-gray-500 dark:text-gray-500"
-                    }
-                    to="/genres"
-                  >
-                    Géneros
-                  </NavLink>
-                  */}
                   <NavLink
                     className={({ isActive }) =>
                       isActive
@@ -362,16 +342,17 @@ export default function Navbar() {
                   >
                     Gestión de Géneros
                   </NavLink>
+                  {/*
                   <NavLink
                     className={({ isActive }) =>
                       isActive
                         ? 'font-bold text-blue-900 dark:text-gray-50 '
                         : 'text-gray-500 dark:text-gray-500'
                     }
-                    to="/managerbooks"
+                    to="/managerauthors"
                   >
                     Gestión de Autores
-                  </NavLink>
+                  </NavLink> */}
                 </>
               )}
               {dataAuthenticatedUser && !dataAuthenticatedUser.admin && (

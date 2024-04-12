@@ -33,6 +33,7 @@ describe('Genre API Routes', () => {
       const token = responseToken.body.data.token;
       const response = await request(app).delete('/genre/' + genre_id)
       .set('Authorization', 'bearer ' + token);
+      console.log(response.body);
       expect(response.status).toBe(200);
       expect(response.body.status).toBe(true);
       expect(response.body.message).toBe('Genero desactivado');
@@ -42,7 +43,7 @@ describe('Genre API Routes', () => {
 
   describe('PUT /genre/activate/{genre_id}', () => {
     it('Activar genero correctamente', async () => {
-      const genre_id = 1;
+      const genre_id = 2;
       const email = 'user4@example.com';
       const password = 'password4';
       const responseToken = await request(app)
