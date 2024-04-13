@@ -64,7 +64,7 @@ class AuthorService {
   async delete(id_author) {
     const author = await this.findOne(id_author);
     if (!author) {
-      throw boom.notFound('Author not found');
+      throw boom.notFound('Auor no encontrado');
     }
     const rta = await author.update({ deleted: true });
     return rta;
@@ -73,7 +73,7 @@ class AuthorService {
   async activate(id_author) {
     const author = await models.Author.findByPk(id_author);
     if (!author) {
-      throw boom.notFound('Author not found');
+      throw boom.notFound('Autor no encontrado');
     }
     const rta = await author.update({ deleted: false });
     return rta;

@@ -10,19 +10,19 @@ import { ENDPOINT } from '../../../config/constants';
 import * as Dialog from '@radix-ui/react-dialog';
 import '../../ui/dialog.css';
 
-const AdminGenres = () => {
+const AdminAuthors = () => {
     const wait = () => new Promise((resolve) => setTimeout(resolve, 1000));
-  const { ObtenerGenerosTodosAPI, genresAll, setGenresAll } =
+  const { ObtenerAutoresTodosAPI, authorsAll, setAuthorsAll } =
     useContext(ECommerceContext);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   
 
-    const activarGenero = (genre_id) => {
+    const activarAutor = (autor_id) => {
     alertify
       .confirm(
-        'Activar Genero',
-        '¿Seguro que quieres activar este genero?',
+        'Activar Autor',
+        '¿Seguro que quieres activar este autor?',
         function () {
           try {
             let token = sessionStorage.getItem('token');
@@ -30,18 +30,18 @@ const AdminGenres = () => {
               Authorization: `Bearer ${token}`,
             };
             axios
-              .put(`${ENDPOINT.genre}/activate/${genre_id}`, {}, { headers })
+              .put(`${ENDPOINT.author}/activate/${author_id}`, {}, { headers })
               .then((response) => {
-                ObtenerGenerosTodosAPI();
-                alertify.success('Genero activado exitosamente');
+                ObtenerAutoresTodosAPI();
+                alertify.success('Autor activado exitosamente');
               })
               .catch((error) => {
                 console.log(error);
-                alertify.error('Error al activar genero');
+                alertify.error('Error al activar autor');
               });
           } catch (error) {
             console.log(error);
-            alertify.error('Error al activar genero');
+            alertify.error('Error al activar autor');
           }
         },
         function () {
@@ -56,30 +56,30 @@ const AdminGenres = () => {
       });
   };
 
-  const desactivarGenero = (genre_id) => {
+  const desactivarAutor = (author_id) => {
     alertify
       .confirm(
-        'Desactivar Genero',
-        '¿Seguro que quieres desactivar este genero?',
+        'Desactivar Autor',
+        '¿Seguro que quieres desactivar este autor?',
         function () {
           try {
             let token = sessionStorage.getItem('token');
             axios
-              .delete(`${ENDPOINT.genre}/${genre_id}`, {
+              .delete(`${ENDPOINT.author}/${author_id}`, {
                 headers: {
                   Authorization: `Bearer ${token}`,
                 },
               })
               .then((response) => {
-                ObtenerGenerosTodosAPI();
-                alertify.success('Genero desactivado exitosamente');
+                ObtenerAutoresTodosAPI();
+                alertify.success('Autor desactivado exitosamente');
               })
               .catch((error) => {
                 console.log(error);
-                alertify.error('Error al desactivar genero');
+                alertify.error('Error al desactivar autor');
               });
           } catch (error) {
-            alertify.error('Error al desactivar genero');
+            alertify.error('Error al desactivar autor');
             console.log(error);
           }
         },
@@ -97,24 +97,13 @@ const AdminGenres = () => {
   useEffect(() => {}, []);
   return (
     <div className="min-[768px]:w-full min-[768px]:h-full pb-8">
-      <Dialog.Root open={open} onOpenChange={setOpen}>
-        <Dialog.Trigger>Open</Dialog.Trigger>
-        <Dialog.Portal>
-          <Dialog.Overlay />
-          <Dialog.Content>
-            <Dialog.Title>Editar Genero</Dialog.Title>
-            <Dialog.Description>Editar el genero de libros</Dialog.Description>
-            <Dialog.Close>Close</Dialog.Close>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
-      <h1 className="font-bold text-xl text-center">Mantenedor Géneros</h1>
+      <h1 className="font-bold text-xl text-center">Mantenedor Autores</h1>
       <div
         className="flex justify-center pl-8 mt-4 mb-4"
-        onClick={() => navigate('/managergenres/add')}
+        onClick={() => navigate('/managerauthors/add')}
       >
         <Button size="sm" className="bg-blue-500">
-          Añadir Género
+          Añadir Autor
         </Button>
       </div>
       <div className="pl-8 pr-8 overflow-x-auto">
@@ -128,20 +117,20 @@ const AdminGenres = () => {
             </tr>
           </thead>
           <tbody className="text-center">
-            {genresAll.map((genre) => (
+            {authorsAll.map((author) => (
               <tr
                 className="text-center border border-gray-300"
-                key={genre.genre_id}
+                key={author.author_id}
               >
-                <td>{genre.genre_id}</td>
-                <td className="w-1/12 text-left">{genre.name}</td>
-                <td className="w-1/12">{genre.quantitybook}</td>
+                <td>{author.author_id}</td>
+                <td className="w-1/12 text-left">{author.name}</td>
+                <td className="w-1/12">{author.quantitybook}</td>
                 <td className="flex justify-center">
                   <Button
                     size="sm"
                     className="m-auto bg-yellow-500 hover:bg-yellow-800  p-2"
                     onClick={() => {
-                      //navigate('/managergenres/edit/' + genre.id);
+                      
                       wait().then(() => {
                         setOpen(true);
                         console.log(open);
@@ -150,12 +139,12 @@ const AdminGenres = () => {
                   >
                     Editar
                   </Button>
-                  {genre.deleted ? (
+                  {author.deleted ? (
                     <Button
                       size="sm"
                       className="m-auto bg-green-500 hover:bg-green-800  pl-4 pr-4"
                       onClick={() => {
-                        activarGenero(genre.genre_id);
+                        activarAutor(author.author_id);
                       }}
                     >
                       Activar
@@ -165,7 +154,7 @@ const AdminGenres = () => {
                       size="sm"
                       className="m-auto bg-red-500 hover:bg-red-800 p-2"
                       onClick={() => {
-                        desactivarGenero(genre.genre_id);
+                        desactivarAutor(author.author_id);
                       }}
                     >
                       Desactivar
@@ -181,4 +170,4 @@ const AdminGenres = () => {
   );
 };
 
-export default AdminGenres;
+export default AdminAuthors;

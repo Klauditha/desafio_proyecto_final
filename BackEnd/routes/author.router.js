@@ -118,7 +118,7 @@ router.get('/:author_id', authorController.getAuthor);
  *                   type: boolean
  *                 message:
  *                   type: string
- *                   default: Authors found
+ *                   default: Autores encontrados
  *                 data:
  *                   type: array
  *                   items:
@@ -179,7 +179,7 @@ router.post('/all', authorController.getAuthors);
  *                   type: boolean
  *                 message:
  *                   type: string
- *                   default: Authors found
+ *                   default: Autores activos encontrados
  *                 data:
  *                   type: array
  *                   items:
@@ -417,7 +417,7 @@ router.put(
  *                   type: boolean
  *                 message:
  *                   type: string
- *                   default: Author desactivated
+ *                   default: Autor desactivado
  *                 data:
  *                   type: object
  *                   properties:
@@ -436,7 +436,7 @@ router.put(
  *                   default: false
  *                 message:
  *                   type: string
- *                   default: Author not found
+ *                   default: Autor no encontrado
  *                 data:
  *                   type: object
  *                   default: null
@@ -457,7 +457,7 @@ router.put(
  *                   type: object
  *                   default: null
  */
-router.delete('/:authorId', authMiddleware, authorController.deleteAuthor);
+router.delete('/:author_id', authMiddleware, authorController.deleteAuthor);
 
 /**
  * @swagger
@@ -488,7 +488,7 @@ router.delete('/:authorId', authMiddleware, authorController.deleteAuthor);
  *                   type: boolean
  *                 message:
  *                   type: string
- *                   default: Author activated
+ *                   default: Autor activado
  *                 data:
  *                   type: object
  *                   properties:
@@ -507,7 +507,7 @@ router.delete('/:authorId', authMiddleware, authorController.deleteAuthor);
  *                   default: false
  *                 message:
  *                   type: string
- *                   default: Author not found
+ *                   default: Autor no encontrado
  *                 data:
  *                   type: object
  *                   default: null

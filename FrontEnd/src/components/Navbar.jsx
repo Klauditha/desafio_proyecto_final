@@ -179,7 +179,7 @@ export default function Navbar() {
                             </NavLink>
                           )}
                       </div>
-                      {/* 
+
                       <div>
                         {dataAuthenticatedUser &&
                           dataAuthenticatedUser.admin && (
@@ -195,7 +195,7 @@ export default function Navbar() {
                             </NavLink>
                           )}
                       </div>
-                      */}
+
                       <div>
                         {dataAuthenticatedUser ? (
                           <NavLink
@@ -342,7 +342,7 @@ export default function Navbar() {
                   >
                     Gestión de Géneros
                   </NavLink>
-                  {/*
+                  
                   <NavLink
                     className={({ isActive }) =>
                       isActive
@@ -352,7 +352,7 @@ export default function Navbar() {
                     to="/managerauthors"
                   >
                     Gestión de Autores
-                  </NavLink> */}
+                  </NavLink> 
                 </>
               )}
               {dataAuthenticatedUser && !dataAuthenticatedUser.admin && (
