@@ -61,7 +61,7 @@ class GenreService {
       let genres = [];
       const client = await pool.connect();
       const query =
-        'SELECT G.genre_id, G.name, G.deleted, CAST(COUNT(BG.book_id) as integer) quantityBook FROM genres G JOIN books_genres BG ON G.genre_id = BG.genre_id GROUP BY G.genre_id, G.name, G.deleted ORDER BY G.genre_id;';
+        'SELECT G.genre_id, G.name, G.deleted, CAST(COUNT(BG.book_id) as integer) quantityBook FROM genres G LEFT JOIN books_genres BG ON G.genre_id = BG.genre_id GROUP BY G.genre_id, G.name, G.deleted ORDER BY G.genre_id;';
       const result = await client.query(query);
       genres = result.rows;
       return genres;

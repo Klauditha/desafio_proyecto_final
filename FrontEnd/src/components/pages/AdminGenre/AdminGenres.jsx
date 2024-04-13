@@ -4,21 +4,22 @@
 import { useContext, useEffect, useState } from 'react';
 import { ECommerceContext } from '../../../Context/ECommerceContext';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ENDPOINT } from '../../../config/constants';
-import * as Dialog from '@radix-ui/react-dialog';
-import '../../ui/dialog.css';
+import { Dialog } from '../../ui/dialog';
+import { Label } from '../../ui/label';
+import { Input } from '../../ui/input';
 
 const AdminGenres = () => {
-    const wait = () => new Promise((resolve) => setTimeout(resolve, 1000));
-  const { ObtenerGenerosTodosAPI, genresAll, setGenresAll } =
-    useContext(ECommerceContext);
-  const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
-  
+  const { ObtenerGenerosTodosAPI, genresAll } = useContext(ECommerceContext);
+  const [openAgregar, setOpenAgregar] = useState(false);
+  const [openEditar, setOpenEditar] = useState(false);
+  const [nameEditar, setNameEditar] = useState('');
+  const [genre_idEditar, setGenre_idEditar] = useState(0);
+  const [nameAgregar, setNameAgregar] = useState('');
 
-    const activarGenero = (genre_id) => {
+
+  const activarGenero = (genre_id) => {
     alertify
       .confirm(
         'Activar Genero',
@@ -94,26 +95,71 @@ const AdminGenres = () => {
         },
       });
   };
-  useEffect(() => {}, []);
+
+  const actualizarGenero = () => {
+    try {
+      let token = sessionStorage.getItem('token');
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      let genre_id = genre_idEditar;
+      axios
+        .put(`${ENDPOINT.genre}/${genre_id}`, { name: nameEditar }, { headers })
+        .then((response) => {
+          ObtenerGenerosTodosAPI();
+          limpiarEditar();
+          alertify.success('Genero actualizado exitosamente');
+        })
+        .catch((error) => {
+          console.log(error);
+          alertify.error('Error al actualizar genero');
+        });
+    } catch (error) {
+      alertify.error('Error al actualizar genero');
+      console.log(error);
+    }
+  };
+
+  const limpiarEditar = () => {
+    setNameEditar('');
+    setGenre_idEditar(0);
+  };
+
+  const agregarGenero = () => {
+    try {
+      let token = sessionStorage.getItem('token');
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      axios
+        .post(`${ENDPOINT.genre}`, { name: nameAgregar }, { headers })
+        .then((response) => {
+          ObtenerGenerosTodosAPI;
+          limpiarAgregar();
+          alertify.success('Genero agregado exitosamente');
+        })
+        .catch((error) => {
+          console.log(error);
+          alertify.error('Error al agregar genero');
+        });
+    } catch (error) {
+      alertify.error('Error al agregar genero');
+      console.log(error);
+    }
+  };
+  const limpiarAgregar = () => {
+    setNameAgregar('');
+  };
+
   return (
     <div className="min-[768px]:w-full min-[768px]:h-full pb-8">
-      <Dialog.Root open={open} onOpenChange={setOpen}>
-        <Dialog.Trigger>Open</Dialog.Trigger>
-        <Dialog.Portal>
-          <Dialog.Overlay />
-          <Dialog.Content>
-            <Dialog.Title>Editar Genero</Dialog.Title>
-            <Dialog.Description>Editar el genero de libros</Dialog.Description>
-            <Dialog.Close>Close</Dialog.Close>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
       <h1 className="font-bold text-xl text-center">Mantenedor Géneros</h1>
-      <div
-        className="flex justify-center pl-8 mt-4 mb-4"
-        onClick={() => navigate('/managergenres/add')}
-      >
-        <Button size="sm" className="bg-blue-500">
+      <div className="flex justify-center pl-8 mt-4 mb-4">
+        <Button
+          size="sm"
+          className="bg-blue-500"
+          onClick={() => setOpenAgregar(true)}
+        >
           Añadir Género
         </Button>
       </div>
@@ -141,11 +187,9 @@ const AdminGenres = () => {
                     size="sm"
                     className="m-auto bg-yellow-500 hover:bg-yellow-800  p-2"
                     onClick={() => {
-                      //navigate('/managergenres/edit/' + genre.id);
-                      wait().then(() => {
-                        setOpen(true);
-                        console.log(open);
-                      });
+                      setGenre_idEditar(genre.genre_id);
+                      setNameEditar(genre.name);
+                      setOpenEditar(true);
                     }}
                   >
                     Editar
@@ -177,6 +221,60 @@ const AdminGenres = () => {
           </tbody>
         </table>
       </div>
+      <Dialog
+        id="dialogAdd"
+        title={'Agregar genero'}
+        content={
+          <form>
+            <div className="field-wrapper">
+              <fieldset className="fieldset">
+                <Label htmlFor="nombreAutor">Nombre</Label>
+                <Input
+                  id="nombreGenero"
+                  required
+                  type="text"
+                  value={nameAgregar || ''}
+                  onChange={(e) => setNameAgregar(e.target.value)}
+                />
+              </fieldset>
+            </div>
+          </form>
+        }
+        textoBoton2={'Cancelar'}
+        textoBoton1={'Guardar'}
+        open={openAgregar}
+        setOpen={setOpenAgregar}
+        accionBoton1={agregarGenero}
+        accionBoton2={limpiarAgregar}
+      ></Dialog>
+
+      <Dialog
+        id="dialogEdit"
+        title={'Editar genero'}
+        content={
+          <form>
+            <div className="field-wrapper">
+              <fieldset className="fieldset">
+                <Label htmlFor="nombreAutor">Nombre</Label>
+                <Input
+                  id="nombreGenero"
+                  required
+                  type="text"
+                  value={nameEditar || ''}
+                  onChange={(e) => {
+                    setNameEditar(e.target.value);
+                  }}
+                />
+              </fieldset>
+            </div>
+          </form>
+        }
+        textoBoton2={'Cancelar'}
+        textoBoton1={'Guardar'}
+        accionBoton1={actualizarGenero}
+        open={openEditar}
+        setOpen={setOpenEditar}
+      ></Dialog>
     </div>
   );
 };

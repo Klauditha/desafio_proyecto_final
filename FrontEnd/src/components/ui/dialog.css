@@ -13,6 +13,12 @@
     padding: 16px 24px;
     border-top: 1px solid #dee5ec;
   }
+  .dialog-title {
+    margin: 0;
+    font-size: 1rem;
+    text-align: center !important;
+    font-weight: 600;
+  }
   .content {
     background-color: white;
     border-radius: 3px;
@@ -69,26 +75,25 @@
     cursor: pointer;
     transition: background-color 0.3s ease-out;
     border-radius: 3px;
-    color: #fff;
     font-size: 12px;
     font-weight: 600;
     height: 32px;
     width: 125px;
   }
   .cancel {
-    color: #000;
-    background-color: #fff;
+    color: #fff;
+    background-color:red !important;
     border: 1px solid #dee5ec;
   }
   .cancel:hover {
     border-color: lightgray;
   }
   .action {
-    background-color: #ff5f5f;
-    border: 1px solid #ff5f5f;
+    background-color: green !important;
+    color: #fff;
   }
   .action:hover {
-    border-color: tomato;
+    border-color: rgb(4, 71, 40);
   }
   .input {
     all: unset;
