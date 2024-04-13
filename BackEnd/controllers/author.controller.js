@@ -9,7 +9,7 @@ const createAuthor = async (req, res, next) => {
     const newAuthor = await service.create(body);
     res.status(200).json({
       status: true,
-      message: 'New author created',
+      message: 'Nuevo autor creado',
       data: {
         author: newAuthor,
       },
@@ -31,7 +31,7 @@ const getAuthor = async (req, res, next) => {
     const author = await service.findOne(author_id);
     res.status(200).json({
       status: true,
-      message: 'Author found',
+      message: 'Autor no encontrado',
       data: {
         author,
       },
@@ -54,7 +54,7 @@ const updateAuthor = async(req, res, next) => {
     const author = await service.update(body, author_id);
     res.status(200).json({
       status: true,
-      message: 'Author updated',
+      message: 'Autor actualizado',
       data: {
         author,
       },
@@ -75,7 +75,7 @@ const deleteAuthor = async (req, res, next) => {
     const author = await service.delete(author_id);
     res.status(200).json({
       status: true,
-      message: 'Author deleted',
+      message: 'Autor desactivado',
       data: {
         author,
       },
@@ -96,7 +96,7 @@ const activateAuthor = async (req, res, next) => {
     const author = await service.activate(author_id);
     res.status(200).json({
       status: true,
-      message: 'Author activated',
+      message: 'Autor activado',
       data: {
         author,
       },
@@ -117,7 +117,7 @@ const getAuthors = async (req, res, next) => {
     const authors = await service.findAll();
     res.status(200).json({
       status: true,
-      message: 'Authors found',
+      message: 'Autores encontrados',
       data: {
         authors,
       },
@@ -137,7 +137,7 @@ const getAuthorsActive = async (req, res, next) => {
     const authors = await service.getAuthorsActive();
     res.status(200).json({
       status: true,
-      message: 'Authors found',
+      message: 'Autores activos encontrados',
       data: {
         authors,
       },

@@ -32,6 +32,7 @@ export const ECommerceProvider = ({ children }) => {
   const [genreFound, setGenreFound] = useState({});
   const [genresAll, setGenresAll] = useState([]);
   const [authorsAll, setAuthorsAll] = useState([]);
+  
 
   /* CARRITO */
   const addToCart = async (book, quantity) => {
@@ -567,7 +568,6 @@ const fetchCartItems = async () => {
       axios
         .post(ENDPOINT.genre + '/all/', { timeout: 5000 })
         .then((response) => {
-          //console.log(response.data.data.genres);
           setGenresAll(response.data.data.genres);
         })
         .catch((error) => {
@@ -580,11 +580,29 @@ const fetchCartItems = async () => {
     }
   }
 
+  const ObtenerAutoresTodosAPI = () => {
+    try {
+      axios
+        .post(ENDPOINT.author + '/all/', { timeout: 5000 })
+        .then((response) => {
+          setAuthorsAll(response.data.data.authors);
+        })
+        .catch((error) => {
+          alertify.error('Error al obtener autores');
+          console.log('Error al obtener autores:', error);
+        });
+    } catch (error) {
+      alertify.error('Error al obtener autores');
+      console.log('Error al obtener autores:', error);
+    }
+  }
+
   useEffect(() => {
     setDataEditoriales();
     ObtenerAutoresActivos();
     ObtenerGenerosActivos();
     ObtenerGenerosTodosAPI();
+    ObtenerAutoresTodosAPI();
     //getUsers();
   }, [authenticatedUser]);
 
@@ -659,10 +677,12 @@ const fetchCartItems = async () => {
         /* Todos los generos */
         genresAll,
         setGenresAll,
+        ObtenerGenerosTodosAPI,
         /* Todos los autores */
         authorsAll,
         setAuthorsAll,
-//        ObtenerGenerosTodosAPI,
+        ObtenerAutoresTodosAPI
+        
       }}
     >
       {children}

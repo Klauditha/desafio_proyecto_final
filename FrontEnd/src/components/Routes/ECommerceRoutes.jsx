@@ -13,6 +13,7 @@ import AdminBooks from '../pages/AdminBooks/AdminBooks';
 import AddEditBook from '../pages/AdminBooks/AddEditBook';
 import Userprofile from '../pages/Userprofile';
 import AdminGenres from '../pages/AdminGenre/AdminGenres';
+import AdminAuthors from '../pages/AdminAuthor/AdminAuthors';
 
 const ECommerceRoutes = () => {
   return (
@@ -28,6 +29,7 @@ const ECommerceRoutes = () => {
       <Route path="/book/:id" element={<BookDetail />} />
       <Route path="/managerbooks" element={<AdminBooks />} />
       <Route path="/managergenres" element={<AdminGenres />} />
+      <Route path="/managerauthors" element={<AdminAuthors />} />
       <Route path="/deleteBook" element={<Home />} />
       <Route path="/managerbooks/edit/:book_id" element={<AddEditBook />} />
       <Route path="/managerbooks/add" element={<AddEditBook />} />

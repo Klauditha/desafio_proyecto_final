@@ -9,21 +9,20 @@ import { ENDPOINT } from '../../../config/constants';
 import { Dialog } from '../../ui/dialog';
 import { Label } from '../../ui/label';
 import { Input } from '../../ui/input';
-
-const AdminGenres = () => {
-  const { ObtenerGenerosTodosAPI, genresAll } = useContext(ECommerceContext);
+const AdminAuthors = () => {
+  const { ObtenerAutoresTodosAPI, authorsAll } =
+    useContext(ECommerceContext);
   const [openAgregar, setOpenAgregar] = useState(false);
   const [openEditar, setOpenEditar] = useState(false);
   const [nameEditar, setNameEditar] = useState('');
-  const [genre_idEditar, setGenre_idEditar] = useState(0);
+  const [author_idEditar, setAuthor_idEditar] = useState(0);
   const [nameAgregar, setNameAgregar] = useState('');
 
-
-  const activarGenero = (genre_id) => {
+  const activarAutor = (author_id) => {
     alertify
       .confirm(
-        'Activar Genero',
-        '¿Seguro que quieres activar este genero?',
+        'Activar Autor',
+        '¿Seguro que quieres activar este autor?',
         function () {
           try {
             let token = sessionStorage.getItem('token');
@@ -31,18 +30,18 @@ const AdminGenres = () => {
               Authorization: `Bearer ${token}`,
             };
             axios
-              .put(`${ENDPOINT.genre}/activate/${genre_id}`, {}, { headers })
+              .put(`${ENDPOINT.author}/activate/${author_id}`, {}, { headers })
               .then((response) => {
-                ObtenerGenerosTodosAPI();
-                alertify.success('Genero activado exitosamente');
+                ObtenerAutoresTodosAPI();
+                alertify.success('Autor activado exitosamente');
               })
               .catch((error) => {
                 console.log(error);
-                alertify.error('Error al activar genero');
+                alertify.error('Error al activar autor');
               });
           } catch (error) {
             console.log(error);
-            alertify.error('Error al activar genero');
+            alertify.error('Error al activar autor');
           }
         },
         function () {
@@ -57,30 +56,30 @@ const AdminGenres = () => {
       });
   };
 
-  const desactivarGenero = (genre_id) => {
+  const desactivarAutor = (author_id) => {
     alertify
       .confirm(
-        'Desactivar Genero',
-        '¿Seguro que quieres desactivar este genero?',
+        'Desactivar Autor',
+        '¿Seguro que quieres desactivar este autor?',
         function () {
           try {
             let token = sessionStorage.getItem('token');
             axios
-              .delete(`${ENDPOINT.genre}/${genre_id}`, {
+              .delete(`${ENDPOINT.author}/${author_id}`, {
                 headers: {
                   Authorization: `Bearer ${token}`,
                 },
               })
               .then((response) => {
-                ObtenerGenerosTodosAPI();
-                alertify.success('Genero desactivado exitosamente');
+                ObtenerAutoresTodosAPI();
+                alertify.success('Autor desactivado exitosamente');
               })
               .catch((error) => {
                 console.log(error);
-                alertify.error('Error al desactivar genero');
+                alertify.error('Error al desactivar autor');
               });
           } catch (error) {
-            alertify.error('Error al desactivar genero');
+            alertify.error('Error al desactivar autor');
             console.log(error);
           }
         },
@@ -96,54 +95,58 @@ const AdminGenres = () => {
       });
   };
 
-  const actualizarGenero = () => {
+  const actualizarAutor = () => {
     try {
       let token = sessionStorage.getItem('token');
       const headers = {
         Authorization: `Bearer ${token}`,
       };
-      let genre_id = genre_idEditar;
+      let author_id = author_idEditar;
       axios
-        .put(`${ENDPOINT.genre}/${genre_id}`, { name: nameEditar }, { headers })
+        .put(
+          `${ENDPOINT.author}/${author_id}`,
+          { name: nameEditar },
+          { headers }
+        )
         .then((response) => {
-          ObtenerGenerosTodosAPI();
+          ObtenerAutoresTodosAPI();
           limpiarEditar();
-          alertify.success('Genero actualizado exitosamente');
+          alertify.success('Autor actualizado exitosamente');
         })
         .catch((error) => {
           console.log(error);
-          alertify.error('Error al actualizar genero');
+          alertify.error('Error al actualizar autor');
         });
     } catch (error) {
-      alertify.error('Error al actualizar genero');
+      alertify.error('Error al actualizar autor');
       console.log(error);
     }
   };
 
   const limpiarEditar = () => {
     setNameEditar('');
-    setGenre_idEditar(0);
+    setAuthor_idEditar(0);
   };
 
-  const agregarGenero = () => {
+  const agregarAutor = () => {
     try {
       let token = sessionStorage.getItem('token');
       const headers = {
         Authorization: `Bearer ${token}`,
       };
       axios
-        .post(`${ENDPOINT.genre}`, { name: nameAgregar }, { headers })
+        .post(`${ENDPOINT.author}`, { name: nameAgregar }, { headers })
         .then((response) => {
-          ObtenerGenerosTodosAPI;
+          ObtenerAutoresTodosAPI();
           limpiarAgregar();
-          alertify.success('Genero agregado exitosamente');
+          alertify.success('Autor agregado exitosamente');
         })
         .catch((error) => {
           console.log(error);
-          alertify.error('Error al agregar genero');
+          alertify.error('Error al agregar autor');
         });
     } catch (error) {
-      alertify.error('Error al agregar genero');
+      alertify.error('Error al agregar autor');
       console.log(error);
     }
   };
@@ -153,14 +156,16 @@ const AdminGenres = () => {
 
   return (
     <div className="min-[768px]:w-full min-[768px]:h-full pb-8">
-      <h1 className="font-bold text-xl text-center">Mantenedor Géneros</h1>
+      <h1 className="font-bold text-xl text-center">Mantenedor Autores</h1>
       <div className="flex justify-center pl-8 mt-4 mb-4">
         <Button
           size="sm"
           className="bg-blue-500"
-          onClick={() => setOpenAgregar(true)}
+          onClick={() => {
+            setOpenAgregar(true);
+          }}
         >
-          Añadir Género
+          Añadir Autor
         </Button>
       </div>
       <div className="pl-8 pr-8 overflow-x-auto">
@@ -174,32 +179,32 @@ const AdminGenres = () => {
             </tr>
           </thead>
           <tbody className="text-center">
-            {genresAll.map((genre) => (
+            {authorsAll.map((author) => (
               <tr
                 className="text-center border border-gray-300"
-                key={genre.genre_id}
+                key={author.author_id}
               >
-                <td>{genre.genre_id}</td>
-                <td className="w-1/12 text-left">{genre.name}</td>
-                <td className="w-1/12">{genre.quantitybook}</td>
+                <td>{author.author_id}</td>
+                <td className="w-1/12 text-left">{author.name}</td>
+                <td className="w-1/12">{author.quantitybook}</td>
                 <td className="flex justify-center">
                   <Button
                     size="sm"
                     className="m-auto bg-yellow-500 hover:bg-yellow-800  p-2"
                     onClick={() => {
-                      setGenre_idEditar(genre.genre_id);
-                      setNameEditar(genre.name);
+                      setAuthor_idEditar(author.author_id);
+                      setNameEditar(author.name);
                       setOpenEditar(true);
                     }}
                   >
                     Editar
                   </Button>
-                  {genre.deleted ? (
+                  {author.deleted ? (
                     <Button
                       size="sm"
                       className="m-auto bg-green-500 hover:bg-green-800  pl-4 pr-4"
                       onClick={() => {
-                        activarGenero(genre.genre_id);
+                        activarAutor(author.author_id);
                       }}
                     >
                       Activar
@@ -209,7 +214,7 @@ const AdminGenres = () => {
                       size="sm"
                       className="m-auto bg-red-500 hover:bg-red-800 p-2"
                       onClick={() => {
-                        desactivarGenero(genre.genre_id);
+                        desactivarAutor(author.author_id);
                       }}
                     >
                       Desactivar
@@ -221,16 +226,17 @@ const AdminGenres = () => {
           </tbody>
         </table>
       </div>
+
       <Dialog
         id="dialogAdd"
-        title={'Agregar genero'}
+        title={'Agregar autor'}
         content={
           <form>
             <div className="field-wrapper">
               <fieldset className="fieldset">
                 <Label htmlFor="nombreAutor">Nombre</Label>
                 <Input
-                  id="nombreGenero"
+                  id="nombreAutor"
                   required
                   type="text"
                   value={nameAgregar || ''}
@@ -244,20 +250,20 @@ const AdminGenres = () => {
         textoBoton1={'Guardar'}
         open={openAgregar}
         setOpen={setOpenAgregar}
-        accionBoton1={agregarGenero}
+        accionBoton1={agregarAutor}
         accionBoton2={limpiarAgregar}
       ></Dialog>
 
       <Dialog
         id="dialogEdit"
-        title={'Editar genero'}
+        title={'Editar autor'}
         content={
           <form>
             <div className="field-wrapper">
               <fieldset className="fieldset">
                 <Label htmlFor="nombreAutor">Nombre</Label>
                 <Input
-                  id="nombreGenero"
+                  id="nombreAutor"
                   required
                   type="text"
                   value={nameEditar || ''}
@@ -271,7 +277,7 @@ const AdminGenres = () => {
         }
         textoBoton2={'Cancelar'}
         textoBoton1={'Guardar'}
-        accionBoton1={actualizarGenero}
+        accionBoton1={actualizarAutor}
         open={openEditar}
         setOpen={setOpenEditar}
       ></Dialog>
@@ -279,4 +285,4 @@ const AdminGenres = () => {
   );
 };
 
-export default AdminGenres;
+export default AdminAuthors;
