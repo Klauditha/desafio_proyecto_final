@@ -18,7 +18,7 @@ const AdminAuthors = () => {
   const [open, setOpen] = useState(false);
   
 
-    const activarAutor = (autor_id) => {
+    const activarAutor = (author_id) => {
     alertify
       .confirm(
         'Activar Autor',
