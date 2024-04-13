@@ -1,5 +1,6 @@
 const { models } = require('../config/sequelize');
 const boom = require('@hapi/boom');
+const { pool } = require('../config/db');
 
 class AuthorService {
   constructor() {}
@@ -9,7 +10,7 @@ class AuthorService {
     const { name } = data;
     const author = await models.Author.findOne({ where: { name } });
     if (author) {
-      throw boom.conflict('Author already exists');
+      throw boom.conflict('Autor ya existe');
     }
     const newAuthor = await models.Author.create(data);
     return newAuthor;
@@ -18,7 +19,7 @@ class AuthorService {
   async findOne(id_author) {
     const author = await models.Author.findByPk(id_author);
     if (!author) {
-      throw boom.notFound('Author not found');
+      throw boom.notFound('Autor no encontrado');
     }
     return author;
   }
@@ -32,8 +33,17 @@ class AuthorService {
   }
 
   async findAll() {
-    const authors = await models.Author.findAll();
-    return authors;
+    try {
+      let authors = [];
+      const client = await pool.connect();
+      const query =
+        'SELECT A.author_id, A.name, A.deleted, CAST(COUNT(BA.book_id) as integer) quantityBook FROM authors A JOIN books_authors BA ON A.author_id = BA.author_id GROUP BY A.author_id, A.name, A.deleted ORDER BY A.author_id;';
+      const result = await client.query(query);
+      authors = result.rows;
+      return authors;
+    } catch (error) {
+      return null;
+    }
   }
 
   async getAuthorsActive() {
