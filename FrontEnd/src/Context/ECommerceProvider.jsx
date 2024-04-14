@@ -32,6 +32,7 @@ export const ECommerceProvider = ({ children }) => {
   const [genreFound, setGenreFound] = useState({});
   const [genresAll, setGenresAll] = useState([]);
   const [authorsAll, setAuthorsAll] = useState([]);
+  const [cartItemsCheckout, setCartItemsCheckout] = useState([]);
   
 
   /* CARRITO */
@@ -681,7 +682,9 @@ const fetchCartItems = async () => {
         /* Todos los autores */
         authorsAll,
         setAuthorsAll,
-        ObtenerAutoresTodosAPI
+        ObtenerAutoresTodosAPI,
+        /* Cart */
+        cartItemsCheckout, setCartItemsCheckout
         
       }}
     >

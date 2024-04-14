@@ -23,6 +23,7 @@
     "pg": "^8.11.3",
     "pg-format": "^1.0.4",
     "sequelize": "^6.37.1",
+    "stripe": "^15.1.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0"
   },
