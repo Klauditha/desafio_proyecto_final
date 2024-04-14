@@ -1,7 +1,8 @@
-import { useContext, useEffect, useState } from "react";
-import { ECommerceContext } from "@/Context/ECommerceContext";
-import IncrementDecrementBtn from "./Incrementbutton";
-import { Button } from "./ui/button";
+/* eslint-disable no-undef */
+import { useContext, useEffect, useState } from 'react';
+import { ECommerceContext } from '@/Context/ECommerceContext';
+import IncrementDecrementBtn from './Incrementbutton';
+import { Button } from './ui/button';
 
 const CartItem = () => {
   const { cart_items, updateCartItemQuantity, fetchCartItems } =
@@ -14,7 +15,7 @@ const CartItem = () => {
       try {
         await fetchCartItems();
       } catch (error) {
-        console.error("Error fetching cart items:", error);
+        console.error('Error fetching cart items:', error);
       } finally {
         setLoading(false);
       }
@@ -52,9 +53,9 @@ const CartItem = () => {
         newQuantity
       );
       await fetchCartItems();
-      alertify.success("Libro removido");
+      alertify.success('Libro removido');
     } catch (error) {
-      console.error("Error removiendo item del carrito:", error);
+      console.error('Error removiendo item del carrito:', error);
     }
   };
 
@@ -78,7 +79,7 @@ const CartItem = () => {
                   key={cartItem.cart_item_id}
                   className="flex flex-col md:flex-row items-center justify-between gap-8 border-b border-gray-200 dark:border-gray-800 px-4 md:px-20"
                 >
-                  <div className="flex flex-col items-center md:flex-row gap-4">
+                  <div className="flex flex-col items-center md:flex-row gap-8">
                     <img
                       alt={book.book.title}
                       className="aspect-[9-16] object-cover border border-gray-200 rounded-lg overflow-hidden dark:border-gray-800"
@@ -86,22 +87,30 @@ const CartItem = () => {
                       src={book.book.img}
                       width={130}
                     />
-                    <div className="flex flex-col justify-center">
+                    <div className="flex flex-col justify-center gap-2">
                       <h2 className="text-2xl font-semibold text-balance text-center">
                         {book.book.title}
                       </h2>
                       <h2 className="text-2xl font-semibold text-center md:text-left">
-                        $ {book.book.price.toLocaleString("es-CL")}
+                        $ {book.book.price.toLocaleString('es-CL')}
                       </h2>
                     </div>
                   </div>
                   <div className="flex gap-4">
-                    <button onClick={() => handleDecrement(cartItem)}>-</button>
-                    <span>{quantity}</span>
-                    <button onClick={() => handleIncrement(cartItem)}>+</button>
-                    <button onClick={() => handleRemove(cartItem)}>
+                    <Button 
+                    className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => handleDecrement(cartItem)}>-</Button>
+                    <span className="mt-2 text-xl text-bold">{quantity}</span>
+                    <Button 
+                    className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => handleIncrement(cartItem)}>+</Button>
+                    <Button
+                      onClick={() => handleRemove(cartItem)}
+                      variant="destructive"
+                    >
                       Remover
-                    </button>
+                    </Button>
+                    
                   </div>
                 </div>
               );
