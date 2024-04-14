@@ -33,7 +33,7 @@ function AppContent() {
   }, [authenticatedUser]);
 
   return (
-    <div className="flex flex-col justify-evenly min-h-screen">
+    <div className="flex flex-col min-h-screen">
       <Navbar/>
       <ECommerceRoutes/>
       <Footer />
