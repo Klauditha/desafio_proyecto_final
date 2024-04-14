@@ -10,8 +10,9 @@ export default function CartTotal() {
   const navigate = useNavigate();
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const calculateTotalPrice =  () => {
+  const calculateTotalPrice = () => {
     let totalPrice = 0;
+    let arrayItem = [];
     for (const cartItem of cart_items) {
       const book = cartItem.book.book;
       if (book) {
@@ -25,15 +26,17 @@ export default function CartTotal() {
         bookId: cartItem.book_id,
         quantity: parseInt(cartItem.quantity),
         price: book ? parseInt(book.price) : 0,
+        image: book
+          ? process.env.URL_SITE + book.img
+          : process.env.URL_SITE + '/images/notAvailable.png',
       });
-
-      setCartItemsCheckout([...cartItemsCheckout, newItem]);
+      arrayItem.push(newItem);
+      //setCartItemsCheckout([...cartItemsCheckout, newItem]);
     }
-
+    setCartItemsCheckout(arrayItem);
     setTotalPrice(totalPrice);
   };
   useEffect(() => {
-    setCartItemsCheckout([]);
     calculateTotalPrice();
   }, [cart_items]);
 

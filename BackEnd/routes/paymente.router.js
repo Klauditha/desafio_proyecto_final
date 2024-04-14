@@ -15,10 +15,10 @@ router.post('/create-checkout-session', async (req, res, next) => {
                 console.log('item',item[0])
                 return {
                     price_data: {
-                        currency: 'usd',
-                        unit_amount: item[0].price * 100,
+                        currency: 'clp',
+                        unit_amount: item[0].price ,
                         product_data: {
-                            name: item[0].name
+                            name: item[0].name,
                         },
                         
                     },
@@ -41,7 +41,8 @@ router.post('/create-checkout-session', async (req, res, next) => {
         ui_mode: 'embedded',
         line_items: line_items,
         mode: 'payment',
-        return_url: `${CLIENT_URL}/success?session_id=${process.env.STRIPE_SECRET_KEY}}`
+        
+        return_url: `${CLIENT_URL}/success/session_id=${process.env.STRIPE_SECRET_KEY}}`
     })
 
     console.log(session)

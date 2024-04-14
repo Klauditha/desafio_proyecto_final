@@ -15,6 +15,7 @@ import Userprofile from '../pages/Userprofile';
 import AdminGenres from '../pages/AdminGenre/AdminGenres';
 import AdminAuthors from '../pages/AdminAuthor/AdminAuthors';
 import CheckoutForm from '../pages/CheckoutForm/CheckoutForm';
+import SuccessPayment from '../pages/CheckoutForm/SuccessPayment';
 
 const ECommerceRoutes = () => {
   return (
@@ -36,6 +37,7 @@ const ECommerceRoutes = () => {
       <Route path="/managerbooks/add" element={<AddEditBook />} />
       <Route path="/profile" element={<Userprofile />} />
       <Route path="/checkout" element={<CheckoutForm />} />
+      <Route path="/success/:session_id" element={<SuccessPayment />} />
     </Routes>
   );
 };
