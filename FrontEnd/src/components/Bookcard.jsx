@@ -31,7 +31,7 @@ const Bookcard = ({
   };
 
   return (
-    <Card className="w-full max-w-xs">
+    <Card className="w-full max-w-xs hover:shadow-lg cursor-pointer hover:scale-[101%]">
       <div className="grid w-full">
         <div className="relative w-full">
           <img
@@ -71,18 +71,17 @@ const Bookcard = ({
           </CardDescription>
         ) : null}
 
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center py-2">
           {displayPrice ? (
-            <span className="text-sm font-medium">${book.price}</span>
+            <span className="text-xl font-medium">${book.price}</span>
           ) : null}
           {btnAddCart ? (
             <Button
-              size="sm"
-              className="bg-blue-500 hover:bg-blue-600 mt-2 "
+              size="xs"
+              className="bg-blue-500 hover:bg-blue-600 px-3 py-2"
               onClick={(e) => handleAddToCart(book)}
             >
-              Agregar
-              <br /> al carrito
+              Agregar al carrito
             </Button>
           ) : null}
           {btnEditBook ? (
