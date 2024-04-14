@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { Link, NavLink } from 'react-router-dom';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
-import { useContext } from 'react';
-import { ECommerceContext } from '../Context/ECommerceContext';
-import { Icon } from '@radix-ui/react-select';
+import { Link, NavLink } from "react-router-dom";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { useContext } from "react";
+import { ECommerceContext } from "../Context/ECommerceContext";
+import { Icon } from "@radix-ui/react-select";
 
 export default function Navbar() {
   const {
@@ -21,18 +21,18 @@ export default function Navbar() {
     <>
       <div className="flex-col flex justify-between px-2 md:px-6">
         <div>
-          <nav className="flex items-center justify-between sm:py-0 md:py-2 py-4 border-b bg-white md:px-6 dark:bg-gray-950 border-gray-100 dark:border-gray-800">
+          <nav className="flex items-center justify-between sm:py-0 md:py-4 py-4 border-b bg-white md:px-6 dark:bg-gray-950 border-gray-100 dark:border-gray-800">
             <div>
               <Link className="mr-6 flex items-center gap-2" to="/">
                 <AustralInk className="h-6 w-6" />
                 <span className="sr-only">Tinta Austral</span>
               </Link>
             </div>
-            <div className="hidden md:flex w-full max-w-sm items-center border border-gray-300 rounded-lg px-2.5">
+            <div className="hidden md:flex w-fit absolute left-1/2 transform -translate-x-1/2 items-center border border-gray-300 rounded-lg px-2.5">
               <SearchIcon className="h-4 w-4 mr-2.5" />
               <Input
                 id="searchBooks"
-                className="w-full border-0"
+                className="w-[250px] border-0"
                 placeholder="Busca aquí"
                 type="search"
                 onChange={(e) => {
@@ -64,13 +64,13 @@ export default function Navbar() {
                   to="/cart"
                   className={({ isActive }) =>
                     isActive
-                      ? 'font-bold text-blue-900 dark:text-gray-50 '
-                      : 'text-gray-500 dark:text-gray-500'
+                      ? "font-bold text-blue-900 dark:text-gray-50 "
+                      : "text-gray-500 dark:text-gray-500"
                   }
                 >
                   <div className="flex gap-2">
                     <span>
-                      {' '}
+                      {" "}
                       <ShoppingCartIcon className="h-4 w-4 fill-current" />
                     </span>
                     <span className="hidden md:flex">Carrito</span>
@@ -103,8 +103,8 @@ export default function Navbar() {
                           to="/news"
                           className={({ isActive }) =>
                             isActive
-                              ? 'font-bold text-blue-900 dark:text-gray-50 '
-                              : 'text-gray-500 dark:text-gray-500'
+                              ? "font-bold text-blue-900 dark:text-gray-50 "
+                              : "text-gray-500 dark:text-gray-500"
                           }
                         >
                           Novedades
@@ -116,8 +116,8 @@ export default function Navbar() {
                           to="/bestselling"
                           className={({ isActive }) =>
                             isActive
-                              ? 'font-bold text-blue-900 dark:text-gray-50 '
-                              : 'text-gray-500 dark:text-gray-500'
+                              ? "font-bold text-blue-900 dark:text-gray-50 "
+                              : "text-gray-500 dark:text-gray-500"
                           }
                         >
                           Lo + vendido
@@ -129,8 +129,8 @@ export default function Navbar() {
                           to="/publishers"
                           className={({ isActive }) =>
                             isActive
-                              ? 'font-bold text-blue-900 dark:text-gray-50 '
-                              : 'text-gray-500 dark:text-gray-500'
+                              ? "font-bold text-blue-900 dark:text-gray-50 "
+                              : "text-gray-500 dark:text-gray-500"
                           }
                         >
                           Editoriales
@@ -142,8 +142,8 @@ export default function Navbar() {
                           to="/wishlist"
                           className={({ isActive }) =>
                             isActive
-                              ? 'font-bold text-blue-900 dark:text-gray-50 '
-                              : 'text-gray-500 dark:text-gray-500'
+                              ? "font-bold text-blue-900 dark:text-gray-50 "
+                              : "text-gray-500 dark:text-gray-500"
                           }
                         >
                           Lista de deseos
@@ -155,8 +155,8 @@ export default function Navbar() {
                             <NavLink
                               className={({ isActive }) =>
                                 isActive
-                                  ? 'font-bold text-blue-900 dark:text-gray-50 '
-                                  : 'text-gray-500 dark:text-gray-500'
+                                  ? "font-bold text-blue-900 dark:text-gray-50 "
+                                  : "text-gray-500 dark:text-gray-500"
                               }
                               to="/managerbooks"
                             >
@@ -170,8 +170,8 @@ export default function Navbar() {
                             <NavLink
                               className={({ isActive }) =>
                                 isActive
-                                  ? 'font-bold text-blue-900 dark:text-gray-50 '
-                                  : 'text-gray-500 dark:text-gray-500'
+                                  ? "font-bold text-blue-900 dark:text-gray-50 "
+                                  : "text-gray-500 dark:text-gray-500"
                               }
                               to="/managergenres"
                             >
@@ -186,8 +186,8 @@ export default function Navbar() {
                             <NavLink
                               className={({ isActive }) =>
                                 isActive
-                                  ? 'font-bold text-blue-900 dark:text-gray-50 '
-                                  : 'text-gray-500 dark:text-gray-500'
+                                  ? "font-bold text-blue-900 dark:text-gray-50 "
+                                  : "text-gray-500 dark:text-gray-500"
                               }
                               to="/managerauthors"
                             >
@@ -206,7 +206,7 @@ export default function Navbar() {
                             <Link
                               onClick={() => {
                                 sessionStorage.clear();
-                                window.location.href = '/';
+                                window.location.href = "/";
                               }}
                             >
                               Cerrar sesión
@@ -232,8 +232,8 @@ export default function Navbar() {
                   to="/profile"
                   className={({ isActive }) =>
                     isActive
-                      ? 'font-bold text-blue-900 dark:text-gray-50 mt-2'
-                      : 'font-bold text-green-700 dark:text-green-500 mt-2'
+                      ? "font-bold text-blue-900 dark:text-gray-50 mt-2"
+                      : "font-bold text-green-700 dark:text-green-500 mt-2"
                   }
                 >
                   <div className="hidden md:flex md:gap-2">
@@ -251,7 +251,7 @@ export default function Navbar() {
                         d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
                       />
                     </svg>
-                    {dataAuthenticatedUser.first_name}{' '}
+                    {dataAuthenticatedUser.first_name}{" "}
                     {dataAuthenticatedUser.last_name}
                   </div>
                 </NavLink>
@@ -274,7 +274,7 @@ export default function Navbar() {
                   <Link
                     onClick={() => {
                       sessionStorage.clear();
-                      window.location.href = '/';
+                      window.location.href = "/";
                     }}
                   >
                     Cerrar sesión
@@ -293,8 +293,8 @@ export default function Navbar() {
                 to="/news"
                 className={({ isActive }) =>
                   isActive
-                    ? 'font-bold text-blue-900 dark:text-gray-50 '
-                    : 'text-gray-500 dark:text-gray-500'
+                    ? "font-bold text-blue-900 dark:text-gray-50 "
+                    : "text-gray-500 dark:text-gray-500"
                 }
               >
                 Novedades
@@ -302,8 +302,8 @@ export default function Navbar() {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? 'font-bold text-blue-900 dark:text-gray-50 '
-                    : 'text-gray-500 dark:text-gray-500'
+                    ? "font-bold text-blue-900 dark:text-gray-50 "
+                    : "text-gray-500 dark:text-gray-500"
                 }
                 to="/bestselling"
               >
@@ -312,8 +312,8 @@ export default function Navbar() {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? 'font-bold text-blue-900 dark:text-gray-50 '
-                    : 'text-gray-500 dark:text-gray-500'
+                    ? "font-bold text-blue-900 dark:text-gray-50 "
+                    : "text-gray-500 dark:text-gray-500"
                 }
                 to="/publishers"
               >
@@ -325,8 +325,8 @@ export default function Navbar() {
                   <NavLink
                     className={({ isActive }) =>
                       isActive
-                        ? 'font-bold text-blue-900 dark:text-gray-50 '
-                        : 'text-gray-500 dark:text-gray-500'
+                        ? "font-bold text-blue-900 dark:text-gray-50 "
+                        : "text-gray-500 dark:text-gray-500"
                     }
                     to="/managerbooks"
                   >
@@ -335,32 +335,32 @@ export default function Navbar() {
                   <NavLink
                     className={({ isActive }) =>
                       isActive
-                        ? 'font-bold text-blue-900 dark:text-gray-50 '
-                        : 'text-gray-500 dark:text-gray-500'
+                        ? "font-bold text-blue-900 dark:text-gray-50 "
+                        : "text-gray-500 dark:text-gray-500"
                     }
                     to="/managergenres"
                   >
                     Gestión de Géneros
                   </NavLink>
-                  
+
                   <NavLink
                     className={({ isActive }) =>
                       isActive
-                        ? 'font-bold text-blue-900 dark:text-gray-50 '
-                        : 'text-gray-500 dark:text-gray-500'
+                        ? "font-bold text-blue-900 dark:text-gray-50 "
+                        : "text-gray-500 dark:text-gray-500"
                     }
                     to="/managerauthors"
                   >
                     Gestión de Autores
-                  </NavLink> 
+                  </NavLink>
                 </>
               )}
               {dataAuthenticatedUser && !dataAuthenticatedUser.admin && (
                 <NavLink
                   className={({ isActive }) =>
                     isActive
-                      ? 'font-bold text-blue-900 dark:text-gray-50 '
-                      : 'text-gray-500 dark:text-gray-500'
+                      ? "font-bold text-blue-900 dark:text-gray-50 "
+                      : "text-gray-500 dark:text-gray-500"
                   }
                   to="/wishlist"
                 >
@@ -394,8 +394,8 @@ export default function Navbar() {
                         to="/news"
                         className={({ isActive }) =>
                           isActive
-                            ? 'font-bold text-blue-900 dark:text-gray-50 '
-                            : 'text-gray-500 dark:text-gray-500'
+                            ? "font-bold text-blue-900 dark:text-gray-50 "
+                            : "text-gray-500 dark:text-gray-500"
                         }
                       >
                         Novedades
@@ -407,8 +407,8 @@ export default function Navbar() {
                         to="/bestselling"
                         className={({ isActive }) =>
                           isActive
-                            ? 'font-bold text-blue-900 dark:text-gray-50 '
-                            : 'text-gray-500 dark:text-gray-500'
+                            ? "font-bold text-blue-900 dark:text-gray-50 "
+                            : "text-gray-500 dark:text-gray-500"
                         }
                       >
                         Lo + vendido
@@ -420,8 +420,8 @@ export default function Navbar() {
                         to="/publishers"
                         className={({ isActive }) =>
                           isActive
-                            ? 'font-bold text-blue-900 dark:text-gray-50 '
-                            : 'text-gray-500 dark:text-gray-500'
+                            ? "font-bold text-blue-900 dark:text-gray-50 "
+                            : "text-gray-500 dark:text-gray-500"
                         }
                       >
                         Editoriales
@@ -433,8 +433,8 @@ export default function Navbar() {
                         to="/wishlist"
                         className={({ isActive }) =>
                           isActive
-                            ? 'font-bold text-blue-900 dark:text-gray-50 '
-                            : 'text-gray-500 dark:text-gray-500'
+                            ? "font-bold text-blue-900 dark:text-gray-50 "
+                            : "text-gray-500 dark:text-gray-500"
                         }
                       >
                         Lista de deseos
@@ -446,13 +446,13 @@ export default function Navbar() {
                         to="/cart"
                         className={({ isActive }) =>
                           isActive
-                            ? 'font-bold text-blue-900 dark:text-gray-50 '
-                            : 'text-gray-500 dark:text-gray-500'
+                            ? "font-bold text-blue-900 dark:text-gray-50 "
+                            : "text-gray-500 dark:text-gray-500"
                         }
                       >
                         <div className="flex gap-2">
                           <span>
-                            {' '}
+                            {" "}
                             <ShoppingCartIcon className="h-4 w-4 fill-current" />
                           </span>
                           <span>Carrito</span>
