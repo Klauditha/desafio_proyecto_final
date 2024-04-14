@@ -2,13 +2,27 @@ import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
-    <div className="min-[768px]:w-3/4  min-[768px]:h-3/4 min-[1024px]:w-full sm:mt-4 md:mt-0 xl:mt-0 bg-slate-300 w-screen flex flex-col sm:flex-col md:flex-row xl:gap-8 sm:gap-8 md:gap-8 gap-4 justify-around sm:py-4 py-2 items-center sm:items-start">
-      <div className="flex flex-col gap-2 sm:gap-0 xl:gap-0">
-        <h2 className="md:text-xl sm:text-sm font-bold text-primary ">
-          Síguenos
+    <div className=" xl:w-full sm:mt-4 md:mt-0 xl:mt-0 bg-slate-300 w-screen flex flex-col sm:flex-col md:flex-row gap-16 justify-around py-12 md:py-8 items-center">
+      <div className=" text-sm font-semibold text-primary items-center flex flex-col justify-center gap-4 md:gap-4 md:py-4">
+        <Link className="text-primary dark:text-gray-50 hover:text-blue-800" to="/new">
+          <h3>Novedades</h3>
+        </Link>
+        <Link className="text-primary dark:text-gray-500 hover:text-blue-800" to="/bestselling">
+          <h3>Lo más vendido</h3>
+        </Link>
+        <Link className="text-primary dark:text-gray-500 hover:text-blue-800" to="/publishers">
+          <h3>Editoriales</h3>
+        </Link>
+        <Link className="text-primary dark:text-gray-500 hover:text-blue-800" to="/wishlist">
+          <h3>Lista de deseos</h3>
+        </Link>
+      </div>
+      <div className="flex flex-col gap-2">
+        <h2 className="md:text-xl sm:text-sm text-center font-bold text-primary ">
+          Síguenos en
         </h2>
-        <div className="flex justify-between">
-          <Link to="http://www.facebook.com/tintaaustral">
+        <div className="flex justify-between gap-8">
+          <Link  to="http://www.facebook.com/tintaaustral">
             <FacebookIcon />
           </Link>
           <Link to="http://www.instagram.com/tintaaustral">
@@ -18,20 +32,6 @@ export default function Footer() {
             <XIcon />
           </Link>
         </div>
-      </div>
-      <div className=" text-sm font-bold text-primary items-center flex flex-col gap-0 sm:gap-4 hidden md:block xl:block">
-        <Link className="text-primary dark:text-gray-50" to="/new">
-          <h3>Novedades</h3>
-        </Link>
-        <Link className="text-primary dark:text-gray-500" to="/bestselling">
-          <h3>Lo más vendido</h3>
-        </Link>
-        <Link className="text-primary dark:text-gray-500" to="/publishers">
-          <h3>Editoriales</h3>
-        </Link>
-        <Link className="text-primary dark:text-gray-500" to="/wishlist">
-          <h3>Lista de deseos</h3>
-        </Link>
       </div>
       <div>
         <Link to="/new">
