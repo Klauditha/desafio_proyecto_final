@@ -6,6 +6,7 @@ import { ENDPOINT } from '../../../config/constants';
 
 const SuccessPayment = () => {
   const [estado, setEstado] = useState(false);
+  
 
   const creacionOrden = () => {
     let user_id = parseInt(sessionStorage.getItem('user_id'), 10);
