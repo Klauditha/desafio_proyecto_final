@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-undef */
-import axios from 'axios';
-import { ENDPOINT } from '../../config/constants';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
 import { ECommerceContext } from '../../Context/ECommerceContext';
@@ -35,8 +33,9 @@ const MyOrders = () => {
               ordersUser.map((order) => (
                 <tr key={order.order_id}>
                   <td>{order.order_id}</td>
-                  <td>{order.order_date}</td>
-                  <td>{order.total_amount}</td>
+                  <td>{(order.order_date)}</td>
+
+                  <td>$ {order.total_amount.toLocaleString('es-CL')}</td>
                   <td>
                     <button
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

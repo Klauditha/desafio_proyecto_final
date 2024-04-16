@@ -78,7 +78,6 @@ export const ECommerceProvider = ({ children }) => {
           );
           alertify.success('Cantidad de copias en el carrito actualizada');
         } else {
-          console.log('Adding book to cart...');
           const response = await axios.post(
             ENDPOINT.cart,
             {
@@ -90,7 +89,6 @@ export const ECommerceProvider = ({ children }) => {
               headers,
             }
           );
-          console.log('Response:', response.data);
 
           if (response.data.status) {
             const newCartItem = response.data.data.cart;
@@ -105,7 +103,6 @@ export const ECommerceProvider = ({ children }) => {
         console.error('Error al agregar libro al carrito:', error);
       }
     } else {
-      console.log('Redirigiendo a login...');
       navigate('/login');
     }
   };
@@ -694,7 +691,7 @@ export const ECommerceProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     setDataEditoriales();
@@ -795,7 +792,7 @@ export const ECommerceProvider = ({ children }) => {
         limpiarCarritoByUser,
         /*Detalle order*/
         ObtenerOrdenDetalleAPI,
-        orderDetail
+        orderDetail,
       }}
     >
       {children}

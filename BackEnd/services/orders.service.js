@@ -38,10 +38,16 @@ class OrdersService {
   }
 
   async getAllByUser(user_id) {
-    const orders = await models.Order.findAll(
-      { where: { user_id } },
-      { order: ['order_id', 'DESC'] }
-    );
+    try {
+      const client = await pool.connect();
+      const query = `SELECT order_id, TO_CHAR(order_date, 'DD-MM-YYYY') as order_date, total_amount, deleted FROM public.orders WHERE user_id = ($1) and deleted = false ORDER BY order_id DESC`;
+      const result = await client.query(query, [user_id]);
+      const orders = result.rows;
+
+      return orders;
+    } catch (error) {
+      console.log(error);
+    }
     return orders;
   }
 

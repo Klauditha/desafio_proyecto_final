@@ -38,8 +38,7 @@ const SuccessPayment = () => {
           console.log(error);
         });
     } catch (error) {
-      alertify.error('Error al crear la orden');
-      console.log('Error al crear la orden:', error);
+      alertify.error('Error al crear la orden');      
     }
   };
 
