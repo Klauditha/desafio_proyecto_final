@@ -11,7 +11,9 @@ class OrdersService {
   }
 
   async find() {
-    const orders = await models.Order.findAll();
+    const orders = await models.Order.findAll({
+      order: [['order_id', 'DESC']],
+    });
     return orders;
   }
 
@@ -36,7 +38,10 @@ class OrdersService {
   }
 
   async getAllByUser(user_id) {
-    const orders = await models.Order.findAll({ where: { user_id } });
+    const orders = await models.Order.findAll(
+      { where: { user_id } },
+      { order: ['order_id', 'DESC'] }
+    );
     return orders;
   }
 

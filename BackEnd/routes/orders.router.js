@@ -115,4 +115,10 @@ router.post(
   authMiddleware,
   ordersController.createOrderByUser
 );
+
+router.get(
+  '/detail/:order_id',
+  authMiddleware,
+  ordersController.getDetailOrder
+);
 module.exports = router;

@@ -27,7 +27,7 @@ const Wishlist = () => {
 
   return (
     <RequireAuth>
-      <div>
+      <div className="flex flex-col gap-4 px-4 md:px-20 py-4">
         <h1 className="font-bold text-xl text-center">Lista de deseos</h1>
         {loading ? (
           <p style={{ textAlign: "center" }}>Cargando...</p>

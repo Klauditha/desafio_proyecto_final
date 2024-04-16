@@ -20,7 +20,7 @@ const SuccessPayment = () => {
     setEstado(true);
     try {
       let token = sessionStorage.getItem('token');
-      console.log('token', token);
+      //console.log('token', token);
       axios
         .post(
           ENDPOINT.orders + '/createbyuser/' + user_id,
