@@ -1,8 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import { ECommerceContext } from '../../../Context/ECommerceContext';
 import { useState, useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { ENDPOINT } from '../../../config/constants';
 
@@ -68,17 +66,6 @@ const SuccessPayment = () => {
     creacionOrden();
   }
 
-  //const { session_id } = useParams();
-
-  /*
-  useEffect(() => {
-    if (!estado) {
-      setEstado(true);
-      //console.log('useEffect', estado);
-      //creacionOrden();
-    }
-    
-  }, []);*/
 
   return (
     <div className="min-[768px]:w-full min-[768px]:h-full pb-8">
