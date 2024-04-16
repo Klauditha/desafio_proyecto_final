@@ -36,7 +36,7 @@ const ECommerceRoutes = () => {
       <Route path="/managerbooks/edit/:book_id" element={<AddEditBook />} />
       <Route path="/managerbooks/add" element={<AddEditBook />} />
       <Route path="/profile" element={<Userprofile />} />
-      <Route path="/paymentsuccess" element={<SuccessPayment />} />
+      <Route path="/paymentsuccess/:session_id" element={<SuccessPayment />} />
       <Route path="/checkout" element={<CheckoutForm />} />
       <Route path="/success" element={<SuccessPayment />} />
     </Routes>
