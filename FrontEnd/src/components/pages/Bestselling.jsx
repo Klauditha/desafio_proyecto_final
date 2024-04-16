@@ -16,9 +16,9 @@ const Bestselling = () => {
 
   return (
     <div>
-      <h1 className="font-bold text-xl text-center">Los más vendidos</h1>
+      <h1 className="font-bold text-xl text-center pt-2">Los más vendidos</h1>
       <h2 className="text-md font-bold text-center mb-4">Nuestros Top 10</h2>
-      <div className="grid gap-8 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 w-full justify-center">
+      <div className="flex flex-wrap gap-8 md:gap-24 justify-center w-full md:py-8">
         {booksMasVendidos ? (
           booksMasVendidos.map((book) => (
             <Bookcard

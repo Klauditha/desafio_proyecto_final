@@ -5,12 +5,12 @@ import {
   CardHeader,
   CardContent,
   Card,
-} from "@/components/ui/card";
-import React, { useContext, useState } from "react";
-import { ECommerceContext } from "@/Context/ECommerceContext";
-import axios from "axios";
-import { ENDPOINT } from "../config/constants";
-import { useNavigate } from "react-router-dom";
+} from '@/components/ui/card';
+import React, { useContext, useState } from 'react';
+import { ECommerceContext } from '@/Context/ECommerceContext';
+import axios from 'axios';
+import { ENDPOINT } from '../config/constants';
+import { useNavigate } from 'react-router-dom';
 
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
@@ -117,7 +117,6 @@ export default function Register() {
     } else if (!phoneRegex.test(formData.phone)) {
       newErrors.phone =
         "Por favor ingrese un numero de telefono valido sin espacios de diez numeros.";
-
       valid = false;
     } else {
       newErrors.phone = "";
@@ -190,6 +189,7 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     console.log("Formulario enviado");
     setButtonText("Estamos creando tu cuenta... 😃");
 
@@ -200,6 +200,7 @@ export default function Register() {
       return;
     }
 
+    console.log("Data de formulario es valida:", formData);
 
     const newUser = {
       username: formData.firstName, // Usa primer nombre por ahora
@@ -228,14 +229,11 @@ export default function Register() {
     try {
       const response = await axios.post(ENDPOINT.users, newUser, {
         headers: {
-
           "Content-Type": "application/json",
-
         },
       });
 
       if (response.status === 201) {
-
         console.log("Usuario registrado correctamente:", response.data);
         alertify.success("Registro exitoso");
         navigate("/login");
@@ -248,16 +246,13 @@ export default function Register() {
     } catch (error) {
       console.error("Error registrando usuario:", error);
       alertify.error("Error registrando usuario. Pruebe más tarde");
-
       // Mostrar mensaje de error a usuario
     }
     setShowAlert(true);
   };
 
   return (
-
     <div className="p-16">
-
       <form onSubmit={handleSubmit}>
         <Card className="mx-auto max-w-sm">
           <CardHeader className="space-y-1">
@@ -269,7 +264,6 @@ export default function Register() {
               compras
             </CardDescription>
           </CardHeader>
-
           <CardContent className="flex flex-col gap-4">
             <div className="space-y-4">
               <div className="space-y-2">

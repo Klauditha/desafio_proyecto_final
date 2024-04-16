@@ -1,12 +1,20 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { useContext, useState } from 'react';
-import { ECommerceContext } from '../Context/ECommerceContext';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { useContext, useState } from "react";
+import { ECommerceContext } from "../Context/ECommerceContext";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 const Productdetail = ({
   book,
@@ -28,11 +36,11 @@ const Productdetail = ({
         if (i <= auxRating) {
           document
             .getElementById(`ratingIcon${i}`)
-            .classList.add('fill-primary');
+            .classList.add("fill-primary");
         } else {
           document
             .getElementById(`ratingIcon${i}`)
-            .classList.add('fill-muted', 'stroke-muted-foreground');
+            .classList.add("fill-muted", "stroke-muted-foreground");
         }
       }
     }
@@ -70,21 +78,20 @@ const Productdetail = ({
     }
   };*/
 
-/*   const handleAddToWishList = () => {
+  /*   const handleAddToWishList = () => {
     alertify.success('Funcionalidad no disponible');
   }; */
-
 
   const handleAddToCart = () => {
     addToCart(book, quantity ? parseInt(quantity) : 1);
   };
-  
+
   useEffect(() => {
     setRating();
   }, [book.book_id, rating]);
 
   return (
-    <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
+    <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6 md:py-20">
       <div className="grid gap-4 md:gap-2 items-start order-2 md:order-1">
         <div className="hidden md:flex items-start">
           <div className="grid gap-4">
@@ -125,19 +132,20 @@ const Productdetail = ({
             <Label className="text-base" htmlFor="quantity">
               Cantidad
             </Label>
-            <select
-              id="quantitySelect"
-              className="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-              onChange={(event) => {
-                setQuantity(event.target.value);
-              }}
-            >
-              {setArrayQuantity().map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
+            <Select>
+              <SelectTrigger className="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                <SelectValue placeholder="Selecciona una cantidad" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {setArrayQuantity().map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
           <div className="text-4xl font-bold">${book.price}</div>
           <div className="flex flex-col gap-2 min-[400px]:flex-row">
@@ -166,8 +174,8 @@ const Productdetail = ({
               )}
 
               {wishlist
-                ? 'Quitar de lista de deseos'
-                : 'Agregar a lista de deseos'}
+                ? "Quitar de lista de deseos"
+                : "Agregar a lista de deseos"}
             </Button>
           </div>
         </form>
