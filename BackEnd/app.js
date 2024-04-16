@@ -66,7 +66,7 @@ app.use(
   cors({
     origin: [
       'http://localhost:5173',
-      'https://desafio-proyecto-final-api.onrender.com/',
+      'hhttps://desafio-proyecto-final.onrender.com/',
       'https://checkout.stripe.com',
     ],
     credentials: true,
