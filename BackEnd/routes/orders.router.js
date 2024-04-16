@@ -4,7 +4,6 @@ const { authMiddleware } = require('../middlewares/auth.handler');
 const router = express.Router();
 const { ordersController } = require('../controllers');
 
-
 /**
  * @swagger
  * components:
@@ -109,10 +108,7 @@ const { ordersController } = require('../controllers');
  *                   type: object
  *                   default: null
  */
-router.get(
-  '/all/:user_id',
-  authMiddleware,
-  ordersController.getAllByUser
-);
+router.get('/all/:user_id', authMiddleware, ordersController.getAllByUser);
 
+router.post('/createbyuser/:user_id', ordersController.createOrderByUser);
 module.exports = router;

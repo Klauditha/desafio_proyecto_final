@@ -18,7 +18,7 @@ const getCartItemsByUser = async (req, res, next) => {
     const cart = await service.getCartItemsByUser(user_id);
     res.status(200).json({
       status: true,
-      message: "Items del carrito encontrados",
+      message: 'Items del carrito encontrados',
       data: {
         cart,
       },
@@ -40,18 +40,18 @@ const updateCartItem = async (req, res, next) => {
     const body = req.body;
     const user = await userService.findById(body.user_id);
     if (!user) {
-      throw boom.notFound("Usuario no encontrado");
+      throw boom.notFound('Usuario no encontrado');
     }
     const book = await bookService.findOne(body.book_id);
     if (!book) {
-      throw boom.notFound("Libro no encontrado");
+      throw boom.notFound('Libro no encontrado');
     }
     if (body.quantity === 0 || body.deleted) {
-      body.deleted = true; 
+      body.deleted = true;
       const cartItem = await service.update(cart_item_id, body);
       res.status(200).json({
         status: true,
-        message: "Item del carrito borrado",
+        message: 'Item del carrito borrado',
         data: {
           cartItem,
         },
@@ -60,7 +60,7 @@ const updateCartItem = async (req, res, next) => {
       const cartItem = await service.update(cart_item_id, body);
       res.status(200).json({
         status: true,
-        message: "Item del carrito actualizado",
+        message: 'Item del carrito actualizado',
         data: {
           cartItem,
         },
@@ -89,22 +89,43 @@ const deleteCartItem = async (req, res, next) => {
     });
   }
 };
-
-
+const deleteCartByUser = async (req, res, next) => {
+  try {
+    const { user_id } = req.params;
+    const user = await userService.findById(user_id);
+    if (!user) {
+      throw boom.notFound('Usuario no encontrado');
+    }
+    const cart = await service.deleteCartByUser(user_id);
+    res.status(200).json({
+      status: true,
+      message: 'Items del carrito eliminados',
+      data: {
+        cart,
+      },
+    });
+  } catch (error) {
+    let codeError = error.isBoom ? error.output.statusCode : 500;
+    res.status(codeError).json({
+      status: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
 
 const createCartItem = async (req, res, next) => {
-
   const { user_id, book_id, quantity } = req.body;
   const quantityInt = parseInt(quantity, 10);
 
   const user = await userService.findById(user_id);
   if (!user) {
-    throw boom.notFound("Usuario no encontrado");
+    throw boom.notFound('Usuario no encontrado');
   }
 
   const book = await bookService.findOne(book_id);
   if (!book) {
-    throw boom.notFound("Libro no encontrado");
+    throw boom.notFound('Libro no encontrado');
   }
 
   const cart = await service.create({
@@ -115,7 +136,7 @@ const createCartItem = async (req, res, next) => {
 
   res.status(201).json({
     status: true,
-    message: "Item de carrito creado",
+    message: 'Item de carrito creado',
     data: {
       cart: cart,
       book: book,
@@ -123,10 +144,10 @@ const createCartItem = async (req, res, next) => {
   });
 };
 
-
 module.exports = {
   getCartItemsByUser,
   updateCartItem,
   createCartItem,
   deleteCartItem,
+  deleteCartByUser,
 };

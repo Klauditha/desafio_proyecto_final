@@ -16,7 +16,6 @@ export default function CartTotal() {
     for (const cartItem of cart_items) {
       const book = cartItem.book.book;
       if (book) {
-        console.log(book);
         totalPrice += cartItem.quantity * book.price;
       }
       let newItem = [];
