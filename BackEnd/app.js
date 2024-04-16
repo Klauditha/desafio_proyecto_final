@@ -69,7 +69,6 @@ app.use(
       'hhttps://desafio-proyecto-final.onrender.com',
       'https://checkout.stripe.com',
     ],
-    credentials: true,
   })
 );
 app.use(express.json());
