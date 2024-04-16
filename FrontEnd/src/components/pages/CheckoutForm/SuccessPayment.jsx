@@ -1,13 +1,14 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import { useState, useContext, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { ENDPOINT } from '../../../config/constants';
+import RequireAuth from '@/components/RequireAuth';
 
 const SuccessPayment = () => {
   const [estado, setEstado] = useState(false);
-  
 
+  console.log('estado', estado);
   const creacionOrden = () => {
     let user_id = parseInt(sessionStorage.getItem('user_id'), 10);
     crearOrdenByUserAPI(user_id);
@@ -67,19 +68,20 @@ const SuccessPayment = () => {
     creacionOrden();
   }
 
-
   return (
-    <div className="min-[768px]:w-full min-[768px]:h-full pb-8">
-      <h1 className="font-bold text-xl text-center">Orden</h1>
-      <div className="flex justify-center pl-8 mt-4 mb-4">
-        <div className="w-full md:w-1/2 px-3 mt-8 mb-8 ml-8 md:mb-0">
-          <p>
-            Su pago ha sido procesado correctamente. Su pedido se encuentra en
-            preparación.
-          </p>
+    <RequireAuth>
+      <div className="min-[768px]:w-full min-[768px]:h-full pb-8">
+        <h1 className="font-bold text-xl text-center">Orden</h1>
+        <div className="flex justify-center pl-8 mt-4 mb-4">
+          <div className="w-full md:w-1/2 px-3 mt-8 mb-8 ml-8 md:mb-0">
+            <p>
+              Su pago ha sido procesado correctamente. Su pedido se encuentra en
+              preparación.
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </RequireAuth>
   );
 };
 

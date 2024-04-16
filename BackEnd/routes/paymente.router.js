@@ -31,8 +31,9 @@ router.post('/create-checkout-session', async (req, res, next) => {
     line_items: line_items,
     mode: 'payment',
 
-    //return_url: `${CLIENT_URL}/success/session_id=${process.env.STRIPE_SECRET_KEY}}`
-    return_url: `${CLIENT_URL}/success`,
+    //return_url: `${CLIENT_URL}/paymentsuccess/session_id=${process.env.STRIPE_SECRET_KEY}}`
+    return_url: `${CLIENT_URL}/paymentsuccess`
+    //return_url: `${CLIENT_URL}/pa`,
   });
 
   res.send({ clientSecret: session.client_secret });
