@@ -12,18 +12,10 @@ const OrderItemSchema = {
   order_id: {
     allowNull: false,
     type: DataTypes.INTEGER,
-    references: {
-      model: 'orders',
-      key: 'order_id',
-    },
   },
   book_id: {
     allowNull: false,
     type: DataTypes.INTEGER,
-    references: {
-      model: 'books',
-      key: 'book_id',
-    },
   },
   quantity: {
     allowNull: false,
@@ -38,14 +30,8 @@ const OrderItemSchema = {
 
 class OrderItem extends Model {
   static associate(models) {
-    this.belongsTo(models.Order, {
-      as: 'order',
-      foreignKey: 'order_id',
-    });
-    this.belongsTo(models.Book, {
-      as: 'book',
-      foreignKey: 'book_id',
-    });
+    this.belongsTo(models.Order, { as: 'order' });
+    this.belongsTo(models.Book, { as: 'book' });
   }
   static config(sequelize) {
     return {

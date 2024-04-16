@@ -33,6 +33,8 @@ export const ECommerceProvider = ({ children }) => {
   const [genresAll, setGenresAll] = useState([]);
   const [authorsAll, setAuthorsAll] = useState([]);
   const [cartItemsCheckout, setCartItemsCheckout] = useState([]);
+  const [ordersUser, setOrdersUser] = useState([]);
+  const [orderDetail, setOrderDetail] = useState({});
 
   /* CARRITO */
   const addToCart = async (book, quantity) => {
@@ -650,6 +652,50 @@ export const ECommerceProvider = ({ children }) => {
     }
   };
 
+  const ObtenerOrdenesByUsuarioAPI = () => {
+    let user_id = parseInt(sessionStorage.getItem('user_id'), 10);
+    if (user_id) {
+      try {
+        let token = sessionStorage.getItem('token');
+        axios
+          .get(`${ENDPOINT.orders}/all/${user_id}`, {
+            headers: {
+              Authorization: 'Bearer ' + token,
+            },
+          })
+          .then((response) => {
+            setOrdersUser(response.data.data.orders);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    } else navigate('/');
+  };
+
+  const ObtenerOrdenDetalleAPI = (order_id) => {
+    try {
+      let token = sessionStorage.getItem('token');
+      axios
+        .get(ENDPOINT.orders + '/detail/' + order_id, {
+          headers: {
+            Authorization: 'Bearer ' + token,
+          },
+        })
+        .then((response) => {
+          console.log(response.data.data.detailOrder);
+          setOrderDetail(response.data.data.detailOrder);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     setDataEditoriales();
     if (authenticatedUser && authenticatedUser.admin) {
@@ -742,6 +788,14 @@ export const ECommerceProvider = ({ children }) => {
         cartItemsCheckout,
         setCartItemsCheckout,
         crearOrdenByUserAPI,
+        /*Ordenes del usuario*/
+        ObtenerOrdenesByUsuarioAPI,
+        ordersUser,
+        setOrdersUser,
+        limpiarCarritoByUser,
+        /*Detalle order*/
+        ObtenerOrdenDetalleAPI,
+        orderDetail
       }}
     >
       {children}
