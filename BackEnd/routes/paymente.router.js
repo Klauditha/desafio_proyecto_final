@@ -12,7 +12,7 @@ router.post('/create-checkout-session', async (req, res, next) => {
     if (cart.length) {        
         try {
             line_items = cart.map(item => {
-                console.log('item',item[0])
+                //console.log('item',item[0])
                 return {
                     price_data: {
                         currency: 'clp',
@@ -34,9 +34,7 @@ router.post('/create-checkout-session', async (req, res, next) => {
 
             
     }
-    console.log(line_items)
-    console.log(process.env.STRIPE_SECRET_KEY)
-    // console.log(await stripe.checkout)
+    
     const session = await stripe.checkout.sessions.create({
         ui_mode: 'embedded',
         line_items: line_items,
@@ -45,20 +43,16 @@ router.post('/create-checkout-session', async (req, res, next) => {
         return_url: `${CLIENT_URL}/success/session_id=${process.env.STRIPE_SECRET_KEY}}`
     })
 
-    console.log(session)
+    
     res.send({ clientSecret: session.client_secret })
-    // } catch (error) {
-    //     next(error)
-    // }
+    
 })
 
 router.get('/session-status', async (req, res, next) => {
     try {
         const { session_id } = req.query
-        console.log(session_id)
         const session = await stripe.checkout.sessions.retrieve(session_id)
-        console.log(session)
-
+        
         if (session) {
             res.send({
                 status: session.status,

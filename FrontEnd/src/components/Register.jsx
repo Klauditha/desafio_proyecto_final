@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import {
   CardTitle,
   CardDescription,
@@ -113,7 +114,8 @@ export default function Register() {
       newErrors.phone = 'Por favor ingrese su numero de telefono.';
       valid = false;
     } else if (!phoneRegex.test(formData.phone)) {
-      newErrors.phone = 'Por favor ingrese un numero de telefono valido sin espacios de diez numeros.';
+      newErrors.phone =
+        'Por favor ingrese un numero de telefono valido sin espacios de diez numeros.';
       valid = false;
     } else {
       newErrors.phone = '';
@@ -177,9 +179,6 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-
-    console.log('Formulario enviado');
 
     const isValid = validateForm();
 
@@ -187,8 +186,6 @@ export default function Register() {
       console.log('Validación de formulario ha fallado.');
       return;
     }
-
-    console.log('Data de formulario es valida:', formData);
 
     const newUser = {
       username: formData.firstName, // Usa primer nombre por ahora
@@ -213,40 +210,38 @@ export default function Register() {
     console.log('Data de usuario nuevo:', newUser);
 
     registerUser(newUser);
-    
 
-       try {
-         const response = await axios.post(ENDPOINT.users, newUser, {
-           headers: {
-             'Content-Type': 'application/json',
-           },
-         });
+    try {
+      const response = await axios.post(ENDPOINT.users, newUser, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-         if (response.status === 201) {
-           console.log('Usuario registrado correctamente:', response.data);
-           alertify.success('Registro exitoso');
-           navigate('/login');
-           // Redireccionar
-         } else {
-           console.error('Registro fallido:', response.data);
-           alertify.error('Error registrando usuario. Pruebe más tarde');
-           // Mostrar mensaje de error a usuario
-         }
-       } catch (error) {
-         console.error('Error registrando usuario:', error);
-         alertify.error('Error registrando usuario. Pruebe más tarde');
-         // Mostrar mensaje de error a usuario
-       }
-       setShowAlert(true);
-       
+      if (response.status === 201) {
+        console.log('Usuario registrado correctamente:', response.data);
+        alertify.success('Registro exitoso');
+        navigate('/login');
+        // Redireccionar
+      } else {
+        console.error('Registro fallido:', response.data);
+        alertify.error('Error registrando usuario. Pruebe más tarde');
+        // Mostrar mensaje de error a usuario
+      }
+    } catch (error) {
+      console.error('Error registrando usuario:', error);
+      alertify.error('Error registrando usuario. Pruebe más tarde');
+      // Mostrar mensaje de error a usuario
+    }
+    setShowAlert(true);
   };
-  
+
   return (
-    <div className='pb-16'>
+    <div className="pb-16">
       <form onSubmit={handleSubmit}>
-        <Card className='mx-auto max-w-sm'>
-          <CardHeader className='space-y-1'>
-            <CardTitle className='text-2xl font-bold'>
+        <Card className="mx-auto max-w-sm">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl font-bold">
               Crea una cuenta
             </CardTitle>
             <CardDescription>
@@ -255,13 +250,13 @@ export default function Register() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className='space-y-4'>
-              <div className='space-y-2'>
-                <Label htmlFor='name'>Primer nombre</Label>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Primer nombre</Label>
                 <Input
-                  type='text'
-                  name='firstName'
-                  placeholder='Primer Nombre'
+                  type="text"
+                  name="firstName"
+                  placeholder="Primer Nombre"
                   value={formData.firstName}
                   onChange={handleChange}
                   required
@@ -270,12 +265,12 @@ export default function Register() {
                   <span style={{ color: 'red' }}>{errors.firstName}</span>
                 )}
               </div>
-              <div className='space-y-2'>
-                <Label htmlFor='name'>Apellido</Label>
+              <div className="space-y-2">
+                <Label htmlFor="name">Apellido</Label>
                 <Input
-                  type='text'
-                  name='lastName'
-                  placeholder='Apellido'
+                  type="text"
+                  name="lastName"
+                  placeholder="Apellido"
                   value={formData.lastName}
                   onChange={handleChange}
                   required
@@ -284,14 +279,14 @@ export default function Register() {
                   <span style={{ color: 'red' }}>{errors.lastName}</span>
                 )}
               </div>
-              <div className='space-y-2'>
-                <Label htmlFor='email'>Email</Label>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
                 <Input
-                  name='email'
-                  id='email'
-                  placeholder='correo@gmail.com'
+                  name="email"
+                  id="email"
+                  placeholder="correo@gmail.com"
                   required
-                  type='email'
+                  type="email"
                   value={formData.email}
                   onChange={handleChange}
                 />
@@ -299,13 +294,13 @@ export default function Register() {
                   <span style={{ color: 'red' }}>{errors.email}</span>
                 )}
               </div>
-              <div className='space-y-2'>
-                <Label htmlFor='password'>Contraseña</Label>
+              <div className="space-y-2">
+                <Label htmlFor="password">Contraseña</Label>
                 <Input
-                  name='password'
-                  placeholder=''
+                  name="password"
+                  placeholder=""
                   required
-                  type='password'
+                  type="password"
                   value={formData.password}
                   onChange={handleChange}
                 />
@@ -313,14 +308,14 @@ export default function Register() {
                   <span style={{ color: 'red' }}>{errors.password}</span>
                 )}
               </div>
-              <div className='space-y-2'>
-                <Label htmlFor='password-check'>Confirma la contraseña</Label>
+              <div className="space-y-2">
+                <Label htmlFor="password-check">Confirma la contraseña</Label>
                 <Input
-                  name='confirmPassword'
-                  id='password-check'
-                  placeholder=''
+                  name="confirmPassword"
+                  id="password-check"
+                  placeholder=""
                   required
-                  type='password'
+                  type="password"
                   value={formData.confirmPassword}
                   onChange={handleChange}
                 />
@@ -328,14 +323,14 @@ export default function Register() {
                   <span style={{ color: 'red' }}>{errors.confirmPassword}</span>
                 )}
               </div>
-              <div className='space-y-2'>
-                <Label htmlFor='phone'>Número de celular</Label>
+              <div className="space-y-2">
+                <Label htmlFor="phone">Número de celular</Label>
                 <Input
-                  name='phone'
-                  id='phone'
-                  placeholder='9 2345 4567'
+                  name="phone"
+                  id="phone"
+                  placeholder="9 2345 4567"
                   required
-                  type='number'
+                  type="number"
                   value={formData.phone}
                   onChange={handleChange}
                 />
@@ -343,37 +338,37 @@ export default function Register() {
                   <span style={{ color: 'red' }}>{errors.phone}</span>
                 )}
               </div>
-              <div className='space-y-2'>
-                <Label htmlFor='region'>Región</Label>
+              <div className="space-y-2">
+                <Label htmlFor="region">Región</Label>
                 <Select
-                  id='region'
+                  id="region"
                   value={selectedRegion}
                   onValueChange={handleRegionChange}
-                  name='region'
+                  name="region"
                 >
-                  <SelectTrigger className='w-full'>
-                    <SelectValue placeholder='Selecciona una región' />
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Selecciona una región" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectItem value='arica'>Arica y Parinacota</SelectItem>
-                      <SelectItem value='tarapaca'>Tarapacá</SelectItem>
-                      <SelectItem value='antofagasta'>Antofagasta</SelectItem>
-                      <SelectItem value='atacama'>Atacama</SelectItem>
-                      <SelectItem value='coquimbo'>Coquimbo</SelectItem>
-                      <SelectItem value='Valparaiso'>Valparaíso</SelectItem>
-                      <SelectItem value='Metropolitana'>
+                      <SelectItem value="arica">Arica y Parinacota</SelectItem>
+                      <SelectItem value="tarapaca">Tarapacá</SelectItem>
+                      <SelectItem value="antofagasta">Antofagasta</SelectItem>
+                      <SelectItem value="atacama">Atacama</SelectItem>
+                      <SelectItem value="coquimbo">Coquimbo</SelectItem>
+                      <SelectItem value="Valparaiso">Valparaíso</SelectItem>
+                      <SelectItem value="Metropolitana">
                         Metropolitana
                       </SelectItem>
-                      <SelectItem value='ohiggins'>O&#39;Higgins</SelectItem>
-                      <SelectItem value='maule'>Maule</SelectItem>
-                      <SelectItem value='nuble'>Ñuble</SelectItem>
-                      <SelectItem value='biobio'>Biobío</SelectItem>
-                      <SelectItem value='araucania'>Araucanía</SelectItem>
-                      <SelectItem value='losrios'>Los Ríos</SelectItem>
-                      <SelectItem value='loslagos'>Los Lagos</SelectItem>
-                      <SelectItem value='aysen'>Aysén</SelectItem>
-                      <SelectItem value='magallanes'>Magallanes</SelectItem>
+                      <SelectItem value="ohiggins">O&#39;Higgins</SelectItem>
+                      <SelectItem value="maule">Maule</SelectItem>
+                      <SelectItem value="nuble">Ñuble</SelectItem>
+                      <SelectItem value="biobio">Biobío</SelectItem>
+                      <SelectItem value="araucania">Araucanía</SelectItem>
+                      <SelectItem value="losrios">Los Ríos</SelectItem>
+                      <SelectItem value="loslagos">Los Lagos</SelectItem>
+                      <SelectItem value="aysen">Aysén</SelectItem>
+                      <SelectItem value="magallanes">Magallanes</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -381,14 +376,14 @@ export default function Register() {
                   <span style={{ color: 'red' }}>{errors.region}</span>
                 )}
               </div>
-              <div className='space-y-2'>
-                <Label htmlFor='city'>Ciudad</Label>
+              <div className="space-y-2">
+                <Label htmlFor="city">Ciudad</Label>
                 <Input
-                  name='city'
-                  id='city'
-                  placeholder='Santiago'
+                  name="city"
+                  id="city"
+                  placeholder="Santiago"
                   required
-                  type='text'
+                  type="text"
                   value={formData.city}
                   onChange={handleChange}
                 />
@@ -396,14 +391,14 @@ export default function Register() {
                   <span style={{ color: 'red' }}>{errors.city}</span>
                 )}
               </div>
-              <div className='space-y-2'>
-                <Label htmlFor='district'>Comuna</Label>
+              <div className="space-y-2">
+                <Label htmlFor="district">Comuna</Label>
                 <Input
-                  name='district'
-                  id='district'
-                  placeholder='Puente Alto'
+                  name="district"
+                  id="district"
+                  placeholder="Puente Alto"
                   required
-                  type='text'
+                  type="text"
                   value={formData.district}
                   onChange={handleChange}
                 />
@@ -411,14 +406,14 @@ export default function Register() {
                   <span style={{ color: 'red' }}>{errors.district}</span>
                 )}
               </div>
-              <div className='space-y-2'>
-                <Label htmlFor='address'>Dirección</Label>
+              <div className="space-y-2">
+                <Label htmlFor="address">Dirección</Label>
                 <Input
-                  name='address'
-                  id='address'
-                  placeholder='Las Petunias 23'
+                  name="address"
+                  id="address"
+                  placeholder="Las Petunias 23"
                   required
-                  type='text'
+                  type="text"
                   value={formData.address}
                   onChange={handleChange}
                 />
@@ -426,14 +421,14 @@ export default function Register() {
                   <span style={{ color: 'red' }}>{errors.address}</span>
                 )}
               </div>
-              <div className='space-y-2'>
-                <Label htmlFor='zip_code'>Código postal</Label>
+              <div className="space-y-2">
+                <Label htmlFor="zip_code">Código postal</Label>
                 <Input
-                  name='zip_code'
-                  id='zip_code'
-                  placeholder=''
+                  name="zip_code"
+                  id="zip_code"
+                  placeholder=""
                   required
-                  type='text'
+                  type="text"
                   value={formData.zip_code}
                   onChange={handleChange}
                 />
@@ -441,7 +436,7 @@ export default function Register() {
                   <span style={{ color: 'red' }}>{errors.zip_code}</span>
                 )}
               </div>
-              <Button className='w-full' type='submit'>
+              <Button className="w-full" type="submit">
                 Crea tu cuenta
               </Button>
             </div>

@@ -51,7 +51,6 @@ class CartItemService {
   }
 
   async deleteCartByUser(user_id) {
-    console.log('deleteCartByUser', user_id);
     try {
       const cart = await models.Cart.destroy({
         where: {

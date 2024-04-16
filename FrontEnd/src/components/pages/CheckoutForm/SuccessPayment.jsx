@@ -1,30 +1,90 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import { ECommerceContext } from '../../../Context/ECommerceContext';
 import { useState, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-const SuccessPayment = () => {
-  const { setCartItemsCheckout, cartItemsCheckout, cart_items } =
-    useContext(ECommerceContext);
+import axios from 'axios';
+import { ENDPOINT } from '../../../config/constants';
 
-  const limpiarCarrito = () => {};
+const SuccessPayment = () => {
+  const [estado, setEstado] = useState(false);
 
   const creacionOrden = () => {
-      
+    let user_id = parseInt(sessionStorage.getItem('user_id'), 10);
+    crearOrdenByUserAPI(user_id);
+  };
+
+  const crearOrdenByUserAPI = (user_id) => {
+    setEstado(true);
+    try {
+      console.log('crearOrdenByUserAPI', user_id);
+      let token = sessionStorage.getItem('token');
+      console.log('token', token);
+      axios
+        .post(
+          ENDPOINT.orders + '/createbyuser/' + user_id,
+          {},
+          {
+            headers: {
+              Authorization: 'Bearer ' + token,
+            },
+          }
+        )
+        .then((response) => {
+          limpiarCarritoByUser(user_id);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      alertify.error('Error al crear la orden');
+      console.log('Error al crear la orden:', error);
+    }
+  };
+
+  const limpiarCarritoByUser = (user_id) => {
+    try {
+      let token = sessionStorage.getItem('token');
+      axios
+        .delete(ENDPOINT.cart + '/DeleteByUser/' + user_id, {
+          headers: {
+            Authorization: 'Bearer ' + token,
+          },
+        })
+        .then((response) => {
+          alertify.success('Orden creada con exito');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      alertify.error('Error al limpiar el carrito');
+      console.log('Error al limpiar el carrito:', error);
+    }
+  };
+
+  if (!estado) {
+    setEstado(true);
+    creacionOrden();
   }
 
-  const { session_id } = useParams();
-  console.log(cartItemsCheckout);
-  console.log(cart_items);
-  console.log(session_id);
+  //const { session_id } = useParams();
 
-  useEffect(() => {}, []);
+  /*
+  useEffect(() => {
+    if (!estado) {
+      setEstado(true);
+      //console.log('useEffect', estado);
+      //creacionOrden();
+    }
+    
+  }, []);*/
 
   return (
     <div className="min-[768px]:w-full min-[768px]:h-full pb-8">
       <h1 className="font-bold text-xl text-center">Orden</h1>
       <div className="flex justify-center pl-8 mt-4 mb-4">
         <div className="w-full md:w-1/2 px-3 mt-8 mb-8 ml-8 md:mb-0">
-          <h2>Orden creada correctamente</h2>
           <p>
             Su pago ha sido procesado correctamente. Su pedido se encuentra en
             preparación.

@@ -20,7 +20,7 @@ export default function CartTotal() {
       }
       let newItem = [];
       newItem.push({
-        name: book.title,
+        name: book ? book.title : '',
         cartItemId: cartItem.cart_item_id,
         bookId: cartItem.book_id,
         quantity: parseInt(cartItem.quantity),
@@ -30,7 +30,7 @@ export default function CartTotal() {
           : process.env.URL_SITE + '/images/notAvailable.png',
       });
       arrayItem.push(newItem);
-      //setCartItemsCheckout([...cartItemsCheckout, newItem]);
+      
     }
     setCartItemsCheckout(arrayItem);
     setTotalPrice(totalPrice);

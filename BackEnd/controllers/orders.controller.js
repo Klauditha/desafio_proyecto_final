@@ -44,7 +44,7 @@ const createOrderByUser = async (req, res, next) => {
     });
   } catch (error) {
     let codeError = error.isBoom ? error.output.statusCode : 500;
-    console.log(error);
+    //console.log(error);
     res.status(codeError).json({
       status: false,
       message: error.message,

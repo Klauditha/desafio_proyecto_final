@@ -33,14 +33,13 @@ export const ECommerceProvider = ({ children }) => {
   const [genresAll, setGenresAll] = useState([]);
   const [authorsAll, setAuthorsAll] = useState([]);
   const [cartItemsCheckout, setCartItemsCheckout] = useState([]);
-  
 
   /* CARRITO */
   const addToCart = async (book, quantity) => {
     if (authenticatedUser) {
       try {
-        let token = sessionStorage.getItem("token");
-        let user_id = parseInt(sessionStorage.getItem("user_id"), 10);
+        let token = sessionStorage.getItem('token');
+        let user_id = parseInt(sessionStorage.getItem('user_id'), 10);
 
         if (!token || isNaN(user_id)) {
           return;
@@ -75,8 +74,9 @@ export const ECommerceProvider = ({ children }) => {
               return item;
             })
           );
-          alertify.success("Cantidad de copias en el carrito actualizada");
+          alertify.success('Cantidad de copias en el carrito actualizada');
         } else {
+          console.log('Adding book to cart...');
           const response = await axios.post(
             ENDPOINT.cart,
             {
@@ -88,20 +88,23 @@ export const ECommerceProvider = ({ children }) => {
               headers,
             }
           );
+          console.log('Response:', response.data);
+
           if (response.data.status) {
             const newCartItem = response.data.data.cart;
             setCartItems([...cart_items, newCartItem]);
-            alertify.success("Libro agregado al carrito");
+            alertify.success('Libro agregado al carrito');
           } else {
-            console.error("No se ha podido agregar libro al carrito");
+            console.error('No se ha podido agregar libro al carrito');
           }
         }
       } catch (error) {
-        console.error("Error al agregar libro al carrito:", error);
+        console.error('Error:', error);
+        console.error('Error al agregar libro al carrito:', error);
       }
     } else {
-      console.log("Redirigiendo a login...");
-      navigate("/login");
+      console.log('Redirigiendo a login...');
+      navigate('/login');
     }
   };
 
@@ -128,43 +131,40 @@ export const ECommerceProvider = ({ children }) => {
     }
   };
 
+  const fetchCartItems = async () => {
+    try {
+      const token = sessionStorage.getItem('token');
+      const user_id = parseInt(sessionStorage.getItem('user_id'), 10);
 
-const fetchCartItems = async () => {
-  try {
-    const token = sessionStorage.getItem("token");
-    const user_id = parseInt(sessionStorage.getItem("user_id"), 10);
+      if (!token || isNaN(user_id)) {
+        console.error('Token o id de usuario invalidos.');
+        return;
+      }
 
-    if (!token || isNaN(user_id)) {
-      console.error("Token o id de usuario invalidos.");
-      return;
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const response = await axios.get(`${ENDPOINT.cart}/${user_id}`, {
+        headers: headers,
+      });
+      const cartItems = response.data.data.cart;
+      const cart_items = await Promise.all(
+        cartItems.map(async (cartItem) => {
+          const bookResponse = await axios.get(
+            `${ENDPOINT.book}/${cartItem.book_id}&${user_id}`
+          );
+          const bookDetails = bookResponse.data.data;
+          return { ...cartItem, book: bookDetails };
+        })
+      );
+
+      setCartItems(cart_items);
+    } catch (error) {
+      console.error('Error fetching cart items:', error);
+      return [];
     }
-
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-
-    const response = await axios.get(`${ENDPOINT.cart}/${user_id}`, {
-      headers: headers,
-    });
-    const cartItems = response.data.data.cart;
-    const cart_items = await Promise.all(
-      cartItems.map(async (cartItem) => {
-        const bookResponse = await axios.get(
-          `${ENDPOINT.book}/${cartItem.book_id}&${user_id}`
-        );
-        const bookDetails = bookResponse.data.data;
-        return { ...cartItem, book: bookDetails };
-      })
-    );
-
-    setCartItems(cart_items);
-  } catch (error) {
-    console.error("Error fetching cart items:", error);
-    return [];
-  }
-};
-
-
+  };
 
   /**
    * Obtiene la cantidad de libros vendidos de un libro concreto
@@ -181,8 +181,6 @@ const fetchCartItems = async () => {
 
     return sold;
   };
-
-
 
   /*
   const fetchData = async () => {
@@ -229,8 +227,8 @@ const fetchCartItems = async () => {
 
   const updateCartItemQuantity = async (cart_item_id, book_id, newQuantity) => {
     try {
-      let user_id = parseInt(sessionStorage.getItem("user_id"), 10);
-      let token = sessionStorage.getItem("token");
+      let user_id = parseInt(sessionStorage.getItem('user_id'), 10);
+      let token = sessionStorage.getItem('token');
       const headers = {
         Authorization: `Bearer ${token}`,
       };
@@ -255,31 +253,34 @@ const fetchCartItems = async () => {
         )
       );
     } catch (error) {
-      console.error("Error actualizando cantidad de item en el carrito:", error);
+      console.error(
+        'Error actualizando cantidad de item en el carrito:',
+        error
+      );
     }
   };
 
   const removeFromCart = async (cart_item_id, book_id) => {
     try {
-      let user_id = parseInt(sessionStorage.getItem("user_id"), 10);
-      let token = sessionStorage.getItem("token");
+      let user_id = parseInt(sessionStorage.getItem('user_id'), 10);
+      let token = sessionStorage.getItem('token');
       const headers = {
         Authorization: `Bearer ${token}`,
       };
-       await axios.delete(`${ENDPOINT.cart}/${cart_item_id}`, {
-         headers,
-         data: {
-           user_id,
-           book_id,
-           deleted: true,
-           quantity: 0,
-         },
-       });
+      await axios.delete(`${ENDPOINT.cart}/${cart_item_id}`, {
+        headers,
+        data: {
+          user_id,
+          book_id,
+          deleted: true,
+          quantity: 0,
+        },
+      });
       setCartItems(
         cartItems.filter((item) => item.cart_item_id !== cart_item_id)
       );
     } catch (error) {
-      console.error("Error removiendo item del carrito:", error);
+      console.error('Error removiendo item del carrito:', error);
     }
   };
 
@@ -319,7 +320,7 @@ const fetchCartItems = async () => {
     let username = sessionStorage.getItem('username');
     let token = sessionStorage.getItem('token');
     let user_id = '';
-    
+
     if (username && token) {
       axios
         .get(
@@ -335,7 +336,7 @@ const fetchCartItems = async () => {
         .then((response) => {
           const userData = response.data.data.user;
           user_id = userData.user_id;
-          sessionStorage.setItem("user_id", user_id);
+          sessionStorage.setItem('user_id', user_id);
           setDataAuthenticatedUser(userData);
           fetchCartItems();
           fetchWishlistBooks();
@@ -347,59 +348,61 @@ const fetchCartItems = async () => {
     }
   };
 
-/* Obtener wishlist
-*/
+  /* Obtener wishlist
+   */
   const fetchWishlistBooks = async () => {
     let loggedUserId = sessionStorage.getItem('user_id');
-  
+
     try {
       if (!loggedUserId) {
-        console.error("Usuario no autentificado.");
+        console.error('Usuario no autentificado.');
         return;
       }
-      const response = await axios.get(ENDPOINT.book + '/wishlist/' + loggedUserId);
+      const response = await axios.get(
+        ENDPOINT.book + '/wishlist/' + loggedUserId
+      );
       const data = response.data;
 
       if (data.status) {
         const wishlistBooks = data.data.wishlistBooks;
         return wishlistBooks;
       } else {
-        console.error("Error consiguiendo libros de wishlist", data.message);
+        console.error('Error consiguiendo libros de wishlist', data.message);
         return [];
       }
     } catch (error) {
-    console.error("Error consiguiendo libros de wishlist:", error);
-    return [];
+      console.error('Error consiguiendo libros de wishlist:', error);
+      return [];
     }
   };
 
- const handleAddToWishlist = async (book_id, wishlistStatus) => {
-   let token = sessionStorage.getItem("token");
-   let user_id = parseInt(sessionStorage.getItem("user_id"), 10);
+  const handleAddToWishlist = async (book_id, wishlistStatus) => {
+    let token = sessionStorage.getItem('token');
+    let user_id = parseInt(sessionStorage.getItem('user_id'), 10);
 
-   if (token) {
-     const headers = {
-       Authorization: `Bearer ${token}`,
-     };
+    if (token) {
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
 
-     axios
-       .post(
-         `${ENDPOINT.rating}/${book_id}/wishlist`,
-         { user_id, wishlist: wishlistStatus },
-         { headers }
-       )
-       .then((response) => {
-         console.log("Response:", response.data);
-         console.log("Wishlist actualizado exitosamente");
-       })
-       .catch((error) => {
-         console.error("Error:", error);
-         console.error("No se ha podido actualizar wishlist");
-       });
-   } else {
-     console.error("Token no encontrado");
-   }
- };
+      axios
+        .post(
+          `${ENDPOINT.rating}/${book_id}/wishlist`,
+          { user_id, wishlist: wishlistStatus },
+          { headers }
+        )
+        .then((response) => {
+          console.log('Response:', response.data);
+          console.log('Wishlist actualizado exitosamente');
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          console.error('No se ha podido actualizar wishlist');
+        });
+    } else {
+      console.error('Token no encontrado');
+    }
+  };
 
   /*Obtener novedades de libros */
   const obtenerNovedadesLibros = () => {
@@ -535,7 +538,7 @@ const fetchCartItems = async () => {
       alertify.error('Error al obtener generos');
       console.log('Error al obtener generos:', error);
     }
-  }
+  };
   const obtenerLibroAdminAPI = (book_id) => {
     let user_id = 0;
     if (dataAuthenticatedUser) {
@@ -543,12 +546,11 @@ const fetchCartItems = async () => {
     }
     try {
       axios
-      .get(ENDPOINT.book + '/' + book_id + '&' + user_id)
+        .get(ENDPOINT.book + '/' + book_id + '&' + user_id)
         .then((response) => {
           setBookFound(response.data.data.book);
           setGenreFound(response.data.data.genre);
           setAuthorFound(response.data.data.author);
-          
         })
         .catch((error) => {
           console.log(error);
@@ -560,7 +562,7 @@ const fetchCartItems = async () => {
       alertify.error(
         'No se ha podido obtener el libro. Por favor, inténtelo de nuevo.'
       );
-      console.log(error);      
+      console.log(error);
     }
   };
 
@@ -579,7 +581,7 @@ const fetchCartItems = async () => {
       alertify.error('Error al obtener generos');
       console.log('Error al obtener generos:', error);
     }
-  }
+  };
 
   const ObtenerAutoresTodosAPI = () => {
     try {
@@ -596,14 +598,67 @@ const fetchCartItems = async () => {
       alertify.error('Error al obtener autores');
       console.log('Error al obtener autores:', error);
     }
-  }
+  };
+
+  const crearOrdenByUserAPI = (user_id) => {
+    try {
+      console.log('crearOrdenByUserAPI', user_id);
+      let token = sessionStorage.getItem('token');
+      console.log('token', token);
+      axios
+        .post(
+          ENDPOINT.orders + '/createbyuser/' + user_id,
+          {},
+          {
+            headers: {
+              Authorization: 'Bearer ' + token,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response.data);
+          limpiarCarritoByUser(user_id);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      alertify.error('Error al crear la orden');
+      console.log('Error al crear la orden:', error);
+    }
+  };
+
+  const limpiarCarritoByUser = (user_id) => {
+    try {
+      let token = sessionStorage.getItem('token');
+      axios
+        .delete(ENDPOINT.cart + '/DeleteByUser/' + user_id, {
+          headers: {
+            Authorization: 'Bearer ' + token,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          alertify.success('Orden creada con exito');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      alertify.error('Error al limpiar el carrito');
+      console.log('Error al limpiar el carrito:', error);
+    }
+  };
 
   useEffect(() => {
     setDataEditoriales();
-    ObtenerAutoresActivos();
-    ObtenerGenerosActivos();
-    ObtenerGenerosTodosAPI();
-    ObtenerAutoresTodosAPI();
+    if (authenticatedUser && authenticatedUser.admin) {
+      ObtenerAutoresActivos();
+      ObtenerGenerosActivos();
+      ObtenerGenerosTodosAPI();
+      ObtenerAutoresTodosAPI();
+    }
+
     //getUsers();
   }, [authenticatedUser]);
 
@@ -684,8 +739,9 @@ const fetchCartItems = async () => {
         setAuthorsAll,
         ObtenerAutoresTodosAPI,
         /* Cart */
-        cartItemsCheckout, setCartItemsCheckout
-        
+        cartItemsCheckout,
+        setCartItemsCheckout,
+        crearOrdenByUserAPI,
       }}
     >
       {children}
