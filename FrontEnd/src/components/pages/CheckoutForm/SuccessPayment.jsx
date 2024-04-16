@@ -38,7 +38,7 @@ const SuccessPayment = () => {
           console.log(error);
         });
     } catch (error) {
-      alertify.error('Error al crear la orden');      
+      alertify.error('Error al crear la orden');
     }
   };
 
@@ -53,6 +53,9 @@ const SuccessPayment = () => {
         })
         .then((response) => {
           alertify.success('Orden creada con exito');
+          setTimeout(() => {
+            navigate('/myorders');
+          }, 2000);
         })
         .catch((error) => {
           console.log(error);
@@ -71,13 +74,13 @@ const SuccessPayment = () => {
   return (
     <RequireAuth>
       <div className="min-[768px]:w-full min-[768px]:h-full pb-8">
-        <h1 className="font-bold text-xl text-center">Orden</h1>
-        <div className="flex justify-center pl-8 mt-4 mb-4">
-          <div className="w-full md:w-1/2 px-3 mt-8 mb-8 ml-8 md:mb-0">
-            <p>
-              Su pago ha sido procesado correctamente. Su pedido se encuentra en
-              preparación.
-            </p>
+        <h1 className="font-bold text-xl text-center">Proceso de Pago</h1>
+        <div className="flex justify-center pl-8mb-4">
+          <div className="w-full md:w-1/2 px-3 text-center text-md mt-4 ">
+            <h4 className="mt-4">Su pago ha sido procesado correctamente.</h4>
+            <h4 className='mt-4'>Su pedido se encuentra en preparación.</h4>
+            <h4 className='mt-4'>Será notificado por correo cuando su pedido este listo.</h4>
+            <h4 className="mt-4 text-md font-bold">Gracias por su preferencia</h4>
           </div>
         </div>
       </div>
