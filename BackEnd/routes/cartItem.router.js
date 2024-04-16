@@ -283,6 +283,6 @@ router.post(
   cartController.createCartItem
 );
 
-router.delete('/:user_id', authMiddleware, cartController.deleteCartByUser);
+router.delete('/DeleteByUser/:user_id', authMiddleware, cartController.deleteCartByUser);
 
 module.exports = router;

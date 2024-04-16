@@ -41,10 +41,8 @@ class OrdersService {
   }
 
   async createOrderByUser(user_id) {
-    console.log('createOrderByUser', user_id);
     try {
       const client = await pool.connect();
-      //const query = 'INSERT INTO orders (user_id) VALUES ($1) RETURNING *';
       const query = `INSERT INTO public.orders( user_id, order_date, total_amount, deleted) SELECT user_id, NOW(), sum(quantity*B.price) as total_amount , 'false'
                 FROM public.cart_items CI
                 JOIN public.books B on CI.book_id = B.book_id 

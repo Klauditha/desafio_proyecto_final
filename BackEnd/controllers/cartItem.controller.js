@@ -97,12 +97,13 @@ const deleteCartByUser = async (req, res, next) => {
       throw boom.notFound('Usuario no encontrado');
     }
     const cart = await service.deleteCartByUser(user_id);
+    if (!cart) {
+      throw boom.notFound('No ha sido posible limpiar el carrito');
+    }
     res.status(200).json({
       status: true,
       message: 'Items del carrito eliminados',
-      data: {
-        cart,
-      },
+      data: null,
     });
   } catch (error) {
     let codeError = error.isBoom ? error.output.statusCode : 500;

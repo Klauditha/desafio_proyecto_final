@@ -51,15 +51,18 @@ class CartItemService {
   }
 
   async deleteCartByUser(user_id) {
-    const cart = await models.Cart.destroy({
-      where: {
-        user_id: user_id,
-      },
-    });
-    if (!cart) {
-      throw boom.notFound('Carrito no encontrado');
+    console.log('deleteCartByUser', user_id);
+    try {
+      const cart = await models.Cart.destroy({
+        where: {
+          user_id: user_id,
+        },
+      });
+      return true;
+    } catch (error) {
+      console.log(error);
     }
-    return cart;
+    
   }
 }
 

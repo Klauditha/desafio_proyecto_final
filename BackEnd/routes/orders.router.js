@@ -110,5 +110,9 @@ const { ordersController } = require('../controllers');
  */
 router.get('/all/:user_id', authMiddleware, ordersController.getAllByUser);
 
-router.post('/createbyuser/:user_id', ordersController.createOrderByUser);
+router.post(
+  '/createbyuser/:user_id',
+  authMiddleware,
+  ordersController.createOrderByUser
+);
 module.exports = router;

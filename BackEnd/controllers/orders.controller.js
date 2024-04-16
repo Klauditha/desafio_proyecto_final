@@ -28,7 +28,6 @@ const getAllByUser = async (req, res, next) => {
 };
 
 const createOrderByUser = async (req, res, next) => {
-  console.log('createOrderByUser', req.user);
   try {
     const { user_id } = req.params;
     if (!user_id) {
