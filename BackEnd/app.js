@@ -62,6 +62,7 @@ app.use(
 );
 
 //middleware
+/*
 app.use(
   cors({
     origin: [
@@ -70,7 +71,9 @@ app.use(
       'https://checkout.stripe.com',
     ],
   })
-);
+);*/
+app.use(cors());
+
 app.use(express.json());
 
 //routes
