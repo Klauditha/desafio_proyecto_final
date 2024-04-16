@@ -8,7 +8,7 @@ const swaggerUi = require('swagger-ui-express');
 //const pool = require('./config/db.js');
 
 /**
- * Configuracion Swagger 
+ * Configuracion Swagger
  */
 const options = {
   definition: {
@@ -18,13 +18,13 @@ const options = {
       version: '0.1.0',
       description:
         'Aqui encontraras todas las rutas de la API para el Backend.',
-    },    
+    },
     securityDefinitions: {
-      bearerAuth : {
+      bearerAuth: {
         type: 'http',
         name: 'Authorization',
-        in: 'header'
-      }
+        in: 'header',
+      },
     },
     Bearer: 'Authorization',
     components: {
@@ -35,10 +35,10 @@ const options = {
           description: 'JWT Authorization header using the Bearer scheme.',
           bearerFormat: 'JWT',
           in: 'header',
-          name: 'Authorization',          
+          name: 'Authorization',
         },
       },
-    },    
+    },
     servers: [
       {
         url: 'http://localhost:3000',
@@ -54,7 +54,6 @@ const options = {
   paths: {},
 };
 
-
 const specs = swaggerJsdoc(options);
 app.use(
   '/api-docs',
@@ -63,7 +62,16 @@ app.use(
 );
 
 //middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      'http://localhost:5173',
+      'https://desafio-proyecto-final-api.onrender.com/',
+      'https://checkout.stripe.com',
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 //routes
