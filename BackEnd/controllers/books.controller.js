@@ -31,6 +31,7 @@ const createBook = async (req, res, next) => {
     }
     const newBook = await service.create(body);
     const genre = await genreService.findOneByName(body.genre);
+    
     if (genre != null) {
       bookGenre = await bookGenreService.create({
         book_id: newBook.book_id,
@@ -127,6 +128,7 @@ const getBook = async (req, res, next) => {
  * Actualiza un libro
  */
 const updateBook = async (req, res, next) => {
+  console.log('Actualizando libro...');
   try {
     const { book_id } = req.params;
     const body = req.body;

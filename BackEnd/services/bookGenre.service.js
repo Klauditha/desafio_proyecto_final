@@ -1,5 +1,6 @@
 const boom = require('@hapi/boom');
 const { models } = require('../config/sequelize');
+const { pool } = require('../config/db');
 
 class BookGenreService {
   constructor() {}
@@ -30,11 +31,21 @@ class BookGenreService {
   }
 
   async updateByGenreBook(genre_id, book_id) {
-    const bookGenre = await models.BookGenre.update(
-      { genre_id },
-      { where: { book_id } }
-    );
-    return bookGenre;
+    console.log(genre_id, book_id);
+    try {
+      const client = await pool.connect();
+      const query = `DELETE FROM books_genres WHERE book_id = ($1)`;
+      const result = await client.query(query, [book_id]);
+            
+      const bookGenre = await models.BookGenre.create({
+        genre_id,
+        book_id
+      })
+      return bookGenre;
+    } catch (error) {
+      console.log(error);
+    }
+    
   }
 }
 

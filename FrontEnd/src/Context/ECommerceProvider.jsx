@@ -695,7 +695,7 @@ export const ECommerceProvider = ({ children }) => {
 
   useEffect(() => {
     setDataEditoriales();
-    if (authenticatedUser && authenticatedUser.admin) {
+    if (dataAuthenticatedUser && dataAuthenticatedUser.admin) {
       ObtenerAutoresActivos();
       ObtenerGenerosActivos();
       ObtenerGenerosTodosAPI();
@@ -703,7 +703,7 @@ export const ECommerceProvider = ({ children }) => {
     }
 
     //getUsers();
-  }, [authenticatedUser]);
+  }, [dataAuthenticatedUser]);
 
   return (
     <ECommerceContext.Provider
@@ -761,6 +761,8 @@ export const ECommerceProvider = ({ children }) => {
         /*Generos  */
         genres,
         setGenres,
+        ObtenerAutoresActivos,
+        ObtenerGenerosActivos,
         /*Wishlist */
         fetchWishlistBooks,
         /*Data admin edit*/

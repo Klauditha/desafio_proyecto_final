@@ -31,6 +31,8 @@ const AddEditBook = () => {
     authorFound,
     genreFound,
     obtenerLibroAdminAPI,
+    obtenerAutoresAdminAPI,
+    obtenerGenerosAdminAPI,
   } = useContext(ECommerceContext);
   const navigate = useNavigate();
   const [estadoCarga, setEstadoCarga] = useState(false);
@@ -106,7 +108,6 @@ const AddEditBook = () => {
               (author) => author.author_id == formData.author_id
             ).name;
 
-            
             try {
               const response = await axios.post(
                 `${ENDPOINT.book}`,
@@ -122,7 +123,6 @@ const AddEditBook = () => {
                   price,
                   genre,
                   author,
-                  
                 },
                 {
                   headers: {
@@ -161,7 +161,7 @@ const AddEditBook = () => {
             genre_id = formData.genre_id;
             author_id = formData.author_id;
             img = formData.img;
-            
+
             try {
               const response = await axios.put(
                 `${ENDPOINT.book}/${formData.bookId}`,
@@ -185,12 +185,14 @@ const AddEditBook = () => {
                   },
                 }
               );
+              console.log(genre_id)
               if (response.status === 200) {
                 alertify.success('Libro editado exitosamente');
                 setTimeout(() => {
                   navigate('/managerbooks');
                 }, 2000);
               } else {
+                console.log(response.data);
                 alertify.error('Error al editar libro');
               }
             } catch (error) {
@@ -201,7 +203,6 @@ const AddEditBook = () => {
               }
             }
 
-           
             break;
           default:
             break;
@@ -236,6 +237,11 @@ const AddEditBook = () => {
   };
 
   useEffect(() => {
+    //obtenerGenerosAdminAPI();
+    //obtenerAutoresAdminAPI();
+    console.log(authors);
+    console.log(genres);
+
     if (book_id && bookFound.book_id != book_id) {
       obtenerLibroAdminAPI(book_id);
     }
