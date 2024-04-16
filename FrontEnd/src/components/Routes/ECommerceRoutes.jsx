@@ -14,6 +14,8 @@ import AddEditBook from '../pages/AdminBooks/AddEditBook';
 import Userprofile from '../pages/Userprofile';
 import AdminGenres from '../pages/AdminGenre/AdminGenres';
 import AdminAuthors from '../pages/AdminAuthor/AdminAuthors';
+import CheckoutForm from '../pages/CheckoutForm/CheckoutForm';
+import SuccessPayment from '../pages/CheckoutForm/SuccessPayment';
 
 const ECommerceRoutes = () => {
   return (
@@ -23,7 +25,7 @@ const ECommerceRoutes = () => {
       <Route path="/bestselling" element={<Bestselling />} />
       <Route path="/publishers" element={<Publishers />} />
       <Route path="/wishlist" element={<Wishlist />} />
-      <Route path="/login/*" element={<Loginpage />} />
+      <Route path="/login/*" element={<Loginpage />} /> 
       <Route path="/register" element={<Register />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/book/:id" element={<BookDetail />} />
@@ -34,6 +36,8 @@ const ECommerceRoutes = () => {
       <Route path="/managerbooks/edit/:book_id" element={<AddEditBook />} />
       <Route path="/managerbooks/add" element={<AddEditBook />} />
       <Route path="/profile" element={<Userprofile />} />
+      <Route path="/checkout" element={<CheckoutForm />} />
+      <Route path="/success/:session_id" element={<SuccessPayment />} />
     </Routes>
   );
 };

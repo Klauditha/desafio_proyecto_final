@@ -4,7 +4,7 @@ export const ENDPOINT = {
   login: `${URLBASE}/login`,
   users: `${URLBASE}/user`,
   book: `${URLBASE}/book`,
-  orders: `${URLBASE}/order`,
+  orders: `${URLBASE}/orders`,
   rating: `${URLBASE}/rating`,
   author: `${URLBASE}/author`,
   genre: `${URLBASE}/genre`,

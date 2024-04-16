@@ -51,7 +51,6 @@ describe('Author API Routes', () => {
         const token = responseToken.body.data.token;
         const response = await request(app).put('/author/activate/' + author_id)
         .set('Authorization', 'bearer ' + token);
-        console.log(response.body);
         expect(response.status).toBe(200);
         expect(response.body.status).toBe(true);
         expect(response.body.message).toBe('Autor activado');

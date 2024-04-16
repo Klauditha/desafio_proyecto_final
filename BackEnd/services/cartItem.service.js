@@ -12,7 +12,7 @@ class CartItemService {
       },
     });
     if (!cartItems) {
-      throw boom.notFound("Libros del carrito no encontrados.");
+      throw boom.notFound('Libros del carrito no encontrados.');
     }
     return cartItems;
   }
@@ -44,10 +44,24 @@ class CartItemService {
   async update(cart_item_id, changes) {
     const cart = await models.Cart.findByPk(cart_item_id);
     if (!cart) {
-      throw boom.notFound("Carrito no encontrado");
+      throw boom.notFound('Carrito no encontrado');
     }
     const rta = await cart.update(changes);
     return rta;
+  }
+
+  async deleteCartByUser(user_id) {
+    try {
+      const cart = await models.Cart.destroy({
+        where: {
+          user_id: user_id,
+        },
+      });
+      return true;
+    } catch (error) {
+      console.log(error);
+    }
+    
   }
 }
 

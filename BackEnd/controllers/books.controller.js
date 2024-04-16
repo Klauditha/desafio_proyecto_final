@@ -227,7 +227,7 @@ const getBooksMoreSold = async (req, res, next) => {
       },
     });
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     let codeError = error.isBoom ? error.output.statusCode : 500;
     res.status(codeError).json({
       status: false,

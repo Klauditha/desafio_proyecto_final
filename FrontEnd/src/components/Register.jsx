@@ -1,15 +1,16 @@
+/* eslint-disable no-undef */
 import {
   CardTitle,
   CardDescription,
   CardHeader,
   CardContent,
   Card,
-} from "@/components/ui/card";
-import React, { useContext, useState } from "react";
-import { ECommerceContext } from "@/Context/ECommerceContext";
-import axios from "axios";
-import { ENDPOINT } from "../config/constants";
-import { useNavigate } from "react-router-dom";
+} from '@/components/ui/card';
+import React, { useContext, useState } from 'react';
+import { ECommerceContext } from '@/Context/ECommerceContext';
+import axios from 'axios';
+import { ENDPOINT } from '../config/constants';
+import { useNavigate } from 'react-router-dom';
 
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";

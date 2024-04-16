@@ -11,9 +11,11 @@ const genreRouter = require('./genre.router');
 const bookGenreRouter = require('./booksGenre.router');
 const bookAuthorRouter = require('./booksAuthor.router');
 const publisherRouter = require('./publisher.router');
+const paymenteRouter = require('./paymente.router');
 
 //middleware
 router.use('/', loginRouter);
+router.use('/', paymenteRouter);
 router.use('/user', userRouter);
 router.use('/book', booksRouter);
 router.use('/cart', cartItemRouter);

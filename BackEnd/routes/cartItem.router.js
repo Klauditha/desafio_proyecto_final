@@ -106,7 +106,7 @@ const { check } = require('express-validator');
  *                  data:
  *                    type: object
  *                    default: null
- * 
+ *
  */
 router.get('/:user_id', authMiddleware, cartController.getCartItemsByUser);
 
@@ -207,7 +207,7 @@ router.put(
   cartController.updateCartItem
 );
 
-router.delete("/:cart_item_id", authMiddleware, cartController.deleteCartItem);
+router.delete('/:cart_item_id', authMiddleware, cartController.deleteCartItem);
 
 /**
  * @swagger
@@ -270,17 +270,19 @@ router.delete("/:cart_item_id", authMiddleware, cartController.deleteCartItem);
  *                  data:
  *                    type: object
  *                    default: null
- */ 
- router.post(
-    '/',
-    [
-      check('user_id', 'The user is required').not().isEmpty(),
-      check('book_id', 'The book is required').not().isEmpty(),
-      check('quantity', 'The quantity is required').not().isEmpty(),
-      validarCampos,
-    ],
-    authMiddleware,
-    cartController.createCartItem
-  );
+ */
+router.post(
+  '/',
+  [
+    check('user_id', 'The user is required').not().isEmpty(),
+    check('book_id', 'The book is required').not().isEmpty(),
+    check('quantity', 'The quantity is required').not().isEmpty(),
+    validarCampos,
+  ],
+  authMiddleware,
+  cartController.createCartItem
+);
+
+router.delete('/DeleteByUser/:user_id', authMiddleware, cartController.deleteCartByUser);
 
 module.exports = router;
