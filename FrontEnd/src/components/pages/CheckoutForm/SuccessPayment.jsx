@@ -4,20 +4,21 @@ import { useState } from 'react';
 import axios from 'axios';
 import { ENDPOINT } from '../../../config/constants';
 import RequireAuth from '@/components/RequireAuth';
+import { useNavigate } from 'react-router-dom';
 
 const SuccessPayment = () => {
   const [estado, setEstado] = useState(false);
-
-  console.log('estado', estado);
+  const navigate = useNavigate();
   const creacionOrden = () => {
     let user_id = parseInt(sessionStorage.getItem('user_id'), 10);
-    crearOrdenByUserAPI(user_id);
+    if (user_id) {
+      crearOrdenByUserAPI(user_id);
+    } else navigate('/');
   };
 
   const crearOrdenByUserAPI = (user_id) => {
     setEstado(true);
     try {
-      console.log('crearOrdenByUserAPI', user_id);
       let token = sessionStorage.getItem('token');
       console.log('token', token);
       axios
