@@ -75,6 +75,7 @@ class GenreService {
       where: {
         deleted: false,
       },
+      order: [['name', 'ASC']],
     });
     return genres;
   }
