@@ -51,6 +51,7 @@ class AuthorService {
       where: {
         deleted: false,
       },
+      order: [['name', 'ASC']],
     });
     return authors;
   }
