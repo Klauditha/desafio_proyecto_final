@@ -37,7 +37,7 @@ class AuthorService {
       let authors = [];
       const client = await pool.connect();
       const query =
-        'SELECT A.author_id, A.name, A.deleted, CAST(COUNT(BA.book_id) as integer) quantityBook FROM authors A LEFT JOIN books_authors BA ON A.author_id = BA.author_id GROUP BY A.author_id, A.name, A.deleted ORDER BY A.author_id;';
+        'SELECT A.author_id, A.name, A.deleted, CAST(COUNT(BA.book_id) as integer) quantityBook FROM authors A LEFT JOIN books_authors BA ON A.author_id = BA.author_id GROUP BY A.author_id, A.name, A.deleted ORDER BY A.name;';
       const result = await client.query(query);
       authors = result.rows;
       return authors;
